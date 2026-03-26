@@ -1,0 +1,32 @@
+name: Build & Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+
+      - name: Validate tokens
+        run: npm run validate
+
+      - name: Build outputs
+        run: npm run build
+
+      - name: Verify dist files exist
+        run: |
+          test -f build/dist/css/oklch.css
+          test -f build/dist/css/hsl.css
+          test -f build/dist/hex/colors.json
+          test -f build/dist/tailwind/preset.js

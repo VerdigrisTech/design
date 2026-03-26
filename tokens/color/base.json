@@ -1,0 +1,168 @@
+{
+  "$description": "Verdigris primitive color palette in OKLch. Canonical source — all other formats are derived from these values. Extracted from Patina (production app).",
+  "color": {
+    "brand": {
+      "verdigris": {
+        "$value": "oklch(0.75 0.1286 191.57)",
+        "$type": "color",
+        "$description": "Primary brand teal. Equivalent: hsl(178 86% 42%) / #0fc8c3"
+      },
+      "mix-step-1": {
+        "$value": "oklch(0.635 0.1341 216.01)",
+        "$type": "color",
+        "$description": "Teal-to-purple gradient step 1"
+      },
+      "mix-step-2": {
+        "$value": "oklch(0.52 0.1396 240.45)",
+        "$type": "color",
+        "$description": "Teal-to-purple gradient step 2"
+      },
+      "mix-step-3": {
+        "$value": "oklch(0.405 0.1451 264.89)",
+        "$type": "color",
+        "$description": "Teal-to-purple gradient step 3"
+      },
+      "midnight-purple": {
+        "$value": "oklch(0.29 0.1506 289.33)",
+        "$type": "color",
+        "$description": "Secondary brand purple. Deep, saturated."
+      },
+      "midnight-purple-step-1": {
+        "$value": "oklch(0.3925 0.1607 313.03)",
+        "$type": "color",
+        "$description": "Purple-to-red gradient step 1"
+      },
+      "midnight-purple-step-2": {
+        "$value": "oklch(0.495 0.1708 336.72)",
+        "$type": "color",
+        "$description": "Purple-to-red gradient step 2"
+      },
+      "midnight-purple-step-3": {
+        "$value": "oklch(0.5975 0.1808 0.42)",
+        "$type": "color",
+        "$description": "Purple-to-red gradient step 3"
+      },
+      "pastel-red": {
+        "$value": "oklch(0.7 0.1909 24.11)",
+        "$type": "color",
+        "$description": "Accent warm red. Used for sidebar primary in Patina."
+      },
+      "pastel-red-step-1": {
+        "$value": "oklch(0.7425 0.1878 41.14)",
+        "$type": "color",
+        "$description": "Red-to-yellow gradient step 1"
+      },
+      "pastel-red-step-2": {
+        "$value": "oklch(0.785 0.1848 58.17)",
+        "$type": "color",
+        "$description": "Red-to-yellow gradient step 2"
+      },
+      "pastel-red-step-3": {
+        "$value": "oklch(0.8275 0.1817 75.2)",
+        "$type": "color",
+        "$description": "Red-to-yellow gradient step 3"
+      },
+      "cyber-yellow": {
+        "$value": "oklch(0.87 0.1786 92.23)",
+        "$type": "color",
+        "$description": "Accent yellow. Warm highlight."
+      },
+      "cyber-yellow-step-1": {
+        "$value": "oklch(0.8142 0.1695 113.33)",
+        "$type": "color",
+        "$description": "Yellow-back-to-teal gradient step 1"
+      },
+      "cyber-yellow-step-2": {
+        "$value": "oklch(0.7698 0.1588 137.1)",
+        "$type": "color",
+        "$description": "Yellow-back-to-teal gradient step 2"
+      },
+      "cyber-yellow-step-3": {
+        "$value": "oklch(0.7486 0.1412 163.85)",
+        "$type": "color",
+        "$description": "Yellow-back-to-teal gradient step 3"
+      }
+    },
+    "neutral": {
+      "$description": "Neutral scale derived from Patina's zinc-tinted grays (hue ~286). Used for backgrounds, borders, text.",
+      "white": {
+        "$value": "oklch(1 0 0)",
+        "$type": "color"
+      },
+      "50": {
+        "$value": "oklch(0.985 0 0)",
+        "$type": "color",
+        "$description": "Near-white — primary-foreground in light mode"
+      },
+      "100": {
+        "$value": "oklch(0.967 0.001 286.375)",
+        "$type": "color",
+        "$description": "Secondary/muted/accent background in light mode"
+      },
+      "200": {
+        "$value": "oklch(0.92 0.004 286.32)",
+        "$type": "color",
+        "$description": "Border/input in light mode"
+      },
+      "400": {
+        "$value": "oklch(0.705 0.015 286.067)",
+        "$type": "color",
+        "$description": "Ring in light mode, muted-foreground in dark"
+      },
+      "500": {
+        "$value": "oklch(0.552 0.016 285.938)",
+        "$type": "color",
+        "$description": "Muted foreground in light mode, ring in dark"
+      },
+      "800": {
+        "$value": "oklch(0.274 0.006 286.033)",
+        "$type": "color",
+        "$description": "Secondary/muted/accent in dark mode"
+      },
+      "900": {
+        "$value": "oklch(0.21 0.006 285.885)",
+        "$type": "color",
+        "$description": "Primary in light, card/popover in dark"
+      },
+      "950": {
+        "$value": "oklch(0.141 0.005 285.823)",
+        "$type": "color",
+        "$description": "Foreground in light, background in dark"
+      },
+      "black": {
+        "$value": "oklch(0 0 0)",
+        "$type": "color"
+      }
+    },
+    "status": {
+      "destructive-light": {
+        "$value": "oklch(0.577 0.245 27.325)",
+        "$type": "color",
+        "$description": "Destructive/error in light mode"
+      },
+      "destructive-dark": {
+        "$value": "oklch(0.704 0.191 22.216)",
+        "$type": "color",
+        "$description": "Destructive/error in dark mode — slightly softer"
+      }
+    },
+    "legacy": {
+      "$description": "HSL values from www site. Mapped for reference during migration. These should converge toward the OKLch brand values above.",
+      "www-primary-light": {
+        "$value": "oklch(0.48 0.12 178)",
+        "$type": "color",
+        "$description": "www hsl(178 86% 28%) — WCAG-darkened teal for text contrast. Patina equivalent: neutral.900 as primary."
+      },
+      "www-brand-teal": {
+        "$value": "oklch(0.75 0.1286 191.57)",
+        "$type": "color",
+        "$description": "www hsl(178 86% 42%) — matches brand.verdigris exactly. Used decoratively."
+      },
+      "www-ring": {
+        "$value": "oklch(0.55 0.12 160)",
+        "$type": "color",
+        "$description": "www hsl(153 67% 38%) — green-shifted ring/focus. Deviates from Patina's neutral ring."
+      }
+    }
+  }
+}

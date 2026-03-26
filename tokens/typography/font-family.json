@@ -1,0 +1,20 @@
+{
+  "$description": "Font family definitions. Inter (body) is shared across both codebases. Lato (display/headings) is used by www for marketing differentiation — Patina uses Inter for everything. JetBrains Mono is Patina's monospace; www uses system mono.",
+  "fontFamily": {
+    "sans": {
+      "$value": "'Inter', -apple-system, 'Roboto', sans-serif",
+      "$type": "fontFamily",
+      "$description": "Primary body font. Used across both Patina and www."
+    },
+    "display": {
+      "$value": "'Lato', -apple-system, 'Roboto', sans-serif",
+      "$type": "fontFamily",
+      "$description": "Display/heading font for marketing. Used by www. Patina has no display font (uses Inter). Baseline to evaluate — see foundations/typography.md for alternatives analysis."
+    },
+    "mono": {
+      "$value": "'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
+      "$type": "fontFamily",
+      "$description": "Monospace for code, metrics, IDs, timestamps. Patina uses JetBrains Mono; www falls back to system mono."
+    }
+  }
+}

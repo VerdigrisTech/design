@@ -1,0 +1,30 @@
+{
+  "$description": "Animation duration tokens. Extracted from www CSS transitions and Patina globals.",
+  "duration": {
+    "fast": {
+      "$value": "150ms",
+      "$type": "duration",
+      "$description": "Micro-interactions: reference-line-label hover (Patina)"
+    },
+    "normal": {
+      "$value": "200ms",
+      "$type": "duration",
+      "$description": "Button hover transitions (www .button-primary)"
+    },
+    "moderate": {
+      "$value": "300ms",
+      "$type": "duration",
+      "$description": "Card hover, image zoom, team photo reveal (www)"
+    },
+    "slow": {
+      "$value": "500ms",
+      "$type": "duration",
+      "$description": "Hero slide-up, hover-scale (www). Also Patina slide-up."
+    },
+    "spin": {
+      "$value": "800ms",
+      "$type": "duration",
+      "$description": "Spinner animation (Patina spin-around)"
+    }
+  }
+}

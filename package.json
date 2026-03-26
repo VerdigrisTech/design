@@ -1,0 +1,41 @@
+{
+  "name": "@verdigristech/design-tokens",
+  "version": "0.1.0",
+  "description": "Verdigris design system tokens — OKLch-first, multi-format output",
+  "license": "UNLICENSED",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VerdigrisTech/design.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "type": "module",
+  "main": "build/dist/index.js",
+  "exports": {
+    ".": "./build/dist/index.js",
+    "./css/oklch": "./build/dist/css/oklch.css",
+    "./css/hsl": "./build/dist/css/hsl.css",
+    "./hex": "./build/dist/hex/colors.json",
+    "./tailwind": "./build/dist/tailwind/preset.js",
+    "./tokens/*": "./tokens/*",
+    "./rules/*": "./rules/*"
+  },
+  "files": [
+    "build/dist/",
+    "tokens/",
+    "rules/",
+    "foundations/",
+    "AGENTS.md"
+  ],
+  "scripts": {
+    "build": "tsx build/config.ts",
+    "validate": "tsx build/validate.ts",
+    "clean": "rm -rf build/dist"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

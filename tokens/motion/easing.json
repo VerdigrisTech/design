@@ -1,0 +1,20 @@
+{
+  "$description": "Easing curve tokens. Both codebases predominantly use ease/ease-out.",
+  "easing": {
+    "default": {
+      "$value": "ease",
+      "$type": "cubicBezier",
+      "$description": "General-purpose. Used by www hover-lift, hover-scale, team-member transitions."
+    },
+    "out": {
+      "$value": "ease-out",
+      "$type": "cubicBezier",
+      "$description": "Entrance animations. Used by www slide-up, Patina reference-line-label."
+    },
+    "linear": {
+      "$value": "linear",
+      "$type": "cubicBezier",
+      "$description": "Continuous rotation. Used by Patina spin-around."
+    }
+  }
+}

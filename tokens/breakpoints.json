@@ -1,0 +1,17 @@
+{
+  "$description": "Responsive breakpoints. Patina extends Tailwind defaults with 3xl–8xl for ultra-wide displays. www uses 640/768/991px breakpoints.",
+  "breakpoints": {
+    "sm": { "$value": "640px", "$type": "dimension", "$description": "40rem — Tailwind default" },
+    "md": { "$value": "768px", "$type": "dimension", "$description": "48rem — Tailwind default" },
+    "lg": { "$value": "1024px", "$type": "dimension", "$description": "64rem — Tailwind default" },
+    "xl": { "$value": "1280px", "$type": "dimension", "$description": "80rem — Tailwind default" },
+    "2xl": { "$value": "1536px", "$type": "dimension", "$description": "96rem — Tailwind default" },
+    "3xl": { "$value": "1792px", "$type": "dimension", "$description": "112rem — Patina custom" },
+    "4xl": { "$value": "2048px", "$type": "dimension", "$description": "128rem — Patina custom" },
+    "5xl": { "$value": "2304px", "$type": "dimension", "$description": "144rem — Patina custom" },
+    "6xl": { "$value": "2560px", "$type": "dimension", "$description": "160rem — Patina custom" },
+    "7xl": { "$value": "2816px", "$type": "dimension", "$description": "176rem — Patina custom" },
+    "8xl": { "$value": "3072px", "$type": "dimension", "$description": "192rem — Patina custom" },
+    "www-tablet": { "$value": "991px", "$type": "dimension", "$description": "www's responsive breakpoint for headings/padding. Non-standard — should migrate to lg (1024px)." }
+  }
+}

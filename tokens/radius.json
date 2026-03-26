@@ -1,0 +1,45 @@
+{
+  "$description": "Border radius tokens. Patina uses 0.625rem (10px), www uses 0.5rem (8px). Design repo documents both — recommendation: adopt Patina's 0.625rem as canonical (see foundations/spacing.md for rationale).",
+  "radius": {
+    "base": {
+      "$value": "0.625rem",
+      "$type": "dimension",
+      "$description": "10px — Patina's --radius. Recommended canonical value."
+    },
+    "sm": {
+      "$value": "calc(0.625rem - 4px)",
+      "$type": "dimension",
+      "$description": "~6px. Patina calc(var(--radius) - 4px)"
+    },
+    "md": {
+      "$value": "calc(0.625rem - 2px)",
+      "$type": "dimension",
+      "$description": "~8px. Patina calc(var(--radius) - 2px)"
+    },
+    "lg": {
+      "$value": "0.625rem",
+      "$type": "dimension",
+      "$description": "Same as base — Patina's --radius-lg = --radius"
+    },
+    "xl": {
+      "$value": "calc(0.625rem + 4px)",
+      "$type": "dimension",
+      "$description": "~14px. Patina calc(var(--radius) + 4px)"
+    },
+    "full": {
+      "$value": "9999px",
+      "$type": "dimension",
+      "$description": "Pill shape"
+    },
+    "button": {
+      "$value": "0.375rem",
+      "$type": "dimension",
+      "$description": "6px — www button-primary/secondary radius. Deviation from Patina (uses shadcn default)."
+    },
+    "www-legacy": {
+      "$value": "0.5rem",
+      "$type": "dimension",
+      "$description": "8px — www's current --radius. Should migrate to 0.625rem."
+    }
+  }
+}

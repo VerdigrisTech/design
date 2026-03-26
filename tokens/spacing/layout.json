@@ -1,0 +1,55 @@
+{
+  "$description": "Layout spacing tokens. Extracted from www CSS utilities (container, padding-global, section-pad, etc.).",
+  "layout": {
+    "container-max": {
+      "$value": "80rem",
+      "$type": "dimension",
+      "$description": "1280px. Both www (.container-medium) and www (@utility container) use this."
+    },
+    "padding-global": {
+      "$value": "2.5rem",
+      "$type": "dimension",
+      "$description": "40px horizontal page padding. www .padding-global"
+    },
+    "padding-global-mobile": {
+      "$value": "1.5rem",
+      "$type": "dimension",
+      "$description": "24px horizontal padding below 991px"
+    },
+    "section-pad": {
+      "$value": "4rem",
+      "$type": "dimension",
+      "$description": "64px vertical section padding. www @utility section-pad"
+    },
+    "section-pad-large": {
+      "$value": "8rem",
+      "$type": "dimension",
+      "$description": "128px vertical padding for hero/feature sections"
+    },
+    "section-pad-large-mobile": {
+      "$value": "5rem",
+      "$type": "dimension",
+      "$description": "80px on mobile"
+    },
+    "section-pad-medium": {
+      "$value": "5rem",
+      "$type": "dimension",
+      "$description": "80px vertical padding for secondary sections"
+    },
+    "hero-height": {
+      "$value": "22rem",
+      "$type": "dimension",
+      "$description": "352px mobile hero height"
+    },
+    "hero-height-sm": {
+      "$value": "25rem",
+      "$type": "dimension",
+      "$description": "400px at 640px+"
+    },
+    "hero-height-md": {
+      "$value": "31.25rem",
+      "$type": "dimension",
+      "$description": "500px at 768px+"
+    }
+  }
+}

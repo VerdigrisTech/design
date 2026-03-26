@@ -1,0 +1,11 @@
+{
+  "$description": "Z-index layers. Phase 2 — placeholder. Will be populated from component audit.",
+  "zIndex": {
+    "base": { "$value": 0, "$type": "number" },
+    "dropdown": { "$value": 10, "$type": "number" },
+    "sticky": { "$value": 20, "$type": "number" },
+    "overlay": { "$value": 30, "$type": "number" },
+    "modal": { "$value": 40, "$type": "number" },
+    "toast": { "$value": 50, "$type": "number" }
+  }
+}

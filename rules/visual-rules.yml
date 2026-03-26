@@ -1,0 +1,70 @@
+# Visual Design Rules
+# Machine-enforceable rules for evaluator pipelines.
+# Phase 2: will be consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
+#
+# Version: 0.1.0
+
+color:
+  # The canonical brand teal must be used consistently
+  brand_teal:
+    oklch: "oklch(0.75 0.1286 191.57)"
+    hex: "#0fc8c3"
+    hsl: "hsl(178, 86%, 42%)"
+    usage: "Decorative brand color — backgrounds, illustrations, data viz"
+    never_as_text: true  # Fails WCAG AA on white
+
+  # Text colors must meet WCAG AA
+  text_contrast:
+    min_ratio: 4.5
+    large_text_ratio: 3.0  # 18px bold or 24px regular
+    ui_component_ratio: 3.0
+
+  # Off-brand colors — flag if found
+  never_use:
+    - "#ff0000"  # Pure red
+    - "#00ff00"  # Pure green
+    - "#0000ff"  # Pure blue
+
+typography:
+  # Font families
+  body_font: "Inter"
+  display_font: "Lato"  # www only; Patina uses Inter
+  mono_font: "JetBrains Mono"
+
+  # Heading sizes (CSS source of truth — NOT brand_rules.yml)
+  headings:
+    h1: { size: "4rem", weight: 700, line_height: 1.1 }
+    h2: { size: "3rem", weight: 700, line_height: 1.2 }
+    h3: { size: "2rem", weight: 700, line_height: 1.3 }
+
+  # Body sizes
+  body:
+    large: { size: "1.25rem", line_height: 1.6 }
+    medium: { size: "1.125rem", line_height: 1.6 }
+    regular: { size: "1rem", line_height: 1.6 }
+    small: { size: "0.875rem", line_height: 1.6 }
+
+spacing:
+  # Border radius
+  radius:
+    canonical: "0.625rem"  # 10px — Patina value
+    www_legacy: "0.5rem"   # 8px — www should migrate
+
+  # Container
+  container_max: "80rem"   # 1280px
+
+motion:
+  # Reduced motion must be respected
+  require_reduced_motion: true
+
+  # Max animation duration for user-triggered actions
+  max_interaction_duration: "500ms"
+
+  # Hover effects must be gated
+  require_hover_media_query: true
+
+accessibility:
+  require_alt_text: true
+  require_aria_labels: true
+  require_focus_indicators: true
+  min_contrast_ratio: 4.5
