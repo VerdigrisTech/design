@@ -1,0 +1,45 @@
+title: "Verdigris Design System"
+description: "Canonical design tokens, guidelines, and visual rules for all Verdigris surfaces"
+url: "https://design.verdigris.co"
+
+# No theme -- using custom _layouts/default.html
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Exclude build artifacts and dev files from the Jekyll site
+exclude:
+  - build/
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - tsconfig.json
+  - AGENTS.md
+  - Gemfile
+  - Gemfile.lock
+  - "*.ts"
+  - "*.js"
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+  - scope:
+      path: "foundations"
+    values:
+      layout: "default"
+      section: "foundations"
+  - scope:
+      path: "categories"
+    values:
+      layout: "default"
+      section: "categories"
+  - scope:
+      path: "examples"
+    values:
+      layout: "default"
+      section: "examples"
