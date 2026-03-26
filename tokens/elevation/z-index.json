@@ -1,11 +1,30 @@
 {
-  "$description": "Z-index layers. Phase 2 — placeholder. Will be populated from component audit.",
+  "$description": "Z-index layer tokens extracted from Patina component audit (2026-03-25). Values match Tailwind v4 defaults — no custom z-index extensions.",
   "zIndex": {
-    "base": { "$value": 0, "$type": "number" },
-    "dropdown": { "$value": 10, "$type": "number" },
-    "sticky": { "$value": 20, "$type": "number" },
-    "overlay": { "$value": 30, "$type": "number" },
-    "modal": { "$value": 40, "$type": "number" },
-    "toast": { "$value": 50, "$type": "number" }
+    "base": {
+      "$value": 0,
+      "$type": "number",
+      "$description": "Default stacking context. Used by waveform background (inline zIndex: 0)."
+    },
+    "scrollbar": {
+      "$value": 1,
+      "$type": "number",
+      "$description": "Scroll-area scrollbar thumb (z-1). Just above content to remain grabbable."
+    },
+    "raised": {
+      "$value": 10,
+      "$type": "number",
+      "$description": "Locally raised elements within their parent context. Used by: sidebar panel (z-10), resizable handle (z-10), data-table draggable head while dragging (z-10), button-group focused child (z-10), toggle-group focused item (z-10), calendar focused day (z-10)."
+    },
+    "sticky": {
+      "$value": 20,
+      "$type": "number",
+      "$description": "Sticky/resize affordances. Used by: sidebar resize handle (z-20), sidebar-resize-handle custom component (z-20)."
+    },
+    "overlay": {
+      "$value": 50,
+      "$type": "number",
+      "$description": "Top-level overlays, modals, popovers, and fixed UI. Used by: dialog overlay + content (z-50), alert-dialog overlay + content (z-50), draggable-dialog overlay + content (z-50), sheet overlay + content (z-50), dropdown-menu content + sub-content (z-50), select content (z-50), popover (z-50), hover-card (z-50), tooltip + arrow (z-50), app-header (z-50), data-table action-bar (z-50)."
+    }
   }
 }

@@ -1,14 +1,40 @@
 {
-  "$description": "Shadow elevation tokens. Phase 2 — placeholder with values extracted from www hover-lift.",
+  "$description": "Shadow elevation tokens extracted from Patina component audit (2026-03-25). All values are Tailwind v4 defaults — no custom shadow overrides in globals.css or tailwind config.",
   "shadow": {
     "none": {
       "$value": "none",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$description": "Reset / removal. Used by sidebar-header, input-group children, toggle-group flush spacing."
+    },
+    "xs": {
+      "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "$type": "shadow",
+      "$description": "Tailwind shadow-xs. Subtle depth for form controls. Used by: input, textarea, select-trigger, checkbox, switch, button (outline), toggle (outline), toggle-group (outline), button-group, input-group, calendar dropdown, editable, data-table kbd."
+    },
+    "sm": {
+      "$value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+      "$type": "shadow",
+      "$description": "Tailwind shadow-sm. Light elevation for containers. Used by: card, slider thumb, tabs-trigger (active), sidebar (floating variant), sidebar-inset, data-table action-bar."
+    },
+    "md": {
+      "$value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+      "$type": "shadow",
+      "$description": "Tailwind shadow-md. Medium elevation for floating elements. Used by: dropdown-menu content, select content, popover, hover-card."
+    },
+    "lg": {
+      "$value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+      "$type": "shadow",
+      "$description": "Tailwind shadow-lg. High elevation for modals and overlays. Used by: dialog, alert-dialog, draggable-dialog, sheet, dropdown-menu sub-content."
     },
     "xl": {
       "$value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
       "$type": "shadow",
-      "$description": "www hover-lift shadow. Tailwind shadow-xl equivalent."
+      "$description": "Tailwind shadow-xl. Maximum elevation for chart tooltips. Used by: chart tooltip."
+    },
+    "sidebar-border": {
+      "$value": "0 0 0 1px hsl(var(--sidebar-border))",
+      "$type": "shadow",
+      "$description": "Custom 1px outline-as-shadow for sidebar menu-button. Uses box-shadow instead of border for layout stability. Hover state swaps to --sidebar-accent."
     }
   }
 }

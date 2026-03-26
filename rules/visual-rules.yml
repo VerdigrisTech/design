@@ -1,70 +1,682 @@
 # Visual Design Rules
 # Machine-enforceable rules for evaluator pipelines.
-# Phase 2: will be consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
+# Consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
 #
-# Version: 0.1.0
+# Version: 1.0.0
+# Last updated: 2026-03-25
 
+# =============================================================================
+# COLOR
+# =============================================================================
 color:
-  # The canonical brand teal must be used consistently
+  # ---------------------------------------------------------------------------
+  # Brand teal
+  # ---------------------------------------------------------------------------
   brand_teal:
     oklch: "oklch(0.75 0.1286 191.57)"
     hex: "#0fc8c3"
     hsl: "hsl(178, 86%, 42%)"
     usage: "Decorative brand color — backgrounds, illustrations, data viz"
-    never_as_text: true  # Fails WCAG AA on white
+    never_as_text_on_white: true   # Fails WCAG AA (contrast ~2.9:1 on white)
+    ok_on_dark_backgrounds: true   # Passes AA on neutral.950 and darker
+    min_background_lightness: 0.35 # OKLch L* of background must be <= this for teal text
 
-  # Text colors must meet WCAG AA
-  text_contrast:
-    min_ratio: 4.5
-    large_text_ratio: 3.0  # 18px bold or 24px regular
-    ui_component_ratio: 3.0
+  # ---------------------------------------------------------------------------
+  # Brand gradient stops (for reference — enforce order only)
+  # ---------------------------------------------------------------------------
+  brand_gradient:
+    description: "Teal -> Purple -> Red -> Yellow -> Teal loop. 16 stops."
+    start: "oklch(0.75 0.1286 191.57)"   # brand.verdigris
+    end: "oklch(0.87 0.1786 92.23)"       # brand.cyber-yellow
+    enforce_order: true  # Gradient stops must follow hue rotation
 
-  # Off-brand colors — flag if found
-  never_use:
-    - "#ff0000"  # Pure red
-    - "#00ff00"  # Pure green
-    - "#0000ff"  # Pure blue
+  # ---------------------------------------------------------------------------
+  # WCAG contrast requirements per context
+  # ---------------------------------------------------------------------------
+  contrast:
+    normal_text:
+      min_ratio: 4.5
+      description: "WCAG AA for text < 18px bold or < 24px regular"
+    large_text:
+      min_ratio: 3.0
+      description: "WCAG AA for text >= 18px bold or >= 24px regular"
+    ui_components:
+      min_ratio: 3.0
+      description: "WCAG AA for interactive UI components and graphical objects"
+    decorative:
+      min_ratio: 0
+      description: "No contrast requirement for purely decorative elements"
+    enhanced_normal_text:
+      min_ratio: 7.0
+      description: "WCAG AAA for normal text (aspirational, not blocking)"
+      severity: "warning"
 
+  # ---------------------------------------------------------------------------
+  # Dark mode requirements
+  # ---------------------------------------------------------------------------
+  dark_mode:
+    background:
+      value: "oklch(0.141 0.005 285.823)"   # neutral.950
+      description: "Near-black, NOT pure black. Pure black (#000) is banned."
+      never_pure_black: true
+    card_background:
+      value: "oklch(0.21 0.006 285.885)"     # neutral.900
+    border:
+      description: "Semi-transparent borders in dark mode for layering"
+      pattern: "border-color:\\s*oklch\\([^)]+\\s*/\\s*[\\d.]+\\)"
+      recommended_opacity_range: [0.1, 0.3]
+    text_foreground:
+      value: "oklch(0.985 0 0)"              # neutral.50
+    muted_foreground:
+      value: "oklch(0.552 0.016 285.938)"    # neutral.500
+
+  # ---------------------------------------------------------------------------
+  # Banned colors — flag if found in source
+  # ---------------------------------------------------------------------------
+  banned_colors:
+    - value: "#ff0000"
+      reason: "Pure red — use status.destructive-light or destructive-dark"
+    - value: "#00ff00"
+      reason: "Pure green — off-brand"
+    - value: "#0000ff"
+      reason: "Pure blue — off-brand"
+    - value: "#000000"
+      reason: "Pure black — use neutral.950 oklch(0.141 0.005 285.823)"
+      context: "background"  # Only banned as background; OK in SVG strokes
+    - value: "#ffffff"
+      reason: "Prefer neutral.50 for foreground in dark mode"
+      context: "dark_mode_text"
+      severity: "warning"
+    - value: "rgb(0, 0, 255)"
+      reason: "Pure blue — off-brand"
+    - value: "rgb(255, 0, 0)"
+      reason: "Pure red — use status tokens"
+    - value: "rgb(0, 255, 0)"
+      reason: "Pure green — off-brand"
+    - value: "#ff00ff"
+      reason: "Magenta — off-brand"
+    - value: "#800080"
+      reason: "Generic purple — use brand.midnight-purple"
+    - value: "#ffa500"
+      reason: "Generic orange — off-brand"
+    - value: "#008000"
+      reason: "Generic green — off-brand"
+
+  # ---------------------------------------------------------------------------
+  # Neutral palette (for rule cross-referencing)
+  # ---------------------------------------------------------------------------
+  neutrals:
+    white: "oklch(1 0 0)"
+    "50": "oklch(0.985 0 0)"
+    "100": "oklch(0.967 0.001 286.375)"
+    "200": "oklch(0.92 0.004 286.32)"
+    "400": "oklch(0.705 0.015 286.067)"
+    "500": "oklch(0.552 0.016 285.938)"
+    "800": "oklch(0.274 0.006 286.033)"
+    "900": "oklch(0.21 0.006 285.885)"
+    "950": "oklch(0.141 0.005 285.823)"
+    black: "oklch(0 0 0)"
+
+  # ---------------------------------------------------------------------------
+  # Status colors
+  # ---------------------------------------------------------------------------
+  status:
+    destructive_light: "oklch(0.577 0.245 27.325)"
+    destructive_dark: "oklch(0.704 0.191 22.216)"
+
+
+# =============================================================================
+# TYPOGRAPHY
+# =============================================================================
 typography:
-  # Font families
-  body_font: "Inter"
-  display_font: "Lato"  # www only; Patina uses Inter
-  mono_font: "JetBrains Mono"
+  # ---------------------------------------------------------------------------
+  # Font stacks — enforceable via CSS audit
+  # ---------------------------------------------------------------------------
+  font_stacks:
+    body:
+      family: "Inter"
+      fallback: "Inter, ui-sans-serif, system-ui, -apple-system, sans-serif"
+      usage: "All body text, UI labels, navigation"
+    display:
+      family: "Lato"
+      fallback: "Lato, ui-sans-serif, system-ui, -apple-system, sans-serif"
+      usage: "www headings only; Patina uses Inter for headings"
+      scope: "www"
+    mono:
+      family: "JetBrains Mono"
+      fallback: "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace"
+      usage: "Code blocks, technical values, data labels"
 
-  # Heading sizes (CSS source of truth — NOT brand_rules.yml)
+  # ---------------------------------------------------------------------------
+  # Heading sizes — desktop AND mobile breakpoints
+  # Source of truth: tokens/typography/scale.json
+  # ---------------------------------------------------------------------------
   headings:
-    h1: { size: "4rem", weight: 700, line_height: 1.1 }
-    h2: { size: "3rem", weight: 700, line_height: 1.2 }
-    h3: { size: "2rem", weight: 700, line_height: 1.3 }
+    h1:
+      desktop:
+        size: "4rem"       # 64px
+        weight: 700
+        line_height: 1.1
+        letter_spacing: "-0.02em"
+      mobile:
+        size: "2.75rem"    # 44px
+        weight: 700
+        line_height: 1.1
+        letter_spacing: "-0.02em"
+      breakpoint: "1024px"  # Canonical; www uses 991px (should migrate)
+    h2:
+      desktop:
+        size: "3rem"       # 48px
+        weight: 700
+        line_height: 1.2
+        letter_spacing: "-0.02em"
+      mobile:
+        size: "2rem"       # 32px
+        weight: 700
+        line_height: 1.2
+        letter_spacing: "-0.02em"
+      breakpoint: "1024px"
+    h3:
+      desktop:
+        size: "2rem"       # 32px
+        weight: 700
+        line_height: 1.3
+        letter_spacing: "0"
+      mobile:
+        size: "1.5rem"     # 24px
+        weight: 700
+        line_height: 1.3
+        letter_spacing: "0"
+      breakpoint: "1024px"
 
+  # ---------------------------------------------------------------------------
   # Body sizes
+  # ---------------------------------------------------------------------------
   body:
-    large: { size: "1.25rem", line_height: 1.6 }
-    medium: { size: "1.125rem", line_height: 1.6 }
-    regular: { size: "1rem", line_height: 1.6 }
-    small: { size: "0.875rem", line_height: 1.6 }
+    large:
+      size: "1.25rem"      # 20px
+      line_height: 1.6
+      letter_spacing: "0"
+    medium:
+      size: "1.125rem"     # 18px
+      line_height: 1.6
+      letter_spacing: "0"
+    regular:
+      size: "1rem"         # 16px
+      line_height: 1.6
+      letter_spacing: "0"
+    small:
+      size: "0.875rem"     # 14px
+      line_height: 1.6
+      letter_spacing: "0"
 
+  # ---------------------------------------------------------------------------
+  # Font weight constraints per element type
+  # ---------------------------------------------------------------------------
+  weight_rules:
+    - element: "h1, h2, h3"
+      allowed_weights: [700]
+      description: "Headings must be bold (700). brand_rules.yml says 600 for H2 — WRONG, CSS is truth."
+    - element: "h4, h5, h6"
+      allowed_weights: [600, 700]
+      description: "Subheadings: semibold or bold"
+    - element: "body, p, li, td"
+      allowed_weights: [400]
+      description: "Body text: regular weight only"
+    - element: "a, nav, label"
+      allowed_weights: [400, 500]
+      description: "Navigation and labels: regular or medium"
+    - element: "button, .cta"
+      allowed_weights: [600]
+      description: "Buttons and CTAs: semibold"
+    - element: "strong, b"
+      allowed_weights: [600, 700]
+      description: "Emphasis: semibold or bold"
+
+  # ---------------------------------------------------------------------------
+  # Line height requirements
+  # ---------------------------------------------------------------------------
+  line_height_rules:
+    - context: "headings"
+      named_scale: "tight"
+      min: 1.1
+      max: 1.3
+      description: "Headings: tight leading (1.1 for h1, 1.2 for h2, 1.3 for h3)"
+    - context: "body"
+      named_scale: "relaxed"
+      value: 1.6
+      description: "All body text uses 1.6 line-height"
+    - context: "ui_compact"
+      min: 1.2
+      max: 1.4
+      description: "Compact UI elements (badges, pills, table cells)"
+
+  # ---------------------------------------------------------------------------
+  # Letter spacing rules
+  # ---------------------------------------------------------------------------
+  letter_spacing_rules:
+    - context: "h1, h2"
+      value: "-0.02em"
+      description: "Large headings get slight tightening"
+    - context: "h3, h4, h5, h6"
+      value: "0"
+      description: "Smaller headings: no adjustment"
+    - context: "body"
+      value: "0"
+      description: "Body text: no adjustment"
+    - context: "uppercase"
+      value: "0.05em"
+      description: "Uppercase text (labels, overlines) needs loose tracking"
+      severity: "warning"
+
+
+# =============================================================================
+# SPACING
+# =============================================================================
 spacing:
-  # Border radius
-  radius:
-    canonical: "0.625rem"  # 10px — Patina value
-    www_legacy: "0.5rem"   # 8px — www should migrate
+  # ---------------------------------------------------------------------------
+  # 4px grid compliance
+  # ---------------------------------------------------------------------------
+  grid:
+    base_unit: "4px"
+    base_rem: "0.25rem"
+    description: "All spacing values must be multiples of 4px"
+    allowed_scale:
+      - { token: "0", value: "0" }
+      - { token: "1", value: "0.25rem" }    #  4px
+      - { token: "2", value: "0.5rem" }     #  8px
+      - { token: "3", value: "0.75rem" }    # 12px
+      - { token: "4", value: "1rem" }       # 16px
+      - { token: "5", value: "1.25rem" }    # 20px
+      - { token: "6", value: "1.5rem" }     # 24px
+      - { token: "8", value: "2rem" }       # 32px
+      - { token: "10", value: "2.5rem" }    # 40px
+      - { token: "12", value: "3rem" }      # 48px
+      - { token: "16", value: "4rem" }      # 64px
+      - { token: "20", value: "5rem" }      # 80px
+      - { token: "24", value: "6rem" }      # 96px
+      - { token: "32", value: "8rem" }      # 128px
+    enforce: true
+    exceptions:
+      - "1px"       # borders
+      - "0.375rem"  # 6px button radius (legacy)
+      - "0.625rem"  # 10px canonical radius
+      - "9999px"    # pill radius
 
+  # ---------------------------------------------------------------------------
+  # Section padding — desktop and mobile
+  # ---------------------------------------------------------------------------
+  section_padding:
+    standard:
+      desktop: "4rem"       # 64px vertical
+      mobile: "4rem"        # Same — standard sections don't shrink
+    large:
+      desktop: "8rem"       # 128px — hero/feature sections
+      mobile: "5rem"        # 80px
+    medium:
+      desktop: "5rem"       # 80px — secondary sections
+      mobile: "5rem"
+
+  # ---------------------------------------------------------------------------
+  # Page padding (horizontal)
+  # ---------------------------------------------------------------------------
+  page_padding:
+    desktop: "2.5rem"       # 40px
+    mobile: "1.5rem"        # 24px
+    breakpoint: "1024px"    # Canonical; www uses 991px (should migrate)
+
+  # ---------------------------------------------------------------------------
   # Container
-  container_max: "80rem"   # 1280px
+  # ---------------------------------------------------------------------------
+  container:
+    max_width: "80rem"      # 1280px
+    description: "Both www (.container-medium) and Patina use this max-width"
 
+  # ---------------------------------------------------------------------------
+  # Responsive hero heights
+  # ---------------------------------------------------------------------------
+  hero_height:
+    base: "22rem"           # 352px — mobile
+    sm: "25rem"             # 400px at 640px+
+    md: "31.25rem"          # 500px at 768px+
+    breakpoints:
+      sm: "640px"
+      md: "768px"
+
+
+# =============================================================================
+# MOTION
+# =============================================================================
 motion:
-  # Reduced motion must be respected
-  require_reduced_motion: true
+  # ---------------------------------------------------------------------------
+  # Duration tokens
+  # ---------------------------------------------------------------------------
+  durations:
+    fast: "150ms"           # Micro-interactions (hover feedback)
+    normal: "200ms"         # Button hover transitions
+    moderate: "300ms"       # Card hover, image zoom
+    slow: "500ms"           # Hero animations, slide-up
+    spin: "800ms"           # Spinner rotation
 
-  # Max animation duration for user-triggered actions
+  # ---------------------------------------------------------------------------
+  # Easing tokens
+  # ---------------------------------------------------------------------------
+  easings:
+    default: "ease"         # General-purpose
+    out: "ease-out"         # Entrance animations
+    linear: "linear"        # Continuous rotation only
+
+  # ---------------------------------------------------------------------------
+  # Named animation patterns — required CSS for each
+  # ---------------------------------------------------------------------------
+  patterns:
+    hover-lift:
+      description: "Card/element lifts on hover with shadow"
+      duration: "500ms"
+      easing: "ease"
+      css: "transition: transform 500ms ease, box-shadow 500ms ease"
+      transform: "translateY(-4px)"
+      requires_hover_query: true
+    slide-up:
+      description: "Element slides up into view on scroll/mount"
+      duration: "500ms"
+      easing: "ease-out"
+      css: "transition: transform 500ms ease-out, opacity 500ms ease-out"
+      transform_from: "translateY(20px)"
+      transform_to: "translateY(0)"
+      opacity_from: 0
+      opacity_to: 1
+    image-zoom:
+      description: "Image scales slightly on hover"
+      duration: "300ms"
+      easing: "ease"
+      css: "transition: transform 300ms ease"
+      transform: "scale(1.05)"
+      requires_hover_query: true
+    spinner:
+      description: "Loading spinner continuous rotation"
+      duration: "800ms"
+      easing: "linear"
+      css: "animation: spin 800ms linear infinite"
+      keyframes: "from { transform: rotate(0deg) } to { transform: rotate(360deg) }"
+
+  # ---------------------------------------------------------------------------
+  # Max duration constraint
+  # ---------------------------------------------------------------------------
   max_interaction_duration: "500ms"
+  description_max: "User-triggered transitions (hover, click) must not exceed this"
 
-  # Hover effects must be gated
-  require_hover_media_query: true
+  # ---------------------------------------------------------------------------
+  # Reduced motion — REQUIRED
+  # ---------------------------------------------------------------------------
+  reduced_motion:
+    required: true
+    description: "All animations MUST respect prefers-reduced-motion"
+    media_query: "@media (prefers-reduced-motion: reduce)"
+    fallback_patterns:
+      - pattern: "transition"
+        replacement: "transition-duration: 0.01ms !important"
+        description: "Collapse transition durations"
+      - pattern: "animation"
+        replacement: "animation-duration: 0.01ms !important; animation-iteration-count: 1 !important"
+        description: "Collapse animation durations, stop infinite loops"
+      - pattern: "transform"
+        replacement: "transform: none !important"
+        description: "Remove transforms"
+        severity: "warning"
+    global_css: |
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
 
+  # ---------------------------------------------------------------------------
+  # Hover media query — REQUIRED for hover effects
+  # ---------------------------------------------------------------------------
+  hover_gate:
+    required: true
+    media_query: "@media (hover: hover) and (pointer: fine)"
+    description: "All :hover effects must be wrapped in this media query to prevent sticky hover on touch devices"
+    enforcement: "error"
+    example_css: |
+      @media (hover: hover) and (pointer: fine) {
+        .card:hover {
+          transform: translateY(-4px);
+        }
+      }
+
+
+# =============================================================================
+# COMPONENTS
+# =============================================================================
+components:
+  # ---------------------------------------------------------------------------
+  # Border radius scale
+  # ---------------------------------------------------------------------------
+  radius:
+    base:
+      value: "0.625rem"    # 10px — Patina canonical
+      description: "Primary radius. www should migrate from 0.5rem."
+    sm:
+      value: "calc(0.625rem - 4px)"  # ~6px
+      description: "Tight radius — inner elements, badges"
+    md:
+      value: "calc(0.625rem - 2px)"  # ~8px
+      description: "Medium radius — inputs, small cards"
+    lg:
+      value: "0.625rem"    # 10px — same as base
+      description: "Large radius — cards, dialogs"
+    xl:
+      value: "calc(0.625rem + 4px)"  # ~14px
+      description: "Extra large — modals, prominent surfaces"
+    full:
+      value: "9999px"
+      description: "Pill shape — tags, badges, avatars"
+    button:
+      value: "0.375rem"    # 6px — www legacy
+      description: "Button radius (www). Deviation from Patina's shadcn default."
+      migration_target: "sm"
+    www_legacy:
+      value: "0.5rem"      # 8px
+      description: "www's current --radius. Should migrate to base (0.625rem)."
+      deprecated: true
+
+  # ---------------------------------------------------------------------------
+  # Focus indicator requirements
+  # ---------------------------------------------------------------------------
+  focus:
+    required: true
+    style: "outline"
+    outline_width: "2px"
+    outline_style: "solid"
+    outline_offset: "2px"
+    outline_color:
+      light: "oklch(0.705 0.015 286.067)"   # neutral.400
+      dark: "oklch(0.552 0.016 285.938)"     # neutral.500
+      www_override: "oklch(0.55 0.12 160)"   # www-ring (green-shifted, should migrate)
+    css: "outline: 2px solid var(--ring); outline-offset: 2px"
+    rules:
+      - description: "Never use outline: none without a visible alternative"
+        pattern: "outline:\\s*none"
+        severity: "error"
+        exception: "Only if replaced by box-shadow or border focus indicator"
+      - description: "Focus indicators must be visible in both light and dark modes"
+        severity: "error"
+      - description: "Focus must not rely solely on color change"
+        severity: "error"
+
+  # ---------------------------------------------------------------------------
+  # Button styling rules
+  # ---------------------------------------------------------------------------
+  buttons:
+    primary:
+      background: "oklch(0.21 0.006 285.885)"    # neutral.900
+      text_color: "oklch(0.985 0 0)"              # neutral.50
+      hover_background: "oklch(0.21 0.006 285.885 / 0.9)"
+      border_radius: "0.375rem"                    # www button radius
+      font_weight: 600
+      min_height: "2.5rem"                         # 40px — touch target
+      min_width: "6rem"
+      padding: "0.5rem 1rem"
+    secondary:
+      background: "transparent"
+      text_color: "oklch(0.21 0.006 285.885)"     # neutral.900
+      border: "1px solid oklch(0.92 0.004 286.32)" # neutral.200
+      hover_background: "oklch(0.967 0.001 286.375)" # neutral.100
+      border_radius: "0.375rem"
+      font_weight: 600
+      min_height: "2.5rem"
+      padding: "0.5rem 1rem"
+    rules:
+      - description: "Buttons must have min 44px touch target (WCAG 2.5.8)"
+        min_touch_target: "44px"
+        severity: "warning"
+      - description: "Button text must not use font-weight below 600"
+        severity: "error"
+      - description: "Disabled buttons must have reduced opacity (0.5) and cursor: not-allowed"
+        severity: "error"
+
+  # ---------------------------------------------------------------------------
+  # Dark mode token swap rules
+  # ---------------------------------------------------------------------------
+  dark_mode_tokens:
+    description: "Required token swaps when .dark class or prefers-color-scheme: dark"
+    swaps:
+      - token: "background"
+        light: "oklch(1 0 0)"                     # white
+        dark: "oklch(0.141 0.005 285.823)"         # neutral.950
+      - token: "foreground"
+        light: "oklch(0.141 0.005 285.823)"        # neutral.950
+        dark: "oklch(0.985 0 0)"                   # neutral.50
+      - token: "card"
+        light: "oklch(1 0 0)"                      # white
+        dark: "oklch(0.21 0.006 285.885)"          # neutral.900
+      - token: "muted"
+        light: "oklch(0.967 0.001 286.375)"        # neutral.100
+        dark: "oklch(0.274 0.006 286.033)"         # neutral.800
+      - token: "muted-foreground"
+        light: "oklch(0.552 0.016 285.938)"        # neutral.500
+        dark: "oklch(0.705 0.015 286.067)"         # neutral.400
+      - token: "border"
+        light: "oklch(0.92 0.004 286.32)"          # neutral.200
+        dark: "oklch(0.274 0.006 286.033)"         # neutral.800
+      - token: "ring"
+        light: "oklch(0.705 0.015 286.067)"        # neutral.400
+        dark: "oklch(0.552 0.016 285.938)"         # neutral.500
+      - token: "destructive"
+        light: "oklch(0.577 0.245 27.325)"
+        dark: "oklch(0.704 0.191 22.216)"
+    rules:
+      - description: "Every semantic color token must have both light and dark values"
+        severity: "error"
+      - description: "Dark mode must not use pure black (#000000) as background"
+        severity: "error"
+      - description: "Dark mode borders should use semi-transparent values for depth"
+        severity: "warning"
+
+
+# =============================================================================
+# BREAKPOINTS
+# =============================================================================
+breakpoints:
+  # ---------------------------------------------------------------------------
+  # Standard breakpoints (Tailwind defaults)
+  # ---------------------------------------------------------------------------
+  standard:
+    sm:
+      value: "640px"
+      rem: "40rem"
+      description: "Small — landscape phones, small tablets"
+    md:
+      value: "768px"
+      rem: "48rem"
+      description: "Medium — tablets"
+    lg:
+      value: "1024px"
+      rem: "64rem"
+      description: "Large — small laptops, landscape tablets"
+    xl:
+      value: "1280px"
+      rem: "80rem"
+      description: "Extra large — desktops"
+    "2xl":
+      value: "1536px"
+      rem: "96rem"
+      description: "2X large — large desktops"
+
+  # ---------------------------------------------------------------------------
+  # Patina custom breakpoints (ultra-wide displays)
+  # ---------------------------------------------------------------------------
+  patina_custom:
+    "3xl":
+      value: "1792px"
+      rem: "112rem"
+      description: "Patina custom — wide monitors"
+    "4xl":
+      value: "2048px"
+      rem: "128rem"
+      description: "Patina custom — 2K displays"
+    "5xl":
+      value: "2304px"
+      rem: "144rem"
+      description: "Patina custom — ultrawide"
+    "6xl":
+      value: "2560px"
+      rem: "160rem"
+      description: "Patina custom — QHD"
+    "7xl":
+      value: "2816px"
+      rem: "176rem"
+      description: "Patina custom — large ultrawide"
+    "8xl":
+      value: "3072px"
+      rem: "192rem"
+      description: "Patina custom — 4K and beyond"
+
+  # ---------------------------------------------------------------------------
+  # Migration notes
+  # ---------------------------------------------------------------------------
+  migration:
+    www_tablet:
+      current: "991px"
+      target: "1024px"
+      target_token: "lg"
+      description: "www uses 991px for heading/padding responsive breakpoint. Should migrate to standard lg (1024px)."
+      severity: "warning"
+      affected:
+        - "heading responsive sizes (h1, h2, h3)"
+        - "padding-global responsive switch"
+        - "section-pad-large responsive switch"
+
+  # ---------------------------------------------------------------------------
+  # Enforcement
+  # ---------------------------------------------------------------------------
+  rules:
+    - description: "Custom breakpoints outside the standard + patina set are flagged"
+      severity: "warning"
+    - description: "Mobile-first approach: use min-width media queries"
+      severity: "warning"
+
+
+# =============================================================================
+# ACCESSIBILITY (retained from v0.1.0, cross-references color/components)
+# =============================================================================
 accessibility:
   require_alt_text: true
   require_aria_labels: true
-  require_focus_indicators: true
-  min_contrast_ratio: 4.5
+  require_focus_indicators: true   # See components.focus for specifics
+  min_contrast_ratio: 4.5          # See color.contrast for full breakdown
+  touch_target_min: "44px"         # WCAG 2.5.8
+  rules:
+    - description: "Images must have alt text (empty string for decorative)"
+      severity: "error"
+    - description: "Interactive elements must have accessible names"
+      severity: "error"
+    - description: "Color must not be the sole means of conveying information"
+      severity: "error"
+    - description: "Text resizing to 200% must not break layout"
+      severity: "warning"
