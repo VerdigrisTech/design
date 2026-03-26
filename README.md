@@ -108,6 +108,17 @@ The `design` section of `verdigriswww/rules/brand_rules.yml` is **deprecated**. 
 2. **Phase 2**: Evaluator loads visual rules from `@verdigristech/design-tokens/rules/visual-rules.yml`.
 3. **Phase 3**: Remove design section from brand_rules.yml. It retains only vocabulary/tone/terminology.
 
+## For Designers
+
+New to this repo? Here's where to start:
+
+- **Browse `foundations/`** — read the rationale behind color, typography, spacing, and motion decisions
+- **Go to `categories/`** — each subfolder is a medium (photography, illustration, ads, etc.). See [`categories/README.md`](categories/README.md) for what goes where and how to add assets
+- **Use `categories/_guide-template.md`** to create a new category guide
+- **Check `examples/`** for annotated good/bad visual references
+
+You don't need to run any code to contribute guidelines or assets — just add markdown and images via PR. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full process.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).

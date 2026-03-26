@@ -33,10 +33,24 @@
 
 ## How to Add a Category Guide
 
-1. Create a directory in `categories/` if the medium doesn't exist
-2. Add `guidelines.md` following the structure of existing foundation docs
-3. Include at least 2 good and 2 bad examples
-4. Reference specific tokens from `tokens/` — don't hardcode values
+1. See [`categories/README.md`](categories/README.md) for which folder to use
+2. Copy `categories/_guide-template.md` → `categories/{your-medium}/guidelines.md`
+3. Fill in each section: mood/style, specs, token usage, do's/don'ts
+4. Add reference images in `categories/{your-medium}/assets/` (see asset format guide below)
+5. Include at least 2 good and 2 bad examples with screenshots
+6. Reference specific tokens from `tokens/` by name — don't hardcode color or size values
+7. Open a PR
+
+## Asset Format Guide
+
+| Type | Preferred Format | Max Size | Naming |
+|------|-----------------|----------|--------|
+| Icons & illustrations | SVG | — | `icon-{name}.svg` |
+| UI screenshots | PNG | 2x resolution, max 2400px wide | `{good\|bad}-{description}.png` |
+| Photos & mood boards | WebP or JPG | Max 1600px wide, <500KB | `photo-{description}.webp` |
+| Diagrams | SVG or PNG | — | `diagram-{description}.svg` |
+
+**Naming:** lowercase, hyphens, no spaces. Prefix example images with `good-` or `bad-`. Keep names descriptive (`good-hero-dark-teal-bg.png`, not `screenshot1.png`).
 
 ## Review Process
 
