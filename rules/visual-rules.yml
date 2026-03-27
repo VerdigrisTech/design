@@ -2,8 +2,8 @@
 # Machine-enforceable rules for evaluator pipelines.
 # Consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
 #
-# Version: 1.0.0
-# Last updated: 2026-03-25
+# Version: 2.0.0
+# Last updated: 2026-03-27
 
 # =============================================================================
 # COLOR
@@ -660,6 +660,78 @@ breakpoints:
       severity: "warning"
     - description: "Mobile-first approach: use min-width media queries"
       severity: "warning"
+
+
+# =============================================================================
+# ELEVATION
+# =============================================================================
+elevation:
+  # ---------------------------------------------------------------------------
+  # Shadow scale — only these tokens are allowed
+  # Source: tokens/elevation/shadow.json (Tailwind v4 defaults from Patina)
+  # ---------------------------------------------------------------------------
+  shadows:
+    allowed_tokens:
+      none:
+        value: "none"
+        usage: "Reset/removal — sidebar-header, input-group, toggle-group flush"
+      xs:
+        value: "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+        usage: "Form controls — input, textarea, select, checkbox, switch, button (outline)"
+      sm:
+        value: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
+        usage: "Containers — card, slider thumb, tabs (active), sidebar (floating)"
+      md:
+        value: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+        usage: "Floating elements — dropdown, select content, popover, hover-card"
+      lg:
+        value: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+        usage: "Overlays — dialog, alert-dialog, sheet, dropdown sub-content"
+      xl:
+        value: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
+        usage: "Maximum elevation — chart tooltips"
+    rules:
+      - description: "Ad-hoc box-shadow values are banned — use shadow tokens (none/xs/sm/md/lg/xl)"
+        severity: "error"
+        detection: "box-shadow values not matching any allowed_tokens value"
+        exception: "sidebar-border shadow (outline-as-shadow pattern)"
+      - description: "Shadow elevation must match component context (e.g., cards use sm, modals use lg)"
+        severity: "warning"
+      - description: "Hover states that add shadow must transition from a lower token, not from none to lg"
+        severity: "warning"
+
+  # ---------------------------------------------------------------------------
+  # Z-index layers — strict layer system
+  # Source: tokens/elevation/z-index.json (Tailwind v4 defaults from Patina)
+  # ---------------------------------------------------------------------------
+  z_index:
+    allowed_layers:
+      base:
+        value: 0
+        usage: "Default stacking context"
+      scrollbar:
+        value: 1
+        usage: "Scroll-area scrollbar thumb"
+      raised:
+        value: 10
+        usage: "Locally raised — sidebar panel, resize handle, focused group item"
+      sticky:
+        value: 20
+        usage: "Sticky/resize affordances — sidebar resize handle"
+      overlay:
+        value: 50
+        usage: "Top-level overlays — dialog, sheet, dropdown, popover, tooltip, header"
+    rules:
+      - description: "Custom z-index values outside the allowed layer set are banned"
+        severity: "error"
+        detection: "z-index values not matching 0, 1, 10, 20, or 50"
+        exception: "Negative z-index for stacking context tricks (z-[-1])"
+      - description: "Z-index must not exceed 50 — no z-[999] or z-[9999] hacks"
+        severity: "error"
+      - description: "Elements at z-overlay (50) must have a backdrop or dismiss mechanism"
+        severity: "warning"
+      - description: "Z-index should only be set on elements that create a stacking context"
+        severity: "warning"
 
 
 # =============================================================================
