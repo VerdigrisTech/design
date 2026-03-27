@@ -102,11 +102,11 @@ tokens/color/base.json (OKLch)
 
 ## Relationship to brand_rules.yml
 
-The `design` section of `verdigriswww/rules/brand_rules.yml` is **deprecated**. This repo is the canonical source for visual tokens. Migration plan:
+This repo is the **canonical source** for all visual tokens. The migration from `brand_rules.yml` is complete:
 
-1. **Phase 1** (now): Design repo is canonical. brand_rules.yml keeps its design section with deprecation notice.
-2. **Phase 2**: Evaluator loads visual rules from `@verdigristech/design-tokens/rules/visual-rules.yml`.
-3. **Phase 3**: Remove design section from brand_rules.yml. It retains only vocabulary/tone/terminology.
+1. **Phase 1** ~~(done)~~: Design repo established as canonical source.
+2. **Phase 2** ~~(done)~~: Evaluator loads visual rules from `@verdigristech/design-tokens/rules/visual-rules.yml`.
+3. **Phase 3** ~~(done)~~: Design section removed from `brand_rules.yml`. It now retains only vocabulary/tone/terminology.
 
 ## For Designers
 
