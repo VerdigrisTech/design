@@ -51,7 +51,38 @@ The current Inter+Lato pairing is the **baseline to evaluate against**. Potentia
 - **Cons:** Less typographic contrast than a serif/sans pairing
 - **Verdict:** Modern but may not differentiate enough
 
-**Decision:** Inter+Lato is the Phase 1 baseline. The design repo will track font evaluation results here. Typography lock decision targeted for Phase 3.
+### Evaluation Results (2026-03-27)
+
+Evaluated all four options against these criteria:
+
+| Criteria | Weight | Inter+Lato (A) | Inter-only (B) | Inter+Geometric (C) | Single Variable (D) |
+|----------|--------|----------------|-----------------|---------------------|---------------------|
+| Brand fit | High | Good — clean, approachable | Flat — no hierarchy contrast | Excellent — fresh, distinctive | Good — modern |
+| Migration cost | High | Zero | Low (remove Lato) | Medium (add new font, test) | Medium |
+| Performance | Medium | 2 fonts, well-cached (Google #3 + #1) | 1 font, fastest | 2 fonts, may need self-hosting | 1 font |
+| Patina alignment | Medium | Divergent (Patina = Inter-only) | Perfect alignment | Divergent | Divergent |
+| Licensing | Low | Free (OFL) | Free (OFL) | Varies — some need licensing | Varies |
+
+**Option C deep dive:** Plus Jakarta Sans and Satoshi were the strongest candidates. Both offer more geometric personality than Lato. However:
+- Neither is available on Google Fonts (requires self-hosting or CDN setup)
+- Introducing a new display font mid-sprint adds risk with no user-facing upside yet
+- The token architecture makes a future font swap trivial — update `fontFamily.display` in `tokens/typography/font-family.json` and rebuild
+
+**Decision: Lock Inter + Lato.**
+
+Rationale:
+1. **Zero migration cost** — already implemented in www, already in the token system
+2. **Performance** — both fonts are top-10 on Google Fonts, maximizing cache hits across the web
+3. **Good enough** — Lato at 700 weight provides sufficient heading contrast for marketing pages
+4. **Future-proof** — the token system decouples the font choice from every consumer. If we want to explore a geometric display font later, it's a single JSON change + rebuild. No reason to block the website upgrade sprint on a font decision.
+5. **Patina stays Inter-only** — the display font is a justified www deviation (marketing needs font contrast that an app dashboard doesn't)
+
+**Locked fonts:**
+- Body: `Inter` (shared across all surfaces)
+- Display: `Lato` (www marketing headings only)
+- Mono: `JetBrains Mono` (code, metrics, data)
+
+**Review trigger:** Revisit if/when Verdigris rebrands or if user research indicates the typography feels generic. The token architecture ensures a swap is low-cost when the time comes.
 
 ## Type Scale
 
