@@ -1,0 +1,595 @@
+---
+layout: null
+title: Brand Specimen
+---
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brand Specimen | Verdigris Design System</title>
+  <meta name="description" content="Live rendering of the canonical Verdigris visual identity — typography, color palette, spacing, and brand qualities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Tokens (from tokens/*.json) ──────────────────────────────── */
+    :root {
+      /* Brand */
+      --brand-verdigris: oklch(0.75 0.1286 191.57);
+      --brand-mix-1: oklch(0.635 0.1341 216.01);
+      --brand-mix-2: oklch(0.52 0.1396 240.45);
+      --brand-mix-3: oklch(0.405 0.1451 264.89);
+      --brand-midnight-purple: oklch(0.29 0.1506 289.33);
+      --brand-mp-step-1: oklch(0.3925 0.1607 313.03);
+      --brand-mp-step-2: oklch(0.495 0.1708 336.72);
+      --brand-mp-step-3: oklch(0.5975 0.1808 0.42);
+      --brand-pastel-red: oklch(0.7 0.1909 24.11);
+      --brand-pr-step-1: oklch(0.7425 0.1878 41.14);
+      --brand-pr-step-2: oklch(0.785 0.1848 58.17);
+      --brand-pr-step-3: oklch(0.8275 0.1817 75.2);
+      --brand-cyber-yellow: oklch(0.87 0.1786 92.23);
+      --brand-cy-step-1: oklch(0.8142 0.1695 113.33);
+      --brand-cy-step-2: oklch(0.7698 0.1588 137.1);
+      --brand-cy-step-3: oklch(0.7486 0.1412 163.85);
+      /* Neutrals */
+      --neutral-50: oklch(0.985 0 0);
+      --neutral-100: oklch(0.967 0.001 286.375);
+      --neutral-200: oklch(0.92 0.004 286.32);
+      --neutral-400: oklch(0.705 0.015 286.067);
+      --neutral-500: oklch(0.552 0.016 285.938);
+      --neutral-800: oklch(0.274 0.006 286.033);
+      --neutral-900: oklch(0.21 0.006 285.885);
+      --neutral-950: oklch(0.141 0.005 285.823);
+      /* Semantic (light) */
+      --bg: white;
+      --fg: var(--neutral-950);
+      --muted: var(--neutral-100);
+      --muted-fg: var(--neutral-500);
+      --border: var(--neutral-200);
+      --card: white;
+      --card-fg: var(--neutral-950);
+      /* Fonts */
+      --font-body: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --font-display: Lato, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      /* Spacing */
+      --radius: 0.625rem;
+    }
+    html.dark {
+      --bg: var(--neutral-950);
+      --fg: var(--neutral-50);
+      --muted: var(--neutral-800);
+      --muted-fg: var(--neutral-400);
+      --border: var(--neutral-800);
+      --card: var(--neutral-900);
+      --card-fg: var(--neutral-50);
+    }
+
+    /* ── Reset ────────────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      transition: background 200ms ease, color 200ms ease;
+    }
+    a { color: inherit; }
+
+    /* ── Layout ───────────────────────────────────────────────────── */
+    .container { max-width: 80rem; margin: 0 auto; padding: 0 2.5rem; }
+    .section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: none; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted-fg);
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Header ───────────────────────────────────────────────────── */
+    .specimen-header {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .specimen-header h1 {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .specimen-header .teal-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--brand-verdigris);
+      margin-right: 0.5rem;
+    }
+    .badge {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      padding: 0.25rem 0.625rem;
+      border-radius: 9999px;
+      background: var(--muted);
+      color: var(--muted-fg);
+    }
+    .controls { display: flex; gap: 0.75rem; align-items: center; }
+    .mode-toggle {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      color: var(--fg);
+      cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease;
+    }
+    .mode-toggle:hover { border-color: var(--brand-verdigris); }
+    .back-link {
+      font-size: 0.875rem;
+      text-decoration: none;
+      color: var(--muted-fg);
+    }
+    .back-link:hover { color: var(--fg); }
+
+    /* ── Hero ─────────────────────────────────────────────────────── */
+    .hero {
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      max-width: 48rem;
+    }
+    .hero-sub {
+      font-size: 1.25rem;
+      color: var(--muted-fg);
+      margin-top: 1rem;
+      max-width: 40rem;
+      line-height: 1.6;
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.75rem; }
+    }
+
+    /* ── Brand Gradient ───────────────────────────────────────────── */
+    .gradient-strip {
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(
+        90deg in oklch,
+        var(--brand-verdigris),
+        var(--brand-mix-1),
+        var(--brand-mix-2),
+        var(--brand-mix-3),
+        var(--brand-midnight-purple),
+        var(--brand-mp-step-1),
+        var(--brand-mp-step-2),
+        var(--brand-mp-step-3),
+        var(--brand-pastel-red),
+        var(--brand-pr-step-1),
+        var(--brand-pr-step-2),
+        var(--brand-pr-step-3),
+        var(--brand-cyber-yellow),
+        var(--brand-cy-step-1),
+        var(--brand-cy-step-2),
+        var(--brand-cy-step-3),
+        var(--brand-verdigris)
+      );
+      margin-top: 2rem;
+    }
+
+    /* ── Color Swatches ───────────────────────────────────────────── */
+    .swatches { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .swatch-group { margin-bottom: 2rem; }
+    .swatch-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted-fg);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .swatch {
+      width: 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .swatch-color {
+      width: 5rem;
+      height: 3.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .swatch-name {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--muted-fg);
+      line-height: 1.3;
+    }
+
+    /* ── Typography Specimen ──────────────────────────────────────── */
+    .type-row {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: 1rem;
+      align-items: baseline;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--muted-fg);
+      line-height: 1.4;
+    }
+    .type-sample-display {
+      font-family: var(--font-display);
+      font-weight: 700;
+    }
+    .type-sample-body {
+      font-family: var(--font-body);
+    }
+    .type-sample-mono {
+      font-family: var(--font-mono);
+    }
+
+    /* ── Brand Pillars ────────────────────────────────────────────── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: 1.5rem;
+    }
+    .pillar {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+    .pillar-name {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand-verdigris);
+      margin-bottom: 0.5rem;
+    }
+    .pillar-desc {
+      font-size: 0.875rem;
+      color: var(--muted-fg);
+      line-height: 1.5;
+    }
+    .pillar-mapping {
+      margin-top: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    /* ── Spacing ──────────────────────────────────────────────────── */
+    .spacing-scale { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; }
+    .spacing-item { text-align: center; }
+    .spacing-block {
+      background: var(--brand-verdigris);
+      border-radius: 2px;
+      opacity: 0.7;
+    }
+    .spacing-label {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--muted-fg);
+      margin-top: 0.25rem;
+    }
+
+    /* ── Partner Assets ───────────────────────────────────────────── */
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: 1rem;
+    }
+    .asset-card {
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+    .asset-card h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .asset-card p {
+      font-size: 0.8125rem;
+      color: var(--muted-fg);
+      margin-bottom: 0.75rem;
+    }
+    .asset-card code {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: var(--muted);
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────────── */
+    .specimen-footer {
+      padding: 2rem 0;
+      font-size: 0.8125rem;
+      color: var(--muted-fg);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header class="specimen-header">
+      <div>
+        <h1><span class="teal-dot"></span>Verdigris Design System</h1>
+      </div>
+      <div class="controls">
+        <span class="badge">Living Document</span>
+        <button class="mode-toggle" onclick="toggleMode()" id="modeBtn">Dark Mode</button>
+        <a href="{{ '/' | relative_url }}" class="back-link">&larr; Docs</a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <p class="section-label">Brand Specimen</p>
+      <h2 class="hero-title">Electrical Intelligence for the AI-Factory Era</h2>
+      <p class="hero-sub">The canonical visual identity for all Verdigris surfaces. Typography, color, spacing, and brand qualities rendered live from design tokens.</p>
+      <div class="gradient-strip"></div>
+    </section>
+
+    <!-- Brand Pillars -->
+    <section class="section">
+      <p class="section-label">Brand Tone</p>
+      <h2 class="section-title">Four Pillars</h2>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-name">Precision</div>
+          <div class="pillar-desc">Exact, specific, and data-driven. No vagueness or hand-waving.</div>
+          <div class="pillar-mapping">Visual: tight letter-spacing (-0.02em), tabular numbers, mono for data</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-name">Masterful</div>
+          <div class="pillar-desc">Expert, authoritative, and deeply knowledgeable. Command of the domain.</div>
+          <div class="pillar-mapping">Visual: Inter's high legibility, 700-weight headings, confident hierarchy</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-name">Refined</div>
+          <div class="pillar-desc">Polished, elegant, and thoughtfully crafted. No rough edges.</div>
+          <div class="pillar-mapping">Visual: generous whitespace, zinc-tinted neutrals, 0.625rem radius</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-name">Pioneering</div>
+          <div class="pillar-desc">Forward-thinking, innovative, and leading the industry.</div>
+          <div class="pillar-mapping">Visual: OKLch color space, perceptual gradient interpolation, brand hue loop</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section class="section">
+      <p class="section-label">Typography</p>
+      <h2 class="section-title">Type Specimen</h2>
+
+      <div class="type-row">
+        <div class="type-meta">Display / H1<br>Lato 700<br>4rem / 64px<br>-0.02em</div>
+        <div class="type-sample-display" style="font-size:4rem;line-height:1.1;letter-spacing:-0.02em">Electrical Intelligence</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Display / H2<br>Lato 700<br>3rem / 48px<br>-0.02em</div>
+        <div class="type-sample-display" style="font-size:3rem;line-height:1.2;letter-spacing:-0.02em">Sub-Cycle Visibility</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Display / H3<br>Lato 700<br>2rem / 32px</div>
+        <div class="type-sample-display" style="font-size:2rem;line-height:1.3">Tokens Per Watt</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Body / Large<br>Inter 400<br>1.25rem / 20px</div>
+        <div class="type-sample-body" style="font-size:1.25rem">Verdigris captures sub-cycle electrical data and applies physics-based analysis to detect instability invisible to traditional monitoring.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Body / Regular<br>Inter 400<br>1rem / 16px</div>
+        <div class="type-sample-body" style="font-size:1rem">AI workloads create sharp, fast electrical transients that turn hidden electrical weakness into systemic risk. Safe capacity — not theoretical capacity — is the bottleneck.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Body / Small<br>Inter 400<br>0.875rem / 14px</div>
+        <div class="type-sample-body" style="font-size:0.875rem;color:var(--muted-fg)">Deployed across all T-Mobile data centers in North America. Expanding with Verizon. Piloting with AWS and Supermicro.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Mono<br>JetBrains Mono<br>400</div>
+        <div class="type-sample-mono" style="font-size:0.875rem">8kHz · 48hr early warning · oklch(0.75 0.1286 191.57)</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">UI / Button<br>Inter 600<br>1rem</div>
+        <div>
+          <span style="display:inline-block;font-weight:600;font-size:1rem;background:var(--neutral-900);color:var(--neutral-50);padding:0.5rem 1rem;border-radius:0.375rem">Request Demo</span>
+          <span style="display:inline-block;font-weight:600;font-size:1rem;border:1px solid var(--border);padding:0.5rem 1rem;border-radius:0.375rem;margin-left:0.5rem">Learn More</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Color Palette -->
+    <section class="section">
+      <p class="section-label">Color</p>
+      <h2 class="section-title">Brand Palette</h2>
+      <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1.5rem">Canonical values in OKLch. All other formats (HSL, hex, RGB) are generated by the build pipeline.</p>
+
+      <div class="swatch-group">
+        <div class="swatch-group-label">Brand Hue Loop (16 stops)</div>
+        <div class="swatches">
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-verdigris)"></div><div class="swatch-name">Verdigris<br>#0fc8c3</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-mix-1)"></div><div class="swatch-name">Mix 1</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-mix-2)"></div><div class="swatch-name">Mix 2</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-mix-3)"></div><div class="swatch-name">Mix 3</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-midnight-purple)"></div><div class="swatch-name">Midnight Purple</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-mp-step-1)"></div><div class="swatch-name">MP Step 1</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-mp-step-2)"></div><div class="swatch-name">MP Step 2</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-mp-step-3)"></div><div class="swatch-name">MP Step 3</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-pastel-red)"></div><div class="swatch-name">Pastel Red</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-pr-step-1)"></div><div class="swatch-name">PR Step 1</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-pr-step-2)"></div><div class="swatch-name">PR Step 2</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-pr-step-3)"></div><div class="swatch-name">PR Step 3</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-cyber-yellow)"></div><div class="swatch-name">Cyber Yellow</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-cy-step-1)"></div><div class="swatch-name">CY Step 1</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-cy-step-2)"></div><div class="swatch-name">CY Step 2</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:var(--brand-cy-step-3)"></div><div class="swatch-name">CY Step 3</div></div>
+        </div>
+      </div>
+
+      <div class="swatch-group">
+        <div class="swatch-group-label">Neutral Scale (zinc-tinted, hue ~286)</div>
+        <div class="swatches">
+          <div class="swatch"><div class="swatch-color" style="background:oklch(0.985 0 0);border-color:var(--neutral-200)"></div><div class="swatch-name">50</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:oklch(0.967 0.001 286.375)"></div><div class="swatch-name">100</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:oklch(0.92 0.004 286.32)"></div><div class="swatch-name">200</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:oklch(0.705 0.015 286.067)"></div><div class="swatch-name">400</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:oklch(0.552 0.016 285.938)"></div><div class="swatch-name">500</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:oklch(0.274 0.006 286.033)"></div><div class="swatch-name">800</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:oklch(0.21 0.006 285.885)"></div><div class="swatch-name">900</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:oklch(0.141 0.005 285.823)"></div><div class="swatch-name">950</div></div>
+        </div>
+      </div>
+
+      <div class="gradient-strip" style="height:24px;border-radius:var(--radius);margin-top:0"></div>
+      <p style="font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted-fg);margin-top:0.5rem">Full hue loop: Teal → Purple → Red → Yellow → Teal. 16 stops, interpolated in OKLch for perceptual uniformity.</p>
+    </section>
+
+    <!-- Spacing -->
+    <section class="section">
+      <p class="section-label">Spacing</p>
+      <h2 class="section-title">4px Grid</h2>
+      <div class="spacing-scale">
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:4px"></div><div class="spacing-label">1 · 4px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:8px"></div><div class="spacing-label">2 · 8px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:12px"></div><div class="spacing-label">3 · 12px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:16px"></div><div class="spacing-label">4 · 16px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:20px"></div><div class="spacing-label">5 · 20px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:24px"></div><div class="spacing-label">6 · 24px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:32px"></div><div class="spacing-label">8 · 32px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:40px"></div><div class="spacing-label">10 · 40px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:48px"></div><div class="spacing-label">12 · 48px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:64px"></div><div class="spacing-label">16 · 64px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:80px"></div><div class="spacing-label">20 · 80px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:96px"></div><div class="spacing-label">24 · 96px</div></div>
+        <div class="spacing-item"><div class="spacing-block" style="width:1rem;height:128px"></div><div class="spacing-label">32 · 128px</div></div>
+      </div>
+      <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap">
+        <div style="padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--card)">
+          <div style="font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted-fg)">Border Radius</div>
+          <div style="margin-top:0.5rem;display:flex;gap:0.75rem;align-items:center">
+            <div style="width:2.5rem;height:2.5rem;background:var(--muted);border-radius:calc(0.625rem - 4px)"></div>
+            <div style="width:2.5rem;height:2.5rem;background:var(--muted);border-radius:calc(0.625rem - 2px)"></div>
+            <div style="width:2.5rem;height:2.5rem;background:var(--muted);border-radius:0.625rem"></div>
+            <div style="width:2.5rem;height:2.5rem;background:var(--muted);border-radius:calc(0.625rem + 4px)"></div>
+            <div style="width:2.5rem;height:2.5rem;background:var(--muted);border-radius:9999px"></div>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:0.625rem;color:var(--muted-fg);margin-top:0.375rem;display:flex;gap:0.75rem">
+            <span style="width:2.5rem;text-align:center">sm</span>
+            <span style="width:2.5rem;text-align:center">md</span>
+            <span style="width:2.5rem;text-align:center">base</span>
+            <span style="width:2.5rem;text-align:center">xl</span>
+            <span style="width:2.5rem;text-align:center">full</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WCAG -->
+    <section class="section">
+      <p class="section-label">Accessibility</p>
+      <h2 class="section-title">Contrast Rules</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));gap:1rem">
+        <div style="padding:1.5rem;border-radius:var(--radius);background:var(--neutral-950);color:var(--neutral-50)">
+          <div style="font-family:var(--font-mono);font-size:0.6875rem;opacity:0.6;margin-bottom:0.5rem">PASS — Teal on dark (12.3:1)</div>
+          <div style="font-size:1.5rem;font-family:var(--font-display);font-weight:700;color:var(--brand-verdigris)">Electrical Intelligence</div>
+          <div style="font-size:0.875rem;margin-top:0.375rem;opacity:0.7">Brand teal is safe on neutral.950 and darker backgrounds.</div>
+        </div>
+        <div style="padding:1.5rem;border-radius:var(--radius);border:2px dashed oklch(0.577 0.245 27.325)">
+          <div style="font-family:var(--font-mono);font-size:0.6875rem;color:oklch(0.577 0.245 27.325);margin-bottom:0.5rem">FAIL — Teal on white (2.9:1)</div>
+          <div style="font-size:1.5rem;font-family:var(--font-display);font-weight:700;color:var(--brand-verdigris)">Electrical Intelligence</div>
+          <div style="font-size:0.875rem;margin-top:0.375rem;color:var(--muted-fg)">Brand teal as text on white fails WCAG AA. Use neutral.900 for text instead.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partner Assets -->
+    <section class="section">
+      <p class="section-label">For Partners</p>
+      <h2 class="section-title">Brand Assets</h2>
+      <div class="asset-grid">
+        <div class="asset-card">
+          <h4>Color Values</h4>
+          <p>Hex values for print, email, and Figma</p>
+          <code>npm install @verdigristech/design-tokens</code>
+          <p style="margin-top:0.5rem;font-size:0.75rem">Import from <code>hex/colors.json</code> &middot; Pantone: PMS 3262 C</p>
+        </div>
+        <div class="asset-card">
+          <h4>CSS Variables</h4>
+          <p>OKLch (modern) or HSL (legacy) custom properties</p>
+          <code>@import '@verdigristech/design-tokens/css/oklch'</code>
+        </div>
+        <div class="asset-card">
+          <h4>Tailwind Preset</h4>
+          <p>Drop-in preset for Tailwind CSS projects</p>
+          <code>import preset from '@verdigristech/design-tokens/tailwind'</code>
+        </div>
+        <div class="asset-card">
+          <h4>Typography</h4>
+          <p>Load via Google Fonts (free, OFL licensed)</p>
+          <code style="font-size:0.6875rem">Inter 400-700 &middot; Lato 700 &middot; JetBrains Mono 400</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="specimen-footer">
+      <p>Verdigris Design System &middot; <a href="https://github.com/VerdigrisTech/design">GitHub</a> &middot; <a href="{{ '/' | relative_url }}">Documentation</a> &middot; v0.2.0</p>
+    </footer>
+
+  </div>
+
+  <script>
+    function toggleMode() {
+      const html = document.documentElement;
+      const btn = document.getElementById('modeBtn');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        html.classList.add('light');
+        btn.textContent = 'Dark Mode';
+      } else {
+        html.classList.remove('light');
+        html.classList.add('dark');
+        btn.textContent = 'Light Mode';
+      }
+    }
+  </script>
+</body>
+</html>
