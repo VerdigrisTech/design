@@ -98,13 +98,31 @@ Machine-enforceable visual rules for evaluator pipelines.
 
 Annotated good and bad visual references.
 
-### Good
-- [Color WCAG darkened teal](examples/good/color-wcag-darkened-teal.md)
-- [Dark mode translucent borders](examples/good/dark-mode-translucent-borders.md)
+- [Examples index](examples/) -- all good and bad references in one place
 
-### Bad
-- [Brand rules wrong sizes](examples/bad/brand-rules-wrong-sizes.md)
-- [Bright teal as text](examples/bad/bright-teal-as-text.md)
+---
+
+## For Partners
+
+See the [Brand Specimen](specimen.html) for a live rendering of fonts, colors, spacing, and brand qualities. Key quick references:
+
+- **Brand teal:** `#0fc8c3` (decorative only -- not for text on white)
+- **Fonts:** Inter (body), Lato (display headings), JetBrains Mono (code)
+- **Pantone:** PMS 3262 C
+- **Package:** `npm install @verdigristech/design-tokens`
+
+---
+
+## Contributing
+
+No code required to contribute design guidelines or assets.
+
+1. Browse the [categories/](categories/) folder -- pick a medium
+2. Copy [`_guide-template.md`](categories/_guide-template.md) to get started
+3. Add reference images to an `assets/` subfolder (SVG for icons, PNG for screenshots)
+4. Open a PR -- the build check runs automatically
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full process and [AGENTS.md](AGENTS.md) for AI agent instructions.
 
 ---
 
