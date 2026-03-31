@@ -80,6 +80,7 @@
     .mode-toggle:hover { border-color: var(--brand-teal); }
     .gradient-bar {
       height: 3px;
+      background: linear-gradient(90deg, #0fc8c3, #3b5ea0, #1a0a4a, #c44e7a, #e85d3a, #d4c520, #0fc8c3);
       background: linear-gradient(90deg in oklch,
         oklch(0.75 0.1286 191.57), oklch(0.405 0.1451 264.89),
         oklch(0.29 0.1506 289.33), oklch(0.5975 0.1808 0.42),
@@ -310,7 +311,7 @@
       <button class="mobile-nav-toggle" onclick="document.querySelector('.site-sidebar').classList.toggle('open')">Menu</button>
     </div>
     <div class="header-controls">
-      <button class="mode-toggle" onclick="document.documentElement.classList.toggle('dark');this.textContent=document.documentElement.classList.contains('dark')?'Light':'Dark'" id="modeBtn">Dark</button>
+      <button class="mode-toggle" id="modeBtn">Dark</button>
     </div>
   </header>
 
@@ -419,18 +420,35 @@
   </div>
 
   <script>
+    // Dark mode: restore from localStorage or respect system preference
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var btn = document.getElementById('modeBtn');
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        btn.textContent = 'Light';
+      }
+      btn.addEventListener('click', function() {
+        var isDark = document.documentElement.classList.toggle('dark');
+        this.textContent = isDark ? 'Light' : 'Dark';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    })();
+
     // Active sidebar link
     document.querySelectorAll('.site-sidebar a').forEach(function(a) {
       var href = a.getAttribute('href');
       var path = window.location.pathname.replace(/\/$/, '').replace(/\.html$/, '');
       var linkPath = href.replace(/\/$/, '').replace(/\.html$/, '');
-      if (path === linkPath || path === linkPath + '/index') {
+      if (path === linkPath || (linkPath && path === linkPath + '/index')) {
         a.classList.add('active');
       }
     });
+
     // Wrap tables for mobile scroll
     document.querySelectorAll('.site-content table').forEach(function(table) {
-      if (!table.parentElement.classList.contains('table-wrap')) {
+      if (!table.closest('.table-wrap')) {
         var wrap = document.createElement('div');
         wrap.className = 'table-wrap';
         table.parentNode.insertBefore(wrap, table);
