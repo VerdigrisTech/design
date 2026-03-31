@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
-  <meta name="description" content="{{ site.description }}">
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%230fc8c3'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -147,6 +148,11 @@
       background: var(--muted);
       color: var(--fg);
     }
+    .site-sidebar nav ul li a.active {
+      background: var(--muted);
+      color: var(--fg);
+      font-weight: 500;
+    }
 
     /* Content */
     .site-content {
@@ -213,11 +219,16 @@
     }
     .site-content blockquote p { margin-bottom: 0; }
 
-    /* Tables */
+    /* Tables — scrollable on mobile */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 1.5rem;
+    }
     .site-content table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0;
       font-size: 0.875rem;
     }
     .site-content th, .site-content td {
@@ -406,5 +417,26 @@
       {{ content }}
     </main>
   </div>
+
+  <script>
+    // Active sidebar link
+    document.querySelectorAll('.site-sidebar a').forEach(function(a) {
+      var href = a.getAttribute('href');
+      var path = window.location.pathname.replace(/\/$/, '').replace(/\.html$/, '');
+      var linkPath = href.replace(/\/$/, '').replace(/\.html$/, '');
+      if (path === linkPath || path === linkPath + '/index') {
+        a.classList.add('active');
+      }
+    });
+    // Wrap tables for mobile scroll
+    document.querySelectorAll('.site-content table').forEach(function(table) {
+      if (!table.parentElement.classList.contains('table-wrap')) {
+        var wrap = document.createElement('div');
+        wrap.className = 'table-wrap';
+        table.parentNode.insertBefore(wrap, table);
+        wrap.appendChild(table);
+      }
+    });
+  </script>
 </body>
 </html>
