@@ -13,6 +13,7 @@
   },
   "type": "module",
   "main": "build/dist/index.js",
+  "types": "build/dist/index.d.ts",
   "exports": {
     ".": "./build/dist/index.js",
     "./css/oklch": "./build/dist/css/oklch.css",

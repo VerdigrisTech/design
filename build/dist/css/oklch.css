@@ -1,0 +1,77 @@
+/* Auto-generated — do not edit. Source: tokens/color/ */
+/* OKLch CSS custom properties for modern browsers */
+
+:root {
+  --color-brand-verdigris: oklch(0.75 0.1286 191.57);
+  --color-brand-mix-step-1: oklch(0.635 0.1341 216.01);
+  --color-brand-mix-step-2: oklch(0.52 0.1396 240.45);
+  --color-brand-mix-step-3: oklch(0.405 0.1451 264.89);
+  --color-brand-midnight-purple: oklch(0.29 0.1506 289.33);
+  --color-brand-midnight-purple-step-1: oklch(0.3925 0.1607 313.03);
+  --color-brand-midnight-purple-step-2: oklch(0.495 0.1708 336.72);
+  --color-brand-midnight-purple-step-3: oklch(0.5975 0.1808 0.42);
+  --color-brand-pastel-red: oklch(0.7 0.1909 24.11);
+  --color-brand-pastel-red-step-1: oklch(0.7425 0.1878 41.14);
+  --color-brand-pastel-red-step-2: oklch(0.785 0.1848 58.17);
+  --color-brand-pastel-red-step-3: oklch(0.8275 0.1817 75.2);
+  --color-brand-cyber-yellow: oklch(0.87 0.1786 92.23);
+  --color-brand-cyber-yellow-step-1: oklch(0.8142 0.1695 113.33);
+  --color-brand-cyber-yellow-step-2: oklch(0.7698 0.1588 137.1);
+  --color-brand-cyber-yellow-step-3: oklch(0.7486 0.1412 163.85);
+  --color-neutral-50: oklch(0.985 0 0);
+  --color-neutral-100: oklch(0.967 0.001 286.375);
+  --color-neutral-200: oklch(0.92 0.004 286.32);
+  --color-neutral-400: oklch(0.705 0.015 286.067);
+  --color-neutral-500: oklch(0.552 0.016 285.938);
+  --color-neutral-800: oklch(0.274 0.006 286.033);
+  --color-neutral-900: oklch(0.21 0.006 285.885);
+  --color-neutral-950: oklch(0.141 0.005 285.823);
+  --color-neutral-white: oklch(1 0 0);
+  --color-neutral-black: oklch(0 0 0);
+  --color-status-destructive-light: oklch(0.577 0.245 27.325);
+  --color-status-destructive-dark: oklch(0.704 0.191 22.216);
+  --color-legacy-www-primary-light: oklch(0.48 0.12 178);
+  --color-legacy-www-brand-teal: oklch(0.75 0.1286 191.57);
+  --color-legacy-www-ring: oklch(0.55 0.12 160);
+  --color-semantic-background: oklch(1 0 0);
+  --color-semantic-foreground: oklch(0.141 0.005 285.823);
+  --color-semantic-card: oklch(1 0 0);
+  --color-semantic-card-foreground: oklch(0.141 0.005 285.823);
+  --color-semantic-popover: oklch(1 0 0);
+  --color-semantic-popover-foreground: oklch(0.141 0.005 285.823);
+  --color-semantic-primary: oklch(0.21 0.006 285.885);
+  --color-semantic-primary-foreground: oklch(0.985 0 0);
+  --color-semantic-secondary: oklch(0.967 0.001 286.375);
+  --color-semantic-secondary-foreground: oklch(0.21 0.006 285.885);
+  --color-semantic-muted: oklch(0.967 0.001 286.375);
+  --color-semantic-muted-foreground: oklch(0.552 0.016 285.938);
+  --color-semantic-accent: oklch(0.967 0.001 286.375);
+  --color-semantic-accent-foreground: oklch(0.21 0.006 285.885);
+  --color-semantic-destructive: oklch(0.577 0.245 27.325);
+  --color-semantic-border: oklch(0.92 0.004 286.32);
+  --color-semantic-input: oklch(0.92 0.004 286.32);
+  --color-semantic-ring: oklch(0.705 0.015 286.067);
+  --color-semantic-sidebar-primary: oklch(0.7 0.1909 24.11);
+}
+
+.dark {
+  --color-semantic-background: oklch(0.141 0.005 285.823);
+  --color-semantic-foreground: oklch(0.985 0 0);
+  --color-semantic-card: oklch(0.21 0.006 285.885);
+  --color-semantic-card-foreground: oklch(0.985 0 0);
+  --color-semantic-popover: oklch(0.21 0.006 285.885);
+  --color-semantic-popover-foreground: oklch(0.985 0 0);
+  --color-semantic-primary: oklch(0.92 0.004 286.32);
+  --color-semantic-primary-foreground: oklch(0.21 0.006 285.885);
+  --color-semantic-secondary: oklch(0.274 0.006 286.033);
+  --color-semantic-secondary-foreground: oklch(0.985 0 0);
+  --color-semantic-muted: oklch(0.274 0.006 286.033);
+  --color-semantic-muted-foreground: oklch(0.705 0.015 286.067);
+  --color-semantic-accent: oklch(0.274 0.006 286.033);
+  --color-semantic-accent-foreground: oklch(0.985 0 0);
+  --color-semantic-destructive: oklch(0.704 0.191 22.216);
+  --color-semantic-border: oklch(1 0 0 / 10%);
+  --color-semantic-input: oklch(1 0 0 / 15%);
+  --color-semantic-ring: oklch(0.552 0.016 285.938);
+  --color-semantic-sidebar-primary: oklch(0.7 0.1909 24.11);
+}

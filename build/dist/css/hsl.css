@@ -1,0 +1,77 @@
+/* Auto-generated — do not edit. Source: tokens/color/ */
+/* HSL CSS custom properties for legacy browsers */
+
+:root {
+  --color-brand-verdigris: hsl(178, 97%, 40%);
+  --color-brand-mix-step-1: hsl(190, 100%, 37%);
+  --color-brand-mix-step-2: hsl(202, 100%, 35%);
+  --color-brand-mix-step-3: hsl(224, 64%, 36%);
+  --color-brand-midnight-purple: hsl(262, 82%, 24%);
+  --color-brand-midnight-purple-step-1: hsl(282, 62%, 31%);
+  --color-brand-midnight-purple-step-2: hsl(312, 53%, 39%);
+  --color-brand-midnight-purple-step-3: hsl(337, 60%, 54%);
+  --color-brand-pastel-red: hsl(1, 100%, 69%);
+  --color-brand-pastel-red-step-1: hsl(18, 100%, 63%);
+  --color-brand-pastel-red-step-2: hsl(34, 100%, 53%);
+  --color-brand-pastel-red-step-3: hsl(42, 100%, 50%);
+  --color-brand-cyber-yellow: hsl(49, 100%, 50%);
+  --color-brand-cyber-yellow-step-1: hsl(64, 63%, 49%);
+  --color-brand-cyber-yellow-step-2: hsl(102, 50%, 59%);
+  --color-brand-cyber-yellow-step-3: hsl(158, 56%, 51%);
+  --color-neutral-50: hsl(0, 0%, 98%);
+  --color-neutral-100: hsl(240, 5%, 96%);
+  --color-neutral-200: hsl(240, 6%, 90%);
+  --color-neutral-400: hsl(240, 5%, 64%);
+  --color-neutral-500: hsl(240, 4%, 46%);
+  --color-neutral-800: hsl(240, 4%, 16%);
+  --color-neutral-900: hsl(240, 6%, 10%);
+  --color-neutral-950: hsl(240, 10%, 4%);
+  --color-neutral-white: hsl(0, 0%, 100%);
+  --color-neutral-black: hsl(0, 0%, 0%);
+  --color-status-destructive-light: hsl(357, 100%, 45%);
+  --color-status-destructive-dark: hsl(359, 100%, 70%);
+  --color-legacy-www-primary-light: hsl(169, 100%, 22%);
+  --color-legacy-www-brand-teal: hsl(178, 97%, 40%);
+  --color-legacy-www-ring: hsl(157, 77%, 30%);
+  --color-semantic-background: hsl(0, 0%, 100%);
+  --color-semantic-foreground: hsl(240, 10%, 4%);
+  --color-semantic-card: hsl(0, 0%, 100%);
+  --color-semantic-card-foreground: hsl(240, 10%, 4%);
+  --color-semantic-popover: hsl(0, 0%, 100%);
+  --color-semantic-popover-foreground: hsl(240, 10%, 4%);
+  --color-semantic-primary: hsl(240, 6%, 10%);
+  --color-semantic-primary-foreground: hsl(0, 0%, 98%);
+  --color-semantic-secondary: hsl(240, 5%, 96%);
+  --color-semantic-secondary-foreground: hsl(240, 6%, 10%);
+  --color-semantic-muted: hsl(240, 5%, 96%);
+  --color-semantic-muted-foreground: hsl(240, 4%, 46%);
+  --color-semantic-accent: hsl(240, 5%, 96%);
+  --color-semantic-accent-foreground: hsl(240, 6%, 10%);
+  --color-semantic-destructive: hsl(357, 100%, 45%);
+  --color-semantic-border: hsl(240, 6%, 90%);
+  --color-semantic-input: hsl(240, 6%, 90%);
+  --color-semantic-ring: hsl(240, 5%, 64%);
+  --color-semantic-sidebar-primary: hsl(1, 100%, 69%);
+}
+
+.dark {
+  --color-semantic-background: hsl(240, 10%, 4%);
+  --color-semantic-foreground: hsl(0, 0%, 98%);
+  --color-semantic-card: hsl(240, 6%, 10%);
+  --color-semantic-card-foreground: hsl(0, 0%, 98%);
+  --color-semantic-popover: hsl(240, 6%, 10%);
+  --color-semantic-popover-foreground: hsl(0, 0%, 98%);
+  --color-semantic-primary: hsl(240, 6%, 90%);
+  --color-semantic-primary-foreground: hsl(240, 6%, 10%);
+  --color-semantic-secondary: hsl(240, 4%, 16%);
+  --color-semantic-secondary-foreground: hsl(0, 0%, 98%);
+  --color-semantic-muted: hsl(240, 4%, 16%);
+  --color-semantic-muted-foreground: hsl(240, 5%, 64%);
+  --color-semantic-accent: hsl(240, 4%, 16%);
+  --color-semantic-accent-foreground: hsl(0, 0%, 98%);
+  --color-semantic-destructive: hsl(359, 100%, 70%);
+  --color-semantic-border: hsl(0, 0%, 100%);
+  --color-semantic-input: hsl(0, 0%, 100%);
+  --color-semantic-ring: hsl(240, 4%, 46%);
+  --color-semantic-sidebar-primary: hsl(1, 100%, 69%);
+}
