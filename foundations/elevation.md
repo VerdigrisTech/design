@@ -75,9 +75,11 @@ Every portal-based or fixed-position component converges on `z-50`:
 
 The data-table uses CSS custom properties for per-column z-index:
 
+{% raw %}
 ```tsx
 style={{ zIndex: `var(--header-${header?.id}-z)` }}
 ```
+{% endraw %}
 
 These are computed at runtime based on pinned column positions, not from the token scale. They operate within the table's local stacking context and do not conflict with the global layer system.
 

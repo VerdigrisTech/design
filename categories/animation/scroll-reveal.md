@@ -222,6 +222,7 @@ Use `--stagger-index` set on each item to calculate a progressive delay:
 
 ### React Stagger Pattern
 
+{% raw %}
 ```tsx
 function StaggerGrid({ items }: { items: Item[] }) {
   const { ref, isVisible } = useScrollReveal<HTMLDivElement>();
@@ -241,6 +242,7 @@ function StaggerGrid({ items }: { items: Item[] }) {
   );
 }
 ```
+{% endraw %}
 
 ### Stagger Rules
 
