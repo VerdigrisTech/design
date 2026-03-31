@@ -106,7 +106,7 @@ Annotated good and bad visual references.
 
 See the [Brand Specimen](specimen.html) for a live rendering of fonts, colors, spacing, and brand qualities. Key quick references:
 
-- **Brand teal:** `#0fc8c3` (decorative only -- not for text on white)
+- **Brand teal:** `color.brand.verdigris` / #0fc8c3 (decorative only -- not for text on white)
 - **Fonts:** Inter (body), Lato (display headings), JetBrains Mono (code)
 - **Pantone:** PMS 3262 C
 - **Package:** `npm install @verdigristech/design-tokens`

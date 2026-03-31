@@ -13,13 +13,13 @@
 - **Foreground:** `hsl(220 13% 18%)` — slightly blue-tinted dark
 - **Neutral hue:** ~220 (blue-gray)
 
-### design.verdigris.co (docs site)
-- **Color space:** Hex fallbacks in CSS (`#0fc8c3`, `#0e0f11`, etc.)
-- **Radius:** `0.375rem` (6px) on sidebar links
-- **Fonts:** Inter (body only), no Lato on headings, no JetBrains Mono loaded via Google Fonts
-- **Layout:** Sidebar + content, sticky header, clean but basic
-- **No dark mode toggle**
-- **No brand gradient visible**
+### design.verdigris.co (docs site) — updated 2026-03-31
+- **Color space:** OKLch (with sRGB gradient fallbacks)
+- **Radius:** `0.625rem` (10px) — canonical
+- **Fonts:** Inter (body) + Lato (headings) + JetBrains Mono (code) via Google Fonts
+- **Layout:** Sidebar with active state + content, sticky header, dark mode toggle, brand gradient bar
+- **Dark mode:** Toggle with localStorage persistence + system preference detection
+- **Brand gradient:** Visible at top of every page
 
 ### Canonical tokens (this repo)
 - **Color space:** OKLch (canonical) → all others derived
@@ -32,15 +32,17 @@
 
 ## Alignment Gaps
 
-### 1. Docs site doesn't eat its own dog food
+### 1. ~~Docs site doesn't eat its own dog food~~ — RESOLVED (2026-03-31)
 
-| Property | Canonical Token | Docs Site Actual | Gap |
-|----------|----------------|------------------|-----|
-| Heading font | Lato 700 | Inter (no Lato loaded) | Headings use body font |
-| Mono font | JetBrains Mono | System mono stack | Code blocks use fallback |
-| Border radius | 0.625rem (10px) | 0.375rem (6px) | Smaller than canonical |
-| Neutral hue | ~286 (zinc) | Pure gray hex values | No zinc tint |
-| Dark mode | Full token swap system | Not implemented | No dark mode |
+All gaps from the original analysis have been fixed:
+
+| Property | Canonical Token | Docs Site Actual | Status |
+|----------|----------------|------------------|--------|
+| Heading font | Lato 700 | Lato 700 via Google Fonts | Fixed |
+| Mono font | JetBrains Mono | JetBrains Mono via Google Fonts | Fixed |
+| Border radius | 0.625rem (10px) | 0.625rem | Fixed |
+| Neutral hue | ~286 (zinc) | OKLch zinc-tinted values | Fixed |
+| Dark mode | Full token swap system | Toggle + localStorage + system pref | Fixed |
 | Brand gradient | 16-stop OKLch hue loop | Not visible | Missing brand signature |
 | Color space | OKLch | Hex fallbacks | Not using canonical format |
 
