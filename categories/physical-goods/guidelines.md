@@ -1,3 +1,37 @@
+---
+layout: visual
+title: Physical Goods Guidelines
+---
+
+<div class="v-demo">
+  <div class="v-label">Visual Mood — "Clean, premium, understated."</div>
+  <div class="v-swatches">
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.75 0.1286 191.57)"></div>
+      <div class="v-swatch-name">Verdigris</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.141 0.005 285.823)"></div>
+      <div class="v-swatch-name">neutral.950</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.92 0.004 286.32)"></div>
+      <div class="v-swatch-name">neutral.200</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.985 0 0)"></div>
+      <div class="v-swatch-name">neutral.50</div>
+    </div>
+  </div>
+  <div class="v-gradient" style="height: 4px; background: linear-gradient(to right, oklch(0.75 0.1286 191.57), oklch(0.141 0.005 285.823))"></div>
+  <div class="v-card" style="margin-top: 1rem; padding: 1.5rem; background: oklch(0.985 0 0); border-left: 3px solid oklch(0.75 0.1286 191.57)">
+    <div class="v-card-title" style="font-family: Lato, sans-serif; font-weight: 700; font-size: 1.25rem">Clean, premium, understated.</div>
+    <div class="v-card-desc">Matte finishes, generous negative space, teal as a precise accent. Engineering confidence in physical form.</div>
+  </div>
+</div>
+
+<details class="v-details"><summary>Guidelines</summary>
+
 # Physical Goods Guidelines
 
 ## Overview
@@ -161,3 +195,5 @@ These deviations are constrained to the physical medium. Brand identity (logo, t
 - [Typography foundations](../../foundations/typography.md) — Font stack, type scale, and weight specifications
 - [Hex color output](../../build/dist/hex/colors.json) — Machine-generated hex values for all tokens (use as print starting point)
 - [Base color tokens](../../tokens/color/base.json) — Canonical OKLch definitions
+
+</details>

@@ -1,3 +1,37 @@
+---
+layout: visual
+title: Animation Guidelines
+---
+
+<div class="v-demo">
+  <div class="v-label">Visual Mood — "Purposeful, not decorative."</div>
+  <div class="v-swatches">
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.75 0.1286 191.57)"></div>
+      <div class="v-swatch-name">Verdigris</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.141 0.005 285.823)"></div>
+      <div class="v-swatch-name">neutral.950</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.552 0.016 285.938)"></div>
+      <div class="v-swatch-name">neutral.500</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.985 0 0)"></div>
+      <div class="v-swatch-name">neutral.50</div>
+    </div>
+  </div>
+  <div class="v-gradient" style="height: 4px; background: linear-gradient(to right, oklch(0.75 0.1286 191.57), oklch(0.141 0.005 285.823))"></div>
+  <div class="v-card" style="margin-top: 1rem; padding: 1.5rem; background: oklch(0.985 0 0); border-left: 3px solid oklch(0.75 0.1286 191.57)">
+    <div class="v-card-title" style="font-family: Lato, sans-serif; font-weight: 700; font-size: 1.25rem">Purposeful, not decorative.</div>
+    <div class="v-card-desc">Feedback, orientation, brand. Every animation must pass all three gates before it ships.</div>
+  </div>
+</div>
+
+<details class="v-details"><summary>Guidelines</summary>
+
 # Animation Guidelines
 
 ## Overview
@@ -197,3 +231,5 @@ The Verdigris system uses a small set of repeatable animation patterns. Each is 
 - [reduced-motion.md](reduced-motion.md) — Accessibility fallbacks
 - [tokens/motion/duration.json](../../tokens/motion/duration.json) — Duration tokens
 - [tokens/motion/easing.json](../../tokens/motion/easing.json) — Easing tokens
+
+</details>
