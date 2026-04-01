@@ -25,8 +25,8 @@ title: Animation Guidelines
   </div>
   <div class="v-gradient" style="height: 4px; background: linear-gradient(to right, oklch(0.75 0.1286 191.57), oklch(0.141 0.005 285.823))"></div>
   <div class="v-card" style="margin-top: 1rem; padding: 1.5rem; background: oklch(0.985 0 0); border-left: 3px solid oklch(0.75 0.1286 191.57)">
-    <div class="v-card-title" style="font-family: Lato, sans-serif; font-weight: 700; font-size: 1.25rem">Purposeful, not decorative.</div>
-    <div class="v-card-desc">Feedback, orientation, brand. Every animation must pass all three gates before it ships.</div>
+    <div class="v-card-title" style="font-family: Lato, sans-serif; font-weight: 700; font-size: 1.25rem; color: oklch(0.141 0.005 285.823)">Purposeful, not decorative.</div>
+    <div class="v-card-desc" style="color: oklch(0.552 0.016 285.938)">Feedback, orientation, brand. Every animation must pass all three gates before it ships.</div>
   </div>
 </div>
 
