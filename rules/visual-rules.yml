@@ -577,6 +577,14 @@ components:
         severity: "error"
       - description: "Dark mode borders should use semi-transparent values for depth"
         severity: "warning"
+      - description: "Code blocks (pre) must have distinct background from page in dark mode — use neutral.800 not neutral.950"
+        severity: "error"
+      - description: "Links must be visually distinguishable from body text in dark mode — use brand teal or underline"
+        severity: "error"
+      - description: "Dark mode preference must persist across page navigation via localStorage"
+        severity: "error"
+      - description: "Dark mode init must run before first paint (in <head>, not <body>) to prevent FOUC"
+        severity: "error"
 
 
 # =============================================================================

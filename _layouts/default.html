@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script>
+    // Prevent FOUC: apply dark mode before any CSS renders
+    (function(){
+      var s = localStorage.getItem('theme');
+      if (s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
@@ -251,8 +260,8 @@
       border-radius: 0.25rem;
     }
     .site-content pre {
-      background: oklch(0.141 0.005 285.823);
-      color: oklch(0.985 0 0);
+      background: var(--neutral-950);
+      color: var(--neutral-50);
       padding: 1rem 1.25rem;
       border-radius: var(--radius);
       overflow-x: auto;
@@ -260,11 +269,20 @@
       font-size: 0.8125rem;
       line-height: 1.6;
     }
+    html.dark .site-content pre {
+      background: var(--neutral-800);
+      border: 1px solid var(--border);
+    }
     .site-content pre code {
       background: none;
       padding: 0;
       color: inherit;
     }
+
+    /* Links — distinguishable in dark mode */
+    .site-content a { text-decoration: underline; text-underline-offset: 2px; }
+    html.dark .site-content a { color: var(--brand-teal); }
+    html.dark .site-content a:hover { opacity: 0.85; }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -298,8 +316,20 @@
         height: calc(100vh - 57px);
         background: var(--bg);
         z-index: 20;
-        box-shadow: 4px 0 16px oklch(0 0 0 / 0.08);
+        box-shadow: 4px 0 16px oklch(0 0 0 / 0.12);
       }
+      html.dark .site-sidebar.open {
+        box-shadow: 4px 0 16px oklch(0 0 0 / 0.4);
+      }
+      .mobile-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        top: 57px;
+        background: oklch(0 0 0 / 0.4);
+        z-index: 19;
+      }
+      .mobile-backdrop.open { display: block; }
     }
   </style>
 </head>
@@ -308,12 +338,13 @@
   <header class="site-header">
     <div class="header-left">
       <h1><a href="{{ '/' | relative_url }}"><span class="teal-dot"></span>Verdigris Design System</a></h1>
-      <button class="mobile-nav-toggle" onclick="document.querySelector('.site-sidebar').classList.toggle('open')">Menu</button>
+      <button class="mobile-nav-toggle" onclick="document.querySelector('.site-sidebar').classList.toggle('open');document.querySelector('.mobile-backdrop').classList.toggle('open')">Menu</button>
     </div>
     <div class="header-controls">
       <button class="mode-toggle" id="modeBtn">Dark</button>
     </div>
   </header>
+  <div class="mobile-backdrop" onclick="document.querySelector('.site-sidebar').classList.remove('open');this.classList.remove('open')"></div>
 
   <div class="site-wrapper">
     <aside class="site-sidebar">
