@@ -53,7 +53,7 @@ When generating UI components, pages, or visual assets for Verdigris:
 - Body: Inter, headings (marketing): Lato
 - H1: 4rem with -0.02em letter-spacing and weight 700
 - All body text: 1.6 line-height
-- `brand_rules.yml` typography values are WRONG — use values from this repo
+- This repo is the canonical source for all visual values
 
 ### Semantic Tokens (CSS Variables)
 

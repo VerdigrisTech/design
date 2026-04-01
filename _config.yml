@@ -21,6 +21,10 @@ exclude:
   - Gemfile.lock
   - "*.ts"
   - "*.js"
+  - docs/brand-alignment-analysis.md
+  - docs/figma-sync.md
+  - categories/_guide-template.md
+  - examples/_template.md
 
 # Default front matter
 defaults:

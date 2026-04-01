@@ -105,19 +105,8 @@ All values from www's production CSS. Where `brand_rules.yml` disagrees, CSS is 
 | Regular | 1rem (16px) | 1.6 | Body paragraphs, lists |
 | Small | 0.875rem (14px) | 1.6 | Captions, metadata, fine print |
 
-### Discrepancies (brand_rules.yml vs CSS)
+### Notes
 
-| Property | brand_rules.yml | www CSS (truth) | Patina |
-|----------|----------------|-----------------|--------|
-| H1 size | 3.5rem | **4rem** | Tailwind default |
-| H2 size | 2.5rem | **3rem** | Tailwind default |
-| H2 weight | 600 | **700** | Tailwind default |
-| H3 weight | 500 | **700** | Tailwind default |
-| Font family | Inter only | **Inter + Lato** | Inter only |
-| CTA casing | uppercase | Not applied | Not applied |
-
-**Recommendation:** Update `brand_rules.yml` design section to match CSS values, then deprecate in favor of this design repo.
-
-## CTA Text Transform
-
-`brand_rules.yml` specifies `text-transform: uppercase` for CTAs. Neither codebase implements this. **Recommendation:** Document as optional, not enforced. Remove from `brand_rules.yml`.
+- CTA text-transform (uppercase) is not enforced. Buttons use sentence case.
+- Patina uses Inter for headings (no display font). The www display font (Lato) is a justified deviation for marketing contexts.
+- All values in this document are canonical. The design token JSON files are the machine-readable source of truth.
