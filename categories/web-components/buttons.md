@@ -1,3 +1,48 @@
+---
+layout: visual
+title: Buttons
+---
+
+<p class="v-label">Button Variants</p>
+<div class="v-demo">
+  <div class="v-comp-demo">
+    <div class="v-comp-row">
+      <button class="v-btn v-btn-default">Default</button>
+      <button class="v-btn v-btn-destructive">Destructive</button>
+      <button class="v-btn v-btn-outline">Outline</button>
+      <button class="v-btn v-btn-secondary">Secondary</button>
+      <button class="v-btn v-btn-ghost">Ghost</button>
+      <button class="v-btn v-btn-link">Link</button>
+    </div>
+  </div>
+</div>
+
+<p class="v-label">Button Sizes</p>
+<div class="v-demo">
+  <div class="v-comp-demo">
+    <div class="v-comp-row" style="align-items: center;">
+      <button class="v-btn v-btn-default" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; height: 1.5rem;">XS</button>
+      <button class="v-btn v-btn-default v-btn-sm">SM</button>
+      <button class="v-btn v-btn-default">Default</button>
+      <button class="v-btn v-btn-default v-btn-lg">LG</button>
+    </div>
+  </div>
+</div>
+
+<p class="v-label">Disabled State</p>
+<div class="v-demo">
+  <div class="v-comp-demo">
+    <div class="v-comp-row">
+      <button class="v-btn v-btn-default" disabled style="opacity: 0.5; cursor: not-allowed;">Default (disabled)</button>
+      <button class="v-btn v-btn-destructive" disabled style="opacity: 0.5; cursor: not-allowed;">Destructive (disabled)</button>
+      <button class="v-btn v-btn-outline" disabled style="opacity: 0.5; cursor: not-allowed;">Outline (disabled)</button>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Buttons
 
 Source files: `button.tsx`, `button-group.tsx`
@@ -90,3 +135,5 @@ Groups buttons into a connected strip, removing inner border-radii and duplicate
 
 - `data-slot="button-group"`, `data-orientation`
 - `data-slot="button-group-separator"`
+
+</details>

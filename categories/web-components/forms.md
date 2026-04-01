@@ -1,3 +1,38 @@
+---
+layout: visual
+title: Forms
+---
+
+<p class="v-label">Text Input</p>
+<div class="v-demo">
+  <div class="v-comp-demo">
+    <input class="v-input" type="text" placeholder="Enter your email address" />
+  </div>
+</div>
+
+<p class="v-label">Input with Label</p>
+<div class="v-demo">
+  <div class="v-comp-demo">
+    <div style="display: flex; flex-direction: column; gap: 0.375rem;">
+      <label style="font-size: 0.875rem; font-weight: 500; color: var(--color-foreground, #1a1a1a);">Email address</label>
+      <input class="v-input" type="email" placeholder="you@example.com" />
+    </div>
+  </div>
+</div>
+
+<p class="v-label">Subscribe Pattern</p>
+<div class="v-demo">
+  <div class="v-comp-demo">
+    <div class="v-comp-row">
+      <input class="v-input" type="email" placeholder="you@example.com" style="flex: 1;" />
+      <button class="v-btn v-btn-default">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Forms
 
 Source files: `input.tsx`, `select.tsx`, `textarea.tsx`, `checkbox.tsx`, `switch.tsx`, `slider.tsx`, `calendar.tsx`, `form.tsx`, `label.tsx`
@@ -193,3 +228,5 @@ Returns `{ id, name, formItemId, formDescriptionId, formMessageId, ...fieldState
 **Primitive:** `@radix-ui/react-label`
 
 Styled label: `text-sm font-medium`, `select-none`. Respects `group-data-[disabled=true]` and `peer-disabled` for opacity changes.
+
+</details>
