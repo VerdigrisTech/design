@@ -43,3 +43,8 @@ defaults:
     values:
       layout: "default"
       section: "examples"
+  - scope:
+      path: "docs"
+    values:
+      layout: "default"
+      section: "docs"

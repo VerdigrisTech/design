@@ -1,3 +1,7 @@
+---
+title: Figma Tokens Studio Sync
+---
+
 # Figma Tokens Studio Sync
 
 How to keep Figma design variables in sync with the canonical tokens in this repo.

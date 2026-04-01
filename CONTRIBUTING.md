@@ -1,3 +1,7 @@
+---
+title: Contributing
+---
+
 # Contributing to the Design System
 
 ## How to Add Design Tokens

@@ -1,3 +1,7 @@
+---
+title: Brand Alignment Analysis
+---
+
 # Brand Alignment Analysis: design.verdigris.co vs www.verdigris.co
 
 **Date:** 2026-03-27
