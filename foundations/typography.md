@@ -1,3 +1,77 @@
+---
+layout: visual
+title: Typography
+---
+
+<div class="v-demo">
+  <div class="v-label">Type Specimen</div>
+
+  <div class="v-type-row">
+    <div class="v-type-meta">H1<br>Lato 700<br>4rem / 1.1</div>
+    <div style="font-family: 'Lato', var(--font-display), sans-serif; font-weight: 700; font-size: 4rem; line-height: 1.1; letter-spacing: -0.02em;">Electrical Intelligence</div>
+  </div>
+
+  <div class="v-type-row">
+    <div class="v-type-meta">H2<br>Lato 700<br>3rem / 1.2</div>
+    <div style="font-family: 'Lato', var(--font-display), sans-serif; font-weight: 700; font-size: 3rem; line-height: 1.2; letter-spacing: -0.02em;">Electrical Intelligence</div>
+  </div>
+
+  <div class="v-type-row">
+    <div class="v-type-meta">H3<br>Lato 700<br>2rem / 1.3</div>
+    <div style="font-family: 'Lato', var(--font-display), sans-serif; font-weight: 700; font-size: 2rem; line-height: 1.3;">Electrical Intelligence</div>
+  </div>
+
+  <div class="v-type-row">
+    <div class="v-type-meta">body-large<br>Inter 400<br>1.25rem / 1.6</div>
+    <div style="font-family: 'Inter', var(--font-body), sans-serif; font-weight: 400; font-size: 1.25rem; line-height: 1.6;">Electrical Intelligence — real-time energy monitoring for commercial buildings.</div>
+  </div>
+
+  <div class="v-type-row">
+    <div class="v-type-meta">body<br>Inter 400<br>1rem / 1.6</div>
+    <div style="font-family: 'Inter', var(--font-body), sans-serif; font-weight: 400; font-size: 1rem; line-height: 1.6;">Electrical Intelligence — real-time energy monitoring for commercial buildings.</div>
+  </div>
+
+  <div class="v-type-row">
+    <div class="v-type-meta">body-small<br>Inter 400<br>0.875rem / 1.6</div>
+    <div style="font-family: 'Inter', var(--font-body), sans-serif; font-weight: 400; font-size: 0.875rem; line-height: 1.6;">Electrical Intelligence — real-time energy monitoring for commercial buildings.</div>
+  </div>
+
+  <div class="v-type-row">
+    <div class="v-type-meta">mono<br>JetBrains 400<br>0.875rem / 1.6</div>
+    <div style="font-family: 'JetBrains Mono', var(--font-mono), monospace; font-weight: 400; font-size: 0.875rem; line-height: 1.6;">oklch(0.75 0.1286 191.57) // brand.verdigris</div>
+  </div>
+</div>
+
+<div class="v-demo">
+  <div class="v-label">Font Comparison — "Electrical Intelligence"</div>
+  <div class="v-grid-3">
+    <div class="v-card">
+      <div class="v-card-desc" style="margin-bottom: 0.5rem;">Lato (Display)</div>
+      <div style="font-family: 'Lato', var(--font-display), sans-serif; font-weight: 700; font-size: 1.5rem; line-height: 1.2;">Electrical Intelligence</div>
+    </div>
+    <div class="v-card">
+      <div class="v-card-desc" style="margin-bottom: 0.5rem;">Inter (Body)</div>
+      <div style="font-family: 'Inter', var(--font-body), sans-serif; font-weight: 700; font-size: 1.5rem; line-height: 1.2;">Electrical Intelligence</div>
+    </div>
+    <div class="v-card">
+      <div class="v-card-desc" style="margin-bottom: 0.5rem;">JetBrains Mono (Code)</div>
+      <div style="font-family: 'JetBrains Mono', var(--font-mono), monospace; font-weight: 400; font-size: 1.5rem; line-height: 1.2;">Electrical Intelligence</div>
+    </div>
+  </div>
+</div>
+
+<div class="v-demo">
+  <div class="v-label">Button Text Sample</div>
+  <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+    <span class="v-btn v-btn-default" style="font-family: 'Inter', var(--font-body), sans-serif; font-weight: 600;">Get Started</span>
+    <span class="v-btn v-btn-outline" style="font-family: 'Inter', var(--font-body), sans-serif; font-weight: 600;">Learn More</span>
+    <span class="v-btn v-btn-secondary" style="font-family: 'Inter', var(--font-body), sans-serif; font-weight: 600;">Contact Sales</span>
+    <span style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted-fg);">Inter 600 / 0.875rem</span>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Typography
 
 ## Font Stack
@@ -110,3 +184,5 @@ All values from www's production CSS. Where `brand_rules.yml` disagrees, CSS is 
 - CTA text-transform (uppercase) is not enforced. Buttons use sentence case.
 - Patina uses Inter for headings (no display font). The www display font (Lato) is a justified deviation for marketing contexts.
 - All values in this document are canonical. The design token JSON files are the machine-readable source of truth.
+
+</details>

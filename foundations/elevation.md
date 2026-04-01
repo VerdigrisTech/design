@@ -1,3 +1,102 @@
+---
+layout: visual
+title: Elevation
+---
+
+<div class="v-demo">
+  <div class="v-label">Shadow Scale</div>
+  <p style="font-size:0.8125rem; color:var(--muted-fg); margin-bottom:1.25rem;">Tailwind v4 default shadows from none to xl.</p>
+
+  <div style="display:flex; flex-wrap:wrap; gap:1.25rem; align-items:flex-end;">
+    <div class="v-shadow-card" style="box-shadow:none;">
+      <span>none</span>
+    </div>
+    <div class="v-shadow-card" style="box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);">
+      <span>xs</span>
+    </div>
+    <div class="v-shadow-card" style="box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);">
+      <span>sm</span>
+    </div>
+    <div class="v-shadow-card" style="box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);">
+      <span>md</span>
+    </div>
+    <div class="v-shadow-card" style="box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);">
+      <span>lg</span>
+    </div>
+    <div class="v-shadow-card" style="box-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);">
+      <span>xl</span>
+    </div>
+  </div>
+</div>
+
+<div class="v-demo">
+  <div class="v-label">Z-Index Layers</div>
+  <p style="font-size:0.8125rem; color:var(--muted-fg); margin-bottom:1.25rem;">Five-layer stacking system. Higher layers visually overlap lower ones.</p>
+
+  <style>
+    .z-stack {
+      position: relative;
+      height: 14rem;
+      max-width: 28rem;
+    }
+    .z-layer {
+      position: absolute;
+      left: 0;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: flex-end;
+      padding: 0.5rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      border: 1px solid;
+    }
+    .z-layer-base {
+      bottom: 0; width: 100%; height: 100%;
+      background: oklch(0.75 0.1286 191.57 / 8%);
+      border-color: oklch(0.75 0.1286 191.57 / 20%);
+      color: var(--muted-fg);
+    }
+    .z-layer-scrollbar {
+      bottom: 0.5rem; left: 1rem; width: calc(100% - 2rem); height: calc(100% - 1.5rem);
+      background: oklch(0.75 0.1286 191.57 / 12%);
+      border-color: oklch(0.75 0.1286 191.57 / 25%);
+      color: var(--muted-fg);
+    }
+    .z-layer-raised {
+      bottom: 1rem; left: 2rem; width: calc(100% - 4rem); height: calc(100% - 3rem);
+      background: oklch(0.75 0.1286 191.57 / 18%);
+      border-color: oklch(0.75 0.1286 191.57 / 30%);
+      color: var(--fg);
+    }
+    .z-layer-sticky {
+      bottom: 1.5rem; left: 3rem; width: calc(100% - 6rem); height: calc(100% - 4.5rem);
+      background: oklch(0.75 0.1286 191.57 / 25%);
+      border-color: oklch(0.75 0.1286 191.57 / 40%);
+      color: var(--fg);
+    }
+    .z-layer-overlay {
+      bottom: 2rem; left: 4rem; width: calc(100% - 8rem); height: calc(100% - 6rem);
+      background: oklch(0.75 0.1286 191.57 / 35%);
+      border-color: oklch(0.75 0.1286 191.57 / 50%);
+      color: var(--fg);
+      font-weight: 600;
+    }
+  </style>
+
+  <div class="z-stack">
+    <div class="z-layer z-layer-base">base — z-0</div>
+    <div class="z-layer z-layer-scrollbar">scrollbar — z-1</div>
+    <div class="z-layer z-layer-raised">raised — z-10</div>
+    <div class="z-layer z-layer-sticky">sticky — z-20</div>
+    <div class="z-layer z-layer-overlay">overlay — z-50</div>
+  </div>
+</div>
+
+<div class="v-gradient"></div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Elevation
 
 > Audit of 59 UI components + non-UI components in Patina (`/tmp/patina/src/components/`).
@@ -105,3 +204,5 @@ If dark-mode elevation becomes a concern, consider:
 - Adding a `shadow-glow` token with a brand-tinted light shadow (e.g., `0 0 12px rgb(var(--primary) / 0.15)`)
 - Using `ring` utilities (already used for focus states) as decorative elevation cues
 - Increasing `border` opacity for cards and floating elements in dark mode
+
+</details>
