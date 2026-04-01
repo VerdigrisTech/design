@@ -1,6 +1,14 @@
 ---
+layout: visual
 title: Contributing
 ---
+
+<div class="v-demo">
+  <p class="v-label">Contributing</p>
+  <div style="font-family:var(--font-display);font-size:2rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:0.5rem">Add to the Design System</div>
+  <p style="font-size:1rem;color:var(--muted-fg);max-width:36rem;line-height:1.6">No code required. Add guidelines, assets, or tokens via PR. The build check runs automatically.</p>
+  <div class="v-gradient"></div>
+</div>
 
 # Contributing to the Design System
 

@@ -11,6 +11,9 @@ title: Tabs
       <div class="v-tab">Analytics</div>
       <div class="v-tab">Settings</div>
     </div>
+    <div style="padding:1.25rem;border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);font-size:0.875rem;color:var(--muted-fg)">
+      Real-time energy monitoring across 847 circuits. Last updated 2 minutes ago.
+    </div>
   </div>
 </div>
 
