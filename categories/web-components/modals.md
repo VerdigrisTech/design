@@ -1,3 +1,43 @@
+---
+layout: visual
+title: Modals
+---
+
+<p class="v-label">Dialog</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="display: flex; justify-content: center; padding: 2rem;">
+    <div class="v-card" style="width: 24rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: start;">
+        <div>
+          <div style="font-size: 1.1rem; font-weight: 600;">Confirm action</div>
+          <div style="font-size: 0.875rem; color: var(--color-muted-foreground); margin-top: 0.25rem;">Are you sure you want to proceed? This action cannot be undone.</div>
+        </div>
+        <span style="cursor: pointer; color: var(--color-muted-foreground);">&#10005;</span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+        <button class="v-btn v-btn-outline">Cancel</button>
+        <button class="v-btn v-btn-default">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="v-label">Sheet (Side Panel)</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="display: flex; justify-content: flex-end; min-height: 12rem;">
+    <div style="width: 16rem; height: 100%; border-left: 1px solid var(--color-border); background: var(--color-background); padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 600;">Settings</span>
+        <span style="cursor: pointer; color: var(--color-muted-foreground);">&#10005;</span>
+      </div>
+      <div style="font-size: 0.875rem; color: var(--color-muted-foreground);">Panel content goes here.</div>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Modals
 
 Source files: `dialog.tsx`, `alert-dialog.tsx`, `draggable-dialog.tsx`, `sheet.tsx`
@@ -312,3 +352,5 @@ All modal content surfaces use `shadow-lg` (`shadow.lg`) for high elevation, vis
 ### Portal rendering
 
 All modals render via a portal (appended to `document.body`) to avoid z-index and overflow clipping issues from parent containers.
+
+</details>

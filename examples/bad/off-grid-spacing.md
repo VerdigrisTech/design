@@ -1,3 +1,34 @@
+---
+layout: visual
+title: "Bad: Off-Grid Spacing Values"
+category: spacing
+classification: bad
+---
+
+<div class="v-demo">
+  <span class="v-badge v-badge-fail">FAIL</span>
+  <div class="v-label">Incorrect: 15px padding -- not on the 4px grid</div>
+  <div style="background:#f5f5f5; padding:2rem; border-radius:0.625rem;">
+    <div style="background:#fff; padding:15px; border-radius:0.625rem; border:2px dashed #ef4444; max-width:280px;">
+      <p style="margin:0; font-family:Inter,sans-serif; font-size:1rem; color:#0a0a0a;">Circuit A: 342 kWh</p>
+      <span style="font-family:monospace; font-size:0.75rem; color:#ef4444;">padding: 15px (off-grid)</span>
+    </div>
+  </div>
+</div>
+
+<div class="v-demo" style="margin-top:1rem;">
+  <span class="v-badge v-badge-pass">PASS</span>
+  <div class="v-label">Corrected: 16px (1rem) padding -- on the 4px grid via spacing.4</div>
+  <div style="background:#f5f5f5; padding:2rem; border-radius:0.625rem;">
+    <div style="background:#fff; padding:16px; border-radius:0.625rem; border:2px solid #22c55e; max-width:280px;">
+      <p style="margin:0; font-family:Inter,sans-serif; font-size:1rem; color:#0a0a0a;">Circuit A: 342 kWh</p>
+      <span style="font-family:monospace; font-size:0.75rem; color:#22c55e;">padding: 16px (spacing.4)</span>
+    </div>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Bad: Off-Grid Spacing Values
 
 ## Category
@@ -12,8 +43,6 @@ bad
 - Hardcoded pixel/rem values instead of referencing spacing tokens
 - Inconsistent spacing makes the layout feel off-balance and unpredictable
 - These values will not align with adjacent components that use the token scale
-
-<!-- Screenshot placeholder: Card with 15px padding next to a card with token-based padding, showing misalignment -->
 
 ## Tokens Referenced
 - `spacing.grid.allowed_scale` -- defines the valid spacing steps (multiples of 4px)
@@ -57,4 +86,4 @@ Always use spacing tokens that follow the 4px grid. The spacing scale provides v
 }
 ```
 
-<!-- Screenshot placeholder: Corrected card with token-based padding aligned to the 4px grid -->
+</details>

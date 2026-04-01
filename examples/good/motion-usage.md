@@ -1,3 +1,36 @@
+---
+layout: visual
+title: "Good: Proper Hover-Lift Animation"
+category: motion
+classification: good
+---
+
+<div class="v-demo">
+  <span class="v-badge v-badge-pass">PASS</span>
+  <div style="background:#f5f5f5; padding:2rem; border-radius:0.625rem; text-align:center;">
+    <style>
+      .demo-btn-lift {
+        display:inline-block; padding:0.75rem 2rem; background:#0fc8c3; color:#0a0a0a;
+        border:none; border-radius:0.625rem; font-family:Lato,sans-serif; font-weight:700;
+        font-size:1rem; cursor:pointer; text-decoration:none;
+        transition: transform 500ms ease, box-shadow 500ms ease;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      }
+      @media (hover:hover) and (pointer:fine) {
+        .demo-btn-lift:hover { transform:translateY(-4px); box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+      }
+      @media (prefers-reduced-motion:reduce) {
+        .demo-btn-lift { transition:none; }
+        .demo-btn-lift:hover { transform:none; }
+      }
+    </style>
+    <a href="#" class="demo-btn-lift" onclick="return false;">View Dashboard</a>
+    <p style="margin:0.75rem 0 0; font-family:Inter,sans-serif; font-size:0.8rem; color:#737373;">Hover to see the lift effect (pointer devices only)</p>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Good: Proper Hover-Lift Animation
 
 ## Category
@@ -12,8 +45,6 @@ good
 - Animation is gated behind `(hover: hover) and (pointer: fine)` -- prevents activation on touch devices
 - A `prefers-reduced-motion: reduce` fallback disables the transform entirely
 - The shadow deepens on hover to reinforce the "lift" affordance
-
-<!-- Screenshot placeholder: Card in default state and hovered state showing subtle vertical lift -->
 
 ## Tokens Referenced
 - `motion.duration.normal` -- 500ms for interactive transitions
@@ -56,4 +87,4 @@ The hover-lift pattern gives users clear feedback that an element is interactive
 </a>
 ```
 
-<!-- Screenshot placeholder: Two-frame comparison of card at rest and card in hover-lift state -->
+</details>
