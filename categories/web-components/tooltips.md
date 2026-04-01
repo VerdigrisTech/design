@@ -1,3 +1,22 @@
+---
+layout: visual
+title: Tooltips & Overlays
+---
+
+<p class="v-label">Tooltip</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 2.5rem 1rem 1rem;">
+    <div style="background: var(--color-foreground); color: var(--color-background); font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: 0.375rem; position: relative;">
+      Copy to clipboard
+      <span style="position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 8px; height: 8px; background: var(--color-foreground);"></span>
+    </div>
+    <button class="v-btn v-btn-outline" style="margin-top: 0.25rem;">Hover me</button>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Tooltips & Overlays
 
 Source files: `tooltip.tsx`, `hover-card.tsx`, `popover.tsx`
@@ -182,3 +201,5 @@ Never mix trigger behaviors -- a tooltip should never require a click, and a pop
 - `TooltipProvider`, `Tooltip`, `TooltipTrigger`, `TooltipContent`
 - `HoverCard`, `HoverCardTrigger`, `HoverCardContent`
 - `Popover`, `PopoverTrigger`, `PopoverContent`, `PopoverAnchor`
+
+</details>

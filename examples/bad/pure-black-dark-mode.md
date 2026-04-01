@@ -1,3 +1,34 @@
+---
+layout: visual
+title: "Bad: Pure Black Background in Dark Mode"
+category: color
+classification: bad
+---
+
+<div class="v-demo">
+  <span class="v-badge v-badge-fail">FAIL</span>
+  <div class="v-label">Incorrect: #000000 background -- harsh contrast, OLED pixel-off artifact</div>
+  <div style="background:#000000; padding:2rem; border-radius:0.625rem; color:#ffffff;">
+    <div style="background:#111111; padding:1.5rem; border-radius:0.625rem; border:1px solid #222;">
+      <h3 style="margin:0 0 0.25rem; font-family:Lato,sans-serif; font-weight:700; font-size:1.25rem;">Facility Overview</h3>
+      <p style="margin:0; font-family:Inter,sans-serif; font-size:0.875rem; opacity:0.7;">Monitoring 47 circuits across 3 buildings.</p>
+    </div>
+  </div>
+</div>
+
+<div class="v-demo" style="margin-top:1rem;">
+  <span class="v-badge v-badge-pass">PASS</span>
+  <div class="v-label">Corrected: neutral.950 (#0a0a0a) background -- warm, layered, easy on eyes</div>
+  <div style="background:#0a0a0a; padding:2rem; border-radius:0.625rem; color:#fafafa;">
+    <div style="background:#171717; padding:1.5rem; border-radius:0.625rem; border:1px solid rgba(255,255,255,0.1);">
+      <h3 style="margin:0 0 0.25rem; font-family:Lato,sans-serif; font-weight:700; font-size:1.25rem;">Facility Overview</h3>
+      <p style="margin:0; font-family:Inter,sans-serif; font-size:0.875rem; color:#a3a3a3;">Monitoring 47 circuits across 3 buildings.</p>
+    </div>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Bad: Pure Black Background in Dark Mode
 
 ## Category
@@ -12,8 +43,6 @@ bad
 - White text on `#000000` produces maximum contrast (21:1), which causes eye strain during extended reading
 - Borders and card edges disappear against pure black, flattening the visual hierarchy
 - The design system explicitly prohibits pure black backgrounds
-
-<!-- Screenshot placeholder: Dark mode page with #000000 background showing harsh contrast and lost borders -->
 
 ## Tokens Referenced
 - `color.dark_mode.never_pure_black` -- explicit rule: never use `#000000` as a background
@@ -60,4 +89,4 @@ Use `neutral.950` (`#0a0a0a`) for the page background and `neutral.900` (`#17171
 }
 ```
 
-<!-- Screenshot placeholder: Corrected dark mode showing near-black background with visible card layering -->
+</details>

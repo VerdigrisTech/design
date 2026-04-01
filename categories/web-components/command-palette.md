@@ -1,3 +1,31 @@
+---
+layout: visual
+title: Command Palette
+---
+
+<p class="v-label">Command Palette</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="display: flex; justify-content: center; padding: 2rem;">
+    <div class="v-card" style="width: 24rem; padding: 0; overflow: hidden;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border);">
+        <span style="color: var(--color-muted-foreground);">&#128269;</span>
+        <span style="font-size: 0.875rem; color: var(--color-muted-foreground);">Type a command or search...</span>
+      </div>
+      <div style="padding: 0.25rem 0;">
+        <div style="padding: 0.25rem 0.5rem;">
+          <div style="font-size: 0.75rem; font-weight: 500; color: var(--color-muted-foreground); padding: 0.375rem 0.5rem;">Pages</div>
+          <div style="padding: 0.375rem 0.5rem; font-size: 0.875rem; border-radius: 0.25rem; background: var(--color-accent);">Dashboard</div>
+          <div style="padding: 0.375rem 0.5rem; font-size: 0.875rem; border-radius: 0.25rem;">Settings</div>
+          <div style="padding: 0.375rem 0.5rem; font-size: 0.875rem; border-radius: 0.25rem;">Team Members</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Command Palette
 
 Source files: `command.tsx`
@@ -202,3 +230,5 @@ The currently highlighted item (via keyboard navigation or hover):
 - `CommandShortcut` -- keyboard shortcut label
 - `CommandSeparator` -- visual divider
 - `CommandLoading` -- loading state
+
+</details>

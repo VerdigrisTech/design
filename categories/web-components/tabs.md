@@ -1,3 +1,22 @@
+---
+layout: visual
+title: Tabs
+---
+
+<p class="v-label">Tab Bar</p>
+<div class="v-demo">
+  <div class="v-comp-demo">
+    <div class="v-tabs">
+      <div class="v-tab v-tab-active">Overview</div>
+      <div class="v-tab">Analytics</div>
+      <div class="v-tab">Settings</div>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Tabs
 
 Source files: `tabs.tsx`
@@ -118,3 +137,5 @@ This pattern keeps the tab state in the URL so it survives page refreshes and ca
 - `TabsList` -- tab bar
 - `TabsTrigger` -- individual tab button
 - `TabsContent` -- panel content
+
+</details>

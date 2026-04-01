@@ -1,3 +1,32 @@
+---
+layout: visual
+title: Sidebar
+---
+
+<p class="v-label">Sidebar Navigation</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="display: flex;">
+    <div style="width: 14rem; background: var(--color-sidebar-background, var(--color-muted)); border-right: 1px solid var(--color-border); padding: 0.75rem 0; display: flex; flex-direction: column; gap: 0.125rem; min-height: 14rem;">
+      <div style="padding: 0.5rem 0.75rem; font-size: 0.75rem; font-weight: 500; color: var(--color-muted-foreground); text-transform: uppercase; letter-spacing: 0.05em;">Main</div>
+      <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; background: var(--color-accent); border-radius: 0.375rem; margin: 0 0.5rem;">
+        <span style="opacity: 0.7;">&#9776;</span> Dashboard
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; color: var(--color-muted-foreground); margin: 0 0.5rem;">
+        <span style="opacity: 0.7;">&#9881;</span> Settings
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; color: var(--color-muted-foreground); margin: 0 0.5rem;">
+        <span style="opacity: 0.7;">&#128100;</span> Users
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; color: var(--color-muted-foreground); margin: 0 0.5rem;">
+        <span style="opacity: 0.7;">&#128202;</span> Analytics
+      </div>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Sidebar
 
 Source files: `sidebar.tsx`
@@ -209,3 +238,5 @@ Returns the full sidebar context:
 - `SidebarMenu`, `SidebarMenuItem`, `SidebarMenuButton`, `SidebarMenuAction`, `SidebarMenuBadge`, `SidebarMenuSkeleton`
 - `SidebarMenuSub`, `SidebarMenuSubItem`, `SidebarMenuSubButton`
 - `useSidebar` -- context hook
+
+</details>
