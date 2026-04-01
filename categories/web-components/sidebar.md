@@ -24,7 +24,7 @@ title: Sidebar
   </div>
 </div>
 
-<details class="v-details">
+<details class="v-details" markdown="1">
 <summary>Documentation</summary>
 
 # Sidebar

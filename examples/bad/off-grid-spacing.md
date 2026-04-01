@@ -27,7 +27,7 @@ classification: bad
   </div>
 </div>
 
-<details class="v-details"><summary>Documentation</summary>
+<details class="v-details" markdown="1"><summary>Documentation</summary>
 
 # Bad: Off-Grid Spacing Values
 

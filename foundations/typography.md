@@ -70,7 +70,7 @@ title: Typography
   </div>
 </div>
 
-<details class="v-details"><summary>Documentation</summary>
+<details class="v-details" markdown="1"><summary>Documentation</summary>
 
 # Typography
 
@@ -160,7 +160,7 @@ Rationale:
 
 ## Type Scale
 
-All values from www's production CSS. Where `brand_rules.yml` disagrees, CSS is the source of truth.
+All values from production CSS. This repo is the canonical source of truth.
 
 ### Headings
 

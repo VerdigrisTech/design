@@ -184,7 +184,7 @@ title: Color System
   </div>
 </div>
 
-<details class="v-details"><summary>Documentation</summary>
+<details class="v-details" markdown="1"><summary>Documentation</summary>
 
 # Color System
 
@@ -280,7 +280,7 @@ The build pipeline generates:
 |-------|-----|--------|------------|
 | Color space | HSL | OKLch | OKLch is canonical; HSL output available for compatibility |
 | Primary (light) | Darkened teal `hsl(178,86%,28%)` | Near-black `oklch(0.21...)` | Different strategies — both valid |
-| Ring/focus | Green-shifted `hsl(153,67%,38%)` | Neutral `oklch(0.705...)` | www should adopt Patina's neutral ring |
+| Ring/focus | Green-shifted `hsl(153,67%,38%)` | Neutral `oklch(0.705...)` | Neutral ring is canonical |
 | Brand teal | `hsl(178,86%,42%)` | `oklch(0.75,0.1286,191.57)` | Equivalent values — confirmed |
 
 </details>

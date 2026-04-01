@@ -13,7 +13,7 @@ classification: good
   </div>
 </div>
 
-<details class="v-details"><summary>Documentation</summary>
+<details class="v-details" markdown="1"><summary>Documentation</summary>
 
 # Good: Brand Teal on Dark Backgrounds
 

@@ -83,13 +83,13 @@ title: Home
     <div class="v-card" style="padding:1rem">
       <div style="font-family:var(--font-mono);font-size:0.625rem;color:var(--muted-fg);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.375rem">Package</div>
       <div style="font-family:var(--font-mono);font-size:0.8125rem">@verdigristech/design-tokens</div>
-      <div style="font-family:var(--font-mono);font-size:0.625rem;color:var(--muted-fg);margin-top:0.125rem">v0.3.0 &middot; npm</div>
+      <div style="font-family:var(--font-mono);font-size:0.625rem;color:var(--muted-fg);margin-top:0.125rem">v0.4.0 &middot; npm</div>
     </div>
   </div>
   <p style="margin-top:0.75rem"><a href="specimen" style="font-size:0.875rem">Full brand specimen &rarr;</a></p>
 </div>
 
-<details class="v-details">
+<details class="v-details" markdown="1">
 <summary>Documentation &amp; Developer Resources</summary>
 
 ## Foundations

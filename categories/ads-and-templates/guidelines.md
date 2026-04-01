@@ -30,7 +30,7 @@ title: Ads & Templates Guidelines
   </div>
 </div>
 
-<details class="v-details"><summary>Guidelines</summary>
+<details class="v-details" markdown="1"><summary>Guidelines</summary>
 
 # Ads & Templates Guidelines
 
