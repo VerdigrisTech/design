@@ -90,7 +90,7 @@ The build pipeline generates:
 
 | Token | www | Patina | Resolution |
 |-------|-----|--------|------------|
-| Color space | HSL | OKLch | www should migrate to OKLch |
+| Color space | HSL | OKLch | OKLch is canonical; HSL output available for compatibility |
 | Primary (light) | Darkened teal `hsl(178,86%,28%)` | Near-black `oklch(0.21...)` | Different strategies — both valid |
 | Ring/focus | Green-shifted `hsl(153,67%,38%)` | Neutral `oklch(0.705...)` | www should adopt Patina's neutral ring |
 | Brand teal | `hsl(178,86%,42%)` | `oklch(0.75,0.1286,191.57)` | Equivalent values — confirmed |

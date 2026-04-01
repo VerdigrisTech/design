@@ -33,6 +33,7 @@
   "scripts": {
     "build": "tsx build/config.ts",
     "validate": "tsx build/validate.ts",
+    "lint:external": "tsx build/lint-external.ts",
     "clean": "rm -rf build/dist"
   },
   "devDependencies": {

@@ -30,3 +30,6 @@ jobs:
           test -f build/dist/css/hsl.css
           test -f build/dist/hex/colors.json
           test -f build/dist/tailwind/preset.js
+
+      - name: Lint external-facing content
+        run: npm run lint:external
