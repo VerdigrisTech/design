@@ -1,3 +1,43 @@
+---
+layout: visual
+title: Tables
+---
+
+<p class="v-label">Data Table</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="padding: 0; overflow: hidden;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+      <thead>
+        <tr style="background: var(--color-muted, #f4f4f5); border-bottom: 1px solid var(--color-border, #e4e4e7);">
+          <th style="text-align: left; padding: 0.625rem 0.75rem; font-weight: 600; color: var(--color-foreground, #1a1a1a);">Circuit</th>
+          <th style="text-align: left; padding: 0.625rem 0.75rem; font-weight: 600; color: var(--color-foreground, #1a1a1a);">Location</th>
+          <th style="text-align: right; padding: 0.625rem 0.75rem; font-weight: 600; color: var(--color-foreground, #1a1a1a);">Power (kW)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid var(--color-border, #e4e4e7);">
+          <td style="padding: 0.625rem 0.75rem;">HVAC-Main</td>
+          <td style="padding: 0.625rem 0.75rem; color: var(--color-muted-foreground, #71717a);">Building A, Floor 2</td>
+          <td style="padding: 0.625rem 0.75rem; text-align: right; font-variant-numeric: tabular-nums;">24.8</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--color-border, #e4e4e7); background: var(--color-muted, #f4f4f5); background: color-mix(in oklch, var(--color-muted, #f4f4f5) 40%, transparent);">
+          <td style="padding: 0.625rem 0.75rem;">Lighting-East</td>
+          <td style="padding: 0.625rem 0.75rem; color: var(--color-muted-foreground, #71717a);">Building A, Floor 1</td>
+          <td style="padding: 0.625rem 0.75rem; text-align: right; font-variant-numeric: tabular-nums;">8.3</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.625rem 0.75rem;">Plug-Load-West</td>
+          <td style="padding: 0.625rem 0.75rem; color: var(--color-muted-foreground, #71717a);">Building B, Floor 3</td>
+          <td style="padding: 0.625rem 0.75rem; text-align: right; font-variant-numeric: tabular-nums;">12.1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Tables
 
 Source files: `table.tsx`, `data-table.tsx`
@@ -148,3 +188,5 @@ All base Table tokens apply, plus:
 - `DataTable` -- the full-featured table component
 - `DataTableColumnHeader` -- reusable sortable column header
 - `DataTablePagination` -- reusable pagination bar
+
+</details>

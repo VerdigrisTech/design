@@ -1,3 +1,20 @@
+---
+layout: visual
+title: "Good: Brand Teal on Dark Backgrounds"
+category: color
+classification: good
+---
+
+<div class="v-demo">
+  <span class="v-badge v-badge-pass">PASS</span>
+  <div style="background:#0a0a0a; color:#0fc8c3; padding:1.5rem 2rem; border-radius:0.625rem; font-family:Lato,sans-serif;">
+    <h2 style="margin:0 0 0.25rem; font-size:2rem; font-weight:700;">Monitor your energy in real time</h2>
+    <p style="margin:0; font-size:1rem; opacity:0.85;">Brand teal on neutral.950 &mdash; 12.3 : 1 contrast</p>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Good: Brand Teal on Dark Backgrounds
 
 ## Category
@@ -10,8 +27,6 @@ good
 - `color.brand.verdigris` (`#0fc8c3`) on `neutral.950` (`#0a0a0a`) achieves ~12.3:1 contrast ratio
 - Passes WCAG AA and AAA for both normal and large text
 - The bright teal retains its full vibrancy because dark backgrounds provide natural contrast
-
-<!-- Screenshot placeholder: Side-by-side showing brand teal heading on neutral.950 background -->
 
 ## Tokens Referenced
 - `color.brand.verdigris` -- the canonical brand teal
@@ -36,4 +51,4 @@ On dark backgrounds the bright brand teal has plenty of contrast without any lig
 </section>
 ```
 
-<!-- Screenshot placeholder: Rendered hero section with teal heading on near-black background -->
+</details>

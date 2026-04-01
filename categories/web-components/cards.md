@@ -1,3 +1,35 @@
+---
+layout: visual
+title: Cards
+---
+
+<p class="v-label">Card Examples</p>
+<div class="v-demo">
+  <div class="v-grid-2">
+    <div class="v-card">
+      <div class="v-card-title">Analytics Overview</div>
+      <div class="v-card-desc">View real-time energy consumption metrics across all monitored circuits and panels.</div>
+    </div>
+    <div class="v-card">
+      <div class="v-card-title">Recent Alerts</div>
+      <div class="v-card-desc">3 new alerts detected in the past 24 hours requiring your attention.</div>
+    </div>
+  </div>
+</div>
+
+<p class="v-label">Card with Accent Bar</p>
+<div class="v-demo">
+  <div style="max-width: 360px;">
+    <div class="v-card" style="border-top: 3px solid var(--color-brand-teal, #0fc8c3); padding-top: 1.25rem;">
+      <div class="v-card-title">Energy Savings</div>
+      <div class="v-card-desc">Your facility saved 12% on energy costs this month compared to the rolling baseline.</div>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Cards
 
 Source file: `card.tsx`
@@ -46,3 +78,5 @@ Card
 ### Data attributes
 
 Each sub-component emits `data-slot="card"`, `data-slot="card-header"`, etc. The `CardAction` slot enables the grid layout via `has-data-[slot=card-action]:grid-cols-[1fr_auto]` on `CardHeader`.
+
+</details>

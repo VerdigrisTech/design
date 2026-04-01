@@ -1,3 +1,37 @@
+---
+layout: visual
+title: Illustration Guidelines
+---
+
+<div class="v-demo">
+  <div class="v-label">Visual Mood — "Technical with polish."</div>
+  <div class="v-swatches">
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.75 0.1286 191.57)"></div>
+      <div class="v-swatch-name">Verdigris</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.29 0.1506 289.33)"></div>
+      <div class="v-swatch-name">Midnight Purple</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.21 0.006 285.885)"></div>
+      <div class="v-swatch-name">neutral.900</div>
+    </div>
+    <div class="v-swatch">
+      <div class="v-swatch-color" style="background: oklch(0.87 0.1786 92.23)"></div>
+      <div class="v-swatch-name">Cyber Yellow</div>
+    </div>
+  </div>
+  <div class="v-gradient" style="height: 4px; background: linear-gradient(to right, oklch(0.75 0.1286 191.57), oklch(0.29 0.1506 289.33))"></div>
+  <div class="v-card" style="margin-top: 1rem; padding: 1.5rem; background: oklch(0.21 0.006 285.885); border-left: 3px solid oklch(0.75 0.1286 191.57)">
+    <div class="v-card-title" style="font-family: Lato, sans-serif; font-weight: 700; font-size: 1.25rem; color: oklch(0.985 0 0)">Technical with polish.</div>
+    <div class="v-card-desc" style="color: oklch(0.92 0.004 286.32)">Clean geometry, consistent strokes, deliberate alignment. Engineering whitepaper, professionally designed.</div>
+  </div>
+</div>
+
+<details class="v-details"><summary>Guidelines</summary>
+
 # Illustration Guidelines
 
 ## Overview
@@ -136,3 +170,5 @@ Illustrations should not contain embedded text. If labels are required:
 - [Dark mode foundations](../../foundations/dark-mode.md) -- How illustrations should adapt between light and dark contexts
 - [Accessibility foundations](../../foundations/accessibility.md) -- Contrast requirements, alt text conventions for illustrations
 - [tokens/color/base.json](../../tokens/color/base.json) -- Canonical brand and neutral color values
+
+</details>

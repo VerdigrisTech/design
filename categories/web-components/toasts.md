@@ -1,3 +1,32 @@
+---
+layout: visual
+title: Toasts
+---
+
+<p class="v-label">Toast Variants</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="display: flex; flex-direction: column; gap: 0.5rem; max-width: 22rem; margin: 0 auto;">
+    <div class="v-toast">
+      <span style="font-size: 0.875rem;">Event has been created</span>
+    </div>
+    <div class="v-toast">
+      <span class="v-toast-icon" style="color: #22c55e;">&#9679;</span>
+      <span style="font-size: 0.875rem;">Saved successfully</span>
+    </div>
+    <div class="v-toast">
+      <span class="v-toast-icon" style="color: #ef4444;">&#9679;</span>
+      <span style="font-size: 0.875rem;">Something went wrong</span>
+    </div>
+    <div class="v-toast">
+      <span class="v-toast-icon" style="color: #eab308;">&#9679;</span>
+      <span style="font-size: 0.875rem;">Check your connection</span>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Toasts
 
 Source file: `sonner.tsx`
@@ -147,3 +176,5 @@ The toast surface uses the `popover` / `popover-foreground` semantic pair, consi
 - `Toaster` -- the global toast provider component (place once at app root)
 
 Toast triggering is done via the `toast` function exported from the `sonner` package directly, not from the Patina component file.
+
+</details>

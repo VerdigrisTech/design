@@ -1,3 +1,44 @@
+---
+layout: visual
+title: "Bad: Animation Without Reduced-Motion Fallback"
+category: motion
+classification: bad
+---
+
+<div class="v-demo">
+  <span class="v-badge v-badge-fail">FAIL</span>
+  <div class="v-label">Incorrect: slide-in animation runs unconditionally -- no reduced-motion check</div>
+  <div style="background:#f5f5f5; padding:2rem; border-radius:0.625rem;">
+    <style>
+      @keyframes demo-slide-bad { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    </style>
+    <div style="background:#fff; padding:1.5rem; border-radius:0.625rem; border:2px dashed #ef4444; max-width:320px; animation:demo-slide-bad 600ms ease-out;">
+      <h3 style="margin:0 0 0.25rem; font-family:Lato,sans-serif; font-weight:700; font-size:1.25rem; color:#0a0a0a;">Weekly Summary</h3>
+      <p style="margin:0; font-family:Inter,sans-serif; font-size:0.875rem; color:#404040;">Total consumption: 2,891 kWh</p>
+      <span style="display:block; margin-top:0.5rem; font-family:monospace; font-size:0.75rem; color:#ef4444;">No prefers-reduced-motion query</span>
+    </div>
+  </div>
+</div>
+
+<div class="v-demo" style="margin-top:1rem;">
+  <span class="v-badge v-badge-pass">PASS</span>
+  <div class="v-label">Corrected: animation gated behind prefers-reduced-motion: no-preference</div>
+  <div style="background:#f5f5f5; padding:2rem; border-radius:0.625rem;">
+    <style>
+      @keyframes demo-slide-good { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+      .demo-panel-good { opacity:1; transform:translateY(0); }
+      @media (prefers-reduced-motion:no-preference) { .demo-panel-good { animation:demo-slide-good 500ms ease-out; } }
+    </style>
+    <div class="demo-panel-good" style="background:#fff; padding:1.5rem; border-radius:0.625rem; border:2px solid #22c55e; max-width:320px;">
+      <h3 style="margin:0 0 0.25rem; font-family:Lato,sans-serif; font-weight:700; font-size:1.25rem; color:#0a0a0a;">Weekly Summary</h3>
+      <p style="margin:0; font-family:Inter,sans-serif; font-size:0.875rem; color:#404040;">Total consumption: 2,891 kWh</p>
+      <span style="display:block; margin-top:0.5rem; font-family:monospace; font-size:0.75rem; color:#22c55e;">Respects prefers-reduced-motion</span>
+    </div>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Bad: Animation Without Reduced-Motion Fallback
 
 ## Category
@@ -12,8 +53,6 @@ bad
 - The `prefers-reduced-motion` media query is entirely absent
 - This violates WCAG 2.1 SC 2.3.3 (Animation from Interactions) at AAA level
 - The design system requires a reduced-motion fallback for every animation
-
-<!-- Screenshot placeholder: Browser DevTools showing animation CSS with no prefers-reduced-motion query -->
 
 ## Tokens Referenced
 - `motion.reduced_motion.required` -- all animations must include a reduced-motion fallback
@@ -74,4 +113,4 @@ Wrap the animation in a `prefers-reduced-motion: no-preference` query so it only
 }
 ```
 
-<!-- Screenshot placeholder: DevTools showing corrected CSS with prefers-reduced-motion query highlighted -->
+</details>

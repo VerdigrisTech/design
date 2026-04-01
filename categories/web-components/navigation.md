@@ -1,3 +1,24 @@
+---
+layout: visual
+title: Navigation
+---
+
+<p class="v-label">Horizontal Nav Bar</p>
+<div class="v-demo">
+  <div class="v-comp-demo">
+    <div style="display: flex; align-items: center; gap: 1.5rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border); width: 100%; font-size: 0.875rem;">
+      <span style="font-weight: 600; margin-right: 1rem;">Verdigris</span>
+      <a href="#" style="color: var(--color-foreground); font-weight: 500; text-decoration: none; border-bottom: 2px solid var(--color-foreground); padding-bottom: 0.25rem;">Dashboard</a>
+      <a href="#" style="color: var(--color-muted-foreground); text-decoration: none;">Projects</a>
+      <a href="#" style="color: var(--color-muted-foreground); text-decoration: none;">Team</a>
+      <a href="#" style="color: var(--color-muted-foreground); text-decoration: none;">Settings</a>
+    </div>
+  </div>
+</div>
+
+<details class="v-details">
+<summary>Documentation</summary>
+
 # Navigation
 
 Source files: `sidebar.tsx`, `tabs.tsx`, `breadcrumb.tsx`, `pagination.tsx`, `command.tsx`, `dropdown-menu.tsx`
@@ -227,3 +248,5 @@ Destructive variant: `text-destructive`, `focus:bg-destructive/10`.
 - `text-muted-foreground` (icons, shortcuts)
 - `bg-border` (separator)
 - Animations: `fade-in/out`, `zoom-in/out-95`, `slide-in-from-*`
+
+</details>

@@ -1,3 +1,22 @@
+---
+layout: visual
+title: "Good: Proper Heading Hierarchy"
+category: typography
+classification: good
+---
+
+<div class="v-demo">
+  <span class="v-badge v-badge-pass">PASS</span>
+  <div style="background:#fff; padding:1.5rem 2rem; border-radius:0.625rem; color:#0a0a0a;">
+    <h1 style="margin:0 0 0.5rem; font-family:Lato,sans-serif; font-weight:700; font-size:4rem; line-height:1.1;">Energy Analytics Platform</h1>
+    <h2 style="margin:0 0 0.5rem; font-family:Lato,sans-serif; font-weight:700; font-size:3rem; line-height:1.2;">Real-Time Monitoring</h2>
+    <h3 style="margin:0 0 0.5rem; font-family:Lato,sans-serif; font-weight:700; font-size:2rem; line-height:1.3;">Circuit-Level Breakdown</h3>
+    <p style="margin:0; font-family:Inter,sans-serif; font-weight:400; font-size:1rem; line-height:1.5;">Track energy consumption at the individual circuit level with sub-minute granularity.</p>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Good: Proper Heading Hierarchy
 
 ## Category
@@ -12,8 +31,6 @@ good
 - H3 uses Lato at 700 weight and `2rem` (32px) -- still distinct from body text
 - Body text uses Inter at 400 weight and `1rem` (16px) -- optimized for reading
 - The weight contrast between headings (700) and body (400) creates clear hierarchy
-
-<!-- Screenshot placeholder: Page section showing H1, H2, H3, and body text in correct sizes and weights -->
 
 ## Tokens Referenced
 - `typography.fontFamily.display` -- Lato for headings
@@ -56,4 +73,4 @@ body {
 </article>
 ```
 
-<!-- Screenshot placeholder: Rendered article showing full heading hierarchy with body text -->
+</details>

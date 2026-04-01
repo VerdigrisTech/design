@@ -1,3 +1,22 @@
+---
+layout: visual
+title: "Good: On-Brand Card Composition"
+category: component
+classification: good
+---
+
+<div class="v-demo">
+  <span class="v-badge v-badge-pass">PASS</span>
+  <div style="background:#f5f5f5; padding:2rem; border-radius:0.625rem;">
+    <div style="background:#fff; padding:1.5rem; border-radius:0.625rem; border:1px solid #e5e5e5; box-shadow:0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); max-width:320px;">
+      <h3 style="margin:0 0 0.5rem; font-family:Lato,sans-serif; font-weight:700; font-size:1.25rem; color:#0a0a0a;">Monthly Usage</h3>
+      <p style="margin:0; font-family:Inter,sans-serif; font-size:1rem; color:#404040;">1,247 kWh consumed across 14 circuits.</p>
+    </div>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Good: On-Brand Card Composition
 
 ## Category
@@ -12,8 +31,6 @@ good
 - Padding uses `spacing.6` (`1.5rem` / 24px) -- generous breathing room on the 4px grid
 - Border color uses `neutral.200` in light mode, `neutral.800` in dark mode -- quiet separation
 - All values come from tokens, nothing hardcoded
-
-<!-- Screenshot placeholder: Card component in light mode showing shadow, radius, padding, and border -->
 
 ## Tokens Referenced
 - `elevation.shadow.sm` -- card shadow
@@ -51,4 +68,4 @@ The card follows Patina's composition pattern: subtle shadow for depth, consiste
 </div>
 ```
 
-<!-- Screenshot placeholder: Card in both light and dark mode side by side -->
+</details>

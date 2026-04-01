@@ -1,3 +1,22 @@
+---
+layout: visual
+title: "Good: Correct Dark Mode Implementation"
+category: color
+classification: good
+---
+
+<div class="v-demo">
+  <span class="v-badge v-badge-pass">PASS</span>
+  <div style="background:#0a0a0a; padding:2rem; border-radius:0.625rem; color:#fafafa;">
+    <div style="background:#171717; padding:1.5rem; border-radius:0.625rem; border:1px solid rgba(255,255,255,0.1);">
+      <h3 style="margin:0 0 0.25rem; font-family:Lato,sans-serif; font-weight:700; font-size:1.25rem; color:#fafafa;">Circuit Overview</h3>
+      <p style="margin:0; font-family:Inter,sans-serif; font-size:0.875rem; color:#a3a3a3;">Last updated 3 minutes ago</p>
+    </div>
+  </div>
+</div>
+
+<details class="v-details"><summary>Documentation</summary>
+
 # Good: Correct Dark Mode Implementation
 
 ## Category
@@ -12,8 +31,6 @@ good
 - Borders use semi-transparent white (`oklch(1 0 0 / 10%)`) that adapts to any surface
 - Foreground text swaps to `neutral.50` for primary and `neutral.400` for secondary
 - The overall feel is warm and layered, not flat and stark
-
-<!-- Screenshot placeholder: Full-page dark mode layout showing background, card, text, and border layers -->
 
 ## Tokens Referenced
 - `color.neutral.950` -- page background in dark mode
@@ -50,4 +67,4 @@ Pure black (`#000000`) creates harsh contrast against white text, causing eye st
 </body>
 ```
 
-<!-- Screenshot placeholder: Dark mode page with card showing layered backgrounds and text hierarchy -->
+</details>
