@@ -6,11 +6,12 @@ This category covers all produced marketing collateral at Verdigris: display adv
 
 ## Mood & Style
 
-Verdigris collateral is **precise, masterful, and refined**. We sell energy intelligence to sophisticated buyers — facility managers, sustainability directors, and C-suite executives. The visual tone communicates credibility through restraint, not volume.
+Verdigris collateral embodies all four brand pillars. We sell energy intelligence to sophisticated buyers — facility managers, sustainability directors, and C-suite executives. The visual tone communicates credibility through restraint, not volume.
 
 - **Precise:** Clean geometry, aligned grids, intentional whitespace. Every element earns its place.
 - **Masterful:** Confident typography, controlled color palette, no visual clutter. The design demonstrates the same rigor as our product.
 - **Refined:** Subtle use of the brand gradient, professional photography, understated data visualizations.
+- **Pioneering:** OKLch color science, perceptual gradient interpolation, data-driven proof points (8 kHz, sub-cycle) that signal technical leadership no competitor can claim.
 
 This is **not** salesy, loud, or promotional in the conventional sense. No starbursts, no "ACT NOW" banners, no stock photos of people pointing at screens. If a piece could belong to any B2B SaaS company, it is not Verdigris.
 
