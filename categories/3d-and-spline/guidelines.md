@@ -1,6 +1,8 @@
 ---
 layout: visual
 title: 3D & Spline Guidelines
+status: partial
+status_note: Needs rendered scene captures and starter implementation references before this category is complete.
 ---
 
 <div class="v-demo">

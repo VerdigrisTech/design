@@ -1,6 +1,8 @@
 ---
 layout: visual
 title: Physical Goods Guidelines
+status: partial
+status_note: Needs print-ready starter files and photographed reference pieces for full coverage.
 ---
 
 <div class="v-demo">

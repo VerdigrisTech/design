@@ -1,6 +1,8 @@
 ---
 layout: visual
 title: Ads & Templates Guidelines
+status: partial
+status_note: Needs finalized template files and real campaign examples before this guide is complete.
 ---
 
 <div class="v-demo">

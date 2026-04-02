@@ -1,6 +1,8 @@
 ---
 layout: visual
 title: Illustration Guidelines
+status: partial
+status_note: Needs example illustration assets and a fuller set of good and bad reference comps.
 ---
 
 <div class="v-demo">

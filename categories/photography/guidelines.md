@@ -1,6 +1,8 @@
 ---
 layout: visual
 title: Photography Guidelines
+status: partial
+status_note: Needs annotated example images and approved photography references before the guide is complete.
 ---
 
 <div class="v-demo">

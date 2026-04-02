@@ -284,6 +284,51 @@
     html.dark .site-content a { color: var(--brand-teal); }
     html.dark .site-content a:hover { opacity: 0.85; }
 
+    /* Status pills for documentation completeness */
+    .page-status {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 0 0 1.5rem;
+      padding: 0 0 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-status-note {
+      margin: 0;
+      max-width: 36rem;
+      font-size: 0.875rem;
+      color: var(--muted-fg);
+    }
+    .status-pill {
+      --status-pill-dot: var(--muted-fg);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.625rem;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      background: var(--muted);
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      line-height: 1;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .status-pill::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      flex-shrink: 0;
+      border-radius: 9999px;
+      background: var(--status-pill-dot);
+    }
+    .status-pill-complete { --status-pill-dot: oklch(0.45 0.15 145); }
+    .status-pill-partial { --status-pill-dot: oklch(0.87 0.1786 92.23); }
+    .status-pill-planned { --status-pill-dot: var(--neutral-400); }
+    .status-pill-blocked { --status-pill-dot: oklch(0.577 0.245 27.325); }
+
     /* Responsive */
     @media (max-width: 768px) {
       .site-sidebar { display: none; }
@@ -446,6 +491,15 @@
     </aside>
 
     <main class="site-content">
+      {% if page.status %}
+        {% assign status_label = page.status_label | default: page.status %}
+        <div class="page-status">
+          <span class="status-pill status-pill-{{ page.status }}">{{ status_label | capitalize }}</span>
+          {% if page.status_note %}
+            <p class="page-status-note">{{ page.status_note }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
       {{ content }}
     </main>
   </div>

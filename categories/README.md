@@ -6,13 +6,15 @@ This folder contains **medium-specific visual guidelines**. Each subfolder cover
 
 | Folder | What Goes Here | Status |
 |--------|---------------|--------|
-| `web-components/` | Button, card, form, nav, data display patterns from Patina | Phase 2 |
-| `photography/` | Photo style, mood boards, composition rules, crop guidance | Needs content |
-| `illustration/` | Icon style, line weight, diagram conventions, color usage | Needs content |
-| `3d-and-spline/` | WebGL waveform spec, Three.js patterns, perf budgets | Needs content |
-| `animation/` | Scroll-reveal, hover states, page transitions, reduced-motion | Phase 2 |
-| `ads-and-templates/` | LinkedIn/Google Display specs, sales leave-behinds | Needs content |
-| `physical-goods/` | Trade show, merchandise, print color specs | Needs content |
+| `web-components/` | Button, card, form, nav, data display patterns from Patina | <span class="status-pill status-pill-complete">Complete</span> |
+| `photography/` | Photo style, mood boards, composition rules, crop guidance | <span class="status-pill status-pill-partial">Partial</span> |
+| `illustration/` | Icon style, line weight, diagram conventions, color usage | <span class="status-pill status-pill-partial">Partial</span> |
+| `3d-and-spline/` | WebGL waveform spec, Three.js patterns, perf budgets | <span class="status-pill status-pill-partial">Partial</span> |
+| `animation/` | Scroll-reveal, hover states, page transitions, reduced-motion | <span class="status-pill status-pill-complete">Complete</span> |
+| `ads-and-templates/` | LinkedIn/Google Display specs, sales leave-behinds | <span class="status-pill status-pill-partial">Partial</span> |
+| `physical-goods/` | Trade show, merchandise, print color specs | <span class="status-pill status-pill-partial">Partial</span> |
+
+Status reflects documentation completeness, not design approval. `Partial` means the guide is already usable, but still needs examples, source assets, or starter templates before it should be treated as complete.
 
 ## How to Contribute a Category Guide
 

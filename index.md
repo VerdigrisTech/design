@@ -104,11 +104,13 @@ title: Home
 
 ## Categories
 
-- [Photography](categories/photography/guidelines.md) -- Photo style, composition rules
-- [Illustration](categories/illustration/guidelines.md) -- Icon style, diagram conventions
-- [3D and Spline](categories/3d-and-spline/guidelines.md) -- WebGL waveform spec
-- [Ads and Templates](categories/ads-and-templates/guidelines.md) -- Ad specs, collateral
-- [Physical Goods](categories/physical-goods/guidelines.md) -- Trade show, print
+- [Photography](categories/photography/guidelines.md) -- Photo style, composition rules <span class="status-pill status-pill-partial">Partial</span>
+- [Illustration](categories/illustration/guidelines.md) -- Icon style, diagram conventions <span class="status-pill status-pill-partial">Partial</span>
+- [3D and Spline](categories/3d-and-spline/guidelines.md) -- WebGL waveform spec <span class="status-pill status-pill-partial">Partial</span>
+- [Ads and Templates](categories/ads-and-templates/guidelines.md) -- Ad specs, collateral <span class="status-pill status-pill-partial">Partial</span>
+- [Physical Goods](categories/physical-goods/guidelines.md) -- Trade show, print <span class="status-pill status-pill-partial">Partial</span>
+
+Status reflects documentation completeness. `Partial` means guidance exists today, but examples, source assets, or templates are still being filled in.
 
 ## Tokens (JSON)
 

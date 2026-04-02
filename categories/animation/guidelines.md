@@ -1,6 +1,8 @@
 ---
 layout: visual
 title: Animation Guidelines
+status: complete
+status_note: Includes the core motion rules plus hover, scroll, and reduced-motion guidance.
 ---
 
 <div class="v-demo">
