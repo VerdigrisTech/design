@@ -3,3 +3,6 @@ build/dist/
 *.tgz
 .DS_Store
 .gstack/
+*.png
+# Browser automation artifacts
+.playwright-mcp/
