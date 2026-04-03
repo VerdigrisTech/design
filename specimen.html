@@ -347,6 +347,36 @@ title: Brand Specimen
       padding: 0.125rem 0.375rem;
       border-radius: 0.25rem;
     }
+    .asset-preview {
+      margin-top: 0.875rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--muted);
+    }
+    .asset-preview img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .logo-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 7rem;
+      padding: 1.25rem;
+    }
+    .logo-preview img {
+      width: 9.75rem;
+      max-width: 100%;
+      height: auto;
+    }
+    .logo-preview-light {
+      background: white;
+    }
+    .logo-preview-dark {
+      background: var(--neutral-950);
+    }
 
     /* ── Footer ───────────────────────────────────────────────────── */
     .specimen-footer {
@@ -580,6 +610,28 @@ title: Brand Specimen
           <h4>Typography</h4>
           <p>Load via Google Fonts (free, OFL licensed)</p>
           <code style="font-size:0.6875rem">Inter 400-700 &middot; Lato 700 &middot; JetBrains Mono 400</code>
+        </div>
+        <div class="asset-card">
+          <h4>Logo Lockups</h4>
+          <p>Recovered canonical SVG lockups for light and dark surfaces.</p>
+          <code>assets/logos/brand/logo-green.svg</code>
+          <div class="asset-preview logo-preview logo-preview-light">
+            <img src="assets/logos/brand/logo-green.svg" alt="Verdigris teal logo lockup on a light background" />
+          </div>
+          <div class="asset-preview logo-preview logo-preview-dark" style="margin-top:0.75rem">
+            <img src="assets/logos/brand/logo-white.svg" alt="Verdigris white logo lockup on a dark background" />
+          </div>
+        </div>
+        <div class="asset-card">
+          <h4>Banner Assets</h4>
+          <p>Recovered legacy marketing-site banners that define approved Verdigris brand treatment.</p>
+          <code>assets/banners/verdigris-banner.avif</code>
+          <div class="asset-preview">
+            <img src="assets/banners/verdigris-banner.avif" alt="Recovered Verdigris banner asset used for editorial and news surfaces" />
+          </div>
+          <div class="asset-preview" style="margin-top:0.75rem">
+            <img src="assets/banners/verdigris-banner-green.avif" alt="Recovered green Verdigris banner asset used for press surfaces" />
+          </div>
         </div>
       </div>
     </section>

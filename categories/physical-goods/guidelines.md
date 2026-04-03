@@ -175,6 +175,7 @@ All fonts must be outlined (converted to paths) in final production files. Do no
 
 ## Templates & Starting Points
 
+- **Canonical SVG logo lockups**: [logo-green.svg](../../assets/logos/brand/logo-green.svg) for light backgrounds and [logo-white.svg](../../assets/logos/brand/logo-white.svg) for dark backgrounds. These were recovered from the legacy marketing-site source repo and are now stored in this design system repo.
 - **Business card template**: Request the current Figma file from the brand team. The template includes bleed marks, safe zone guides, and correctly placed logo with Inter/Lato type.
 - **Trade show banner template**: Vendor-specific — request dieline templates from the print vendor, then apply brand elements following this guide.
 - **Hardware label template**: Coordinate with hardware engineering for enclosure dimensions and UL/regulatory requirements before designing.

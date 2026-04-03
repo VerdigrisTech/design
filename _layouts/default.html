@@ -147,7 +147,10 @@
     }
     .site-sidebar nav ul li { margin: 0; }
     .site-sidebar nav ul li a {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
       padding: 0.25rem 0.75rem;
       border-radius: var(--radius);
       text-decoration: none;
@@ -162,6 +165,18 @@
       background: var(--muted);
       color: var(--fg);
       font-weight: 500;
+    }
+    .nav-status-indicator {
+      display: inline-flex;
+      width: 0.5rem;
+      height: 0.5rem;
+      flex-shrink: 0;
+      border-radius: 9999px;
+      background: var(--muted-fg);
+      box-shadow: 0 0 0 1px var(--bg);
+    }
+    .nav-status-partial {
+      background: oklch(0.87 0.1786 92.23);
     }
 
     /* Content */
@@ -438,11 +453,11 @@
 
         <h3>Categories</h3>
         <ul>
-          <li><a href="{{ '/categories/photography/guidelines' | relative_url }}">Photography</a></li>
-          <li><a href="{{ '/categories/illustration/guidelines' | relative_url }}">Illustration</a></li>
-          <li><a href="{{ '/categories/3d-and-spline/guidelines' | relative_url }}">3D & WebGL</a></li>
-          <li><a href="{{ '/categories/ads-and-templates/guidelines' | relative_url }}">Ads & Templates</a></li>
-          <li><a href="{{ '/categories/physical-goods/guidelines' | relative_url }}">Physical Goods</a></li>
+          <li><a href="{{ '/categories/photography/guidelines' | relative_url }}">Photography <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
+          <li><a href="{{ '/categories/illustration/guidelines' | relative_url }}">Illustration <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
+          <li><a href="{{ '/categories/3d-and-spline/guidelines' | relative_url }}">3D & WebGL <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
+          <li><a href="{{ '/categories/ads-and-templates/guidelines' | relative_url }}">Ads & Templates <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
+          <li><a href="{{ '/categories/physical-goods/guidelines' | relative_url }}">Physical Goods <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
         </ul>
 
         <h3>Examples</h3>

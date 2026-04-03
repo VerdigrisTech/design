@@ -30,6 +30,16 @@ status_note: Needs finalized template files and real campaign examples before th
     <div class="v-card-title" style="font-family: Lato, sans-serif; font-weight: 700; font-size: 1.25rem; color: oklch(0.141 0.005 285.823)">Precise, masterful, refined, pioneering.</div>
     <div class="v-card-desc" style="color: oklch(0.552 0.016 285.938)">Credibility through restraint. Sophisticated buyers, not impulse shoppers.</div>
   </div>
+  <div class="v-grid-2" style="margin-top: 1rem;">
+    <div class="v-card" style="padding: 1rem;">
+      <div class="v-comp-label">Recovered News Banner</div>
+      <img src="../../assets/banners/verdigris-banner.avif" alt="Recovered Verdigris banner asset used for news and editorial surfaces" style="width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border);" />
+    </div>
+    <div class="v-card" style="padding: 1rem;">
+      <div class="v-comp-label">Recovered Press Banner</div>
+      <img src="../../assets/banners/verdigris-banner-green.avif" alt="Recovered green Verdigris banner asset used for press surfaces" style="width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border);" />
+    </div>
+  </div>
 </div>
 
 <details class="v-details" markdown="1"><summary>Guidelines</summary>
@@ -173,6 +183,13 @@ Use the 4 px grid from `tokens/spacing/base.json`. Key values for collateral:
 ## Templates & Starting Points
 
 Standard templates are maintained in Figma (access through the Verdigris design team). When Figma links become available, they will be listed here.
+
+### Recovered Brand Banner Assets
+
+- [verdigris-banner.avif](../../assets/banners/verdigris-banner.avif) — canonical editorial/news banner recovered from the legacy marketing-site source repo
+- [verdigris-banner-green.avif](../../assets/banners/verdigris-banner-green.avif) — green press/banner variant recovered from the legacy marketing-site source repo
+
+These should be treated as reference assets for on-brand collateral and specimen work. They are useful for understanding composition, cropping, and brand treatment, but they do not replace proper source templates in Figma.
 
 ### Planned Templates
 
