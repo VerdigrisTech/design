@@ -9,11 +9,11 @@ Recovered from the previous Verdigris marketing-site source repo:
 
 Included assets:
 
-- `verdigris-banner.avif` — standard Verdigris banner used across news entries
-- `verdigris-banner-green.avif` — green-tinted press/banner variant
+- `verdigris-banner.avif` — canonical Verdigris banner used across news and press surfaces
 
 Notes:
 
+- The old repo listed two paths (`verdigris-banner.avif` and `verdigris-banner-green.avif`), but the files were byte-identical. This repo keeps only one copy.
 - These are raster brand banners, not vector logo files.
-- The old repo also contains responsive derivatives (`-640w`, `-960w`, `-1280w`), but this design repo stores the canonical base assets only.
-- Use these as reference/banner exemplars in guides and specimen pages, not as the primary source for print production.
+- The old repo also contains responsive derivatives (`-640w`, `-960w`, `-1280w`), but this design repo stores the canonical base asset only.
+- Use as a reference/banner exemplar in guides and specimen pages, not as the primary source for print production.
