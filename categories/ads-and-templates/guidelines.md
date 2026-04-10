@@ -37,7 +37,7 @@ status_note: Needs finalized template files and real campaign examples before th
     </div>
     <div class="v-card" style="padding: 1rem;">
       <div class="v-comp-label">Recovered Press Banner</div>
-      <img src="../../assets/banners/verdigris-banner-green.avif" alt="Recovered green Verdigris banner asset used for press surfaces" style="width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border);" />
+      <img src="../../assets/banners/verdigris-banner.avif" alt="Recovered Verdigris banner asset used for news, editorial, and press surfaces" style="width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border);" />
     </div>
   </div>
 </div>
@@ -186,8 +186,7 @@ Standard templates are maintained in Figma (access through the Verdigris design 
 
 ### Recovered Brand Banner Assets
 
-- [verdigris-banner.avif](../../assets/banners/verdigris-banner.avif) — canonical editorial/news banner recovered from the legacy marketing-site source repo
-- [verdigris-banner-green.avif](../../assets/banners/verdigris-banner-green.avif) — green press/banner variant recovered from the legacy marketing-site source repo
+- [verdigris-banner.avif](../../assets/banners/verdigris-banner.avif) — canonical banner recovered from the legacy marketing-site source repo (used across news, editorial, and press surfaces)
 
 These should be treated as reference assets for on-brand collateral and specimen work. They are useful for understanding composition, cropping, and brand treatment, but they do not replace proper source templates in Figma.
 

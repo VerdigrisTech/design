@@ -129,6 +129,25 @@
       height: calc(100vh - 57px);
       font-size: 0.875rem;
     }
+    .sidebar-search {
+      width: 100%;
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 0.375rem;
+      background: var(--bg);
+      color: var(--fg);
+      font-size: 0.8125rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .sidebar-search:focus {
+      border-color: oklch(0.72 0.15 185);
+      box-shadow: 0 0 0 2px oklch(0.72 0.15 185 / 0.2);
+    }
+    .sidebar-search::placeholder {
+      color: var(--muted-fg);
+    }
     .site-sidebar nav h3 {
       font-size: 0.6875rem;
       font-weight: 600;
@@ -137,8 +156,14 @@
       color: var(--muted-fg);
       margin: 1.25rem 0 0.5rem 0;
     }
-    .site-sidebar nav h3:first-child {
+    .sidebar-search + h3 {
       margin-top: 0;
+    }
+    .sidebar-no-results {
+      font-size: 0.75rem;
+      color: var(--muted-fg);
+      padding: 0.5rem 0.75rem;
+      margin: 0;
     }
     .site-sidebar nav ul {
       list-style: none;
@@ -148,14 +173,23 @@
     .site-sidebar nav ul li { margin: 0; }
     .site-sidebar nav ul li a {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.125rem 0.5rem;
       padding: 0.25rem 0.75rem;
       border-radius: var(--radius);
       text-decoration: none;
       color: var(--muted-fg);
       transition: background 150ms ease, color 150ms ease;
+    }
+    .nav-hint {
+      display: block;
+      width: 100%;
+      font-size: 0.625rem;
+      letter-spacing: 0.01em;
+      color: var(--muted-fg);
+      line-height: 1.3;
+      margin-top: -0.0625rem;
     }
     .site-sidebar nav ul li a:hover {
       background: var(--muted);
@@ -168,15 +202,19 @@
     }
     .nav-status-indicator {
       display: inline-flex;
-      width: 0.5rem;
-      height: 0.5rem;
-      flex-shrink: 0;
-      border-radius: 9999px;
-      background: var(--muted-fg);
-      box-shadow: 0 0 0 1px var(--bg);
+      align-items: center;
+      font-size: 0.625rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.075rem 0.35rem;
+      border-radius: 0.25rem;
+      line-height: 1.4;
+      vertical-align: middle;
+      margin-left: 0.25rem;
     }
     .nav-status-partial {
-      background: oklch(0.87 0.1786 92.23);
+      background: oklch(0.87 0.1786 92.23 / 0.25);
+      color: oklch(0.55 0.12 80);
     }
 
     /* Content */
@@ -409,28 +447,29 @@
   <div class="site-wrapper">
     <aside class="site-sidebar">
       <nav>
+        <input type="search" id="sidebarSearch" class="sidebar-search" placeholder="Filter pages…" aria-label="Filter sidebar navigation" autocomplete="off" />
         <h3>Specimen</h3>
         <ul>
-          <li><a href="{{ '/specimen' | relative_url }}">Brand Specimen</a></li>
+          <li><a href="{{ '/specimen' | relative_url }}">Brand Specimen<span class="nav-hint" aria-hidden="true">logo, banner, palette, font overview</span></a></li>
         </ul>
 
         <h3>Foundations</h3>
         <ul>
           <li><a href="{{ '/foundations/color' | relative_url }}">Color</a></li>
-          <li><a href="{{ '/foundations/typography' | relative_url }}">Typography</a></li>
+          <li><a href="{{ '/foundations/typography' | relative_url }}">Typography<span class="nav-hint" aria-hidden="true">font, typeface, scale, weight, line-height</span></a></li>
           <li><a href="{{ '/foundations/spacing' | relative_url }}">Spacing</a></li>
-          <li><a href="{{ '/foundations/motion' | relative_url }}">Motion</a></li>
+          <li><a href="{{ '/foundations/motion' | relative_url }}">Motion<span class="nav-hint" aria-hidden="true">animation, transition, easing, duration</span></a></li>
           <li><a href="{{ '/foundations/accessibility' | relative_url }}">Accessibility</a></li>
           <li><a href="{{ '/foundations/dark-mode' | relative_url }}">Dark Mode</a></li>
-          <li><a href="{{ '/foundations/elevation' | relative_url }}">Elevation</a></li>
+          <li><a href="{{ '/foundations/elevation' | relative_url }}">Elevation<span class="nav-hint" aria-hidden="true">shadow, depth, z-index, layers</span></a></li>
         </ul>
 
         <h3>Web Components</h3>
         <ul>
           <li><a href="{{ '/categories/web-components/buttons' | relative_url }}">Buttons</a></li>
           <li><a href="{{ '/categories/web-components/cards' | relative_url }}">Cards</a></li>
-          <li><a href="{{ '/categories/web-components/data-display' | relative_url }}">Data Display</a></li>
-          <li><a href="{{ '/categories/web-components/feedback' | relative_url }}">Feedback</a></li>
+          <li><a href="{{ '/categories/web-components/data-display' | relative_url }}">Data Display<span class="nav-hint" aria-hidden="true">badge, tag, avatar, stat, metric</span></a></li>
+          <li><a href="{{ '/categories/web-components/feedback' | relative_url }}">Feedback<span class="nav-hint" aria-hidden="true">alert, notification, banner, status</span></a></li>
           <li><a href="{{ '/categories/web-components/forms' | relative_url }}">Forms</a></li>
           <li><a href="{{ '/categories/web-components/layout' | relative_url }}">Layout</a></li>
           <li><a href="{{ '/categories/web-components/navigation' | relative_url }}">Navigation</a></li>
@@ -440,7 +479,7 @@
           <li><a href="{{ '/categories/web-components/tooltips' | relative_url }}">Tooltips & Popovers</a></li>
           <li><a href="{{ '/categories/web-components/tabs' | relative_url }}">Tabs</a></li>
           <li><a href="{{ '/categories/web-components/sidebar' | relative_url }}">Sidebar</a></li>
-          <li><a href="{{ '/categories/web-components/command-palette' | relative_url }}">Command Palette</a></li>
+          <li><a href="{{ '/categories/web-components/command-palette' | relative_url }}">Command Palette<span class="nav-hint" aria-hidden="true">cmd+k, search, quick actions</span></a></li>
         </ul>
 
         <h3>Animation</h3>
@@ -453,16 +492,16 @@
 
         <h3>Categories</h3>
         <ul>
-          <li><a href="{{ '/categories/photography/guidelines' | relative_url }}">Photography <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
-          <li><a href="{{ '/categories/illustration/guidelines' | relative_url }}">Illustration <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
-          <li><a href="{{ '/categories/3d-and-spline/guidelines' | relative_url }}">3D & WebGL <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
-          <li><a href="{{ '/categories/ads-and-templates/guidelines' | relative_url }}">Ads & Templates <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
-          <li><a href="{{ '/categories/physical-goods/guidelines' | relative_url }}">Physical Goods <span class="nav-status-indicator nav-status-partial" title="Partial coverage"></span></a></li>
+          <li><a href="{{ '/categories/photography/guidelines' | relative_url }}">Photography <span class="nav-status-indicator nav-status-partial">Partial</span></a></li>
+          <li><a href="{{ '/categories/illustration/guidelines' | relative_url }}">Illustration <span class="nav-status-indicator nav-status-partial">Partial</span></a></li>
+          <li><a href="{{ '/categories/3d-and-spline/guidelines' | relative_url }}">3D & WebGL<span class="nav-hint" aria-hidden="true">spline, three.js, shader, canvas</span> <span class="nav-status-indicator nav-status-partial">Partial</span></a></li>
+          <li><a href="{{ '/categories/ads-and-templates/guidelines' | relative_url }}">Ads & Templates <span class="nav-status-indicator nav-status-partial">Partial</span></a></li>
+          <li><a href="{{ '/categories/physical-goods/guidelines' | relative_url }}">Physical Goods<span class="nav-hint" aria-hidden="true">merch, swag, print, sticker, packaging</span> <span class="nav-status-indicator nav-status-partial">Partial</span></a></li>
         </ul>
 
         <h3>Examples</h3>
         <ul>
-          <li><a href="{{ '/examples/' | relative_url }}">Index</a></li>
+          <li><a href="{{ '/examples/' | relative_url }}">Index<span class="nav-hint" aria-hidden="true">all good and bad visual examples</span></a></li>
           <li><a href="{{ '/examples/good/brand-teal-on-dark' | relative_url }}">Teal on Dark ✓</a></li>
           <li><a href="{{ '/examples/good/heading-hierarchy' | relative_url }}">Heading Hierarchy ✓</a></li>
           <li><a href="{{ '/examples/good/card-composition' | relative_url }}">Card Composition ✓</a></li>
@@ -502,6 +541,7 @@
           <li><a href="{{ '/' | relative_url }}">Home</a></li>
           <li><a href="{{ '/CONTRIBUTING' | relative_url }}">Contributing</a></li>
         </ul>
+        <p class="sidebar-no-results" hidden>No pages match your filter.</p>
       </nav>
     </aside>
 
@@ -545,6 +585,49 @@
         a.classList.add('active');
       }
     });
+
+    // Sidebar search filter
+    (function() {
+      var input = document.getElementById('sidebarSearch');
+      var nav = input.closest('nav');
+      var headings = nav.querySelectorAll('h3');
+      var noResults = nav.querySelector('.sidebar-no-results');
+
+      // Build searchable text for a nav item, excluding badge text
+      function searchText(li) {
+        var parts = [];
+        li.querySelectorAll('a').forEach(function(a) {
+          a.childNodes.forEach(function(node) {
+            if (node.nodeType === 3) { parts.push(node.textContent); }
+            else if (node.nodeType === 1 && !node.classList.contains('nav-status-indicator')) {
+              parts.push(node.textContent);
+            }
+          });
+        });
+        return parts.join(' ').toLowerCase();
+      }
+
+      input.addEventListener('input', function() {
+        var q = this.value.toLowerCase().trim();
+        var anyGlobal = false;
+        headings.forEach(function(h3) {
+          var ul = h3.nextElementSibling;
+          if (!ul || ul.tagName !== 'UL') return;
+          var items = ul.querySelectorAll('li');
+          var anyVisible = false;
+          items.forEach(function(li) {
+            var text = searchText(li);
+            var show = !q || text.indexOf(q) !== -1;
+            li.style.display = show ? '' : 'none';
+            if (show) anyVisible = true;
+          });
+          h3.style.display = (!q || anyVisible) ? '' : 'none';
+          ul.style.display = (!q || anyVisible) ? '' : 'none';
+          if (anyVisible) anyGlobal = true;
+        });
+        noResults.hidden = !q || anyGlobal;
+      });
+    })();
 
     // Wrap tables for mobile scroll
     document.querySelectorAll('.site-content table').forEach(function(table) {
