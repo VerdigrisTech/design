@@ -68,6 +68,8 @@ const INTERNAL_PATTERNS: Array<{ pattern: RegExp; description: string; severity:
 const ALLOWLIST: Record<string, string[]> = {
   // CONTRIBUTING.md may reference internal workflow
   "CONTRIBUTING.md": ["Linear issue reference"],
+  // evolution.html is internal-first communication with team member callouts
+  "evolution.html": ["Team member name (Daniela)", "Team member name (Josh)", "Team member name (Jimit)"],
 };
 
 // --- Scanner ---

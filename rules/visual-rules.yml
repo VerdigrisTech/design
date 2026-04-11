@@ -1377,8 +1377,8 @@ accessibility:
 # medium it's on). Each cell has its own ruleset. The same surface can
 # serve different purposes with different composition logic.
 #
-# Purposes: persuade, inform, analyze, convert, identify
-# Surfaces: web_page, ad_banner, email, slide_deck, dashboard, hardware
+# Purposes: persuade, inform, analyze, convert, identify, narrate, assist, instruct
+# Surfaces: web_page, ad_banner, email, slide_deck, dashboard, hardware, chat
 #
 # Build incrementally — only filled cells are enforced.
 # =============================================================================
@@ -1402,7 +1402,9 @@ composition:
       convert_web_page: "defined"
       identify_ad_banner: "defined"
       identify_hardware: "defined"
-      # LLM/chat surfaces — new surface type
+      # Narrative / editorial
+      narrate_web_page: "defined"        # long-form editorial, design essays, retrospectives
+      # LLM/chat surfaces
       assist_chat: "defined"             # human-to-AI conversational interface
       assist_embedded: "defined"         # AI-generated content within other surfaces
       instruct_machine: "defined"        # machine-to-machine (AI agents consuming design system)
@@ -1869,6 +1871,85 @@ composition:
         type: "constraint"
       - id: "composition.assist-embedded.provenance"
         description: "AI-generated content must include machine-readable provenance metadata. EU AI Act Article 50 compliance required by August 2026."
+        severity: "error"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # NARRATE x WEB PAGE — long-form editorial, design essays, retrospectives
+  # ---------------------------------------------------------------------------
+  # Not persuade (no funnel, no conversion). Not inform (not flat, not reference).
+  # The reader follows a journey. Specimens and visuals are figures within prose.
+  # Think magazine feature: Craig Mod, Frank Chimero, Stripe's Annual Letter.
+  # ---------------------------------------------------------------------------
+  narrate_web_page:
+    id: "composition.narrate-web-page"
+    type: "reference"
+    description: "Long-form editorial for design essays, retrospectives, case narratives. The reader follows a journey with depth. Visuals are figures within prose, not marketing sections. Generous whitespace, steady reading rhythm, honesty about process."
+
+    # --- Narrative structure ---
+    # Not roles like persuade (hook/turn/close). Narrate uses a looser structure:
+    # the piece flows through episodes, each with prose + a figure (specimen, before/after, code).
+    structure:
+      opening:
+        description: "Set the scene. A specific moment, question, or observation that draws the reader in. Not a hero with a CTA. A quiet start."
+        color_intensity: "full or supporting"
+        type_max: "h1"
+        section_padding: "8rem"
+        note: "Can be dark (atmospheric) or light (editorial). The opening sets the tone for the piece."
+      episode:
+        description: "A chapter in the story. Prose followed by a figure (specimen, before/after, code block, visual comparison). Repeatable, any number."
+        color_intensity: "breathing or supporting"
+        type_max: "h2"
+        section_padding: "5rem"
+        note: "Episodes alternate between prose sections and figure sections. Prose is body-first. Figures get their own visual space."
+      figure:
+        description: "A visual embedded in the narrative. Rendered specimen, before/after comparison, code example, color swatch. Figures are the evidence within episodes."
+        color_intensity: "varies (the figure itself may use any intensity)"
+        type_max: "caption"
+        section_padding: "3rem"
+        note: "Figures sit within episodes, not as standalone sections. They have a caption (mono, small) and generous margin above and below."
+      reflection:
+        description: "Honest assessment of what worked, what didn't, what the process can't do. The narrate purpose demands self-awareness."
+        color_intensity: "breathing"
+        type_max: "h2"
+        section_padding: "5rem"
+        note: "This is what distinguishes narrate from persuade. Persuade hides failures. Narrate shows them."
+      closing:
+        description: "Not a CTA. A question, invitation, or forward look. The reader leaves thinking, not clicking."
+        color_intensity: "full or supporting"
+        section_padding: "8rem"
+
+    # --- Reading rhythm ---
+    rhythm:
+      description: "Steady, magazine-like pacing. No dramatic arc (persuade) or metronomic flatness (inform). Episodes create natural chapter breaks. Figures provide visual rest between prose. The reader sets their own pace."
+      line_length: "65ch max for prose. Figures may break wider."
+      body_size: "1rem minimum, 1.125rem preferred for long-form readability."
+      body_line_height: "1.7 for long-form prose (looser than persuade's 1.6)."
+
+    # --- Color usage ---
+    color:
+      description: "Color is illustrative, not atmospheric. The palette appears IN the figures (specimens, before/after comparisons) not as section background tints. Between figures, the page is neutral. This lets the illustrated colors speak without competing with ambient color."
+      page_background: "White and neutral.200 for prose sections. Dark only for opening and closing."
+      figure_background: "Figures may use any palette region as needed for illustration."
+      accent_budget: "No earned accent in the persuade sense. Color appears as part of the content (the things being shown), not as a compositional device on the page itself."
+
+    # --- Coupling rules ---
+    coupling:
+      - id: "composition.narrate-web-page.coupling.prose-spacing"
+        description: "Prose sections use 5rem padding. Figures within episodes use 3rem padding. Opening and closing use 8rem."
+        severity: "warning"
+        type: "constraint"
+      - id: "composition.narrate-web-page.coupling.long-form-line-height"
+        description: "Body line-height 1.7 for sustained reading. Looser than persuade (1.6) or inform (1.5-1.6). Magazine-grade readability."
+        severity: "warning"
+        type: "constraint"
+        test: { body_line_height: { min: 1.7 } }
+      - id: "composition.narrate-web-page.coupling.figure-margin"
+        description: "Figures have 2rem margin above and below within their episode. They breathe separately from prose."
+        severity: "warning"
+        type: "constraint"
+      - id: "composition.narrate-web-page.coupling.no-marketing-patterns"
+        description: "No CTA buttons in prose sections. No gradient strips. No card grids as content (cards may appear inside figures). The page is an essay, not a landing page."
         severity: "error"
         type: "constraint"
 
