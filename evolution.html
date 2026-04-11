@@ -1,0 +1,602 @@
+---
+layout: null
+title: Can a Design System Describe Taste?
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function(){
+    var s = localStorage.getItem('theme');
+    if (s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
+  <meta charset="utf-8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%230fc8c3'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Can a Design System Describe Taste? | Verdigris</title>
+  <meta name="description" content="An exploration of whether design tokens, composition rules, and palette semantics can encode the difference between correct and good. What worked, what didn't, and what machines still can't do.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-verdigris: oklch(0.75 0.1286 191.57);
+      --brand-mp-step-2: oklch(0.495 0.1708 336.72);
+      --brand-pastel-red: oklch(0.7 0.1909 24.11);
+      --brand-cyber-yellow: oklch(0.87 0.1786 92.23);
+      --brand-cy-step-2: oklch(0.7698 0.1588 137.1);
+      --brand-midnight-purple: oklch(0.29 0.1506 289.33);
+      --neutral-50: oklch(0.985 0 0);
+      --neutral-100: oklch(0.967 0.001 286.375);
+      --neutral-200: oklch(0.92 0.004 286.32);
+      --neutral-400: oklch(0.705 0.015 286.067);
+      --neutral-500: oklch(0.552 0.016 285.938);
+      --neutral-800: oklch(0.274 0.006 286.033);
+      --neutral-900: oklch(0.21 0.006 285.885);
+      --neutral-950: oklch(0.141 0.005 285.823);
+      --bg: white;
+      --fg: var(--neutral-950);
+      --muted: var(--neutral-100);
+      --muted-fg: var(--neutral-500);
+      --border: var(--neutral-200);
+      --card: white;
+      --font-body: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --font-display: Lato, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --radius: 0.625rem;
+    }
+    html.dark {
+      --bg: var(--neutral-950);
+      --fg: var(--neutral-50);
+      --muted: var(--neutral-800);
+      --muted-fg: var(--neutral-400);
+      --border: var(--neutral-800);
+      --card: var(--neutral-900);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.7;  /* narrate: 1.7 for long-form */
+    }
+    .container { max-width: 80rem; margin: 0 auto; padding: 0 2.5rem; }
+    .prose { max-width: 65ch; }  /* narrate: 65ch for readability */
+    .prose p { margin-bottom: 1.25rem; font-size: 1.125rem; color: var(--muted-fg); }
+    .prose p:last-child { margin-bottom: 0; }
+    .label { font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .figure { margin: 3rem 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .figure-caption { padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.625rem; color: var(--muted-fg); border-top: 1px solid var(--border); }
+    .episode { padding: 5rem 0; border-top: 1px solid var(--border); background: var(--bg); }
+    .episode:nth-child(even) { background: var(--card); }  /* subtle alternation using semantic vars — works in both modes */
+    .episode h2 { font-family: var(--font-display); font-size: 3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1.5rem; }
+    @media (max-width: 768px) {
+      .container { padding: 0 1.5rem; }
+      .episode h2 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================ -->
+  <!-- OPENING -->
+  <!-- ================================================================ -->
+  <div style="background: var(--neutral-950); padding: 8rem 0;">
+    <div class="container">
+      <div class="label" style="color: var(--brand-verdigris); margin-bottom: 2rem;">April 2026</div>
+      <h1 style="font-family: var(--font-display); font-size: 4rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--neutral-50); max-width: 48rem;">Can a Design System Describe Taste?</h1>
+      <div class="prose" style="margin-top: 2rem;">
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">Mark had been saying the website felt off. Not broken. The tokens were correct, the fonts loaded, the spacing was on grid. But something about the feeling was wrong. The pages were technically right and emotionally flat.</p>
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">This is the story of how we figured out what was missing, and what it took to teach a design system the difference between correct and good.</p>
+      </div>
+
+      <!-- Before / After: same 3 sections, different composition -->
+      <div class="figure" style="margin-top: 3rem; max-width: 56rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border);">
+          <!-- BEFORE: same content, monotone teal, flat dark sections -->
+          <div>
+            <div style="padding: 0.5rem 0.75rem; background: var(--neutral-900); font-family: var(--font-mono); font-size: 0.5625rem; color: var(--neutral-500); text-transform: uppercase; letter-spacing: 0.05em;">Before</div>
+            <div style="background: var(--neutral-950); padding: 1.25rem;">
+              <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris);">Technology</div>
+              <div style="font-family: var(--font-display); font-size: 0.875rem; font-weight: 700; color: var(--neutral-50); margin-top: 0.25rem;">Platform features</div>
+            </div>
+            <div style="background: var(--neutral-950); padding: 1.25rem; border-top: 1px solid oklch(1 0 0 / 10%);">
+              <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris);">Detection</div>
+              <div style="font-family: var(--font-display); font-size: 0.875rem; font-weight: 700; color: var(--neutral-50); margin-top: 0.25rem;">Fault detection</div>
+            </div>
+            <div style="background: var(--neutral-950); padding: 1.25rem; border-top: 1px solid oklch(1 0 0 / 10%);">
+              <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris);">Results</div>
+              <div style="font-family: var(--font-display); font-size: 0.875rem; font-weight: 700; color: var(--neutral-50); margin-top: 0.25rem;">$2.4M recovered</div>
+            </div>
+          </div>
+          <!-- AFTER: same content, composition rules applied -->
+          <div>
+            <div style="padding: 0.5rem 0.75rem; background: var(--neutral-900); font-family: var(--font-mono); font-size: 0.5625rem; color: var(--brand-verdigris); text-transform: uppercase; letter-spacing: 0.05em;">After</div>
+            <div style="background: white; padding: 1.25rem;">
+              <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris);">Technology</div>
+              <div style="font-family: var(--font-display); font-size: 0.875rem; font-weight: 700; color: var(--neutral-950); margin-top: 0.25rem;">Platform features</div>
+            </div>
+            <div style="background: white; padding: 1.25rem; position: relative; border-top: 1px solid var(--border);">
+              <div style="position: absolute; inset: 0; background: oklch(0.495 0.1708 336.72 / 4%);"></div>
+              <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: oklch(0.495 0.1708 336.72);"></div>
+              <div style="position: relative; padding-left: 0.75rem;">
+                <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: oklch(0.495 0.1708 336.72);">Detection</div>
+                <div style="font-family: var(--font-display); font-size: 0.875rem; font-weight: 700; color: var(--neutral-950); margin-top: 0.25rem;">Fault detection</div>
+              </div>
+            </div>
+            <div style="background: white; padding: 1.25rem; border-top: 1px solid var(--border);">
+              <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris);">Results</div>
+              <div style="font-family: var(--font-display); font-size: 0.875rem; font-weight: 700; color: var(--neutral-950); margin-top: 0.25rem;">$2.4M recovered</div>
+            </div>
+          </div>
+        </div>
+        <div class="figure-caption">Same three sections, same content. Left: every section dark, every label teal, no differentiation. Right: light flow with one earned accent (detection in energy region). The composition rules create the difference.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- EPISODE 1: The palette nobody used -->
+  <!-- ================================================================ -->
+  <div class="episode">
+    <div class="container">
+      <div class="label" style="color: var(--brand-verdigris); margin-bottom: 0.75rem;">The starting point</div>
+      <h2>Sixteen colors, two in use</h2>
+      <div class="prose">
+        <p>The Verdigris design system had 16 brand color tokens. A full chromatic gradient, carefully interpolated in OKLch: teal to purple to red to yellow and back. It was technically beautiful. It was also almost entirely unused.</p>
+        <p>The website used brand teal and a neutral gray scale. Every section, every page, every component: teal accent on neutral background. The other 14 colors sat in a JSON file, waiting.</p>
+        <p>The spacing rules worked. The type scale worked. But they worked in isolation. Nothing in the design system said how color, typography, and spacing should compose together. A human designer would know intuitively that a dark section needs more padding, or that a tinted background changes how body text reads. The system had no way to express that.</p>
+      </div>
+
+      <!-- Figure: the palette, only teal highlighted -->
+      <div class="figure">
+        <div style="padding: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: var(--brand-verdigris); border: 2px solid var(--fg);"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.635 0.1341 216.01); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.52 0.1396 240.45); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.405 0.1451 264.89); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: var(--brand-midnight-purple); opacity: 0.25; border: 1px solid var(--border);"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.3925 0.1607 313.03); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: var(--brand-mp-step-2); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.5975 0.1808 0.42); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: var(--brand-pastel-red); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.7425 0.1878 41.14); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.785 0.1848 58.17); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.8275 0.1817 75.2); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: var(--brand-cyber-yellow); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.8142 0.1695 113.33); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: var(--brand-cy-step-2); opacity: 0.25;"></div>
+          <div style="width: 3rem; height: 3rem; border-radius: 4px; background: oklch(0.7486 0.1412 163.85); opacity: 0.25;"></div>
+        </div>
+        <div class="figure-caption">16 brand tokens. The bordered swatch is the only one the website used. The rest at 25% opacity: present in the system, absent from every surface.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- EPISODE 2: What colors mean -->
+  <!-- ================================================================ -->
+  <div class="episode">
+    <div class="container">
+      <div class="label" style="color: var(--muted-fg); margin-bottom: 0.75rem;">The first question</div>
+      <h2>What should each color be used for?</h2>
+      <div class="prose">
+        <p>The obvious answer was to map colors to emotions. Teal means trust. Purple means sophistication. Red means warmth. We started there.</p>
+        <p>Three research agents explored what competitors actually do. Stripe uses one purple consistently. Linear is practically monochrome. Datadog uses purple plus orange, but not as "emotional mapping," just as brand identity. None of them assign feelings to hex codes.</p>
+        <p>But then something shifted. This design system isn't primarily for human designers. It's for machines. Claude builds our pages. The evaluator pipeline judges them. A human designer can look at a detection-focused section and intuit "this should feel more urgent." A machine can't. It needs to be told: detection content uses the energy palette region (purple-to-magenta, hue 313-0, high chroma).</p>
+        <p>So we mapped colors to content categories, not emotions. The meaning comes from what the content is about, and the color reinforces that meaning.</p>
+      </div>
+
+      <!-- Figure: palette regions mapped to Verdigris content -->
+      <div class="figure">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);">
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="height: 3px; background: var(--brand-verdigris); border-radius: 2px; margin-bottom: 0.75rem;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand-verdigris); margin-bottom: 0.25rem;">Trust</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Technology, platform</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">The core Verdigris register</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="height: 3px; background: var(--brand-mp-step-2); border-radius: 2px; margin-bottom: 0.75rem;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand-mp-step-2); margin-bottom: 0.25rem;">Energy</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Detection, alerting</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">High chroma, demands attention</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="height: 3px; background: var(--brand-cyber-yellow); border-radius: 2px; margin-bottom: 0.75rem;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand-cyber-yellow); margin-bottom: 0.25rem;">Results</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Metrics, outcomes</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Bright tones for proof points</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="height: 3px; background: var(--brand-midnight-purple); border-radius: 2px; margin-bottom: 0.75rem; border: 1px solid var(--border); border-radius: 2px;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-bottom: 0.25rem;">Depth</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">AI, premium, dark hero</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Backgrounds only, never text</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="height: 3px; background: var(--brand-pastel-red); border-radius: 2px; margin-bottom: 0.75rem;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand-pastel-red); margin-bottom: 0.25rem;">Warmth</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">People, contact, CTA</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Invites human connection</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="height: 3px; background: var(--brand-cy-step-2); border-radius: 2px; margin-bottom: 0.75rem;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand-cy-step-2); margin-bottom: 0.25rem;">Growth</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">M&V, recovery, sustainability</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Closes the loop to teal</div>
+          </div>
+        </div>
+        <div class="figure-caption">Six palette regions mapped to Verdigris content categories. Not emotions, not decorations. The color tells the machine what kind of content this is.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- EPISODE 3: The rainbow problem -->
+  <!-- ================================================================ -->
+  <div class="episode">
+    <div class="container">
+      <div class="label" style="color: var(--muted-fg); margin-bottom: 0.75rem;">What went wrong first</div>
+      <h2>Without ceilings, everything becomes a rainbow</h2>
+      <div class="prose">
+        <p>The first version of the palette semantics said "use at least 2 palette regions beyond teal." We thought this was encouragement to use the full palette. It was actually an instruction to maximize it.</p>
+        <p>A machine that reads "minimum 2 regions" interprets it as "use as many as possible." Every section got its own color. Detection was magenta. Results was yellow. Growth was green. Technology was teal. It looked like a children's website.</p>
+      </div>
+
+      <!-- Figure: rainbow vs restrained -->
+      <div class="figure">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border);">
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; color: oklch(0.577 0.245 27.325); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">v1: no ceilings</div>
+            <div style="display: flex; height: 2.5rem; border-radius: 4px; overflow: hidden;">
+              <div style="flex: 1; background: var(--brand-verdigris); opacity: 0.5;"></div>
+              <div style="flex: 1; background: var(--brand-midnight-purple); opacity: 0.5;"></div>
+              <div style="flex: 1; background: var(--brand-mp-step-2); opacity: 0.5;"></div>
+              <div style="flex: 1; background: var(--brand-pastel-red); opacity: 0.5;"></div>
+              <div style="flex: 1; background: var(--brand-cyber-yellow); opacity: 0.5;"></div>
+              <div style="flex: 1; background: var(--brand-cy-step-2); opacity: 0.5;"></div>
+            </div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; color: var(--brand-verdigris); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">Final: 70% teal, max 2 regions</div>
+            <div style="display: flex; height: 2.5rem; border-radius: 4px; overflow: hidden;">
+              <div style="flex: 7; background: var(--brand-verdigris); opacity: 0.3;"></div>
+              <div style="flex: 2; background: var(--neutral-200);"></div>
+              <div style="flex: 1; background: var(--brand-mp-step-2); opacity: 0.5;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="figure-caption">Left: what happens when every section uses a different palette region. Right: 70% teal dominance, one earned accent. The brand pillars (Precise, Masterful, Refined) set the ceiling, not arbitrary numbers.</div>
+      </div>
+
+      <div class="prose" style="margin-top: 2rem;">
+        <p>We tightened it three times. First to 60% teal with max 3 regions. Then to 70% teal with max 2, after checking against the brand pillars. "Controlled color palette, no visual clutter" (Masterful). "Subtle use of the brand gradient" (Refined). "Every element earns its place" (Precision). The values stopped being arbitrary when they were justified by the brand itself.</p>
+        <p>The lesson: every minimum needs a maximum. Machines optimize toward whatever you don't constrain.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- EPISODE 4: Color as space — the essay's own accent moment -->
+  <!-- This episode applies the framework to itself: tint + border + colored label -->
+  <!-- ================================================================ -->
+  <div class="episode" style="position: relative;">
+    <div style="position: absolute; inset: 0; background: oklch(0.495 0.1708 336.72 / 3%);"></div>
+    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: oklch(0.495 0.1708 336.72);"></div>
+    <div class="container" style="position: relative;">
+      <div class="label" style="color: oklch(0.495 0.1708 336.72); margin-bottom: 0.75rem;">The insight that changed direction</div>
+      <h2>Color gives text room to breathe</h2>
+      <div class="prose">
+        <p>Thomas said something that reframed the whole approach: "Without more color, text becomes really heavy on screen. Color lets words breathe and gives space and feelings in the narrative."</p>
+        <p>We'd been treating color as decoration to be rationed. But color is also space. A wall of dark text on white is heavy. A subtle tinted background lightens the cognitive load. A colored label creates a visual landmark that lets the reader scan without reading every word.</p>
+        <p>Research confirmed this. Color is processed pre-attentively, in 50-500 milliseconds, before conscious thought. A conspicuous visual target is found 83% faster. Cyan-family backgrounds (our brand teal) actually improve reading accuracy. Lower saturation reads as more premium.</p>
+        <p>This changed what the palette semantics were for. Not just "which color for which content" but "how much color does this section earn?" A detection section doesn't just get the energy palette. It gets a specific intensity: a 4% background tint, a colored label, a thin left border. Three quiet signals that together shift the feeling. The section before it gets nothing. The contrast makes the accent land.</p>
+      </div>
+
+      <!-- Figure: color creates breathing — same content, with and without -->
+      <div class="figure">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border);">
+          <!-- WITHOUT: dense, all same weight -->
+          <div>
+            <div style="padding: 0.5rem 0.75rem; font-family: var(--font-mono); font-size: 0.5625rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); background: var(--muted);">Without color</div>
+            <div style="background: white; padding: 1.25rem;">
+              <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950);">Purpose-built for critical infrastructure</div>
+              <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.375rem; line-height: 1.5;">Not retrofit SCADA. Hardware and software designed from scratch for high-frequency electrical monitoring.</div>
+            </div>
+            <div style="background: white; padding: 1.25rem; border-top: 1px solid var(--border);">
+              <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950);">Real-time fault detection</div>
+              <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.375rem; line-height: 1.5;">Loose connections, arcing, harmonic distortion, phase imbalance. Detected at the sub-cycle level.</div>
+            </div>
+            <div style="background: white; padding: 1.25rem; border-top: 1px solid var(--border);">
+              <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950);">$2.4M recovered annually</div>
+              <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.375rem; line-height: 1.5;">Stranded capacity identified and returned to service across the portfolio.</div>
+            </div>
+          </div>
+          <!-- WITH: color creates space, breathing, hierarchy -->
+          <div>
+            <div style="padding: 0.5rem 0.75rem; font-family: var(--font-mono); font-size: 0.5625rem; color: var(--brand-verdigris); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); background: var(--muted);">With color</div>
+            <div style="background: white; padding: 1.25rem;">
+              <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris); margin-bottom: 0.25rem;">Technology</div>
+              <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950);">Purpose-built for critical infrastructure</div>
+              <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.375rem; line-height: 1.5;">Not retrofit SCADA. Hardware and software designed from scratch for high-frequency electrical monitoring.</div>
+            </div>
+            <div style="background: white; padding: 1.25rem; border-top: 1px solid var(--border); position: relative;">
+              <div style="position: absolute; inset: 0; background: oklch(0.495 0.1708 336.72 / 4%);"></div>
+              <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: oklch(0.495 0.1708 336.72);"></div>
+              <div style="position: relative; padding-left: 0.75rem;">
+                <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: oklch(0.495 0.1708 336.72); margin-bottom: 0.25rem;">Detection</div>
+                <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950);">Real-time fault detection</div>
+                <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.375rem; line-height: 1.5;">Loose connections, arcing, harmonic distortion, phase imbalance. Detected at the sub-cycle level.</div>
+              </div>
+            </div>
+            <div style="background: white; padding: 1.25rem; border-top: 1px solid var(--border);">
+              <div style="font-family: var(--font-mono); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris); margin-bottom: 0.25rem;">Results</div>
+              <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950);">$2.4M recovered annually</div>
+              <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.375rem; line-height: 1.5;">Stranded capacity identified and returned to service across the portfolio.</div>
+            </div>
+          </div>
+        </div>
+        <div class="figure-caption">Same content. Left: three sections, same weight, no differentiation. Right: teal labels create scanning landmarks, one accent (detection) earns a tint + border. Color creates breathing room and hierarchy without changing a word of copy.</div>
+      </div>
+
+      <!-- Figure: layered intensity -->
+      <div class="figure">
+        <div style="border-radius: 0;">
+          <!-- Supporting: white, teal label -->
+          <div style="background: white; padding: 1.25rem 2rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris);">Technology</div>
+            <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950); margin-top: 0.25rem;">Purpose-built for critical infrastructure</div>
+            <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.25rem;">Supporting: present but quiet.</div>
+          </div>
+          <!-- Breathing: neutral.200 -->
+          <div style="background: var(--neutral-200); padding: 1.25rem 2rem; border-top: 1px solid var(--border);">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--neutral-500);">Data quality</div>
+            <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950); margin-top: 0.25rem;">Every measurement, verified</div>
+            <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.25rem;">Breathing room: no color. The absence makes the next section hit harder.</div>
+          </div>
+          <!-- Accent: tint + border + label -->
+          <div style="background: white; padding: 1.25rem 2rem; position: relative; border-top: 1px solid var(--border);">
+            <div style="position: absolute; inset: 0; background: oklch(0.495 0.1708 336.72 / 4%);"></div>
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: oklch(0.495 0.1708 336.72);"></div>
+            <div style="position: relative; padding-left: 0.75rem;">
+              <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.1em; color: oklch(0.495 0.1708 336.72);">Detection</div>
+              <div style="font-size: 0.875rem; font-weight: 600; color: var(--neutral-950); margin-top: 0.25rem;">Real-time fault detection</div>
+              <div style="font-size: 0.75rem; color: var(--neutral-500); margin-top: 0.25rem;">Earned accent: 4% tint + border + label. Three quiet signals.</div>
+            </div>
+          </div>
+        </div>
+        <div class="figure-caption">The intensity scale. Supporting (teal label only) to breathing room (no color) to earned accent (tint + border + label). Which color comes from the palette semantics. How much comes from the section's importance.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- EPISODE 5: The strobe problem -->
+  <!-- ================================================================ -->
+  <div class="episode">
+    <div class="container">
+      <div class="label" style="color: var(--muted-fg); margin-bottom: 0.75rem;">What looked wrong</div>
+      <h2>The strobe, and four attempts to fix it</h2>
+      <div class="prose">
+        <p>The first specimen alternated dark and light sections: dark hero, light content, dark accent, light content, dark CTA. Five sections, three contrast flips. Thomas looked at it and said "the dark and white switch between sections can be a bit jarring."</p>
+        <p>He was right. The eye had to re-adapt at every boundary. We tried four different approaches:</p>
+      </div>
+
+      <!-- Figure: four options -->
+      <div class="figure">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border);">
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; color: var(--muted-fg); margin-bottom: 0.5rem;">A: All-light flow</div>
+            <div style="display: flex; height: 1.5rem; border-radius: 3px; overflow: hidden;">
+              <div style="flex: 1; background: var(--neutral-950);"></div>
+              <div style="flex: 1; background: white;"></div>
+              <div style="flex: 1; background: var(--neutral-200);"></div>
+              <div style="flex: 1; background: white; position: relative;"><div style="position: absolute; inset: 0; background: oklch(0.495 0.1708 336.72 / 4%);"></div></div>
+              <div style="flex: 1; background: white;"></div>
+            </div>
+            <div style="font-size: 0.625rem; color: var(--muted-fg); margin-top: 0.375rem;">Accent as a light tint, no dark break. Elegant but potentially invisible.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; color: var(--muted-fg); margin-bottom: 0.5rem;">B: All-dark flow</div>
+            <div style="display: flex; height: 1.5rem; border-radius: 3px; overflow: hidden;">
+              <div style="flex: 1; background: var(--neutral-950);"></div>
+              <div style="flex: 1; background: var(--neutral-900);"></div>
+              <div style="flex: 1; background: var(--neutral-950);"></div>
+              <div style="flex: 1; background: var(--neutral-950); position: relative;"><div style="position: absolute; inset: 0; background: oklch(0.495 0.1708 336.72 / 12%);"></div></div>
+              <div style="flex: 1; background: var(--neutral-900);"></div>
+            </div>
+            <div style="font-size: 0.625rem; color: var(--muted-fg); margin-top: 0.375rem;">Premium feel, but heavy for a marketing page.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; color: var(--muted-fg); margin-bottom: 0.5rem;">C: Label color only</div>
+            <div style="display: flex; height: 1.5rem; border-radius: 3px; overflow: hidden;">
+              <div style="flex: 1; background: var(--neutral-950);"></div>
+              <div style="flex: 1; background: white;"></div>
+              <div style="flex: 1; background: var(--neutral-200);"></div>
+              <div style="flex: 1; background: white;"></div>
+              <div style="flex: 1; background: var(--neutral-200);"></div>
+            </div>
+            <div style="font-size: 0.625rem; color: var(--muted-fg); margin-top: 0.375rem;">Maximum restraint. But a 9px mono label in magenta is hard to see.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; color: var(--brand-verdigris); margin-bottom: 0.5rem;">D: Layered (final)</div>
+            <div style="display: flex; height: 1.5rem; border-radius: 3px; overflow: hidden;">
+              <div style="flex: 2; background: var(--neutral-950);"></div>
+              <div style="flex: 2; background: white;"></div>
+              <div style="flex: 1; background: var(--neutral-200);"></div>
+              <div style="flex: 2; background: white; position: relative;"><div style="position: absolute; inset: 0; background: oklch(0.495 0.1708 336.72 / 4%);"></div><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: oklch(0.495 0.1708 336.72);"></div></div>
+              <div style="flex: 2; background: white;"></div>
+              <div style="flex: 1; background: var(--neutral-950);"></div>
+            </div>
+            <div style="font-size: 0.625rem; color: var(--muted-fg); margin-top: 0.375rem;">Tint + border + label. Three signals that layer. The answer.</div>
+          </div>
+        </div>
+        <div class="figure-caption">Four approaches to section flow, explored and rendered in real time. None of the first three was right alone. D combined the best of A (light flow) and the border from B (structural accent).</div>
+      </div>
+
+      <div class="prose" style="margin-top: 2rem;">
+        <p>The answer was layers. A light tint so subtle you can barely see it. A thin left border in the accent color. A colored label. Each alone is almost invisible. Together they shift the feeling of the section before the reader reads a single word.</p>
+        <p>This produced a new rule: commit to a lightness direction within the content flow. The hero is dark. The content is light. One dark accent moment is allowed (the hero and footer don't count). Within the light flow, vary with subtle tonal shifts (white to neutral.200), not lightness inversions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- EPISODE 6: Every surface is different -->
+  <!-- ================================================================ -->
+  <div class="episode">
+    <div class="container">
+      <div class="label" style="color: var(--muted-fg); margin-bottom: 0.75rem;">The composition matrix</div>
+      <h2>One framework, thirteen cells</h2>
+      <div class="prose">
+        <p>A homepage composes differently from a dashboard. An ad banner composes differently from an email. And the same surface can have different purposes: a web page selling the product (persuade) vs a web page explaining the API (inform) vs a web page showing analytics (analyze).</p>
+        <p>We built a purpose x surface matrix. Six research agents explored award-winning design across ads, email, dashboards, slides, docs, and LLM interfaces simultaneously. Each came back with surface-specific findings.</p>
+        <p>Some of what they found: B2B display ads that win at Cannes treat the banner as a brand impression, not a conversion tool. The best enterprise emails look like well-formatted text, not marketing collateral. Dashboards use the full 16-color palette because data visualization is what the gradient was designed for. Pricing pages need exactly 3 tiers (more than 6 drops conversion from 30% to 3%).</p>
+      </div>
+
+      <!-- Figure: three surfaces side by side -->
+      <div class="figure">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);">
+          <!-- Ad -->
+          <div style="background: var(--card); padding: 0.75rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Ad banner</div>
+            <div style="aspect-ratio: 300/250; background: var(--neutral-950); border-radius: 4px; padding: 0.75rem; display: flex; flex-direction: column; justify-content: space-between;">
+              <div style="font-family: var(--font-mono); font-size: 0.375rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-verdigris);">Verdigris</div>
+              <div style="font-family: var(--font-display); font-size: 0.5rem; font-weight: 700; color: var(--neutral-50); line-height: 1.2;">See faults 48 hours before they happen</div>
+              <span style="display: inline-block; width: fit-content; background: var(--brand-verdigris); color: var(--neutral-950); font-weight: 600; font-size: 0.3125rem; padding: 0.125rem 0.375rem; border-radius: 0.125rem;">Learn more</span>
+            </div>
+          </div>
+          <!-- Dashboard -->
+          <div style="background: var(--card); padding: 0.75rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Dashboard</div>
+            <div style="background: var(--neutral-950); border-radius: 4px; padding: 0.625rem;">
+              <div style="display: flex; gap: 0.5rem; margin-bottom: 0.375rem;">
+                <div><div style="font-family: var(--font-mono); font-size: 0.25rem; color: var(--neutral-400);">Sensors</div><div style="font-size: 0.625rem; font-weight: 700; color: var(--brand-verdigris); font-variant-numeric: tabular-nums;">2,847</div></div>
+                <div><div style="font-family: var(--font-mono); font-size: 0.25rem; color: var(--neutral-400);">Faults</div><div style="font-size: 0.625rem; font-weight: 700; color: var(--brand-mp-step-2); font-variant-numeric: tabular-nums;">23</div></div>
+              </div>
+              <div style="height: 2rem; background: var(--neutral-900); border-radius: 2px; display: flex; align-items: flex-end; padding: 0.125rem; gap: 1px;">
+                <div style="flex:1;background:var(--brand-verdigris);border-radius:1px 1px 0 0;height:50%;opacity:0.6;"></div>
+                <div style="flex:1;background:var(--brand-verdigris);border-radius:1px 1px 0 0;height:70%;opacity:0.6;"></div>
+                <div style="flex:1;background:var(--brand-mp-step-2);border-radius:1px 1px 0 0;height:90%;opacity:0.6;"></div>
+                <div style="flex:1;background:var(--brand-verdigris);border-radius:1px 1px 0 0;height:55%;opacity:0.6;"></div>
+                <div style="flex:1;background:var(--brand-verdigris);border-radius:1px 1px 0 0;height:60%;opacity:0.6;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Chat -->
+          <div style="background: var(--card); padding: 0.75rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">AI Chat</div>
+            <div style="background: var(--muted); border-radius: 4px; padding: 0.5rem; margin-bottom: 0.375rem;">
+              <div style="font-size: 0.375rem; font-weight: 600; color: var(--fg);">You</div>
+              <div style="font-size: 0.375rem; color: var(--fg); margin-top: 0.0625rem;">What caused the spike on B3?</div>
+            </div>
+            <div style="font-size: 0.375rem; color: var(--fg); line-height: 1.4;">340A transient at 14:23:07. Motor inrush, Circuit 14.</div>
+            <div style="background: var(--muted); border-radius: 2px; padding: 0.25rem; margin-top: 0.25rem; display: flex; gap: 0.375rem;">
+              <div><div style="font-family: var(--font-mono); font-size: 0.25rem; color: var(--muted-fg);">Peak</div><div style="font-family: var(--font-mono); font-size: 0.375rem; font-weight: 600; color: var(--fg);">340.2A</div></div>
+              <div><div style="font-family: var(--font-mono); font-size: 0.25rem; color: var(--muted-fg);">Duration</div><div style="font-family: var(--font-mono); font-size: 0.375rem; font-weight: 600; color: var(--fg);">12.4ms</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="figure-caption">Same brand, different rules. An ad has 3 seconds. A dashboard serves analysts for hours. A chat interface shows exact values. The composition matrix gives each surface its own ruleset.</div>
+      </div>
+
+      <div class="prose" style="margin-top: 2rem;">
+        <p>We also discovered a surface that doesn't exist in any design system we could find: LLM chat interfaces. No established best practices. Two schools are emerging: character-driven (consumer) and competence-driven (B2B). For Verdigris, the AI should feel like an expert tool, not a chatbot. Exact values, not ranges. Citations, not hedging. The EU AI Act (August 2026) will require visual marking of AI-generated content.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- EPISODE 7: What the adversarial reviews taught us -->
+  <!-- ================================================================ -->
+  <div class="episode">
+    <div class="container">
+      <div class="label" style="color: var(--muted-fg); margin-bottom: 0.75rem;">What this doesn't do</div>
+      <h2>The framework is not a panacea</h2>
+      <div class="prose">
+        <p>We ran three adversarial review passes. They caught 12 issues, including a rule that said 30% when the actual constraint was 70%, a specimen that contradicted its own YAML, broken dark mode rendering, and AI writing artifacts that survived two manual cleanup passes.</p>
+        <p>The reviews were valuable. But they also showed the limits of the process. Here's what the framework doesn't do:</p>
+        <p><strong>It doesn't replace iteration.</strong> The strobe problem is the clearest example. The first specimen alternated dark and light sections. No rule flagged it. Thomas looked at it and said "the dark and white switch between sections can be a bit jarring." He was right. We wrote the section-flow rules after the fact, to codify what his eye caught instantly. The framework carries decisions forward, but someone has to make the first call.</p>
+        <p><strong>It doesn't eliminate bad output.</strong> This page, built to demonstrate the framework, had 12 violations of its own composition rules when the adversarial reviewer checked. H2 sections with 4rem padding instead of 5rem. A closing section with marketing-style pill buttons. Hardcoded white backgrounds that broke in dark mode. Knowing the rules and following them are different things.</p>
+        <p><strong>It doesn't create taste.</strong> It encodes taste that already exists. Daniela's design work established the visual identity. The brand pillars grew from her choices. The composition rules formalized those pillars into constraints. But someone had to make the original judgment calls, and someone still has to say "that doesn't feel right" when the rules pass but the output is off.</p>
+        <p>The adversarial review process itself has limits. It catches contradictions (a rule says 70%, the docs say 30%). It catches structural issues (broken dark mode, missing schema fields). It doesn't catch whether a page feels like Verdigris. It doesn't know if the before/after comparison is visceral enough for Mark. It doesn't have taste. It has rules about taste.</p>
+        <p>What the framework does: it sets boundaries so the worst choices get caught early. It compresses iteration cycles. And it leaves space within the boundaries for the creative judgment that no rule can encode. The space between "follows all the rules" and "feels right" is where design happens.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- EPISODE 8: How this was built -->
+  <!-- ================================================================ -->
+  <div class="episode">
+    <div class="container">
+      <div class="label" style="color: var(--muted-fg); margin-bottom: 0.75rem;">Process</div>
+      <h2>One session, not one quarter</h2>
+      <div class="prose">
+        <p>This entire evolution happened in a single Claude session. Not a design sprint. Not a committee. One conversation, parallel research agents, adversarial reviews, iterative specimens.</p>
+      </div>
+
+      <!-- Figure: stats -->
+      <div class="figure">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border);">
+          <div style="background: var(--card); padding: 1.25rem; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 700; color: var(--fg);">~30</div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-top: 0.25rem;">commits</div>
+          </div>
+          <div style="background: var(--card); padding: 1.25rem; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 700; color: var(--fg);">5,000+</div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-top: 0.25rem;">lines written</div>
+          </div>
+          <div style="background: var(--card); padding: 1.25rem; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 700; color: var(--fg);">14</div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-top: 0.25rem;">composition cells</div>
+          </div>
+          <div style="background: var(--card); padding: 1.25rem; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 700; color: var(--fg);">6</div>
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-top: 0.25rem;">parallel agents</div>
+          </div>
+        </div>
+        <div class="figure-caption">Session output. The equivalent work for a design lead + engineer would take 4-6 weeks. Not because the work is hard, but because iteration cycles compress from days to minutes.</div>
+      </div>
+
+      <div class="prose" style="margin-top: 2rem;">
+        <p>What was uniquely AI-enabled: 6 research agents explored award-winning design across ads, email, dashboards, slides, docs, and LLM interfaces simultaneously. Adversarial review agents caught rules contradicting their own specimens. The design system is itself a machine-consumable artifact: AI agents read the YAML to build pages, the evaluator validates the output.</p>
+        <p>This isn't about replacing designers. Daniela's work established the visual identity that the brand pillars encode. It's about encoding taste so it can be applied consistently and iterated on faster than any human team could manage alone.</p>
+        <p>Hongbin: the hardware and industrial design cell exists in the matrix but is empty. Brand alignment for physical products without a painful iteration process is an open opportunity.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- CLOSING -->
+  <!-- ================================================================ -->
+  <div style="background: var(--neutral-950); padding: 8rem 0;">
+    <div class="container">
+      <div class="label" style="color: var(--brand-verdigris); margin-bottom: 2rem;">What's next</div>
+      <h1 style="font-family: var(--font-display); font-size: 3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--neutral-50); max-width: 36rem;">Try it. Tell us what's off.</h1>
+      <div class="prose" style="margin-top: 1.5rem;">
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">Andrew: pick one Patina component and check it against the dashboard rules. Daniela: run the next email or ad through its composition cell. Josh: compare a dashboard view to the specimen. Mark: look at the before/after at the top. Does the "after" feel like the Verdigris you want?</p>
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">The framework sets boundaries so poor choices get caught. But the best choices still need people who care about the feeling. That's what makes this a design system and not just a style guide.</p>
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">The obvious next step: apply this to verdigris.co. The homepage, the product pages, the whole site. See what the composition rules produce against what exists today. That's the real test of whether a design system can describe taste.</p>
+      </div>
+      <div class="prose" style="margin-top: 2rem;">
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">Start with the <a href="specimen" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">full specimen</a>, the <a href="foundations/composition" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">composition rules</a>, or the <a href="foundations/color" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">palette semantics</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="background: var(--neutral-950); padding: 1.5rem 0; border-top: 1px solid oklch(1 0 0 / 10%);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--neutral-500);">Verdigris Design System</div>
+      <div style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--neutral-500);">April 2026</div>
+    </div>
+  </div>
+
+</body>
+</html>

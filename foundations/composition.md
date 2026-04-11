@@ -20,6 +20,7 @@ Composition rules are organized by purpose (what the page does) and surface (wha
 | **Analyze** | Show data, monitor, compare | Full palette | Compact (1-3rem panels) | Dashboard grid |
 | **Convert** | Drive a single action | 1 accent (CTA only) | Focused (4rem) | Linear funnel |
 | **Identify** | Brand recognition in seconds | Teal only | Surface-constrained | Single moment |
+| **Narrate** | Tell a story with depth | Illustrative (in figures) | Generous (5-8rem) | Episode + figure pairs |
 | **Assist** | AI interaction (chat, embedded) | Monochrome + functional | Content-driven | Conversational |
 | **Instruct** | Machine-to-machine | N/A (structural) | N/A | Rule clarity |
 
@@ -37,6 +38,7 @@ Composition rules are organized by purpose (what the page does) and surface (wha
 | Convert x Web page | **Defined** | 4-role funnel, single CTA, max 3 tiers, micro-reassurance |
 | Identify x Ad banner | **Defined** | Teal only, 3-8 word tagline, Z-pattern |
 | Identify x Hardware | **Defined** | One teal accent, neutral housing, single wordmark |
+| Narrate x Web page | **Defined** | Episode + figure pairs, 1.7 line-height, color in figures not backgrounds |
 | Assist x Chat | **Defined** | Flat layout (no bubbles), 680-720px, competence over personality |
 | Assist x Embedded | **Defined** | Visual marker for AI content, provenance metadata, EU AI Act compliance |
 | Instruct x Machine | **Defined** | Floors AND ceilings, id paths, canonical tokens only |
