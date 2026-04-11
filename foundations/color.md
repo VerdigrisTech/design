@@ -306,33 +306,41 @@ The palette divides into 6 semantic regions based on content category:
 
 ### Taste Boundaries — Restraint Rules
 
-The palette semantics guidance without ceilings will produce a rainbow. Taste is knowing when NOT to apply color. The best B2B brands (Linear, Vercel, Stripe) succeed through restraint, not chromatic range.
+The palette semantics without ceilings will produce a rainbow. The brand pillars define the boundaries:
 
-**Teal dominance:** Teal + neutrals must comprise at least 60% of any surface's color expression. Other palette regions are accents, not co-primaries. The brand IS teal.
+- **"Controlled color palette, no visual clutter."** (Masterful)
+- **"Subtle use of the brand gradient."** (Refined)
+- **"Every element earns its place."** (Precision)
+- **"Credibility through restraint. Sophisticated buyers, not impulse shoppers."**
+
+Color is earned, not assigned by lookup table. An accent region appears because it makes the page better, not because a mapping table says it should.
+
+**Teal dominance:** Teal + neutrals must comprise at least 70% of any surface's color expression. Other palette regions are rare accents, not co-primaries. The brand IS teal.
 
 **Maximum regions per surface:**
 
 | Surface | Max non-neutral regions | Rationale |
 |---------|------------------------|-----------|
-| Web page | 3 (trust + 2 accents) | Enough for rhythm, not enough for chaos |
-| Ad banner | 1 (brand teal only) | Ads need instant recognition, not variety |
-| Email | 2 (trust + 1 accent) | Inbox context is noisy — stay simple |
-| White paper | 2 (trust + 1 accent) | Professional restraint |
+| Web page (homepage) | 2 (trust + 1 accent) | Controlled palette; 2 accents only for 10+ section pages with justification |
+| Landing page | 1 (brand teal only) | Focused message, no chromatic distraction |
+| Ad banner | 1 (brand teal only) | Instant recognition, not variety |
+| Email | 1 (brand teal only) | Inbox is noisy — stay clean |
+| White paper | 2 (trust + 1 accent for data) | Professional restraint |
 | Physical goods | 1 (brand teal only) | Hardware/packaging: maximum brand clarity |
 | Data visualization | 6 (full palette) | This is what the gradient was designed for |
 | Slide deck | 2 per slide | One accent per point |
 
 **Section limits (web pages):**
-- No more than 40% of sections should have non-neutral palette accents — the rest should breathe
+- No more than 30% of sections should have non-neutral palette accents — the rest should breathe
 - Never place two colored sections adjacent — always separate with neutral
 - Accents are subtle (background tints and label colors) — NOT full-saturation backgrounds
 
 ### Usage Rules
 
-1. **Teal first** — teal + neutrals dominate every surface (60%+ minimum)
-2. **Max 3 regions on a web page** — trust + at most 2 accent regions
+1. **Teal first** — teal + neutrals dominate every surface (70%+ minimum)
+2. **Max 2 regions on a web page** — trust + at most 1 accent region (earned, not automatic)
 3. **No random assignment** — section accent colors must match the content category above
-4. **Breathing room** — at least 60% neutral sections; never two colored sections adjacent
+4. **Breathing room** — at least 70% neutral sections; never two colored sections adjacent
 5. **Subtlety** — palette accents are tints and labels, not saturated backgrounds
 6. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
 7. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)

@@ -318,28 +318,34 @@ color:
 
     # --- Taste boundaries (upper AND lower) ---
     #
+    # Brand pillars: Precise, Masterful, Refined, Pioneering.
+    # "Credibility through restraint. Sophisticated buyers, not impulse shoppers."
+    # "Controlled color palette, no visual clutter." (Masterful)
+    # "Subtle use of the brand gradient." (Refined)
+    # "Every element earns its place." (Precision)
+    #
     # These rules codify restraint. Without ceilings, an AI agent will
     # optimize toward maximum palette coverage — which reads as a rainbow.
-    # The best B2B brands succeed through restraint, not chromatic range.
-    # Taste is knowing when NOT to apply color.
+    # Color is earned, not assigned by lookup table.
     #
     taste_boundaries:
       teal_dominance:
         id: "color.palette-semantics.teal-dominance"
         severity: "error"
         type: "constraint"
-        description: "Teal (trust region) + neutrals must comprise at least 60% of any surface's color expression. The brand is teal — other palette regions are accents, not co-primaries."
+        description: "Teal (trust region) + neutrals must comprise at least 70% of any surface's color expression. The brand IS teal — other palette regions are rare accents, not co-primaries. 'Controlled color palette, no visual clutter.' (Masterful pillar)"
         test:
-          min: 0.6
+          min: 0.7
       max_regions_per_surface:
         id: "color.palette-semantics.max-regions"
         severity: "error"
         type: "constraint"
-        description: "Maximum number of non-neutral palette regions visible on a single surface. More regions = more visual noise. Restraint is sophistication."
-        web_page: 3           # Homepage/landing: trust + 2 accents max
+        description: "Maximum non-neutral palette regions per surface. 'Subtle use of the brand gradient.' (Refined pillar) — every accent must earn its place."
+        web_page: 2           # Homepage/landing: trust + 1 accent (2 accents for long pages with 10+ sections, requires justification)
+        landing_page: 1       # Focused landing pages: trust only (+ neutrals)
         ad_banner: 1          # Ads: brand teal only (+ neutrals)
-        email: 2              # Emails: trust + 1 accent
-        white_paper: 2        # Documents: trust + 1 accent
+        email: 1              # Emails: trust only (+ neutrals)
+        white_paper: 2        # Documents: trust + 1 accent for data sections
         physical_goods: 1     # Hardware/packaging: brand teal only
         data_visualization: 6 # Charts: full palette allowed (this is what the gradient was designed for)
         slide_deck: 2         # Presentations: trust + 1 accent per slide
@@ -347,29 +353,29 @@ color:
         id: "color.palette-semantics.max-colored-sections"
         severity: "warning"
         type: "constraint"
-        description: "On a multi-section page, no more than 40% of sections should have non-neutral palette accents. The rest should breathe."
+        description: "On a multi-section page, no more than 30% of sections should have non-neutral palette accents. 'Every element earns its place.' (Precision pillar)"
         test:
-          max: 0.4
+          max: 0.3
 
     # --- Section color rules (evaluator-enforceable) ---
     rules:
       - id: "color.palette-semantics.no-monotone"
-        description: "Homepage must use at least 1 palette region beyond teal + neutrals to create visual interest (but no more than 3 total regions — see max-regions)"
+        description: "Homepage should use at least 1 palette region beyond teal + neutrals for visual interest (but no more than 2 total non-neutral regions — see max-regions)"
         severity: "warning"
         type: "constraint"
         test:
           min: 1
-          max: 3
+          max: 2
       - id: "color.palette-semantics.no-random-color"
         description: "Section accent colors must match the content category — do not assign palette regions arbitrarily"
         severity: "error"
         type: "constraint"
       - id: "color.palette-semantics.neutral-breathing-room"
-        description: "At least 60% of page sections should use neutral backgrounds. Color is the exception, not the default."
+        description: "At least 70% of page sections should use neutral backgrounds. Color is the exception, not the default. 'Credibility through restraint.'"
         severity: "warning"
         type: "constraint"
         test:
-          min: 0.6
+          min: 0.7
       - id: "color.palette-semantics.adjacent-colored-sections"
         description: "Never place two non-neutral colored sections adjacent to each other. Always separate with a neutral section."
         severity: "error"
