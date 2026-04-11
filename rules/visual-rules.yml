@@ -1392,16 +1392,20 @@ composition:
     type: "reference"
     description: "Purpose x surface composition matrix. AI agents declare both purpose and surface; the evaluator selects the matching cell's ruleset."
     cells:
-      persuade_web_page: "defined"       # BUILD NOW — homepage, landing pages
-      persuade_ad_banner: "placeholder"
-      persuade_email: "placeholder"
-      persuade_slide_deck: "placeholder"
-      inform_web_page: "placeholder"     # docs, blog, case study
-      inform_slide_deck: "placeholder"
-      analyze_dashboard: "placeholder"   # data viz, monitoring
-      convert_web_page: "placeholder"    # pricing, signup, demo request
-      identify_ad_banner: "placeholder"  # brand recognition
-      identify_hardware: "placeholder"
+      persuade_web_page: "defined"
+      persuade_ad_banner: "defined"
+      persuade_email: "defined"
+      persuade_slide_deck: "defined"
+      inform_web_page: "defined"
+      inform_slide_deck: "defined"
+      analyze_dashboard: "defined"
+      convert_web_page: "defined"
+      identify_ad_banner: "defined"
+      identify_hardware: "defined"
+      # LLM/chat surfaces — new surface type
+      assist_chat: "defined"             # human-to-AI conversational interface
+      assist_embedded: "defined"         # AI-generated content within other surfaces
+      instruct_machine: "defined"        # machine-to-machine (AI agents consuming design system)
 
   # ---------------------------------------------------------------------------
   # PERSUADE x WEB PAGE — homepage, landing pages, campaign pages
@@ -1551,3 +1555,338 @@ composition:
       id: "composition.persuade-web-page.whitespace"
       type: "reference"
       description: "Generous whitespace is the primary signal of quality on persuasive pages. Perceived luxury correlates with empty space. When in doubt, add more space, not more content. The default section padding for persuasive pages is the medium spacing (5rem), not the standard (4rem). Standard padding is for inform-purpose pages."
+
+  # ---------------------------------------------------------------------------
+  # INFORM x WEB PAGE — docs, blog, case studies, technical guides
+  # ---------------------------------------------------------------------------
+  inform_web_page:
+    id: "composition.inform-web-page"
+    type: "reference"
+    description: "Composition for informational web pages. Color becomes wayfinding, not atmosphere. Spacing tightens and steadies. Typography shifts from display to body. No narrative arc."
+    section_roles:
+      title:        { color_intensity: "supporting", type_max: "h1", section_padding: "3rem", note: "Page-level framing. One per page. H1 used only here." }
+      explanation:  { color_intensity: "breathing",  type_max: "h2", section_padding: "3rem", note: "Core content. Body text runs the page." }
+      example:      { color_intensity: "breathing",  type_max: "h3", section_padding: "3rem", note: "Code blocks, screenshots, demos. Mono font for code." }
+      reference:    { color_intensity: "breathing",  type_max: "h3", section_padding: "3rem", note: "API tables, parameter lists, specs." }
+      callout:      { color_intensity: "supporting",  type_max: "h3", section_padding: "2rem", note: "Tips, warnings, notes. Teal left border for tips, destructive for warnings." }
+      summary:      { color_intensity: "breathing",  type_max: "h2", section_padding: "3rem", note: "Recap or next steps. Optional." }
+    rhythm: "Metronomic. Every section has equal visual weight. No hero, no crescendo. Roles are interchangeable and repeatable in any order."
+    coupling:
+      - id: "composition.inform-web-page.coupling.line-length"
+        description: "65ch max line length throughout. Tighter than persuade."
+        severity: "warning"
+        type: "constraint"
+        test: { max_line_length: "65ch" }
+      - id: "composition.inform-web-page.coupling.uniform-padding"
+        description: "Uniform 3rem section padding regardless of heading level. Steady rhythm, no drama."
+        severity: "warning"
+        type: "constraint"
+        test: { section_padding: { value: "3rem" } }
+      - id: "composition.inform-web-page.coupling.color-wayfinding"
+        description: "Color marks navigation state (active sidebar, section indicator), not atmosphere. No tinted section backgrounds. Brand accent on interactive elements only."
+        severity: "error"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # INFORM x SLIDE DECK — training materials, technical presentations
+  # ---------------------------------------------------------------------------
+  inform_slide_deck:
+    id: "composition.inform-slide-deck"
+    type: "reference"
+    description: "Technical presentations and training. One idea per slide, H2 max, 60% whitespace minimum. Teal in diagrams only."
+    section_roles:
+      title:    { color_intensity: "supporting", type_max: "h1", note: "Deck title slide. Brand mark + topic." }
+      content:  { color_intensity: "breathing",  type_max: "h2", note: "One point per slide. H2 + body or H2 + diagram." }
+      diagram:  { color_intensity: "supporting",  type_max: "h3", note: "Technical diagram. Teal for primary paths, neutral for secondary." }
+      summary:  { color_intensity: "breathing",  type_max: "h2", note: "Recap. Key takeaways as a list." }
+    coupling:
+      - id: "composition.inform-slide-deck.coupling.type-floor"
+        description: "24pt body minimum for projection readability."
+        severity: "error"
+        type: "constraint"
+        test: { body_size: { min: "24pt" } }
+      - id: "composition.inform-slide-deck.coupling.whitespace"
+        description: "60% minimum whitespace per slide. Inform slides are sparse."
+        severity: "warning"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # ANALYZE x DASHBOARD — analytics, monitoring, data viz
+  # ---------------------------------------------------------------------------
+  analyze_dashboard:
+    id: "composition.analyze-dashboard"
+    type: "reference"
+    description: "Dashboards and data visualization. Full palette allowed (this is what the gradient was designed for). Grid layout, compact spacing, data-dense typography. Fundamentally different from persuade."
+    panel_roles:
+      kpi_strip:    { color_intensity: "supporting", type: "Large numbers (24-32px, weight 700) + trend arrows + sparklines. 4-6 metrics.", layout: "horizontal row" }
+      chart_panel:  { color_intensity: "full_palette", type: "Chart title H3, axis labels 12px mono, legend 12px.", layout: "grid cell, min 300px wide" }
+      table_panel:  { color_intensity: "breathing", type: "13px body, tabular-nums, 1.4 line-height.", layout: "grid cell, scrollable" }
+      status_panel: { color_intensity: "functional", type: "Status badges (red/amber/green), 13px mono labels.", layout: "sidebar or grid cell" }
+      filter_bar:   { color_intensity: "breathing", type: "14px inputs, neutral background.", layout: "top-fixed or sidebar" }
+    layout:
+      type: "CSS Grid, 12-column"
+      sidebar: "240-280px nav"
+      panel_gap: "0.75-1rem"
+      card_padding: "1-1.5rem"
+      max_section_padding: "3rem"
+    color_rules:
+      - id: "composition.analyze-dashboard.color.functional"
+        description: "Color is functional, not decorative. Three encoding types: status (red/amber/green), categorical (distinct hues per series, max 6), sequential (single-hue lightness ramp)."
+        type: "reference"
+      - id: "composition.analyze-dashboard.color.teal-default"
+        description: "Teal is the default/primary series color. Teal-dominance rule (70%) relaxes for dashboards but teal remains the first color in any categorical set."
+        severity: "warning"
+        type: "constraint"
+    typography:
+      body_size: "13-14px"
+      kpi_size: "24-32px"
+      table_cell: "13px, line-height 1.4"
+      font_features: "tabular-nums mandatory for all numeric displays"
+      mono_usage: "Raw values, timestamps, IDs, status codes"
+    coupling:
+      - id: "composition.analyze-dashboard.coupling.density"
+        description: "Whitespace is compressed with discipline, not eliminated. Panel gap 0.75-1rem, card padding 1-1.5rem. Tighter than persuade but never cramped."
+        severity: "warning"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # CONVERT x WEB PAGE — pricing, signup, demo request
+  # ---------------------------------------------------------------------------
+  convert_web_page:
+    id: "composition.convert-web-page"
+    type: "reference"
+    description: "Convert pages strip away everything that does not serve the action. Funnel, not narrative. Color is functional (CTA only). Spacing creates momentum, not luxury."
+    funnel_roles:
+      value:   { color_intensity: "breathing", type_max: "h2", section_padding: "4rem", note: "Value proposition. One sentence, clear benefit." }
+      trust:   { color_intensity: "breathing", type_max: "h3", section_padding: "3rem", note: "Social proof. Logos, testimonials, deployment count. Compact." }
+      options: { color_intensity: "supporting", type_max: "h2", section_padding: "4rem", note: "Pricing tiers or plan comparison. Max 3 tiers. Recommended tier highlighted with accent." }
+      action:  { color_intensity: "supporting", type_max: "h2", section_padding: "4rem", note: "Final CTA. One primary button. Micro-reassurance within 1rem below." }
+    funnel_rules:
+      - id: "composition.convert-web-page.funnel.single-cta"
+        description: "One primary filled CTA button per page. Secondary actions use ghost or text-link treatment only."
+        severity: "error"
+        type: "constraint"
+      - id: "composition.convert-web-page.funnel.max-tiers"
+        description: "Max 3 pricing tiers. More than 6 options drops conversion from 30% to 3% (Hick's Law)."
+        severity: "error"
+        type: "constraint"
+        test: { max: 3 }
+      - id: "composition.convert-web-page.funnel.reassurance"
+        description: "Every primary CTA needs micro-reassurance within 1rem below: 'No credit card required,' 'Cancel anytime,' '30-second setup.'"
+        severity: "warning"
+        type: "constraint"
+      - id: "composition.convert-web-page.funnel.no-escape"
+        description: "Convert pages should minimize navigation distractions. Reduced header, no sidebar, no competing links in the main content area."
+        severity: "warning"
+        type: "constraint"
+    coupling:
+      - id: "composition.convert-web-page.coupling.tight-spacing"
+        description: "4rem section padding max. Momentum over luxury. No 8rem hero-scale padding."
+        severity: "warning"
+        type: "constraint"
+        test: { section_padding: { max: "4rem" } }
+      - id: "composition.convert-web-page.coupling.functional-color"
+        description: "CTA button and the recommended-tier highlight are the only saturated elements. Everything else neutral. No tinted section backgrounds, no gradient strips. The recommended-tier highlight is functional (guides the decision, users spend 42% more time on highlighted plans), not decorative."
+        severity: "error"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # PERSUADE x AD BANNER — display ads (Google, LinkedIn, social)
+  # ---------------------------------------------------------------------------
+  persuade_ad_banner:
+    id: "composition.persuade-ad-banner"
+    type: "reference"
+    description: "Brand impression in under 2 seconds. Treat the banner as recognition, not conversion. Restraint + one bold idea."
+    elements: "Max 4 elements: brand mark, headline (3-8 words), CTA or proof image, whitespace."
+    layout: "Z-pattern: logo top-left, headline center, CTA bottom-right."
+    color: "Teal + neutrals only. Two-color max (verdigris + one supporting neutral)."
+    typography: "One typeface (Lato for headline, Inter for body). Headline 5-12 words max."
+    whitespace: "30% minimum of ad surface."
+    rules:
+      - id: "composition.persuade-ad-banner.max-elements"
+        description: "Max 4 visual elements. More than 4 creates clutter at glance speed."
+        severity: "error"
+        type: "constraint"
+        test: { max: 4 }
+      - id: "composition.persuade-ad-banner.brand-recognition"
+        description: "Logo must be visible within 1 second. Place in top-left or top-center."
+        severity: "error"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # PERSUADE x EMAIL — marketing emails
+  # ---------------------------------------------------------------------------
+  persuade_email:
+    id: "composition.persuade-email"
+    type: "reference"
+    description: "The best B2B emails look like well-formatted text, not marketing collateral. Heavily designed emails underperform because recipients perceive them as ads."
+    layout: "Single column, 600px max width."
+    color: "Brand teal on CTA button only. Body is black text on white. Header may use a teal accent line."
+    typography: "System font stack (14-16px body, 22-28px headings). Match email client defaults for trust."
+    sections: "Max 3 content sections before footer. One CTA per section."
+    rules:
+      - id: "composition.persuade-email.single-column"
+        description: "Single column layout, 600px max. Multi-column breaks on mobile email clients."
+        severity: "error"
+        type: "constraint"
+      - id: "composition.persuade-email.cta-per-section"
+        description: "One CTA per content section. Multiple competing CTAs reduce click-through."
+        severity: "warning"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # PERSUADE x SLIDE DECK — investor pitch, sales deck, conference talk
+  # ---------------------------------------------------------------------------
+  persuade_slide_deck:
+    id: "composition.persuade-slide-deck"
+    type: "reference"
+    description: "Narrative arc adapted for presenter-paced delivery. Each slide is a section. The presenter replaces scroll-pacing with click-pacing."
+    narrative_roles:
+      hook:      { color_intensity: "full", type_max: "h1", note: "Title slide. Brand mark + one-sentence value prop. Dark bg. 3-second scan." }
+      context:   { color_intensity: "breathing", type_max: "h2", note: "Problem statement. 1-2 slides. One point per slide." }
+      evidence:  { color_intensity: "supporting", type_max: "h2", note: "Solution, market, product. 3-5 slides. Cards, diagrams, screenshots." }
+      turn:      { color_intensity: "accent", type_max: "h2", note: "Traction inflection. The one accent slide. Key metric that changes the conversation." }
+      proof:     { color_intensity: "supporting", type_max: "h2", note: "Logos, financials, team. 2-3 slides." }
+      close:     { color_intensity: "full", type_max: "h2", note: "The ask. Dark bg bookends the hook." }
+    arc_rules:
+      - id: "composition.persuade-slide-deck.arc.count"
+        description: "10-15 slides total. Under 10 feels thin; over 15 loses attention (DocSend data: investors spend ~15 seconds per slide)."
+        severity: "warning"
+        type: "constraint"
+        test: { min: 10, max: 15 }
+      - id: "composition.persuade-slide-deck.arc.single-turn"
+        description: "One turn slide per deck. The accent moment. More than one dilutes the inflection."
+        severity: "error"
+        type: "constraint"
+        test: { max: 1 }
+      - id: "composition.persuade-slide-deck.arc.max-low-energy"
+        description: "Max 4 consecutive low-energy slides (context, evidence, proof) before a turn or visual break."
+        severity: "warning"
+        type: "constraint"
+        test: { max_consecutive: 4 }
+    coupling:
+      - id: "composition.persuade-slide-deck.coupling.type-floor"
+        description: "24pt body minimum for projection. 40-72pt headline range. Max 6 lines of body text per slide. Max 2 type sizes per slide."
+        severity: "error"
+        type: "constraint"
+        test: { body_size: { min: "24pt" }, headline_size: { min: "40pt", max: "72pt" } }
+      - id: "composition.persuade-slide-deck.coupling.dark-bookends"
+        description: "Dark slides restricted to hook and close (bookends). Mid-deck dark slides break the light flow."
+        severity: "warning"
+        type: "constraint"
+      - id: "composition.persuade-slide-deck.coupling.chart-colors"
+        description: "Max 3 colors per chart. Data viz limited to 60% of slide content zone."
+        severity: "warning"
+        type: "constraint"
+    spacing: "8% safe margin inset from slide edges for 16:9. Content zone centered. Vertical centering default."
+
+  # ---------------------------------------------------------------------------
+  # IDENTIFY x AD BANNER — brand recognition ads
+  # ---------------------------------------------------------------------------
+  identify_ad_banner:
+    id: "composition.identify-ad-banner"
+    type: "reference"
+    description: "Pure brand recognition in under 2 seconds. Not trying to persuade or convert, just to be remembered as Verdigris."
+    color: "Teal on dark or teal accent on white. No secondary palette regions."
+    typography: "Brand mark + 3-8 word tagline. One typeface."
+    layout: "Z-pattern. Logo top-left, tagline center."
+    whitespace: "30% minimum."
+    rules:
+      - id: "composition.identify-ad-banner.teal-only"
+        description: "Verdigris teal + neutrals only. No other palette regions. Instant recognition requires consistency."
+        severity: "error"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # IDENTIFY x HARDWARE — physical products, labels, trade show
+  # ---------------------------------------------------------------------------
+  identify_hardware:
+    id: "composition.identify-hardware"
+    type: "reference"
+    description: "Physical products and materials. The device should look like architecture, not electronics."
+    color: "One teal accent element (logo, LED indicator, accent line). Neutral housing."
+    brand_mark: "Single wordmark placement. Centrally placed or top-center."
+    materials: "Matte finish preferred. Regulatory text on underside or recessed label."
+    rules:
+      - id: "composition.identify-hardware.single-accent"
+        description: "One brand teal accent on the physical surface. The logo is the only decorative element."
+        severity: "error"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # ASSIST x CHAT — human-to-AI conversational interface
+  # ---------------------------------------------------------------------------
+  assist_chat:
+    id: "composition.assist-chat"
+    type: "reference"
+    description: "Conversational AI interface. Competence-driven, not character-driven. The interface disappears so content dominates. AI as expert tool, not chatbot."
+    layout:
+      type: "Flat document-style for AI responses (no chat bubbles). User messages may use subtle background."
+      reading_width: "680-720px for prose. Code and tables break wider."
+      vertical_spacing: "20px top, 10px sides, 15px bottom between messages."
+    color:
+      ai_response: "Monochrome text. Color reserved for links, syntax highlighting, data viz, interactive elements."
+      user_message: "May use subtle brand tint (teal at 3-5%) for background distinction."
+      system_message: "Neutral gray."
+    typography:
+      prose: "Proportional sans-serif (Inter). Standard body size (1rem)."
+      code: "Monospace (JetBrains Mono) at 14px. Background tinting for inline code."
+      data: "Tabular-nums for metrics. Exact values, not ranges (Precise pillar)."
+    brand_mapping:
+      precise: "No hedging. Exact kWh, timestamps, confidence intervals. Citation-forward like Perplexity."
+      masterful: "AI as infrastructure, not a character. Linear's approach. No animated avatars, no personality theater."
+      refined: "Interface disappears so content dominates. Claude's vanishing-chrome philosophy. Minimal decorative motion."
+      pioneering: "Active artifacts: live charts, drillable metrics, interactive tables within responses. The response IS the analysis tool."
+    rules:
+      - id: "composition.assist-chat.no-personality"
+        description: "B2B AI interactions favor competence over personality. No emoji in AI responses, no casual tone, no character-driven interactions."
+        severity: "warning"
+        type: "constraint"
+      - id: "composition.assist-chat.flat-layout"
+        description: "AI responses use flat document layout, not chat bubbles. Bubbles are for consumer messaging, not expert tools."
+        severity: "warning"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # ASSIST x EMBEDDED — AI-generated content within other surfaces
+  # ---------------------------------------------------------------------------
+  assist_embedded:
+    id: "composition.assist-embedded"
+    type: "reference"
+    description: "AI-generated content appearing within dashboards, reports, or web pages. Must be visually distinguished from human-authored content. EU AI Act Article 50 requires AI content labeling by August 2026."
+    visual_distinction:
+      marker: "Subtle consistent visual marker: thin left-border accent (2px, neutral.400) or provenance icon."
+      tint: "Optional light background tint (neutral.100) to distinguish from surrounding content."
+      label: "Machine-readable metadata for AI provenance. Human-readable indicator for regulatory compliance."
+    trust_signals:
+      citations: "AI claims backed by data should include source reference (sensor ID, timestamp, confidence)."
+      disclaimer: "Brief capability disclaimer accessible but not prominent."
+      human_review: "AI drafts, human reviews, explicit acceptance. Show review state."
+    rules:
+      - id: "composition.assist-embedded.visual-marker"
+        description: "AI-generated content on non-chat surfaces must have a consistent visual marker distinguishing it from human-authored content."
+        severity: "error"
+        type: "constraint"
+      - id: "composition.assist-embedded.provenance"
+        description: "AI-generated content must include machine-readable provenance metadata. EU AI Act Article 50 compliance required by August 2026."
+        severity: "error"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
+  # INSTRUCT x MACHINE — AI agents consuming the design system
+  # ---------------------------------------------------------------------------
+  instruct_machine:
+    id: "composition.instruct-machine"
+    type: "reference"
+    description: "Machine-to-machine surface. The consumer is an AI agent reading YAML, JSON, and markdown to build visual outputs. No visual design — the design is the structure and clarity of the rules themselves."
+    principles:
+      - "Every rule has id, severity, type, description. Machines parse structure, not prose."
+      - "Numeric values have explicit units and bounds (floor AND ceiling)."
+      - "Cross-references use id paths, not prose descriptions."
+      - "Token values are canonical — never fabricate oklch values outside the token set."
+      - "Guidance rules include both what TO do and what NOT to do. Machines optimize toward maximums without upper bounds."
+    rules:
+      - id: "composition.instruct-machine.floors-and-ceilings"
+        description: "Every guidance rule that sets a minimum must also set a maximum. AI agents interpret 'at least 2' as 'use as many as possible.'"
+        severity: "error"
+        type: "constraint"
