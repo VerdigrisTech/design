@@ -316,24 +316,64 @@ color:
           section_accent: "Default section backgrounds — white/neutral.100 (light), neutral.950/900 (dark)"
           text: "Primary text color in both modes"
 
+    # --- Taste boundaries (upper AND lower) ---
+    #
+    # These rules codify restraint. Without ceilings, an AI agent will
+    # optimize toward maximum palette coverage — which reads as a rainbow.
+    # The best B2B brands succeed through restraint, not chromatic range.
+    # Taste is knowing when NOT to apply color.
+    #
+    taste_boundaries:
+      teal_dominance:
+        id: "color.palette-semantics.teal-dominance"
+        severity: "error"
+        type: "constraint"
+        description: "Teal (trust region) + neutrals must comprise at least 60% of any surface's color expression. The brand is teal — other palette regions are accents, not co-primaries."
+        test:
+          min: 0.6
+      max_regions_per_surface:
+        id: "color.palette-semantics.max-regions"
+        severity: "error"
+        type: "constraint"
+        description: "Maximum number of non-neutral palette regions visible on a single surface. More regions = more visual noise. Restraint is sophistication."
+        web_page: 3           # Homepage/landing: trust + 2 accents max
+        ad_banner: 1          # Ads: brand teal only (+ neutrals)
+        email: 2              # Emails: trust + 1 accent
+        white_paper: 2        # Documents: trust + 1 accent
+        physical_goods: 1     # Hardware/packaging: brand teal only
+        data_visualization: 6 # Charts: full palette allowed (this is what the gradient was designed for)
+        slide_deck: 2         # Presentations: trust + 1 accent per slide
+      max_colored_sections:
+        id: "color.palette-semantics.max-colored-sections"
+        severity: "warning"
+        type: "constraint"
+        description: "On a multi-section page, no more than 40% of sections should have non-neutral palette accents. The rest should breathe."
+        test:
+          max: 0.4
+
     # --- Section color rules (evaluator-enforceable) ---
     rules:
       - id: "color.palette-semantics.no-monotone"
-        description: "Homepage must use at least 2 palette regions beyond teal + neutrals to create visual rhythm"
+        description: "Homepage must use at least 1 palette region beyond teal + neutrals to create visual interest (but no more than 3 total regions — see max-regions)"
         severity: "warning"
         type: "constraint"
         test:
-          min: 2
+          min: 1
+          max: 3
       - id: "color.palette-semantics.no-random-color"
         description: "Section accent colors must match the content category — do not assign palette regions arbitrarily"
         severity: "error"
         type: "constraint"
       - id: "color.palette-semantics.neutral-breathing-room"
-        description: "Do not color every section — at least 30% of page sections should use neutral backgrounds for visual rest"
+        description: "At least 60% of page sections should use neutral backgrounds. Color is the exception, not the default."
         severity: "warning"
         type: "constraint"
         test:
-          min: 0.3
+          min: 0.6
+      - id: "color.palette-semantics.adjacent-colored-sections"
+        description: "Never place two non-neutral colored sections adjacent to each other. Always separate with a neutral section."
+        severity: "error"
+        type: "constraint"
       - id: "color.palette-semantics.dark-tint-opacity"
         description: "Dark mode brand tints must use 15%+ opacity for depth region, 10%+ for others — below this they are imperceptible"
         severity: "error"
@@ -344,6 +384,10 @@ color:
         type: "constraint"
         test:
           min: 4.5
+      - id: "color.palette-semantics.accent-subtlety"
+        description: "Section palette accents should be subtle — background tints and label colors, NOT full-saturation section backgrounds. The palette region informs a hint, not a paint job."
+        severity: "error"
+        type: "constraint"
 
 
 # =============================================================================

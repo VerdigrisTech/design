@@ -304,13 +304,38 @@ The palette divides into 6 semantic regions based on content category:
 **Content:** Body text, structural sections, form backgrounds, breathing room between colored sections
 **Rule:** At least 30% of page sections should use neutral backgrounds to prevent chromatic fatigue.
 
+### Taste Boundaries — Restraint Rules
+
+The palette semantics guidance without ceilings will produce a rainbow. Taste is knowing when NOT to apply color. The best B2B brands (Linear, Vercel, Stripe) succeed through restraint, not chromatic range.
+
+**Teal dominance:** Teal + neutrals must comprise at least 60% of any surface's color expression. Other palette regions are accents, not co-primaries. The brand IS teal.
+
+**Maximum regions per surface:**
+
+| Surface | Max non-neutral regions | Rationale |
+|---------|------------------------|-----------|
+| Web page | 3 (trust + 2 accents) | Enough for rhythm, not enough for chaos |
+| Ad banner | 1 (brand teal only) | Ads need instant recognition, not variety |
+| Email | 2 (trust + 1 accent) | Inbox context is noisy — stay simple |
+| White paper | 2 (trust + 1 accent) | Professional restraint |
+| Physical goods | 1 (brand teal only) | Hardware/packaging: maximum brand clarity |
+| Data visualization | 6 (full palette) | This is what the gradient was designed for |
+| Slide deck | 2 per slide | One accent per point |
+
+**Section limits (web pages):**
+- No more than 40% of sections should have non-neutral palette accents — the rest should breathe
+- Never place two colored sections adjacent — always separate with neutral
+- Accents are subtle (background tints and label colors) — NOT full-saturation backgrounds
+
 ### Usage Rules
 
-1. **No monotone** — the homepage must use at least 2 palette regions beyond teal + neutrals
-2. **No random assignment** — section accent colors must match the content category above
-3. **Breathing room** — intersperse neutral sections between colored ones
-4. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
-5. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)
+1. **Teal first** — teal + neutrals dominate every surface (60%+ minimum)
+2. **Max 3 regions on a web page** — trust + at most 2 accent regions
+3. **No random assignment** — section accent colors must match the content category above
+4. **Breathing room** — at least 60% neutral sections; never two colored sections adjacent
+5. **Subtlety** — palette accents are tints and labels, not saturated backgrounds
+6. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
+7. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)
 
 See `rules/visual-rules.yml` → `color.palette_semantics` for the machine-consumable version of this guidance.
 
