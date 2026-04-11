@@ -335,6 +335,30 @@ Color is earned, not assigned by lookup table. An accent region appears because 
 - Never place two colored sections adjacent — always separate with neutral
 - Accents are subtle (background tints and label colors) — NOT full-saturation backgrounds
 
+### Section Flow — Lightness Rhythm
+
+Pages have a lightness direction. Alternating dark and light sections creates a strobe — the eye has to re-adapt at every boundary. Commit to a direction and vary within it.
+
+**Light-mode page flow:**
+```
+Dark hero → white → neutral.100 → white → [one dark accent] → white → footer
+```
+- Content sections flow through white and neutral.100 (subtle tonal shift, not a contrast flip)
+- At most ONE dark-background section as a deliberate accent moment (e.g., detection callout, CTA strip)
+- Hero and footer are always dark — they don't count toward the limit
+
+**Dark-mode page flow:**
+```
+neutral.950 → neutral.900 → neutral.950 → [tinted accent] → neutral.900 → footer
+```
+- Content sections flow through neutral.950 and neutral.900
+- Brand-tinted sections provide variety without lightness jumps
+
+**Rules:**
+- **No strobe** — never alternate dark/light/dark/light across consecutive sections
+- **Max lightness jump in content flow: 0.15 OKLch L*** — white (L=1.0) to neutral.100 (L=0.967) is fine; white to neutral.900 (L=0.21) is not
+- **Consistent text color** — light flow = dark text throughout; dark flow = light text throughout. Don't force the reader to re-adapt.
+
 ### Usage Rules
 
 1. **Teal first** — teal + neutrals dominate every surface (70%+ minimum)
@@ -342,8 +366,9 @@ Color is earned, not assigned by lookup table. An accent region appears because 
 3. **No random assignment** — section accent colors must match the content category above
 4. **Breathing room** — at least 70% neutral sections; never two colored sections adjacent
 5. **Subtlety** — palette accents are tints and labels, not saturated backgrounds
-6. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
-7. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)
+6. **Section flow** — commit to a lightness direction; max one dark accent moment per light page
+7. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
+8. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)
 
 See `rules/visual-rules.yml` → `color.palette_semantics` for the machine-consumable version of this guidance.
 
