@@ -879,10 +879,10 @@ title: Brand Specimen
         <div style="background:var(--muted);padding:0.5rem;font-family:var(--font-mono);font-size:0.5rem;color:var(--muted-fg);text-transform:uppercase;letter-spacing:0.05em;">Chat</div>
         <!-- Persuade -->
         <div style="background:var(--muted);padding:0.5rem;font-family:var(--font-mono);font-size:0.5rem;color:var(--muted-fg);text-transform:uppercase;letter-spacing:0.05em;">Persuade</div>
+        <div style="background:var(--card);padding:0.5rem;color:var(--muted-fg);font-style:italic;">See above</div>
         <div style="background:var(--card);padding:0.5rem;color:var(--brand-verdigris);font-weight:600;">Specimen</div>
         <div style="background:var(--card);padding:0.5rem;color:var(--brand-verdigris);font-weight:600;">Specimen</div>
-        <div style="background:var(--card);padding:0.5rem;color:var(--brand-verdigris);font-weight:600;">Specimen</div>
-        <div style="background:var(--card);padding:0.5rem;color:var(--brand-verdigris);">Specimen</div>
+        <div style="background:var(--card);padding:0.5rem;color:var(--muted-fg);font-style:italic;">Rules only</div>
         <div style="background:var(--card);padding:0.5rem;color:var(--muted-fg);">-</div>
         <div style="background:var(--card);padding:0.5rem;color:var(--muted-fg);">-</div>
         <div style="background:var(--card);padding:0.5rem;color:var(--muted-fg);">-</div>
@@ -932,7 +932,7 @@ title: Brand Specimen
         <div style="background:var(--card);padding:0.5rem;color:var(--muted-fg);">-</div>
         <div style="background:var(--card);padding:0.5rem;color:var(--brand-verdigris);font-weight:600;">Specimen</div>
       </div>
-      <p style="font-family:var(--font-mono);font-size:0.5625rem;color:var(--muted-fg);margin-bottom:2rem;"><strong style="color:var(--brand-verdigris);">Specimen</strong> = rendered below. <em>Rules only</em> = YAML rules, no visual render. <em>Physical</em> = not renderable in HTML. <strong>-</strong> = cell not applicable.</p>
+      <p style="font-family:var(--font-mono);font-size:0.5625rem;color:var(--muted-fg);margin-bottom:2rem;"><strong style="color:var(--brand-verdigris);">Specimen</strong> = rendered below. <em>See above</em> = integrated specimen in previous section. <em>Rules only</em> = YAML rules, no visual render. <em>Physical</em> = not renderable in HTML. <strong>-</strong> = not applicable.</p>
 
       <!-- INFORM x WEB PAGE -->
       <div style="margin-bottom:2.5rem;">
@@ -946,10 +946,10 @@ title: Brand Specimen
             <div style="font-size:0.75rem;color:var(--muted-fg);margin-bottom:0.5rem;">Configuration</div>
             <div style="font-size:0.75rem;color:var(--muted-fg);margin-bottom:0.5rem;">API Reference</div>
           </div>
-          <!-- Content -->
-          <div style="padding:2rem;">
-            <h1 style="font-family:var(--font-display);font-size:2rem;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin:0;">Installation</h1>
-            <p style="font-size:0.875rem;color:var(--muted-fg);margin:0.75rem 0 0;max-width:60ch;line-height:1.6;">Install the design token package from GitHub Packages.</p>
+          <!-- Content: 3rem padding, H1 in body font (not display), 65ch max -->
+          <div style="padding:3rem;">
+            <h1 style="font-family:var(--font-body);font-size:1.5rem;font-weight:700;color:var(--fg);margin:0;">Installation</h1>
+            <p style="font-size:0.875rem;color:var(--muted-fg);margin:0.75rem 0 0;max-width:65ch;line-height:1.6;">Install the design token package from GitHub Packages.</p>
             <div style="background:var(--neutral-950);border-radius:0.375rem;padding:1rem;margin-top:1rem;">
               <code style="font-family:var(--font-mono);font-size:0.8125rem;color:var(--brand-verdigris);">npm install @verdigristech/design-tokens</code>
             </div>
@@ -1086,8 +1086,8 @@ title: Brand Specimen
       <div style="margin-bottom:2.5rem;">
         <div class="swatch-group-label" style="margin-bottom:0.75rem">Persuade x Email (600px)</div>
         <div style="width:100%;max-width:600px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:white;">
-          <!-- Header -->
-          <div style="padding:1.25rem 1.5rem;border-bottom:3px solid var(--brand-verdigris);">
+          <!-- Header: thin accent line, not a branded bar -->
+          <div style="padding:1rem 1.5rem;border-bottom:1px solid var(--border);">
             <div style="font-family:var(--font-mono);font-size:0.625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Verdigris</div>
           </div>
           <!-- Body -->
@@ -1105,39 +1105,13 @@ title: Brand Specimen
         </div>
       </div>
 
-      <!-- PERSUADE x SLIDE DECK -->
-      <div style="margin-bottom:2.5rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Persuade x Slide deck (16:9 miniature)</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;max-width:56rem;">
-          <!-- Hook slide -->
-          <div style="aspect-ratio:16/9;background:var(--neutral-950);border-radius:0.375rem;padding:1rem;display:flex;flex-direction:column;justify-content:center;">
-            <div style="font-family:var(--font-mono);font-size:0.375rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);margin-bottom:0.25rem;">Verdigris</div>
-            <div style="font-family:var(--font-display);font-size:0.625rem;font-weight:700;color:oklch(0.985 0 0);line-height:1.2;">AI-Grade Power Monitoring</div>
-          </div>
-          <!-- Context slide -->
-          <div style="aspect-ratio:16/9;background:white;border:1px solid var(--border);border-radius:0.375rem;padding:1rem;display:flex;flex-direction:column;justify-content:center;">
-            <div style="font-family:var(--font-display);font-size:0.5rem;font-weight:700;color:var(--neutral-950);line-height:1.3;">AI workloads create invisible electrical risk</div>
-            <div style="font-size:0.375rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.4;">One point per slide. No body walls.</div>
-          </div>
-          <!-- Turn slide (accent) -->
-          <div style="aspect-ratio:16/9;background:white;border:1px solid var(--border);border-radius:0.375rem;padding:1rem;display:flex;flex-direction:column;justify-content:center;position:relative;">
-            <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 4%);border-radius:0.375rem;"></div>
-            <div style="position:relative;">
-              <div style="font-family:var(--font-mono);font-size:0.3125rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.495 0.1708 336.72);">Traction</div>
-              <div style="font-size:0.75rem;font-weight:700;color:var(--neutral-950);margin-top:0.125rem;">$2.4M</div>
-              <div style="font-size:0.3125rem;color:var(--neutral-500);">The turn slide. One accent per deck.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- IDENTIFY x AD BANNER -->
       <div style="margin-bottom:2.5rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Identify x Ad banner (brand recognition only)</div>
-        <div style="width:300px;height:250px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--neutral-950);padding:2rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--brand-verdigris);margin-bottom:0.75rem;">Verdigris</div>
-          <div style="font-family:var(--font-display);font-size:0.875rem;font-weight:700;color:oklch(0.985 0 0);line-height:1.3;">Electrical Intelligence</div>
-          <div style="width:3rem;height:2px;background:var(--brand-verdigris);margin-top:0.75rem;opacity:0.5;border-radius:1px;"></div>
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Identify x Ad banner (brand recognition, Z-pattern)</div>
+        <div style="width:300px;height:250px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--neutral-950);padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;">
+          <div style="font-family:var(--font-mono);font-size:0.625rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--brand-verdigris);">Verdigris</div>
+          <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:oklch(0.985 0 0);line-height:1.3;">Electrical Intelligence</div>
+          <div style="width:3rem;height:2px;background:var(--brand-verdigris);opacity:0.5;border-radius:1px;"></div>
         </div>
       </div>
 
@@ -1152,7 +1126,7 @@ title: Brand Specimen
           </div>
           <!-- AI response (flat, no bubble) -->
           <div style="padding:1.25rem 1.5rem;background:var(--card);">
-            <div style="font-size:0.6875rem;font-weight:600;color:var(--brand-verdigris);margin-bottom:0.5rem;">Verdigris</div>
+            <div style="font-size:0.6875rem;font-weight:600;color:var(--muted-fg);margin-bottom:0.5rem;">Assistant</div>
             <div style="font-size:0.875rem;color:var(--fg);line-height:1.6;max-width:60ch;">Panel B3 experienced a 340A transient at 14:23:07 UTC, lasting 12ms. The signature matches a motor inrush event on Circuit 14.</div>
             <!-- Inline data -->
             <div style="background:var(--muted);border-radius:0.375rem;padding:0.75rem 1rem;margin-top:0.75rem;">

@@ -1686,7 +1686,7 @@ composition:
         type: "constraint"
         test: { section_padding: { max: "4rem" } }
       - id: "composition.convert-web-page.coupling.functional-color"
-        description: "CTA button is the only saturated element. Everything else neutral. No tinted section backgrounds, no gradient strips."
+        description: "CTA button and the recommended-tier highlight are the only saturated elements. Everything else neutral. No tinted section backgrounds, no gradient strips. The recommended-tier highlight is functional (guides the decision, users spend 42% more time on highlighted plans), not decorative."
         severity: "error"
         type: "constraint"
 
