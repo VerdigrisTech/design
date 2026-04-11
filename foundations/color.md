@@ -230,6 +230,90 @@ Teal (191°) → step1 (216°) → step2 (240°) → step3 (265°)
 
 This creates a full-spectrum palette from a single generative rule — add or remove steps by interpolating between the anchors.
 
+## Palette Semantics — What the Colors Mean
+
+The brand palette has 16 tokens but the design system must define **what they mean**, not just what they are. This is critical for AI agents and evaluator pipelines that select colors without human visual judgment.
+
+The palette divides into 6 semantic regions based on content category:
+
+### Trust (Teal → Blue, hue 191°–240°)
+
+**Tokens:** `verdigris`, `mix-step-1`, `mix-step-2`
+**Content:** Technology, platform capabilities, data quality, primary brand expression
+**Why:** The anchor of the Verdigris brand. Bright, authoritative, technically precise. This is what a customer should associate with the company name.
+
+- Use as section accents for technology and platform content
+- Safe as text on dark backgrounds (12.3:1 contrast on neutral.950)
+- NOT safe as text on white (fails WCAG at ~2.9:1)
+- Dark mode tint: `oklch(0.75 0.1286 191.57 / 15%)` over neutral.950
+
+### Depth (Deep Blue → Purple, hue 265°–289°)
+
+**Tokens:** `mix-step-3`, `midnight-purple`
+**Content:** AI/intelligence features, premium sections, dark hero backgrounds, footer
+**Why:** The darkest region (L=0.29–0.41). Creates gravitas and sophistication. Works best as backgrounds, not foreground elements.
+
+- Use for dark section backgrounds and hero overlays
+- NOT as text — too dark, invisible on dark backgrounds
+- Dark mode tint: use **18%+ opacity** — below 15%, midnight-purple (chroma 0.15) is indistinguishable from neutral gray
+- Excellent for gradient endpoints paired with teal
+
+### Energy (Purple → Magenta, hue 313°–0°)
+
+**Tokens:** `midnight-purple-step-1`, `midnight-purple-step-2`, `midnight-purple-step-3`
+**Content:** Fault detection, real-time monitoring, anomaly indicators, alerting
+**Why:** High chroma, vibrant mid-range. These colors demand attention without being aggressive — appropriate for detection and signal content.
+
+- `mp-step-2` (L=0.50) and `mp-step-3` (L=0.60) work as text on both light and dark backgrounds
+- Use as accent borders, icon tints, alert section backgrounds
+- Dark mode tint: `oklch(0.495 0.1708 336.72 / 12%)` over neutral.950
+
+### Warmth (Red → Coral, hue 24°–41°)
+
+**Tokens:** `pastel-red`, `pastel-red-step-1`
+**Content:** Contact/conversation, CTA hover states, team sections, customer stories
+**Why:** Warm tones invite human connection. The sidebar-primary color in Patina. Appropriate for sections where the brand becomes personal.
+
+- Use for CTA hover shifts (teal → warm on hover)
+- Pastel red (L=0.70) works as text on dark backgrounds only
+- Dark mode tint: `oklch(0.7 0.1909 24.11 / 10%)` over neutral.950
+
+### Results (Orange → Yellow, hue 58°–92°)
+
+**Tokens:** `pastel-red-step-2`, `pastel-red-step-3`, `cyber-yellow`
+**Content:** Metrics, ROI, stranded capacity recovery, financial outcomes, proof points
+**Why:** Bright, optimistic tones (L=0.79–0.87) that say "look at these numbers." Natural for stats and outcomes.
+
+- HIGH CONTRAST RISK — very light tokens. Only use on dark backgrounds.
+- Use as metric/stat highlights, warm section accents
+- Dark mode tint: `oklch(0.87 0.1786 92.23 / 8%)` — visible despite low opacity due to high lightness
+
+### Growth (Yellow → Green, hue 113°–164°)
+
+**Tokens:** `cyber-yellow-step-1`, `cyber-yellow-step-2`, `cyber-yellow-step-3`
+**Content:** M&V results, capacity recovery, sustainability, environmental impact, completion
+**Why:** Green-teal tones that close the chromatic loop back to brand teal. Natural for sustainability and recovery outcomes.
+
+- Light tokens (L=0.75–0.81) — dark backgrounds only
+- Dark mode tint: `oklch(0.7698 0.1588 137.1 / 10%)` over neutral.950
+- Bridges back to the trust region — use for sections that resolve/conclude
+
+### Neutral (Breathing Room)
+
+**Tokens:** `neutral.50` through `neutral.950`
+**Content:** Body text, structural sections, form backgrounds, breathing room between colored sections
+**Rule:** At least 30% of page sections should use neutral backgrounds to prevent chromatic fatigue.
+
+### Usage Rules
+
+1. **No monotone** — the homepage must use at least 2 palette regions beyond teal + neutrals
+2. **No random assignment** — section accent colors must match the content category above
+3. **Breathing room** — intersperse neutral sections between colored ones
+4. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
+5. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)
+
+See `rules/visual-rules.yml` → `color.palette_semantics` for the machine-consumable version of this guidance.
+
 ## Neutral Scale
 
 The neutral scale is zinc-tinted (hue ~286°) rather than pure gray. This gives surfaces a subtle warmth that complements the teal brand color. Extracted from Patina's production CSS.

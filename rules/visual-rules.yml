@@ -185,6 +185,166 @@ color:
     destructive_light: "oklch(0.577 0.245 27.325)"
     destructive_dark: "oklch(0.704 0.191 22.216)"
 
+  # ---------------------------------------------------------------------------
+  # Palette semantic roles — machine-consumable color usage guidance
+  # Maps palette regions to content categories for AI agents and evaluators.
+  # The design system defines what colors MEAN, not just what they ARE.
+  # ---------------------------------------------------------------------------
+  palette_semantics:
+    id: "color.palette-semantics"
+    type: "reference"
+    description: "Maps brand palette regions to content categories and usage contexts. AI agents and evaluators use this to select contextually appropriate colors for page sections, accents, and data visualization."
+
+    # --- Palette regions (anchor + steps) mapped to content meaning ---
+    regions:
+      trust:
+        id: "color.palette-semantics.trust"
+        type: "reference"
+        description: "Technical authority, reliability, core brand identity. The primary Verdigris register."
+        tokens: ["color.brand.verdigris", "color.brand.mix-step-1", "color.brand.mix-step-2"]
+        hue_range: "191°–240°"
+        lightness_range: "0.52–0.75"
+        content_categories:
+          - "technology and platform capabilities"
+          - "data quality and validation"
+          - "primary brand expression"
+          - "charts and data visualization (primary series)"
+        usage:
+          section_accent: "Background tints, icon backgrounds, decorative borders"
+          text: "Only on dark backgrounds (brand teal fails WCAG on white)"
+          dark_mode_tint: "oklch(0.75 0.1286 191.57 / 15%) over neutral.950"
+
+      depth:
+        id: "color.palette-semantics.depth"
+        type: "reference"
+        description: "Intelligence, sophistication, premium. The deep end of the palette — works exceptionally in dark mode."
+        tokens: ["color.brand.mix-step-3", "color.brand.midnight-purple"]
+        hue_range: "265°–289°"
+        lightness_range: "0.29–0.41"
+        content_categories:
+          - "AI and intelligence features"
+          - "premium or enterprise sections"
+          - "dark hero backgrounds and overlays"
+          - "footer and deep navigation"
+        usage:
+          section_accent: "Dark section backgrounds, hero overlays, gradient endpoints"
+          text: "NOT as text — too dark (L=0.29-0.41), invisible on dark backgrounds"
+          dark_mode_tint: "oklch(0.29 0.1506 289.33 / 18%) over neutral.950 — use 18%+ for perceptibility"
+        constraints:
+          min_tint_opacity: 0.15
+          reason: "Below 15% opacity, midnight-purple (chroma 0.15) is indistinguishable from neutral gray"
+
+      energy:
+        id: "color.palette-semantics.energy"
+        type: "reference"
+        description: "Urgency, detection, alerting. The vibrant middle of the palette with high chroma."
+        tokens: ["color.brand.midnight-purple-step-1", "color.brand.midnight-purple-step-2", "color.brand.midnight-purple-step-3"]
+        hue_range: "313°–0°"
+        lightness_range: "0.39–0.60"
+        content_categories:
+          - "fault detection and alerting"
+          - "real-time monitoring"
+          - "anomaly and signal indicators"
+          - "active states and attention-drawing UI"
+        usage:
+          section_accent: "Accent borders, icon tints, alert section backgrounds"
+          text: "mp-step-2 (L=0.50) and mp-step-3 (L=0.60) work as text on both light and dark backgrounds"
+          dark_mode_tint: "oklch(0.495 0.1708 336.72 / 12%) over neutral.950"
+
+      warmth:
+        id: "color.palette-semantics.warmth"
+        type: "reference"
+        description: "Human connection, action, engagement. Warm tones that invite interaction."
+        tokens: ["color.brand.pastel-red", "color.brand.pastel-red-step-1"]
+        hue_range: "24°–41°"
+        lightness_range: "0.70–0.74"
+        content_categories:
+          - "contact and conversation"
+          - "CTA hover shifts"
+          - "team and people sections"
+          - "customer stories and testimonials"
+        usage:
+          section_accent: "CTA accent color, hover state shifts, warm section tints"
+          text: "Pastel red (L=0.70) works as text on dark backgrounds only"
+          dark_mode_tint: "oklch(0.7 0.1909 24.11 / 10%) over neutral.950"
+
+      results:
+        id: "color.palette-semantics.results"
+        type: "reference"
+        description: "Optimism, value, proof. Warm-bright tones for metrics and outcomes."
+        tokens: ["color.brand.pastel-red-step-2", "color.brand.pastel-red-step-3", "color.brand.cyber-yellow"]
+        hue_range: "58°–92°"
+        lightness_range: "0.79–0.87"
+        content_categories:
+          - "metrics, stats, and proof points"
+          - "financial outcomes and ROI"
+          - "stranded capacity recovery"
+          - "positive performance indicators"
+        usage:
+          section_accent: "Metric highlights, stat number accents, subtle warm backgrounds"
+          text: "HIGH CONTRAST RISK — these are very light (L=0.79-0.87). Only use on dark backgrounds."
+          dark_mode_tint: "oklch(0.87 0.1786 92.23 / 8%) over neutral.950 — visible due to high lightness"
+
+      growth:
+        id: "color.palette-semantics.growth"
+        type: "reference"
+        description: "Sustainability, recovery, completion. Green-teal tones closing the loop back to brand."
+        tokens: ["color.brand.cyber-yellow-step-1", "color.brand.cyber-yellow-step-2", "color.brand.cyber-yellow-step-3"]
+        hue_range: "113°–164°"
+        lightness_range: "0.75–0.81"
+        content_categories:
+          - "M&V (measurement and verification) results"
+          - "capacity recovery outcomes"
+          - "sustainability and environmental impact"
+          - "completion and success states"
+        usage:
+          section_accent: "Background tints for outcome/success sections"
+          text: "Light (L=0.75-0.81) — dark backgrounds only"
+          dark_mode_tint: "oklch(0.7698 0.1588 137.1 / 10%) over neutral.950"
+
+      neutral:
+        id: "color.palette-semantics.neutral"
+        type: "reference"
+        description: "Breathing room, readability, structural clarity. Use between colored sections to prevent chromatic fatigue."
+        tokens: ["color.neutral.50", "color.neutral.100", "color.neutral.200", "color.neutral.800", "color.neutral.900", "color.neutral.950"]
+        content_categories:
+          - "body text and long-form content"
+          - "structural sections (purpose-built, deploy at scale)"
+          - "breathing room between colored sections"
+          - "form and input backgrounds"
+        usage:
+          section_accent: "Default section backgrounds — white/neutral.100 (light), neutral.950/900 (dark)"
+          text: "Primary text color in both modes"
+
+    # --- Section color rules (evaluator-enforceable) ---
+    rules:
+      - id: "color.palette-semantics.no-monotone"
+        description: "Homepage must use at least 2 palette regions beyond teal + neutrals to create visual rhythm"
+        severity: "warning"
+        type: "constraint"
+        test:
+          min: 2
+      - id: "color.palette-semantics.no-random-color"
+        description: "Section accent colors must match the content category — do not assign palette regions arbitrarily"
+        severity: "error"
+        type: "constraint"
+      - id: "color.palette-semantics.neutral-breathing-room"
+        description: "Do not color every section — at least 30% of page sections should use neutral backgrounds for visual rest"
+        severity: "warning"
+        type: "constraint"
+        test:
+          min: 0.3
+      - id: "color.palette-semantics.dark-tint-opacity"
+        description: "Dark mode brand tints must use 15%+ opacity for depth region, 10%+ for others — below this they are imperceptible"
+        severity: "error"
+        type: "constraint"
+      - id: "color.palette-semantics.tint-contrast"
+        description: "Text on brand-tinted dark backgrounds must still pass WCAG AA (4.5:1). Verify contrast after applying tint."
+        severity: "error"
+        type: "constraint"
+        test:
+          min: 4.5
+
 
 # =============================================================================
 # TYPOGRAPHY
