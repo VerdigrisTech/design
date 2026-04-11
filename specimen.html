@@ -534,129 +534,91 @@ title: Brand Specimen
     <section class="section">
       <p class="section-label">Color Usage</p>
       <h2 class="section-title">Palette In Use</h2>
-      <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1.5rem">Applied examples showing how palette regions work in real page sections. 70% teal + neutrals, max 2 accent regions, never adjacent.</p>
+      <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:0.5rem;max-width:40rem;line-height:1.6">Palette semantics tell you <em>which</em> color. Section importance tells you <em>how much</em>. Color gives text room to breathe and creates narrative pacing — a wall of dark text on white is heavy. A touch of color lightens the cognitive load and signals <em>this section feels different</em> before the reader reads a word.</p>
+      <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1.5rem;max-width:40rem;line-height:1.6">Intensity scales with importance: hero gets full expression, accent sections get a tint + colored label, supporting sections get just a label color, breathing room gets nothing.</p>
 
-      <!-- ============================================================ -->
-      <!-- OPTION A: All-light flow — accent via light tint, no dark break -->
-      <!-- ============================================================ -->
+      <!-- The refined approach: layered intensity -->
       <div style="margin-bottom:2.5rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Option A — All-light flow. Accent is a light-tinted background, no dark break mid-page.</div>
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Layered intensity — color scales with section importance</div>
         <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
-          <div style="background:var(--neutral-950);padding:1.75rem 2rem 1.25rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Hero</div>
-            <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:oklch(0.985 0 0);margin-top:0.25rem;">Electrical Intelligence for AI Data Centers</div>
-          </div>
-          <div style="background:white;padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Platform</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">White background, dark text. The light flow.</div>
-          </div>
-          <div style="background:oklch(0.967 0.001 286.375);padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Data quality</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Neutral.100 — subtle tonal shift, same text color.</div>
-          </div>
-          <!-- Accent: light magenta tint on white -->
-          <div style="background:oklch(0.97 0.015 336.72);padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Detection — energy region</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Light magenta tint. Color does the work, not contrast inversion.</div>
-          </div>
-          <div style="background:white;padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Results</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Back to white. Smooth exit — no re-adaptation.</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- ============================================================ -->
-      <!-- OPTION B: All-dark flow — hero through content, tints vary -->
-      <!-- ============================================================ -->
-      <div style="margin-bottom:2.5rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Option B — All-dark flow. Hero and content share dark ground, tints provide variation.</div>
-        <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
-          <div style="background:var(--neutral-950);padding:1.75rem 2rem 1.25rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Hero</div>
-            <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:oklch(0.985 0 0);margin-top:0.25rem;">Electrical Intelligence for AI Data Centers</div>
-          </div>
-          <div style="background:var(--neutral-900);padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-400);">Platform</div>
-            <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">neutral.900 — one step lighter than hero. Still dark.</div>
-          </div>
-          <div style="background:var(--neutral-950);padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-400);">Data quality</div>
-            <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">Back to neutral.950 — gentle oscillation within dark range.</div>
-          </div>
-          <div style="background:var(--neutral-950);padding:1rem 2rem;position:relative;">
-            <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 12%)"></div>
-            <div style="position:relative;">
-              <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Detection — energy region</div>
-              <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">Tinted dark — accent without lightness inversion.</div>
+          <!-- HERO: Full expression — dark bg, teal accent, large type -->
+          <div style="background:var(--neutral-950);padding:2.5rem 2rem 2rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);margin-bottom:0.375rem;">Electrical Intelligence</div>
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:oklch(0.985 0 0);letter-spacing:-0.02em;line-height:1.1;">AI-Grade Power Monitoring<br>for Data Centers</div>
+            <div style="font-size:0.8125rem;color:var(--neutral-400);margin-top:0.5rem;max-width:28rem;line-height:1.6;">Sub-cycle electrical data. Physics-based fault detection. 48-hour early warning.</div>
+            <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+              <div style="background:var(--brand-verdigris);color:var(--neutral-950);font-size:0.75rem;font-weight:600;padding:0.5rem 1rem;border-radius:0.375rem;">Request demo</div>
+              <div style="border:1px solid oklch(1 0 0 / 0.6);color:white;font-size:0.75rem;font-weight:600;padding:0.5rem 1rem;border-radius:0.375rem;">Learn more</div>
             </div>
           </div>
-          <div style="background:var(--neutral-900);padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Results</div>
-            <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">neutral.900 exit. Consistent light text throughout.</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- ============================================================ -->
-      <!-- OPTION C: Dark hero → light body (no mid-page accent at all) -->
-      <!-- ============================================================ -->
-      <div style="margin-bottom:2.5rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Option C — Dark hero, light body. Accent via label color only, no background changes.</div>
-        <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
-          <div style="background:var(--neutral-950);padding:1.75rem 2rem 1.25rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Hero</div>
-            <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:oklch(0.985 0 0);margin-top:0.25rem;">Electrical Intelligence for AI Data Centers</div>
+          <!-- SUPPORTING: Light bg, teal label only — breathing room -->
+          <div style="background:white;padding:1.25rem 2rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Technology</div>
+            <div style="font-size:0.875rem;font-weight:600;color:var(--neutral-900);margin-top:0.25rem;">Purpose-built for critical infrastructure</div>
+            <div style="font-size:0.75rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.5;">Teal label, white background. Supporting content — the palette is present but quiet. Text has room to breathe.</div>
           </div>
-          <div style="background:white;padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Platform</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Teal label on white. The palette is in the typography, not the background.</div>
-          </div>
-          <div style="background:oklch(0.967 0.001 286.375);padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Detection</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Energy accent is the label color only. Background stays neutral.</div>
-          </div>
-          <div style="background:white;padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Data quality</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Back to teal label. Maximum restraint — color whispers, doesn't shout.</div>
-          </div>
-          <div style="background:oklch(0.967 0.001 286.375);padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Results</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Neutral.100. Palette meaning carried entirely by label colors and iconography.</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- ============================================================ -->
-      <!-- OPTION D: Dark hero → light body with left-border accent -->
-      <!-- ============================================================ -->
-      <div style="margin-bottom:2.5rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Option D — Dark hero, light body. Accent via colored left border, backgrounds stay neutral.</div>
-        <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
-          <div style="background:var(--neutral-950);padding:1.75rem 2rem 1.25rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Hero</div>
-            <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:oklch(0.985 0 0);margin-top:0.25rem;">Electrical Intelligence for AI Data Centers</div>
-          </div>
-          <div style="background:white;padding:1rem 2rem;border-left:3px solid var(--brand-verdigris);">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Platform</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Teal left border — the accent is structural, not atmospheric.</div>
-          </div>
-          <div style="background:oklch(0.967 0.001 286.375);padding:1rem 2rem;">
+          <!-- BREATHING ROOM: Neutral.100, no accent at all -->
+          <div style="background:oklch(0.967 0.001 286.375);padding:1.25rem 2rem;">
             <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Data quality</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Neutral section — no border, no accent. Breathing room.</div>
+            <div style="font-size:0.875rem;font-weight:600;color:var(--neutral-900);margin-top:0.25rem;">Every measurement, verified</div>
+            <div style="font-size:0.75rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.5;">Neutral label, neutral.100 background. The page rests. Not every section needs color — this restraint makes the accent section hit harder.</div>
           </div>
-          <div style="background:white;padding:1rem 2rem;border-left:3px solid oklch(0.495 0.1708 336.72);">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Detection — energy region</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Magenta left border. Palette region expressed in 3px, not the whole background.</div>
+
+          <!-- ACCENT: Light tint + colored label + border hint — the earned moment -->
+          <div style="background:white;padding:1.25rem 2rem;position:relative;">
+            <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 4%)"></div>
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:oklch(0.495 0.1708 336.72)"></div>
+            <div style="position:relative;padding-left:0.75rem;">
+              <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Detection</div>
+              <div style="font-size:0.875rem;font-weight:600;color:var(--neutral-900);margin-top:0.25rem;">Real-time fault detection</div>
+              <div style="font-size:0.75rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.5;">Three signals layered: magenta label, left border, barely-there background tint. Each alone is subtle — together they shift the feeling. The reader knows <em>this section is different</em> before reading a word.</div>
+            </div>
           </div>
-          <div style="background:oklch(0.967 0.001 286.375);padding:1rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Results</div>
-            <div style="font-size:0.75rem;color:var(--neutral-900);margin-top:0.125rem;">Teal label, neutral background. The page breathes.</div>
+
+          <!-- SUPPORTING: Back to white, teal label — gentle return -->
+          <div style="background:oklch(0.967 0.001 286.375);padding:1.25rem 2rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Reliability</div>
+            <div style="font-size:0.875rem;font-weight:600;color:var(--neutral-900);margin-top:0.25rem;">99.97% uptime across 200+ sites</div>
+            <div style="font-size:0.75rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.5;">Back to teal label, neutral background. The page breathes again. After the accent moment, the return to neutral feels calm and grounded.</div>
+          </div>
+
+          <!-- CTA: Returns to dark, teal accent — bookends the hero -->
+          <div style="background:var(--neutral-950);padding:1.5rem 2rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Get started</div>
+            <div style="font-size:0.875rem;font-weight:600;color:oklch(0.985 0 0);margin-top:0.25rem;">See what 8kHz visibility looks like for your facility</div>
+            <div style="display:inline-block;margin-top:0.75rem;background:var(--brand-verdigris);color:var(--neutral-950);font-size:0.75rem;font-weight:600;padding:0.5rem 1rem;border-radius:0.375rem;">Request demo</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Intensity scale reference -->
+      <div style="margin-bottom:2.5rem;">
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Intensity scale — how much color a section earns</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:0.75rem;">
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);margin-bottom:0.375rem">Full expression</div>
+            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Dark background, brand teal, CTAs. Reserved for <strong>hero and footer</strong> only.</div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.495 0.1708 336.72);margin-bottom:0.375rem">Earned accent</div>
+            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Light tint + colored label + border. The <strong>one moment</strong> per page where a non-teal palette region appears.</div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-verdigris);margin-bottom:0.375rem">Supporting</div>
+            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Teal label on white or neutral.100. The <strong>default register</strong> — present but quiet. Most sections live here.</div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);margin-bottom:0.375rem">Breathing room</div>
+            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Neutral label, neutral background. <strong>No color at all.</strong> Makes the accent section hit harder by contrast.</div>
           </div>
         </div>
       </div>
 
-      <!-- Wrong: rainbow overuse (kept for contrast) -->
+      <!-- Wrong: still kept for contrast -->
       <div style="margin-bottom:2rem;">
         <div class="swatch-group-label" style="margin-bottom:0.75rem;color:oklch(0.577 0.245 27.325)">Wrong — too many regions, no breathing room, adjacent colored sections</div>
         <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);opacity:0.7;">
