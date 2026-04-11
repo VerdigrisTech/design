@@ -536,33 +536,37 @@ title: Brand Specimen
       <h2 class="section-title">Palette In Use</h2>
       <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1.5rem">Applied examples showing how palette regions work in real page sections. 70% teal + neutrals, max 2 accent regions, never adjacent.</p>
 
-      <!-- Good: restrained page scroll with 1 accent -->
+      <!-- Good: restrained page scroll with proper section flow -->
       <div style="margin-bottom:2rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Correct — teal dominant, one earned accent (energy for detection)</div>
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Correct — dark hero → light content flow → one dark accent → light exit</div>
         <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
-          <!-- Neutral hero -->
+          <!-- Dark hero -->
           <div style="background:var(--neutral-950);padding:2rem 2rem 1.5rem;">
             <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Hero — trust region</div>
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:oklch(0.985 0 0);margin-top:0.375rem;">Electrical Intelligence for AI Infrastructure</div>
-            <div style="font-size:0.8125rem;color:var(--neutral-400);margin-top:0.25rem;">Teal accent on dark neutral — the default Verdigris expression.</div>
+            <div style="font-size:0.8125rem;color:var(--neutral-400);margin-top:0.25rem;">Dark hero. Teal accent — the default Verdigris expression.</div>
           </div>
-          <!-- Neutral section -->
+          <!-- Light content flow: white → neutral.100 (gentle tonal shift) -->
+          <div style="background:white;padding:1.25rem 2rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Neutral &middot; Platform</div>
+            <div style="font-size:0.8125rem;color:var(--neutral-900);margin-top:0.25rem;">Light flow begins. No accent needed — every element earns its place.</div>
+          </div>
           <div style="background:var(--neutral-100);padding:1.25rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Neutral section</div>
-            <div style="font-size:0.8125rem;color:var(--neutral-900);margin-top:0.25rem;">Platform capabilities. Breathing room — no accent color needed.</div>
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Neutral &middot; Data quality</div>
+            <div style="font-size:0.8125rem;color:var(--neutral-900);margin-top:0.25rem;">Gentle shift — white to neutral.100. Same text color throughout.</div>
           </div>
-          <!-- Energy accent section -->
+          <!-- One earned dark accent moment -->
           <div style="background:var(--neutral-950);padding:1.25rem 2rem;position:relative;">
             <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 12%)"></div>
             <div style="position:relative;">
               <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Detection — energy region</div>
-              <div style="font-size:0.8125rem;color:oklch(0.985 0 0);margin-top:0.25rem;">Real-time fault detection. This section <em>earned</em> its accent — alerting content matches the energy palette.</div>
+              <div style="font-size:0.8125rem;color:oklch(0.985 0 0);margin-top:0.25rem;">The one dark accent moment. Earned — alerting content matches the energy palette.</div>
             </div>
           </div>
-          <!-- Neutral section -->
+          <!-- Back to light, gentle exit -->
           <div style="background:white;padding:1.25rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Neutral section</div>
-            <div style="font-size:0.8125rem;color:var(--neutral-900);margin-top:0.25rem;">Deploy at scale. Neutral background — not every section needs color.</div>
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Trust &middot; Results</div>
+            <div style="font-size:0.8125rem;color:var(--neutral-900);margin-top:0.25rem;">Back to light. Teal accent, not yellow — restraint over variety.</div>
           </div>
         </div>
       </div>
