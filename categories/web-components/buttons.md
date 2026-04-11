@@ -17,6 +17,16 @@ title: Buttons
   </div>
 </div>
 
+<p class="v-label">Ghost on Dark (Hero CTA)</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="background: oklch(0.21 0.006 285.885); padding: 2rem; border-radius: 0.625rem;">
+    <div class="v-comp-row">
+      <button class="v-btn v-btn-default" style="background: oklch(0.21 0.006 285.885); color: white; border: 1px solid oklch(1 0 0 / 0.6); font-weight: 600;">Ghost on Dark</button>
+      <button class="v-btn v-btn-default" style="background: oklch(1 0 0 / 0.1); color: white; border: 1px solid oklch(1 0 0 / 0.6); font-weight: 600;">Ghost on Dark (hover)</button>
+    </div>
+  </div>
+</div>
+
 <p class="v-label">Button Sizes</p>
 <div class="v-demo">
   <div class="v-comp-demo">
@@ -64,6 +74,7 @@ Source files: `button.tsx`, `button-group.tsx`
 | `outline` | `border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground` (dark: `bg-input/30`) |
 | `secondary` | `bg-secondary text-secondary-foreground hover:bg-secondary/80` |
 | `ghost` | `hover:bg-accent hover:text-accent-foreground` (dark: `hover:bg-accent/50`) |
+| `ghost-on-dark` | `bg-transparent text-white border-white/60 hover:bg-white/10` (dark context only) |
 | `link` | `text-primary underline-offset-4 hover:underline` |
 
 ### Sizes
@@ -83,7 +94,7 @@ Source files: `button.tsx`, `button-group.tsx`
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `variant` | `"default" \| "destructive" \| "outline" \| "secondary" \| "ghost" \| "link"` | `"default"` | |
+| `variant` | `"default" \| "destructive" \| "outline" \| "secondary" \| "ghost" \| "ghost-on-dark" \| "link"` | `"default"` | |
 | `size` | `"default" \| "xs" \| "sm" \| "lg" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg"` | `"default"` | |
 | `asChild` | `boolean` | `false` | Renders children as the root element via Radix Slot |
 

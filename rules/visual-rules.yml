@@ -2,8 +2,20 @@
 # Machine-enforceable rules for evaluator pipelines.
 # Consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
 #
-# Version: 2.0.0
-# Last updated: 2026-03-27
+# Version: 2.1.0
+# Last updated: 2026-04-10
+#
+# Schema: visual-rules/2.1.0
+# Every enforceable rule entry MUST have:
+#   id:          unique dot-path identifier (e.g., color.contrast.normal-text)
+#   severity:    "error" | "warning"
+#   type:        "value" | "pattern" | "constraint" | "reference"
+#   description: human-readable explanation
+#   test:        machine-testable field — one of:
+#     regex:     regex pattern to match/flag in source
+#     min/max:   numeric bounds
+#     value:     exact required value
+#     values:    set of allowed values
 
 # =============================================================================
 # COLOR
@@ -13,6 +25,8 @@ color:
   # Brand teal
   # ---------------------------------------------------------------------------
   brand_teal:
+    id: "color.brand-teal"
+    type: "value"
     oklch: "oklch(0.75 0.1286 191.57)"
     hex: "#0fc8c3"
     hsl: "hsl(178, 86%, 42%)"
@@ -20,11 +34,24 @@ color:
     never_as_text_on_white: true   # Fails WCAG AA (contrast ~2.9:1 on white)
     ok_on_dark_backgrounds: true   # Passes AA on neutral.950 and darker
     min_background_lightness: 0.35 # OKLch L* of background must be <= this for teal text
+    rules:
+      - id: "color.brand-teal.no-text-on-white"
+        description: "Brand teal fails WCAG AA (~2.9:1) as text on white backgrounds"
+        severity: "error"
+        type: "constraint"
+        test:
+          max: 0.35              # OKLch L* of background for teal text
+      - id: "color.brand-teal.decorative-only-light"
+        description: "Brand teal on light backgrounds is decorative only — not for text"
+        severity: "error"
+        type: "constraint"
 
   # ---------------------------------------------------------------------------
   # Brand gradient stops (for reference — enforce order only)
   # ---------------------------------------------------------------------------
   brand_gradient:
+    id: "color.brand-gradient"
+    type: "reference"
     description: "Teal -> Purple -> Red -> Yellow -> Teal loop. 16 stops."
     start: "oklch(0.75 0.1286 191.57)"   # brand.verdigris
     end: "oklch(0.87 0.1786 92.23)"       # brand.cyber-yellow
@@ -35,26 +62,49 @@ color:
   # ---------------------------------------------------------------------------
   contrast:
     normal_text:
+      id: "color.contrast.normal-text"
+      severity: "error"
+      type: "constraint"
       min_ratio: 4.5
       description: "WCAG AA for text < 18px bold or < 24px regular"
+      test:
+        min: 4.5
     large_text:
+      id: "color.contrast.large-text"
+      severity: "error"
+      type: "constraint"
       min_ratio: 3.0
       description: "WCAG AA for text >= 18px bold or >= 24px regular"
+      test:
+        min: 3.0
     ui_components:
+      id: "color.contrast.ui-components"
+      severity: "error"
+      type: "constraint"
       min_ratio: 3.0
       description: "WCAG AA for interactive UI components and graphical objects"
+      test:
+        min: 3.0
     decorative:
+      id: "color.contrast.decorative"
+      type: "reference"
       min_ratio: 0
       description: "No contrast requirement for purely decorative elements"
     enhanced_normal_text:
+      id: "color.contrast.enhanced"
+      severity: "warning"
+      type: "constraint"
       min_ratio: 7.0
       description: "WCAG AAA for normal text (aspirational, not blocking)"
-      severity: "warning"
+      test:
+        min: 7.0
 
   # ---------------------------------------------------------------------------
   # Dark mode requirements
   # ---------------------------------------------------------------------------
   dark_mode:
+    id: "color.dark-mode"
+    type: "value"
     background:
       value: "oklch(0.141 0.005 285.823)"   # neutral.950
       description: "Near-black, NOT pure black. Pure black (#000) is banned."
@@ -74,38 +124,46 @@ color:
   # Banned colors — flag if found in source
   # ---------------------------------------------------------------------------
   banned_colors:
-    - value: "#ff0000"
-      reason: "Pure red — use status.destructive-light or destructive-dark"
-    - value: "#00ff00"
-      reason: "Pure green — off-brand"
-    - value: "#0000ff"
-      reason: "Pure blue — off-brand"
-    - value: "#000000"
-      reason: "Pure black — use neutral.950 oklch(0.141 0.005 285.823)"
-      context: "background"  # Only banned as background; OK in SVG strokes
-    - value: "#ffffff"
-      reason: "Prefer neutral.50 for foreground in dark mode"
-      context: "dark_mode_text"
-      severity: "warning"
-    - value: "rgb(0, 0, 255)"
-      reason: "Pure blue — off-brand"
-    - value: "rgb(255, 0, 0)"
-      reason: "Pure red — use status tokens"
-    - value: "rgb(0, 255, 0)"
-      reason: "Pure green — off-brand"
-    - value: "#ff00ff"
-      reason: "Magenta — off-brand"
-    - value: "#800080"
-      reason: "Generic purple — use brand.midnight-purple"
-    - value: "#ffa500"
-      reason: "Generic orange — off-brand"
-    - value: "#008000"
-      reason: "Generic green — off-brand"
+    id: "color.banned"
+    type: "pattern"
+    severity: "error"
+    description: "Flag banned color literals in source — use design tokens instead"
+    items:
+      - value: "#ff0000"
+        reason: "Pure red — use status.destructive-light or destructive-dark"
+      - value: "#00ff00"
+        reason: "Pure green — off-brand"
+      - value: "#0000ff"
+        reason: "Pure blue — off-brand"
+      - value: "#000000"
+        reason: "Pure black — use neutral.950 oklch(0.141 0.005 285.823)"
+        context: "background"  # Only banned as background; OK in SVG strokes
+      - value: "#ffffff"
+        reason: "Prefer neutral.50 for foreground in dark mode"
+        context: "dark_mode_text"
+        severity: "warning"
+      - value: "rgb(0, 0, 255)"
+        reason: "Pure blue — off-brand"
+      - value: "rgb(255, 0, 0)"
+        reason: "Pure red — use status tokens"
+      - value: "rgb(0, 255, 0)"
+        reason: "Pure green — off-brand"
+      - value: "#ff00ff"
+        reason: "Magenta — off-brand"
+      - value: "#800080"
+        reason: "Generic purple — use brand.midnight-purple"
+      - value: "#ffa500"
+        reason: "Generic orange — off-brand"
+      - value: "#008000"
+        reason: "Generic green — off-brand"
 
   # ---------------------------------------------------------------------------
   # Neutral palette (for rule cross-referencing)
   # ---------------------------------------------------------------------------
   neutrals:
+    id: "color.neutrals"
+    type: "reference"
+    description: "Neutral palette for rule cross-referencing"
     white: "oklch(1 0 0)"
     "50": "oklch(0.985 0 0)"
     "100": "oklch(0.967 0.001 286.375)"
@@ -121,6 +179,9 @@ color:
   # Status colors
   # ---------------------------------------------------------------------------
   status:
+    id: "color.status"
+    type: "reference"
+    description: "Status color values for rule cross-referencing"
     destructive_light: "oklch(0.577 0.245 27.325)"
     destructive_dark: "oklch(0.704 0.191 22.216)"
 
@@ -133,6 +194,10 @@ typography:
   # Font stacks — enforceable via CSS audit
   # ---------------------------------------------------------------------------
   font_stacks:
+    id: "typography.font-stacks"
+    type: "value"
+    severity: "error"
+    description: "Required font families — flag if other fonts appear in source"
     body:
       family: "Inter"
       fallback: "Inter, ui-sans-serif, system-ui, -apple-system, sans-serif"
@@ -214,60 +279,126 @@ typography:
   # Font weight constraints per element type
   # ---------------------------------------------------------------------------
   weight_rules:
-    - element: "h1, h2, h3"
+    - id: "typography.weight.headings"
+      severity: "error"
+      type: "constraint"
+      element: "h1, h2, h3"
       allowed_weights: [700]
       description: "Headings must be bold (700). brand_rules.yml says 600 for H2 — WRONG, CSS is truth."
-    - element: "h4, h5, h6"
+      test:
+        values: [700]
+    - id: "typography.weight.subheadings"
+      severity: "error"
+      type: "constraint"
+      element: "h4, h5, h6"
       allowed_weights: [600, 700]
       description: "Subheadings: semibold or bold"
-    - element: "body, p, li, td"
+      test:
+        values: [600, 700]
+    - id: "typography.weight.body"
+      severity: "error"
+      type: "constraint"
+      element: "body, p, li, td"
       allowed_weights: [400]
       description: "Body text: regular weight only"
-    - element: "a, nav, label"
+      test:
+        values: [400]
+    - id: "typography.weight.navigation"
+      severity: "warning"
+      type: "constraint"
+      element: "a, nav, label"
       allowed_weights: [400, 500]
       description: "Navigation and labels: regular or medium"
-    - element: "button, .cta"
+      test:
+        values: [400, 500]
+    - id: "typography.weight.buttons"
+      severity: "error"
+      type: "constraint"
+      element: "button, .cta"
       allowed_weights: [600]
-      description: "Buttons and CTAs: semibold"
-    - element: "strong, b"
+      description: "Buttons and CTAs: semibold. Exception: .cta-link uses 500 (see components.cta-link)."
+      test:
+        values: [600]
+    - id: "typography.weight.emphasis"
+      severity: "warning"
+      type: "constraint"
+      element: "strong, b"
       allowed_weights: [600, 700]
       description: "Emphasis: semibold or bold"
+      test:
+        values: [600, 700]
 
   # ---------------------------------------------------------------------------
   # Line height requirements
   # ---------------------------------------------------------------------------
   line_height_rules:
-    - context: "headings"
+    - id: "typography.line-height.headings"
+      severity: "error"
+      type: "constraint"
+      context: "headings"
       named_scale: "tight"
       min: 1.1
       max: 1.3
       description: "Headings: tight leading (1.1 for h1, 1.2 for h2, 1.3 for h3)"
-    - context: "body"
+      test:
+        min: 1.1
+        max: 1.3
+    - id: "typography.line-height.body"
+      severity: "error"
+      type: "constraint"
+      context: "body"
       named_scale: "relaxed"
       value: 1.6
       description: "All body text uses 1.6 line-height"
-    - context: "ui_compact"
+      test:
+        value: 1.6
+    - id: "typography.line-height.ui-compact"
+      severity: "warning"
+      type: "constraint"
+      context: "ui_compact"
       min: 1.2
       max: 1.4
       description: "Compact UI elements (badges, pills, table cells)"
+      test:
+        min: 1.2
+        max: 1.4
 
   # ---------------------------------------------------------------------------
   # Letter spacing rules
   # ---------------------------------------------------------------------------
   letter_spacing_rules:
-    - context: "h1, h2"
+    - id: "typography.letter-spacing.large-headings"
+      severity: "warning"
+      type: "value"
+      context: "h1, h2"
       value: "-0.02em"
       description: "Large headings get slight tightening"
-    - context: "h3, h4, h5, h6"
+      test:
+        value: "-0.02em"
+    - id: "typography.letter-spacing.small-headings"
+      severity: "warning"
+      type: "value"
+      context: "h3, h4, h5, h6"
       value: "0"
       description: "Smaller headings: no adjustment"
-    - context: "body"
+      test:
+        value: "0"
+    - id: "typography.letter-spacing.body"
+      severity: "warning"
+      type: "value"
+      context: "body"
       value: "0"
       description: "Body text: no adjustment"
-    - context: "uppercase"
+      test:
+        value: "0"
+    - id: "typography.letter-spacing.uppercase"
+      severity: "warning"
+      type: "value"
+      context: "uppercase"
       value: "0.05em"
       description: "Uppercase text (labels, overlines) needs loose tracking"
-      severity: "warning"
+      test:
+        value: "0.05em"
 
 
 # =============================================================================
@@ -297,6 +428,10 @@ spacing:
       - { token: "24", value: "6rem" }      # 96px
       - { token: "32", value: "8rem" }      # 128px
     enforce: true
+    id: "spacing.grid"
+    severity: "error"
+    type: "constraint"
+    description: "All spacing values must be multiples of 4px"
     exceptions:
       - "1px"       # borders
       - "0.375rem"  # 6px button radius (legacy)
@@ -399,17 +534,39 @@ motion:
       easing: "linear"
       css: "animation: spin 800ms linear infinite"
       keyframes: "from { transform: rotate(0deg) } to { transform: rotate(360deg) }"
+    logo-marquee:
+      id: "motion.patterns.logo-marquee"
+      severity: "warning"
+      type: "pattern"
+      description: "CSS keyframe marquee for trust bar logos. Continuous horizontal scroll. Must respect reduced-motion."
+      duration: "30s"
+      easing: "linear"
+      css: "animation: marquee 30s linear infinite"
+      keyframes: "from { transform: translateX(0) } to { transform: translateX(-50%) }"
+      requires_reduced_motion: true
+      requires_duplicate_set: true  # Logo set must be duplicated for seamless loop
+      test:
+        regex: "animation:\\s*marquee|@keyframes\\s+marquee"
 
   # ---------------------------------------------------------------------------
   # Max duration constraint
   # ---------------------------------------------------------------------------
-  max_interaction_duration: "500ms"
-  description_max: "User-triggered transitions (hover, click) must not exceed this"
+  max_interaction_duration:
+    id: "motion.max-duration"
+    severity: "error"
+    type: "constraint"
+    value: "500ms"
+    description: "User-triggered transitions (hover, click) must not exceed this"
+    test:
+      max: 500
 
   # ---------------------------------------------------------------------------
   # Reduced motion — REQUIRED
   # ---------------------------------------------------------------------------
   reduced_motion:
+    id: "motion.reduced-motion"
+    severity: "error"
+    type: "pattern"
     required: true
     description: "All animations MUST respect prefers-reduced-motion"
     media_query: "@media (prefers-reduced-motion: reduce)"
@@ -438,10 +595,14 @@ motion:
   # Hover media query — REQUIRED for hover effects
   # ---------------------------------------------------------------------------
   hover_gate:
+    id: "motion.hover-gate"
+    severity: "error"
+    type: "pattern"
     required: true
     media_query: "@media (hover: hover) and (pointer: fine)"
     description: "All :hover effects must be wrapped in this media query to prevent sticky hover on touch devices"
-    enforcement: "error"
+    test:
+      regex: ":hover(?![\\s\\S]*@media\\s*\\(hover:\\s*hover\\))"
     example_css: |
       @media (hover: hover) and (pointer: fine) {
         .card:hover {
@@ -489,6 +650,8 @@ components:
   # Focus indicator requirements
   # ---------------------------------------------------------------------------
   focus:
+    id: "components.focus"
+    type: "value"
     required: true
     style: "outline"
     outline_width: "2px"
@@ -500,13 +663,21 @@ components:
       www_override: "oklch(0.55 0.12 160)"   # www-ring (green-shifted, should migrate)
     css: "outline: 2px solid var(--ring); outline-offset: 2px"
     rules:
-      - description: "Never use outline: none without a visible alternative"
+      - id: "components.focus.no-outline-none"
+        description: "Never use outline: none without a visible alternative"
+        type: "pattern"
         pattern: "outline:\\s*none"
         severity: "error"
         exception: "Only if replaced by box-shadow or border focus indicator"
-      - description: "Focus indicators must be visible in both light and dark modes"
+        test:
+          regex: "outline:\\s*none"
+      - id: "components.focus.visible-both-modes"
+        description: "Focus indicators must be visible in both light and dark modes"
+        type: "constraint"
         severity: "error"
-      - description: "Focus must not rely solely on color change"
+      - id: "components.focus.not-color-only"
+        description: "Focus must not rely solely on color change"
+        type: "constraint"
         severity: "error"
 
   # ---------------------------------------------------------------------------
@@ -531,13 +702,40 @@ components:
       font_weight: 600
       min_height: "2.5rem"
       padding: "0.5rem 1rem"
+    ghost_on_dark:
+      id: "components.buttons.ghost-on-dark"
+      severity: "error"
+      type: "value"
+      description: "Ghost button for dark backgrounds — transparent with white border. Used for secondary hero CTAs. Validated across 7/12 B2B infra competitor audits."
+      context: "dark_background"
+      background: "transparent"
+      text_color: "oklch(1 0 0)"                    # white
+      border: "1px solid oklch(1 0 0 / 0.6)"        # white/60
+      hover_background: "oklch(1 0 0 / 0.1)"        # white/10
+      border_radius: "0.375rem"                      # www button radius
+      font_weight: 600
+      min_height: "2.5rem"                           # 40px — touch target
+      padding: "0.5rem 1rem"
+      requires_hover_query: true
+      test:
+        regex: "border-white\\/60|border-color:\\s*oklch\\(1\\s+0\\s+0\\s*\\/\\s*0?\\.?6"
     rules:
-      - description: "Buttons must have min 44px touch target (WCAG 2.5.8)"
+      - id: "components.buttons.touch-target"
+        description: "Buttons must have min 44px touch target (WCAG 2.5.8)"
+        type: "constraint"
         min_touch_target: "44px"
         severity: "warning"
-      - description: "Button text must not use font-weight below 600"
+        test:
+          min: 44
+      - id: "components.buttons.min-weight"
+        description: "Button text must not use font-weight below 600"
+        type: "constraint"
         severity: "error"
-      - description: "Disabled buttons must have reduced opacity (0.5) and cursor: not-allowed"
+        test:
+          min: 600
+      - id: "components.buttons.disabled-state"
+        description: "Disabled buttons must have reduced opacity (0.5) and cursor: not-allowed"
+        type: "pattern"
         severity: "error"
 
   # ---------------------------------------------------------------------------
@@ -571,20 +769,118 @@ components:
         light: "oklch(0.577 0.245 27.325)"
         dark: "oklch(0.704 0.191 22.216)"
     rules:
-      - description: "Every semantic color token must have both light and dark values"
+      - id: "components.dark-mode.light-dark-pair"
+        description: "Every semantic color token must have both light and dark values"
+        type: "constraint"
         severity: "error"
-      - description: "Dark mode must not use pure black (#000000) as background"
+      - id: "components.dark-mode.no-pure-black"
+        description: "Dark mode must not use pure black (#000000) as background"
+        type: "pattern"
         severity: "error"
-      - description: "Dark mode borders should use semi-transparent values for depth"
+        test:
+          regex: "\\.dark[^}]*background[^;]*#000000|background[^;]*#000(?:;|\\s)"
+      - id: "components.dark-mode.translucent-borders"
+        description: "Dark mode borders should use semi-transparent values for depth"
+        type: "pattern"
         severity: "warning"
-      - description: "Code blocks (pre) must have distinct background from page in dark mode — use neutral.800 not neutral.950"
+      - id: "components.dark-mode.code-block-bg"
+        description: "Code blocks (pre) must have distinct background from page in dark mode — use neutral.800 not neutral.950"
+        type: "value"
         severity: "error"
-      - description: "Links must be visually distinguishable from body text in dark mode — use brand teal or underline"
+      - id: "components.dark-mode.link-distinction"
+        description: "Links must be visually distinguishable from body text in dark mode — use brand teal or underline"
+        type: "constraint"
         severity: "error"
-      - description: "Dark mode preference must persist across page navigation via localStorage"
+      - id: "components.dark-mode.persist-preference"
+        description: "Dark mode preference must persist across page navigation via localStorage"
+        type: "pattern"
         severity: "error"
-      - description: "Dark mode init must run before first paint (in <head>, not <body>) to prevent FOUC"
+      - id: "components.dark-mode.head-init"
+        description: "Dark mode init must run before first paint (in <head>, not <body>) to prevent FOUC"
+        type: "pattern"
         severity: "error"
+
+  # ---------------------------------------------------------------------------
+  # CTA link pattern (homepage overhaul — Z2O-995)
+  # ---------------------------------------------------------------------------
+  cta_link:
+    id: "components.cta-link"
+    severity: "warning"
+    type: "value"
+    description: "CTA inline link — medium weight (not semibold), with hover-gated underline animation. Typographically lighter than buttons. Distinct from button link variant."
+    font_weight: 500                                # Intentional: 500 not 600 — CTA links are lighter than buttons
+    text_decoration: "none"
+    hover_text_decoration: "underline"
+    hover_underline_offset: "4px"
+    requires_hover_query: true
+    css: "font-medium no-underline hover:underline underline-offset-4"
+    test:
+      regex: "cta-link|font-medium[^;]*hover:.*underline"
+
+  # ---------------------------------------------------------------------------
+  # Stats row pattern (homepage overhaul — Z2O-995)
+  # ---------------------------------------------------------------------------
+  stats_row:
+    id: "components.stats-row"
+    severity: "warning"
+    type: "value"
+    description: "Stats display row — large numbers in primary color, uppercase labels with tracking. Used for trust/metric bars on homepage and landing pages."
+    number:
+      color: "var(--color-semantic-primary)"
+      font_weight: 700
+      min_size: "2rem"                              # 32px — large enough for visual impact
+    label:
+      text_transform: "uppercase"
+      letter_spacing: "0.05em"                      # Matches typography.letter-spacing.uppercase rule
+      font_weight: 500
+      color: "var(--color-semantic-muted-foreground)"
+    layout: "horizontal"
+    responsive: "stack vertical below sm (640px)"
+
+  # ---------------------------------------------------------------------------
+  # Logo marquee bar (homepage overhaul — Z2O-995)
+  # ---------------------------------------------------------------------------
+  logo_marquee_bar:
+    id: "components.logo-marquee-bar"
+    severity: "warning"
+    type: "reference"
+    description: "Trust bar with scrolling logos. Requires overflow-hidden container, duplicated logo set for seamless loop. Animation defined in motion.patterns.logo-marquee."
+    overflow: "hidden"
+    logo_max_height: "2rem"                         # 32px — consistent sizing
+    logo_opacity: 0.7                               # Muted to avoid competing with content
+    gap: "3rem"                                     # 48px between logos
+    animation_ref: "motion.patterns.logo-marquee"
+    requires_reduced_motion: true                   # Falls back to static display
+
+  # ---------------------------------------------------------------------------
+  # Dark image container (homepage overhaul — Z2O-995)
+  # ---------------------------------------------------------------------------
+  dark_image_container:
+    id: "components.dark-image-container"
+    severity: "warning"
+    type: "value"
+    description: "Dark wrapper (bg-neutral-900) for showcasing dark-themed screenshots/images on light pages. Prevents jarring contrast between light page and dark UI screenshots."
+    background: "oklch(0.21 0.006 285.885)"         # neutral.900
+    border_radius: "0.625rem"                       # base radius
+    padding: "2rem"                                 # 32px internal padding
+    overflow: "hidden"
+
+  # ---------------------------------------------------------------------------
+  # CTA strip cards (homepage overhaul — Z2O-995)
+  # ---------------------------------------------------------------------------
+  cta_strip_cards:
+    id: "components.cta-strip-cards"
+    severity: "warning"
+    type: "reference"
+    description: "Multi-card horizontal strip with hover-lift. Each card is a CTA with heading, description, and optional icon. Uses motion.patterns.hover-lift for hover state."
+    layout: "horizontal"
+    gap: "1.5rem"                                   # 24px
+    card_min_width: "16rem"                         # 256px
+    card_padding: "1.5rem"                          # 24px
+    card_border_radius: "0.625rem"                  # base radius
+    hover_effect_ref: "motion.patterns.hover-lift"
+    requires_hover_query: true
+    responsive: "scroll horizontal on mobile, grid on desktop"
 
 
 # =============================================================================
@@ -650,6 +946,8 @@ breakpoints:
   # ---------------------------------------------------------------------------
   migration:
     www_tablet:
+      id: "breakpoints.migration.www-tablet"
+      type: "value"
       current: "991px"
       target: "1024px"
       target_token: "lg"
@@ -664,10 +962,16 @@ breakpoints:
   # Enforcement
   # ---------------------------------------------------------------------------
   rules:
-    - description: "Custom breakpoints outside the standard + patina set are flagged"
+    - id: "breakpoints.custom-banned"
+      description: "Custom breakpoints outside the standard + patina set are flagged"
+      type: "pattern"
       severity: "warning"
-    - description: "Mobile-first approach: use min-width media queries"
+    - id: "breakpoints.mobile-first"
+      description: "Mobile-first approach: use min-width media queries"
+      type: "pattern"
       severity: "warning"
+      test:
+        regex: "max-width:\\s*\\d+px"
 
 
 # =============================================================================
@@ -699,13 +1003,19 @@ elevation:
         value: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
         usage: "Maximum elevation — chart tooltips"
     rules:
-      - description: "Ad-hoc box-shadow values are banned — use shadow tokens (none/xs/sm/md/lg/xl)"
+      - id: "elevation.shadows.no-adhoc"
+        description: "Ad-hoc box-shadow values are banned — use shadow tokens (none/xs/sm/md/lg/xl)"
+        type: "pattern"
         severity: "error"
         detection: "box-shadow values not matching any allowed_tokens value"
         exception: "sidebar-border shadow (outline-as-shadow pattern)"
-      - description: "Shadow elevation must match component context (e.g., cards use sm, modals use lg)"
+      - id: "elevation.shadows.context-match"
+        description: "Shadow elevation must match component context (e.g., cards use sm, modals use lg)"
+        type: "constraint"
         severity: "warning"
-      - description: "Hover states that add shadow must transition from a lower token, not from none to lg"
+      - id: "elevation.shadows.hover-transition"
+        description: "Hover states that add shadow must transition from a lower token, not from none to lg"
+        type: "constraint"
         severity: "warning"
 
   # ---------------------------------------------------------------------------
@@ -730,15 +1040,27 @@ elevation:
         value: 50
         usage: "Top-level overlays — dialog, sheet, dropdown, popover, tooltip, header"
     rules:
-      - description: "Custom z-index values outside the allowed layer set are banned"
+      - id: "elevation.z-index.no-custom"
+        description: "Custom z-index values outside the allowed layer set are banned"
+        type: "pattern"
         severity: "error"
         detection: "z-index values not matching 0, 1, 10, 20, or 50"
         exception: "Negative z-index for stacking context tricks (z-[-1])"
-      - description: "Z-index must not exceed 50 — no z-[999] or z-[9999] hacks"
+        test:
+          values: [0, 1, 10, 20, 50]
+      - id: "elevation.z-index.max-50"
+        description: "Z-index must not exceed 50 — no z-[999] or z-[9999] hacks"
+        type: "constraint"
         severity: "error"
-      - description: "Elements at z-overlay (50) must have a backdrop or dismiss mechanism"
+        test:
+          max: 50
+      - id: "elevation.z-index.overlay-backdrop"
+        description: "Elements at z-overlay (50) must have a backdrop or dismiss mechanism"
+        type: "constraint"
         severity: "warning"
-      - description: "Z-index should only be set on elements that create a stacking context"
+      - id: "elevation.z-index.stacking-context"
+        description: "Z-index should only be set on elements that create a stacking context"
+        type: "constraint"
         severity: "warning"
 
 
@@ -752,11 +1074,21 @@ accessibility:
   min_contrast_ratio: 4.5          # See color.contrast for full breakdown
   touch_target_min: "44px"         # WCAG 2.5.8
   rules:
-    - description: "Images must have alt text (empty string for decorative)"
+    - id: "accessibility.alt-text"
+      description: "Images must have alt text (empty string for decorative)"
+      type: "pattern"
       severity: "error"
-    - description: "Interactive elements must have accessible names"
+      test:
+        regex: "<img(?![^>]*alt=)"
+    - id: "accessibility.aria-names"
+      description: "Interactive elements must have accessible names"
+      type: "pattern"
       severity: "error"
-    - description: "Color must not be the sole means of conveying information"
+    - id: "accessibility.not-color-only"
+      description: "Color must not be the sole means of conveying information"
+      type: "constraint"
       severity: "error"
-    - description: "Text resizing to 200% must not break layout"
+    - id: "accessibility.text-resize"
+      description: "Text resizing to 200% must not break layout"
+      type: "constraint"
       severity: "warning"
