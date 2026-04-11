@@ -455,8 +455,58 @@ title: Can a Design System Describe Taste?
       <h2>One framework, thirteen cells</h2>
       <div class="prose">
         <p>A homepage composes differently from a dashboard. An ad banner composes differently from an email. And the same surface can have different purposes: a web page selling the product (persuade) vs a web page explaining the API (inform) vs a web page showing analytics (analyze).</p>
-        <p>We built a purpose x surface matrix. Six research agents explored award-winning design across ads, email, dashboards, slides, docs, and LLM interfaces simultaneously. Each came back with surface-specific findings.</p>
-        <p>Some of what they found: B2B display ads that win at Cannes treat the banner as a brand impression, not a conversion tool. The best enterprise emails look like well-formatted text, not marketing collateral. Dashboards use the full 16-color palette because data visualization is what the gradient was designed for. Pricing pages need exactly 3 tiers (more than 6 drops conversion from 30% to 3%).</p>
+        <p>We defined seven purpose types. Each has its own composition logic: different color budgets, spacing scales, type hierarchies, and rhythms.</p>
+      </div>
+
+      <!-- Figure: purpose types -->
+      <div class="figure">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border);">
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand-verdigris); margin-bottom: 0.25rem;">Persuade</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Sell, convince, inspire</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Narrative arc, generous whitespace, earned accent. Homepage, landing pages.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-bottom: 0.25rem;">Inform</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Explain, document, teach</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Steady rhythm, tight spacing, color as wayfinding only. Docs, blog, case studies.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-bottom: 0.25rem;">Analyze</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Show data, monitor, compare</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Full palette, compact grid, functional color. Dashboards, data viz.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-bottom: 0.25rem;">Convert</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Drive a single action</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Tight funnel, single CTA, max 3 tiers. Pricing, signup, demo request.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-bottom: 0.25rem;">Identify</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Brand recognition in seconds</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Teal only, Z-pattern, single moment. Ads, hardware, trade show.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: oklch(0.495 0.1708 336.72); margin-bottom: 0.25rem;">Narrate</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Tell a story with depth</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Episode + figure pairs, magazine pacing, color in figures not backgrounds. Essays, retrospectives. <strong>This page is an example.</strong></div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-bottom: 0.25rem;">Assist</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">AI interaction</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">Flat layout, competence over personality, provenance markers. Chat, embedded AI content.</div>
+          </div>
+          <div style="background: var(--card); padding: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); margin-bottom: 0.25rem;">Instruct</div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--fg);">Machine-to-machine</div>
+            <div style="font-size: 0.6875rem; color: var(--muted-fg); margin-top: 0.25rem;">No visual output. The design is the structure of the YAML rules themselves.</div>
+          </div>
+        </div>
+        <div class="figure-caption">Eight purpose types, each with different composition rules. The same surface (a web page) can serve different purposes. This essay uses narrate. The homepage uses persuade. Docs use inform. The rules are different for each.</div>
+      </div>
+
+      <div class="prose" style="margin-top: 2rem;">
+        <p>Six research agents explored award-winning design across these surfaces simultaneously. Some of what they found: B2B display ads that win at Cannes treat the banner as a brand impression, not a conversion tool. The best enterprise emails look like well-formatted text, not marketing collateral. Dashboards use the full 16-color palette because data visualization is what the gradient was designed for. Pricing pages need exactly 3 tiers (more than 6 drops conversion from 30% to 3%).</p>
       </div>
 
       <!-- Figure: three surfaces side by side -->
