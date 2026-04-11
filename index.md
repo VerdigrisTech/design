@@ -140,6 +140,7 @@ title: Home
 - [Accessibility](foundations/accessibility.md) -- WCAG AA requirements
 - [Dark Mode](foundations/dark-mode.md) -- Strategy, Patina hue shift
 - [Elevation](foundations/elevation.md) -- Shadow and z-index systems
+- [Composition](foundations/composition.md) -- How color, type, and spacing compose (purpose x surface matrix)
 
 ## Categories
 

@@ -1367,3 +1367,187 @@ accessibility:
       description: "Text resizing to 200% must not break layout"
       type: "constraint"
       severity: "warning"
+
+
+# =============================================================================
+# COMPOSITION — purpose x surface matrix
+# =============================================================================
+# Composition rules govern how color, typography, and spacing interact.
+# Organized by purpose (what the page is trying to do) x surface (what
+# medium it's on). Each cell has its own ruleset. The same surface can
+# serve different purposes with different composition logic.
+#
+# Purposes: persuade, inform, analyze, convert, identify
+# Surfaces: web_page, ad_banner, email, slide_deck, dashboard, hardware
+#
+# Build incrementally — only filled cells are enforced.
+# =============================================================================
+
+composition:
+  # ---------------------------------------------------------------------------
+  # Matrix structure (cells marked BUILD NOW are defined below)
+  # ---------------------------------------------------------------------------
+  matrix:
+    id: "composition.matrix"
+    type: "reference"
+    description: "Purpose x surface composition matrix. AI agents declare both purpose and surface; the evaluator selects the matching cell's ruleset."
+    cells:
+      persuade_web_page: "defined"       # BUILD NOW — homepage, landing pages
+      persuade_ad_banner: "placeholder"
+      persuade_email: "placeholder"
+      persuade_slide_deck: "placeholder"
+      inform_web_page: "placeholder"     # docs, blog, case study
+      inform_slide_deck: "placeholder"
+      analyze_dashboard: "placeholder"   # data viz, monitoring
+      convert_web_page: "placeholder"    # pricing, signup, demo request
+      identify_ad_banner: "placeholder"  # brand recognition
+      identify_hardware: "placeholder"
+
+  # ---------------------------------------------------------------------------
+  # PERSUADE x WEB PAGE — homepage, landing pages, campaign pages
+  # ---------------------------------------------------------------------------
+  # Narrative pacing + coupling rules. Each section has a role in the story.
+  # Composition follows from the role. Coupling rules provide a mechanical
+  # floor grounded in readability research.
+  # ---------------------------------------------------------------------------
+  persuade_web_page:
+    id: "composition.persuade-web-page"
+    type: "reference"
+    description: "Composition rules for persuasive web pages (homepage, landing, campaign). Narrative pacing drives color intensity, type scale, and spacing. Coupling rules ensure readability."
+
+    # --- Narrative roles ---
+    # Each section on a persuasive page serves a role in the story.
+    # The role determines its visual treatment.
+    narrative_roles:
+      hook:
+        id: "composition.persuade-web-page.hook"
+        type: "reference"
+        description: "First impression. Capture attention, state the value proposition."
+        color_intensity: "full"
+        type_max: "h1"
+        section_padding: "8rem"
+        position: "first section"
+        elements: ["heading", "subhead", "primary CTA", "ghost-on-dark CTA", "gradient strip"]
+      context:
+        id: "composition.persuade-web-page.context"
+        type: "reference"
+        description: "Set up the problem or category. Low visual weight — let the hook land before adding information."
+        color_intensity: "breathing"
+        type_max: "h2"
+        section_padding: "4rem"
+        elements: ["heading", "body copy"]
+      evidence:
+        id: "composition.persuade-web-page.evidence"
+        type: "reference"
+        description: "Show proof — cards, feature grids, technical specs. Supporting visual weight."
+        color_intensity: "supporting"
+        type_max: "h2"
+        section_padding: "4rem"
+        elements: ["heading", "body copy", "card grid", "stat highlights"]
+      turn:
+        id: "composition.persuade-web-page.turn"
+        type: "reference"
+        description: "Shift the feeling. The one earned accent moment — this is the conversion point. Pre-attentive capture draws the eye here. Place on the most important value proposition."
+        color_intensity: "accent"
+        type_max: "h2"
+        section_padding: "5rem"
+        elements: ["heading", "body copy", "stats row", "CTA link"]
+        accent_rule: "The turn section gets the palette accent. Choose the palette region that matches the content category (e.g., detection -> energy region)."
+      proof:
+        id: "composition.persuade-web-page.proof"
+        type: "reference"
+        description: "Hard numbers, customer logos, deployment scale. Let the evidence breathe after the turn."
+        color_intensity: "supporting"
+        type_max: "h2"
+        section_padding: "4rem"
+        elements: ["heading", "body copy", "logo bar", "testimonial"]
+      close:
+        id: "composition.persuade-web-page.close"
+        type: "reference"
+        description: "Final CTA. Returns to full expression — bookends the hook."
+        color_intensity: "full"
+        type_max: "h2"
+        section_padding: "4rem"
+        position: "last section"
+        elements: ["heading", "primary CTA"]
+
+    # --- Narrative arc rules ---
+    arc:
+      - id: "composition.persuade-web-page.arc.required-roles"
+        description: "Every persuasive page must have at least a hook and a close."
+        severity: "error"
+        type: "constraint"
+        test:
+          required: ["hook", "close"]
+      - id: "composition.persuade-web-page.arc.single-turn"
+        description: "At most one turn section per page. The turn is the earned accent moment — more than one dilutes it."
+        severity: "error"
+        type: "constraint"
+        test:
+          max: 1
+      - id: "composition.persuade-web-page.arc.max-low-energy"
+        description: "No more than 3 consecutive low-energy sections (context, evidence, proof) without a turn or a visual break. Prevents the middle of the page from going flat."
+        severity: "warning"
+        type: "constraint"
+        test:
+          max_consecutive: 3
+      - id: "composition.persuade-web-page.arc.turn-after-evidence"
+        description: "The turn should follow at least one evidence or proof section. The shift hits harder after the reader has absorbed information."
+        severity: "warning"
+        type: "constraint"
+
+    # --- Coupling rules (mechanical floor) ---
+    # Grounded in readability research. Apply regardless of narrative role.
+    coupling:
+      color_to_spacing:
+        - id: "composition.persuade-web-page.coupling.dark-padding"
+          description: "Dark background sections (L < 0.3) need generous padding. Visual weight needs room to breathe. Dark surfaces signal premium when given space."
+          severity: "warning"
+          type: "constraint"
+          test:
+            when: { background_lightness: { max: 0.3 } }
+            then: { section_padding: { min: "8rem" } }
+        - id: "composition.persuade-web-page.coupling.tinted-padding"
+          description: "Tinted background sections (chroma > 0.01) need at least medium padding."
+          severity: "warning"
+          type: "constraint"
+          test:
+            when: { background_chroma: { min: 0.01 } }
+            then: { section_padding: { min: "5rem" } }
+      color_to_typography:
+        - id: "composition.persuade-web-page.coupling.tinted-line-height"
+          description: "Tinted or dark backgrounds loosen body line-height to 1.65-1.75 for readability. Cyan-family tints aid reading; other tints slightly reduce it."
+          severity: "warning"
+          type: "constraint"
+          test:
+            when: { background_chroma: { min: 0.01 } }
+            then: { body_line_height: { min: 1.65 } }
+        - id: "composition.persuade-web-page.coupling.tinted-line-length"
+          description: "Tinted or dark backgrounds use tighter max line length (65ch vs 75ch default). Colored backgrounds add visual noise — shorter lines reduce cognitive load."
+          severity: "warning"
+          type: "constraint"
+          test:
+            when: { background_chroma: { min: 0.01 } }
+            then: { max_line_length: "65ch" }
+        - id: "composition.persuade-web-page.coupling.dark-letter-spacing"
+          description: "Body text on dark backgrounds gets slightly looser letter-spacing (+0.01em) for readability."
+          severity: "warning"
+          type: "constraint"
+          test:
+            when: { background_lightness: { max: 0.3 } }
+            then: { body_letter_spacing: { min: "0.01em" } }
+      type_to_spacing:
+        - id: "composition.persuade-web-page.coupling.heading-padding"
+          description: "Section padding scales with the largest heading in the section. H1 sections need large padding; H3-led sections can use standard."
+          severity: "warning"
+          type: "constraint"
+          test:
+            h1: { section_padding: { min: "8rem" } }
+            h2: { section_padding: { min: "5rem" } }
+            h3: { section_padding: { min: "4rem" } }
+
+    # --- Whitespace principle ---
+    whitespace:
+      id: "composition.persuade-web-page.whitespace"
+      type: "reference"
+      description: "Generous whitespace is the primary signal of quality on persuasive pages. Perceived luxury correlates with empty space. When in doubt, add more space, not more content. The default section padding for persuasive pages is the medium spacing (5rem), not the standard (4rem). Standard padding is for inform-purpose pages."
