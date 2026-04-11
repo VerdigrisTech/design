@@ -25,6 +25,7 @@ exclude:
   - docs/figma-sync.md
   - categories/_guide-template.md
   - examples/_template.md
+  - evolution.html
 
 # Default front matter
 defaults:
