@@ -33,11 +33,11 @@ status_note: Needs finalized template files and real campaign examples before th
   <div class="v-grid-2" style="margin-top: 1rem;">
     <div class="v-card" style="padding: 1rem;">
       <div class="v-comp-label">Recovered News Banner</div>
-      <img src="../../assets/banners/verdigris-banner.avif" alt="Recovered Verdigris banner asset used for news and editorial surfaces" style="width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border);" />
+      <img src="../../assets/banners/verdigris-banner.avif" alt="Verdigris brand banner" style="width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border);" />
     </div>
     <div class="v-card" style="padding: 1rem;">
       <div class="v-comp-label">Recovered Press Banner</div>
-      <img src="../../assets/banners/verdigris-banner.avif" alt="Recovered Verdigris banner asset used for news, editorial, and press surfaces" style="width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border);" />
+      <img src="../../assets/banners/verdigris-banner.avif" alt="Verdigris brand banner" style="width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border);" />
     </div>
   </div>
 </div>

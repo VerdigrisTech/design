@@ -534,42 +534,159 @@ title: Brand Specimen
     <section class="section">
       <p class="section-label">Color Usage</p>
       <h2 class="section-title">Palette In Use</h2>
-      <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1.5rem">Applied examples showing how palette regions work in real page sections. 70% teal + neutrals, max 2 accent regions, never adjacent.</p>
+      <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1.5rem;max-width:40rem;line-height:1.6">Which color comes from the palette semantics. How much comes from the section's importance. Color gives text room to breathe.</p>
 
-      <!-- Good: restrained page scroll with 1 accent -->
-      <div style="margin-bottom:2rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Correct — teal dominant, one earned accent (energy for detection)</div>
+      <!-- The refined approach: layered intensity -->
+      <div style="margin-bottom:2.5rem;">
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Layered intensity</div>
         <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
-          <!-- Neutral hero -->
-          <div style="background:var(--neutral-950);padding:2rem 2rem 1.5rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Hero — trust region</div>
-            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:oklch(0.985 0 0);margin-top:0.375rem;">Electrical Intelligence for AI Infrastructure</div>
-            <div style="font-size:0.8125rem;color:var(--neutral-400);margin-top:0.25rem;">Teal accent on dark neutral — the default Verdigris expression.</div>
-          </div>
-          <!-- Neutral section -->
-          <div style="background:var(--neutral-100);padding:1.25rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Neutral section</div>
-            <div style="font-size:0.8125rem;color:var(--neutral-900);margin-top:0.25rem;">Platform capabilities. Breathing room — no accent color needed.</div>
-          </div>
-          <!-- Energy accent section -->
-          <div style="background:var(--neutral-950);padding:1.25rem 2rem;position:relative;">
-            <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 12%)"></div>
-            <div style="position:relative;">
-              <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Detection — energy region</div>
-              <div style="font-size:0.8125rem;color:oklch(0.985 0 0);margin-top:0.25rem;">Real-time fault detection. This section <em>earned</em> its accent — alerting content matches the energy palette.</div>
+
+          <!-- HERO: Full expression — dark bg, teal accent, large type -->
+          <div style="background:var(--neutral-950);padding:2.5rem 2rem 2rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);margin-bottom:0.375rem;">Electrical Intelligence</div>
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:oklch(0.985 0 0);letter-spacing:-0.02em;line-height:1.1;">AI-Grade Power Monitoring<br>for Data Centers</div>
+            <div style="font-size:0.8125rem;color:var(--neutral-400);margin-top:0.5rem;max-width:28rem;line-height:1.6;">Sub-cycle electrical data. Physics-based fault detection. 48-hour early warning.</div>
+            <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+              <div style="background:var(--brand-verdigris);color:var(--neutral-950);font-size:0.75rem;font-weight:600;padding:0.5rem 1rem;border-radius:0.375rem;">Request demo</div>
+              <div style="border:1px solid oklch(1 0 0 / 0.6);color:white;font-size:0.75rem;font-weight:600;padding:0.5rem 1rem;border-radius:0.375rem;">Learn more</div>
             </div>
           </div>
-          <!-- Neutral section -->
+
+          <!-- SUPPORTING: Light bg, teal label only — breathing room -->
           <div style="background:white;padding:1.25rem 2rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Neutral section</div>
-            <div style="font-size:0.8125rem;color:var(--neutral-900);margin-top:0.25rem;">Deploy at scale. Neutral background — not every section needs color.</div>
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Technology</div>
+            <div style="font-size:0.875rem;font-weight:600;color:var(--neutral-900);margin-top:0.25rem;">Purpose-built for critical infrastructure</div>
+            <div style="font-size:0.75rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.5;">Teal label, white background. Present but quiet.</div>
+          </div>
+
+          <!-- BREATHING ROOM: Neutral.200 bg, top border to mark section break -->
+          <div style="background:oklch(0.92 0.004 286.32);padding:1.25rem 2rem;border-top:1px solid var(--border);">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--neutral-500);">Data quality</div>
+            <div style="font-size:0.875rem;font-weight:600;color:var(--neutral-900);margin-top:0.25rem;">Every measurement, verified</div>
+            <div style="font-size:0.75rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.5;">Neutral.200. No color. The page rests.</div>
+          </div>
+
+          <!-- ACCENT: Light tint + colored label + border hint — the earned moment -->
+          <div style="background:white;padding:1.25rem 2rem;position:relative;">
+            <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 4%)"></div>
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:oklch(0.495 0.1708 336.72)"></div>
+            <div style="position:relative;padding-left:0.75rem;">
+              <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Detection</div>
+              <div style="font-size:0.875rem;font-weight:600;color:var(--neutral-900);margin-top:0.25rem;">Real-time fault detection</div>
+              <div style="font-size:0.75rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.5;">Magenta label, left border, 4% tint. Three quiet signals. Together they shift the feeling.</div>
+            </div>
+          </div>
+
+          <!-- SUPPORTING: Back to white, teal label — gentle return -->
+          <div style="background:white;padding:1.25rem 2rem;border-top:1px solid var(--border);">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Reliability</div>
+            <div style="font-size:0.875rem;font-weight:600;color:var(--neutral-900);margin-top:0.25rem;">99.97% uptime across 200+ sites</div>
+            <div style="font-size:0.75rem;color:var(--neutral-500);margin-top:0.25rem;line-height:1.5;">White, teal label. The page settles.</div>
+          </div>
+
+          <!-- CTA: Returns to dark, teal accent — bookends the hero -->
+          <div style="background:var(--neutral-950);padding:1.5rem 2rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);">Get started</div>
+            <div style="font-size:0.875rem;font-weight:600;color:oklch(0.985 0 0);margin-top:0.25rem;">See what 8kHz visibility looks like for your facility</div>
+            <div style="display:inline-block;margin-top:0.75rem;background:var(--brand-verdigris);color:var(--neutral-950);font-size:0.75rem;font-weight:600;padding:0.5rem 1rem;border-radius:0.375rem;">Request demo</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Intensity scale reference -->
+      <!-- Intensity scale with perceptual research basis -->
+      <div style="margin-bottom:2.5rem;">
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Intensity scale</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:0.75rem;">
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;background:var(--neutral-950);">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-verdigris);margin-bottom:0.375rem">Full expression</div>
+            <div style="font-size:0.75rem;color:oklch(0.985 0 0);line-height:1.5;">Dark background, brand teal, CTAs. <strong>Hero and footer only.</strong></div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 4%)"></div>
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:oklch(0.495 0.1708 336.72)"></div>
+            <div style="position:relative;padding-left:0.5rem;">
+              <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.495 0.1708 336.72);margin-bottom:0.375rem">Earned accent</div>
+              <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">4% tint + full-chroma label + border. <strong>One per page.</strong> Place on the conversion point.</div>
+            </div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-verdigris);margin-bottom:0.375rem">Supporting</div>
+            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Teal label on white or neutral.200. <strong>The default.</strong> Most sections live here.</div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;background:var(--muted);">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);margin-bottom:0.375rem">Breathing room</div>
+            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Neutral label, neutral background. <strong>No color.</strong> The absence makes the accent land.</div>
           </div>
         </div>
       </div>
 
-      <!-- Wrong: rainbow overuse -->
+      <!-- Cross-surface application -->
+      <div style="margin-bottom:2.5rem;">
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Across surfaces</div>
+        <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.75rem;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);background:var(--muted);">
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Surface</th>
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Full</th>
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Accent</th>
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Supporting</th>
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Why</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Web page</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Hero + footer</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">1 section</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Teal labels</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Long scroll, accent is a scanning landmark</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Ad banner</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Entire ad</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">3 seconds of attention. Teal only.</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Email</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Header strip</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Teal CTA button</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Noisy inbox. Stay clean.</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Slide deck</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Title slide</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">1 per slide</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Teal chart accents</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Presenter controls pace</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Data viz</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Chart frame</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Full palette</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">All 16 tokens</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">This is what the gradient was designed for</td>
+              </tr>
+              <tr>
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Hardware</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Teal logo</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Physical. Brand clarity.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Wrong: still kept for contrast -->
       <div style="margin-bottom:2rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem;color:oklch(0.577 0.245 27.325)">Wrong — too many regions, no breathing room, adjacent colored sections</div>
+        <div class="swatch-group-label" style="margin-bottom:0.75rem;color:oklch(0.577 0.245 27.325)">Wrong: too many regions, no breathing room</div>
         <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);opacity:0.7;">
           <div style="background:var(--neutral-950);padding:1rem 2rem;position:relative;">
             <div style="position:absolute;inset:0;background:oklch(0.75 0.1286 191.57 / 15%)"></div>
@@ -712,11 +829,11 @@ title: Brand Specimen
           <p>Recovered canonical SVG lockups for light and dark surfaces.</p>
           <code>assets/logos/brand/logo-green.svg</code>
           <div class="asset-preview logo-preview logo-preview-light">
-            <img src="assets/logos/brand/logo-green.svg" alt="Verdigris teal logo lockup on a light background" />
+            <img src="assets/logos/brand/logo-green.svg" alt="Verdigris logo — teal" />
           </div>
           <code class="asset-path-alt">assets/logos/brand/logo-white.svg</code>
           <div class="asset-preview logo-preview logo-preview-dark" style="margin-top:0.75rem">
-            <img src="assets/logos/brand/logo-white.svg" alt="Verdigris white logo lockup on a dark background" />
+            <img src="assets/logos/brand/logo-white.svg" alt="Verdigris logo — white" />
           </div>
         </div>
         <div class="asset-card">
@@ -724,7 +841,7 @@ title: Brand Specimen
           <p>Recovered canonical marketing-site banner defining approved Verdigris brand treatment.</p>
           <code>assets/banners/verdigris-banner.avif</code>
           <div class="asset-preview">
-            <img src="assets/banners/verdigris-banner.avif" alt="Recovered Verdigris banner asset used for editorial, news, and press surfaces" />
+            <img src="assets/banners/verdigris-banner.avif" alt="Verdigris brand banner" />
           </div>
         </div>
       </div>

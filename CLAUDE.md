@@ -28,6 +28,12 @@ Before every commit that changes tokens:
 2. `npm run build` — regenerate outputs
 3. Commit build outputs alongside token changes
 
+Before every commit that changes content (foundations, specimens, rules, examples):
+1. `npm run lint:external` — no internal content in public files
+2. Check for AI writing artifacts (emdashes, jargon, overexplaining)
+3. Verify cross-file consistency (values in rules must match foundations and specimens)
+4. YAML validation: `python3 -c "import yaml; yaml.safe_load(open('rules/visual-rules.yml'))"`
+
 ## Commit Message Format
 
 ```
@@ -72,14 +78,31 @@ fix(rules): correct heading weight constraint from 600 to 700
 
 ### Visual Rules (`rules/`)
 - YAML format, machine-parseable for evaluator pipeline consumption
-- Every rule needs a severity level (`error` or `warning`)
-- Include description explaining why the rule exists
+- Schema (v2.1.0): every rule must have `id`, `severity`, `type`, `description`
+- `type: "reference"` entries omit severity (informational, not enforced)
+- Every guidance rule needs both a floor AND a ceiling — AI agents optimize toward maximums without upper bounds
+- Cross-file consistency: if a value appears in rules, foundations, and specimens, all three must match
 
 ## Content Guidelines
 
 - **Don't hardcode design values in docs** — reference token names (e.g., "use `color.brand.verdigris`" not "use `#0fc8c3`")
 - **Asset naming:** lowercase, hyphens, prefix with `good-` or `bad-` for examples
 - **Screenshots:** 2x resolution, max 2400px wide, PNG format
+- **No AI writing artifacts** — strip emdashes, "This means", "In other words", "grounded in", "leverage", "comprehensive". Write short, plain sentences. If it sounds like an AI explaining, rewrite it.
+- **Alt text** — short factual labels ("Verdigris logo — teal"), not internal documentation ("Recovered canonical SVG lockup for light surfaces")
+
+## Information Architecture
+
+- **`index.md`** — summarizes with compact visual specimens, links to details
+- **`foundations/*.md`** — defines rules with rationale and research citations
+- **`specimen.html`** — shows applied examples (rendered page scrolls, live demos). Never lecture — show.
+- **`rules/visual-rules.yml`** — machine-consumable rules for evaluator/agents
+- **`examples/good|bad/`** — isolated pattern examples with live HTML demos
+
+## Workflow
+
+- **Always branch + PR** — never push directly to main, even for docs-only changes
+- **QA before merge** — run content, rules-consistency, and HTML validation review before any PR merge
 
 ## Deviation Protocol
 
