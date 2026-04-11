@@ -30,7 +30,7 @@ title: Home
 
 <div class="v-demo">
   <p class="v-label">Palette Semantics</p>
-  <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1rem;max-width:40rem;line-height:1.6">Palette semantics tell you <em>which</em> color. Section importance tells you <em>how much</em>. Color gives text room to breathe and guides attention pre-attentively — the accented section is where the eye goes first.</p>
+  <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1rem;max-width:40rem;line-height:1.6">Which color comes from the palette. How much comes from the section's importance. Color gives text room to breathe. The accented section is where the eye goes first.</p>
   <!-- Layered intensity specimen -->
   <div style="border-radius:0.625rem;overflow:hidden;border:1px solid var(--border);">
     <!-- FULL EXPRESSION: Hero -->
@@ -44,10 +44,10 @@ title: Home
       <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.75 0.1286 191.57);">Technology</div>
       <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Supporting — teal label, white bg. Present but quiet. Text breathes.</div>
     </div>
-    <!-- BREATHING ROOM: Neutral label, neutral bg -->
-    <div style="background:oklch(0.967 0.001 286.375);padding:1rem 2rem;">
+    <!-- BREATHING ROOM: Neutral label, neutral.200 bg -->
+    <div style="background:oklch(0.92 0.004 286.32);padding:1rem 2rem;">
       <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.552 0.016 285.938);">Data quality</div>
-      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Breathing room — no color at all. Makes the accent hit harder.</div>
+      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Neutral.200. No color. Makes the accent hit harder.</div>
     </div>
     <!-- EARNED ACCENT: Light tint + label + border — conversion point -->
     <div style="background:white;padding:1rem 2rem;position:relative;">
@@ -59,9 +59,9 @@ title: Home
       </div>
     </div>
     <!-- SUPPORTING: Gentle return -->
-    <div style="background:oklch(0.967 0.001 286.375);padding:1rem 2rem;">
+    <div style="background:white;padding:1rem 2rem;">
       <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.75 0.1286 191.57);">Results</div>
-      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Supporting — back to teal, neutral bg. The page settles after the accent.</div>
+      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">White, teal label. The page settles.</div>
     </div>
   </div>
   <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">Full → Supporting → Breathing → Accent → Supporting. <a href="foundations/color" style="font-size:0.75rem">Palette semantics &amp; research basis &rarr;</a></p>

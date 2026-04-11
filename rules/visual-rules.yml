@@ -231,8 +231,8 @@ color:
           text: "NOT as text — too dark (L=0.29-0.41), invisible on dark backgrounds"
           dark_mode_tint: "oklch(0.29 0.1506 289.33 / 18%) over neutral.950 — use 18%+ for perceptibility"
         constraints:
-          min_tint_opacity: 0.15
-          reason: "Below 15% opacity, midnight-purple (chroma 0.15) is indistinguishable from neutral gray"
+          min_tint_opacity: 0.18
+          reason: "Below 18% opacity, midnight-purple (chroma 0.15) is indistinguishable from neutral gray"
 
       energy:
         id: "color.palette-semantics.energy"
@@ -381,7 +381,7 @@ color:
         severity: "error"
         type: "constraint"
       - id: "color.palette-semantics.dark-tint-opacity"
-        description: "Dark mode brand tints must use 15%+ opacity for depth region, 10%+ for others — below this they are imperceptible"
+        description: "Dark mode brand tints must use 18%+ opacity for depth region, 10%+ for others. Below these thresholds they are imperceptible."
         severity: "error"
         type: "constraint"
       - id: "color.palette-semantics.tint-contrast"
@@ -395,7 +395,7 @@ color:
         severity: "error"
         type: "constraint"
       - id: "color.palette-semantics.accent-is-conversion-point"
-        description: "The earned accent section should be the page's primary conversion point or key value proposition — not just the section whose content happens to match a palette region. Color captures attention pre-attentively (50-500ms, before conscious thought). The accented section is where the eye goes first after the hero. Place it on what matters most to the business goal."
+        description: "The earned accent section should be the page's primary conversion point or key value proposition, not just the section whose content matches a palette region. Color captures attention in 50-500ms, before conscious thought. The accented section is where the eye goes first after the hero. Place it on what matters most to the business goal."
         severity: "warning"
         type: "constraint"
       - id: "color.palette-semantics.saturation-contrast"
@@ -403,12 +403,10 @@ color:
         severity: "error"
         type: "constraint"
       - id: "color.palette-semantics.scanning-landmark"
-        description: "Palette accents are page landmarks, not just atmosphere. Users scrolling a long page scan for color changes to locate content without reading headers. Consistent color-to-content mapping across pages builds wayfinding familiarity — a returning visitor looking for detection capabilities will scan for the energy-region accent."
-        severity: "warning"
+        description: "Palette accents are page landmarks, not just atmosphere. Users scrolling a long page scan for color changes to locate content without reading headers. Consistent color-to-content mapping across pages builds wayfinding familiarity."
         type: "reference"
       - id: "color.palette-semantics.surface-intensity"
         description: "The same intensity principles apply across all surfaces, but the color budget scales with attention duration and surface complexity. Longer attention = more color budget. Simpler surface = less color."
-        severity: "warning"
         type: "reference"
         surfaces:
           web_page:
@@ -458,15 +456,15 @@ color:
       id: "color.section-flow.lightness-direction"
       severity: "error"
       type: "constraint"
-      description: "Commit to a lightness direction within content sections. A light-mode page flows through light backgrounds (white ↔ neutral.100 ↔ neutral.50). A dark-mode page flows through dark backgrounds (neutral.950 ↔ neutral.900 ↔ neutral.800). Do not alternate between dark and light sections within the same content flow."
+      description: "Commit to a lightness direction within content sections. A light-mode page flows through light backgrounds (white, neutral.200, neutral.100). A dark-mode page flows through dark backgrounds (neutral.950, neutral.900, neutral.800). Do not alternate between dark and light sections within the same content flow."
 
     tonal_variation:
       id: "color.section-flow.tonal-variation"
       type: "reference"
       description: "Differentiate adjacent neutral sections with subtle tonal shifts, not lightness jumps."
       light_mode:
-        backgrounds: ["white", "oklch(0.985 0 0)", "oklch(0.967 0.001 286.375)"]  # white, neutral.50, neutral.100
-        description: "Alternate between white and neutral.100 for gentle rhythm. Never jump to neutral.800+ within a light flow."
+        backgrounds: ["white", "oklch(0.985 0 0)", "oklch(0.967 0.001 286.375)", "oklch(0.92 0.004 286.32)"]  # white, neutral.50, neutral.100, neutral.200
+        description: "Alternate between white and neutral.200 for visible rhythm. Never jump to neutral.800+ within a light flow."
       dark_mode:
         backgrounds: ["oklch(0.141 0.005 285.823)", "oklch(0.21 0.006 285.885)", "oklch(0.274 0.006 286.033)"]  # neutral.950, neutral.900, neutral.800
         description: "Alternate between neutral.950 and neutral.900 for gentle rhythm. Never jump to white within a dark flow."
@@ -828,6 +826,7 @@ motion:
   # ---------------------------------------------------------------------------
   patterns:
     hover-lift:
+      id: "motion.patterns.hover-lift"
       description: "Card/element lifts on hover with shadow"
       duration: "500ms"
       easing: "ease"
@@ -835,6 +834,7 @@ motion:
       transform: "translateY(-4px)"
       requires_hover_query: true
     slide-up:
+      id: "motion.patterns.slide-up"
       description: "Element slides up into view on scroll/mount"
       duration: "500ms"
       easing: "ease-out"
@@ -844,6 +844,7 @@ motion:
       opacity_from: 0
       opacity_to: 1
     image-zoom:
+      id: "motion.patterns.image-zoom"
       description: "Image scales slightly on hover"
       duration: "300ms"
       easing: "ease"
@@ -851,6 +852,7 @@ motion:
       transform: "scale(1.05)"
       requires_hover_query: true
     spinner:
+      id: "motion.patterns.spinner"
       description: "Loading spinner continuous rotation"
       duration: "800ms"
       easing: "linear"

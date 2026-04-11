@@ -302,7 +302,7 @@ The palette divides into 6 semantic regions based on content category:
 
 **Tokens:** `neutral.50` through `neutral.950`
 **Content:** Body text, structural sections, form backgrounds, breathing room between colored sections
-**Rule:** At least 30% of page sections should use neutral backgrounds to prevent chromatic fatigue.
+**Rule:** At least 70% of page sections should use neutral backgrounds to prevent chromatic fatigue.
 
 ### Taste Boundaries — Restraint Rules
 
@@ -343,7 +343,7 @@ Pages have a lightness direction. Alternating dark and light sections creates a 
 ```
 Dark hero → white → neutral.100 → white → [one dark accent] → white → footer
 ```
-- Content sections flow through white and neutral.100 (subtle tonal shift, not a contrast flip)
+- Content sections flow through white and neutral.200 (visible tonal shift, not a contrast flip)
 - At most ONE dark-background section as a deliberate accent moment (e.g., detection callout, CTA strip)
 - Hero and footer are always dark — they don't count toward the limit
 
@@ -361,17 +361,17 @@ neutral.950 → neutral.900 → neutral.950 → [tinted accent] → neutral.900 
 
 ### How Color Works Perceptually (Research Basis)
 
-These principles are grounded in color perception research and inform all the rules below.
+Color perception findings that inform the rules below.
 
-**Pre-attentive capture.** Color is processed in 50–500ms before conscious thought. A colored element captures attention *before the user decides to look at it*. Making a target visually conspicuous makes search time up to 83% faster. This means the accent section isn't just "different" — it's where the eye goes first after the hero. Place the accent on conversion-critical content. ([Attentional Capture of Colour in Visual Interface Design](https://www.researchgate.net/publication/320433843_The_Attentional_Capture_of_Colour_in_Visual_Interface_Design_A_Controlled-Environment_Study))
+**Attention capture.** Color is processed in 50-500ms, before conscious thought. A colored element captures attention before the user decides to look at it. Conspicuous targets are found up to 83% faster. The accent section is where the eye goes first after the hero. Place it on conversion-critical content. ([Source](https://www.researchgate.net/publication/320433843_The_Attentional_Capture_of_Colour_in_Visual_Interface_Design_A_Controlled-Environment_Study))
 
-**Saturation contrast = premium.** Research shows lower saturation enhances perceived luxury — consumers associate desaturated color with "rich continuity heritage." The mechanism that makes our intensity scale work is saturation contrast: large areas of near-zero chroma (4% background tints) against small areas of full chroma (labels, borders, icons). The gap between them IS the design. Don't desaturate labels to match the tint. Don't raise tint opacity to match the labels. ([Color Saturation and Perceived Status of Luxury Brands](https://academic.oup.com/jcr/advance-article/doi/10.1093/jcr/ucaf029/8120421), [Spatial Color Efficacy in Perceived Luxury](https://pmc.ncbi.nlm.nih.gov/articles/PMC7136482/))
+**Saturation contrast = premium.** Lower saturation enhances perceived luxury. Our intensity scale works because of saturation contrast: large areas of near-zero chroma (4% tints) against small areas of full chroma (labels, borders, icons). The gap between them IS the design. Don't desaturate labels to match tints. Don't raise tint opacity to match labels. ([Source](https://academic.oup.com/jcr/advance-article/doi/10.1093/jcr/ucaf029/8120421), [Source](https://pmc.ncbi.nlm.nih.gov/articles/PMC7136482/))
 
-**Teal backgrounds aid readability.** Studies on background color and visual search found cyan-family backgrounds boost reading accuracy and comfort, while red backgrounds hinder search. Our brand teal is cyan-family — teal tints on light backgrounds aren't just on-brand, they're measurably better for reading. ([Background Colour and Line Spacing on Visual Search](https://www.sciencedirect.com/science/article/abs/pii/S0141938225000563))
+**Teal aids readability.** Cyan-family backgrounds boost reading accuracy and comfort. Red backgrounds hinder search. Teal tints on light backgrounds are on-brand and measurably better for reading. ([Source](https://www.sciencedirect.com/science/article/abs/pii/S0141938225000563))
 
-**Color as scanning landmark.** Users scrolling a long page don't read linearly — they scan for color changes to locate content. Palette accents create page landmarks at the pre-attentive level. Consistent color-to-content mapping across pages builds wayfinding familiarity — a returning visitor looking for detection capabilities will scan for the energy-region accent.
+**Scanning landmarks.** Users scroll-scan for color changes to locate content, not reading headers linearly. Consistent color-to-content mapping across pages builds wayfinding. A returning visitor looking for detection capabilities scans for the energy-region accent.
 
-**Color adjacency (Albers).** The same color looks different depending on what surrounds it. A magenta label on white reads differently than magenta on neutral.100. Test accent sections in context with their neighboring sections, not in isolation. Token values are absolute; perceived color is relative.
+**Color adjacency (Albers).** The same color looks different depending on its neighbors. A magenta label on white reads differently than magenta on neutral.200. Test accent sections in context, not isolation.
 
 ### Usage Rules
 
