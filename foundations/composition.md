@@ -13,30 +13,33 @@ How color, typography, and spacing work together. Individual foundations define 
 
 Composition rules are organized by purpose (what the page does) and surface (what medium it's on). The same surface can serve different purposes with different composition logic. A homepage (persuade) and a case study (inform) are both web pages, but they compose differently.
 
-| Purpose | What it does | Color budget | Spacing | Rhythm | Status |
-|---------|-------------|-------------|---------|--------|--------|
-| **Persuade** | Sell, convince, inspire | Trust + 1 earned accent | Generous (5-8rem sections) | Narrative arc | Defined (web page) |
-| **Inform** | Explain, document, teach | Teal only | Tight (4rem sections) | Steady, scannable | <span class="status-pill status-pill-partial">Partial</span> |
-| **Analyze** | Show data, monitor, compare | Full palette | Compact (2rem sections) | Dashboard grid | <span class="status-pill status-pill-partial">Partial</span> |
-| **Convert** | Drive a single action | 1 accent (CTA only) | Focused (4rem) | Linear funnel | <span class="status-pill status-pill-partial">Partial</span> |
-| **Identify** | Brand recognition in seconds | Teal only | Surface-constrained | Single moment | <span class="status-pill status-pill-partial">Partial</span> |
+| Purpose | What it does | Color budget | Spacing | Rhythm |
+|---------|-------------|-------------|---------|--------|
+| **Persuade** | Sell, convince, inspire | Trust + 1 earned accent | Generous (5-8rem sections) | Narrative arc |
+| **Inform** | Explain, document, teach | Teal only | Tight (3rem sections) | Steady, scannable |
+| **Analyze** | Show data, monitor, compare | Full palette | Compact (1-3rem panels) | Dashboard grid |
+| **Convert** | Drive a single action | 1 accent (CTA only) | Focused (4rem) | Linear funnel |
+| **Identify** | Brand recognition in seconds | Teal only | Surface-constrained | Single moment |
+| **Assist** | AI interaction (chat, embedded) | Monochrome + functional | Content-driven | Conversational |
+| **Instruct** | Machine-to-machine | N/A (structural) | N/A | Rule clarity |
 
 ### Defined Cells
 
 | Purpose x Surface | Status | Tracking |
 |-------------------|--------|----------|
 | Persuade x Web page | **Defined** | Narrative roles, coupling rules, whitespace principle |
-| Persuade x Ad banner | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1007 |
-| Persuade x Email | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1007 |
-| Persuade x Slide deck | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1008 |
-| Inform x Web page | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1004 |
-| Inform x Slide deck | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1004 |
-| Analyze x Dashboard | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1005 |
-| Convert x Web page | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1006 |
-| Identify x Ad banner | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1007 |
-| Identify x Hardware | <span class="status-pill status-pill-partial">Partial</span> | Z2O-1007 |
-
-`Partial` means the purpose is described in the matrix table above but no composition rules, coupling constraints, or specimens exist yet.
+| Persuade x Ad banner | **Defined** | Z-pattern, max 4 elements, 30% whitespace |
+| Persuade x Email | **Defined** | Single column 600px, system fonts, 1 CTA per section |
+| Persuade x Slide deck | **Defined** | 10-15 slides, 24pt floor, dark bookends, single turn |
+| Inform x Web page | **Defined** | Metronomic rhythm, 3rem padding, 65ch line length |
+| Inform x Slide deck | **Defined** | One idea per slide, 60% whitespace, teal in diagrams |
+| Analyze x Dashboard | **Defined** | 12-col grid, full palette, 13-14px body, tabular-nums |
+| Convert x Web page | **Defined** | 4-role funnel, single CTA, max 3 tiers, micro-reassurance |
+| Identify x Ad banner | **Defined** | Teal only, 3-8 word tagline, Z-pattern |
+| Identify x Hardware | **Defined** | One teal accent, neutral housing, single wordmark |
+| Assist x Chat | **Defined** | Flat layout (no bubbles), 680-720px, competence over personality |
+| Assist x Embedded | **Defined** | Visual marker for AI content, provenance metadata, EU AI Act compliance |
+| Instruct x Machine | **Defined** | Floors AND ceilings, id paths, canonical tokens only |
 
 ## Persuade x Web Page
 
