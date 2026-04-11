@@ -145,24 +145,6 @@
         "$type": "color",
         "$description": "Destructive/error in dark mode — slightly softer"
       }
-    },
-    "legacy": {
-      "$description": "HSL values from www site. Mapped for reference during migration. These should converge toward the OKLch brand values above.",
-      "www-primary-light": {
-        "$value": "oklch(0.48 0.12 178)",
-        "$type": "color",
-        "$description": "www hsl(178 86% 28%) — WCAG-darkened teal for text contrast. Patina equivalent: neutral.900 as primary."
-      },
-      "www-brand-teal": {
-        "$value": "oklch(0.75 0.1286 191.57)",
-        "$type": "color",
-        "$description": "www hsl(178 86% 42%) — matches brand.verdigris exactly. Used decoratively."
-      },
-      "www-ring": {
-        "$value": "oklch(0.55 0.12 160)",
-        "$type": "color",
-        "$description": "www hsl(153 67% 38%) — green-shifted ring/focus. Deviates from Patina's neutral ring."
-      }
     }
   }
 }

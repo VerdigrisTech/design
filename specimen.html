@@ -530,6 +530,129 @@ title: Brand Specimen
       <p style="font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted-fg);margin-top:0.5rem">Full hue loop: Teal → Purple → Red → Yellow → Teal. 16 stops, interpolated in OKLch for perceptual uniformity.</p>
     </section>
 
+    <!-- Palette Semantics -->
+    <section class="section">
+      <p class="section-label">Color Usage</p>
+      <h2 class="section-title">Palette Semantics</h2>
+      <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1.5rem">Each palette region maps to a content category. AI agents and evaluators use this to select contextually appropriate colors.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));gap:1rem;">
+        <!-- Trust -->
+        <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="height:4px;background:linear-gradient(90deg in oklch,var(--brand-verdigris),var(--brand-mix-1),var(--brand-mix-2))"></div>
+          <div style="padding:1.25rem;">
+            <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-verdigris);margin-bottom:0.25rem;">Trust</div>
+            <div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Technology &amp; Platform</div>
+            <div style="font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">Data quality, platform capabilities, primary brand expression. The anchor of the Verdigris identity.</div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.75rem;">
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-verdigris)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-mix-1)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-mix-2)"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Depth -->
+        <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="height:4px;background:linear-gradient(90deg in oklch,var(--brand-mix-3),var(--brand-midnight-purple))"></div>
+          <div style="padding:1.25rem;">
+            <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-mp-step-2);margin-bottom:0.25rem;">Depth</div>
+            <div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Intelligence &amp; Premium</div>
+            <div style="font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">AI features, enterprise sections, dark hero backgrounds. The darkest palette region — backgrounds only, not text.</div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.75rem;">
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-mix-3);border:1px solid var(--border)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-midnight-purple);border:1px solid var(--border)"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Energy -->
+        <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="height:4px;background:linear-gradient(90deg in oklch,var(--brand-mp-step-1),var(--brand-mp-step-2),var(--brand-mp-step-3))"></div>
+          <div style="padding:1.25rem;">
+            <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-mp-step-2);margin-bottom:0.25rem;">Energy</div>
+            <div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Detection &amp; Alerting</div>
+            <div style="font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">Fault detection, real-time monitoring, anomaly indicators. High chroma, demands attention.</div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.75rem;">
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-mp-step-1)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-mp-step-2)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-mp-step-3)"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Warmth -->
+        <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="height:4px;background:linear-gradient(90deg in oklch,var(--brand-pastel-red),var(--brand-pr-step-1))"></div>
+          <div style="padding:1.25rem;">
+            <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-pastel-red);margin-bottom:0.25rem;">Warmth</div>
+            <div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">People &amp; Action</div>
+            <div style="font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">Contact, customer stories, CTA hover shifts. Warm tones that invite human connection.</div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.75rem;">
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-pastel-red)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-pr-step-1)"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Results -->
+        <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="height:4px;background:linear-gradient(90deg in oklch,var(--brand-pr-step-2),var(--brand-pr-step-3),var(--brand-cyber-yellow))"></div>
+          <div style="padding:1.25rem;">
+            <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-cyber-yellow);margin-bottom:0.25rem;">Results</div>
+            <div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Metrics &amp; Outcomes</div>
+            <div style="font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">ROI, stranded capacity, financial outcomes. Bright tones (L=0.79–0.87) for proof points. Dark backgrounds only for text.</div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.75rem;">
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-pr-step-2)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-pr-step-3)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-cyber-yellow)"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Growth -->
+        <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="height:4px;background:linear-gradient(90deg in oklch,var(--brand-cy-step-1),var(--brand-cy-step-2),var(--brand-cy-step-3))"></div>
+          <div style="padding:1.25rem;">
+            <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-cy-step-2);margin-bottom:0.25rem;">Growth</div>
+            <div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Sustainability &amp; Recovery</div>
+            <div style="font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">M&amp;V results, capacity recovery, environmental impact. Green-teal tones closing the loop back to brand.</div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.75rem;">
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-cy-step-1)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-cy-step-2)"></div>
+              <div style="width:2rem;height:2rem;border-radius:4px;background:var(--brand-cy-step-3)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dark mode tint samples -->
+      <div style="margin-top:2rem;">
+        <div class="swatch-group-label">Dark Mode Tints — brand colors over neutral.950</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:0.75rem;margin-top:0.75rem;">
+          <div style="background:oklch(0.141 0.005 285.823);border-radius:var(--radius);padding:1rem;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:oklch(0.75 0.1286 191.57 / 15%);pointer-events:none"></div>
+            <div style="position:relative;font-family:var(--font-mono);font-size:0.625rem;color:oklch(0.985 0 0);">Trust tint<br>teal / 15%</div>
+          </div>
+          <div style="background:oklch(0.141 0.005 285.823);border-radius:var(--radius);padding:1rem;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:oklch(0.29 0.1506 289.33 / 18%);pointer-events:none"></div>
+            <div style="position:relative;font-family:var(--font-mono);font-size:0.625rem;color:oklch(0.985 0 0);">Depth tint<br>purple / 18%</div>
+          </div>
+          <div style="background:oklch(0.141 0.005 285.823);border-radius:var(--radius);padding:1rem;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 12%);pointer-events:none"></div>
+            <div style="position:relative;font-family:var(--font-mono);font-size:0.625rem;color:oklch(0.985 0 0);">Energy tint<br>magenta / 12%</div>
+          </div>
+          <div style="background:oklch(0.141 0.005 285.823);border-radius:var(--radius);padding:1rem;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:oklch(0.7 0.1909 24.11 / 10%);pointer-events:none"></div>
+            <div style="position:relative;font-family:var(--font-mono);font-size:0.625rem;color:oklch(0.985 0 0);">Warmth tint<br>red / 10%</div>
+          </div>
+          <div style="background:oklch(0.141 0.005 285.823);border-radius:var(--radius);padding:1rem;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:oklch(0.87 0.1786 92.23 / 8%);pointer-events:none"></div>
+            <div style="position:relative;font-family:var(--font-mono);font-size:0.625rem;color:oklch(0.985 0 0);">Results tint<br>yellow / 8%</div>
+          </div>
+          <div style="background:oklch(0.141 0.005 285.823);border-radius:var(--radius);padding:1rem;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:oklch(0.7698 0.1588 137.1 / 10%);pointer-events:none"></div>
+            <div style="position:relative;font-family:var(--font-mono);font-size:0.625rem;color:oklch(0.985 0 0);">Growth tint<br>green / 10%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Spacing -->
     <section class="section">
       <p class="section-label">Spacing</p>
