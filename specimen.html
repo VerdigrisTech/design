@@ -596,25 +596,92 @@ title: Brand Specimen
       </div>
 
       <!-- Intensity scale reference -->
+      <!-- Intensity scale with perceptual research basis -->
       <div style="margin-bottom:2.5rem;">
-        <div class="swatch-group-label" style="margin-bottom:0.75rem">Intensity scale — how much color a section earns</div>
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Intensity scale — how much color a section earns (grounded in perception research)</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:0.75rem;">
-          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);margin-bottom:0.375rem">Full expression</div>
-            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Dark background, brand teal, CTAs. Reserved for <strong>hero and footer</strong> only.</div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;background:var(--neutral-950);">
+            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-verdigris);margin-bottom:0.375rem">Full expression</div>
+            <div style="font-size:0.75rem;color:oklch(0.985 0 0);line-height:1.5;">Dark background, brand teal, CTAs. <strong>Hero and footer only.</strong> Dark surfaces signal quality and luxury (spatial color efficacy research).</div>
           </div>
-          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
-            <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.495 0.1708 336.72);margin-bottom:0.375rem">Earned accent</div>
-            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Light tint + colored label + border. The <strong>one moment</strong> per page where a non-teal palette region appears.</div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 4%)"></div>
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:oklch(0.495 0.1708 336.72)"></div>
+            <div style="position:relative;padding-left:0.5rem;">
+              <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.495 0.1708 336.72);margin-bottom:0.375rem">Earned accent</div>
+              <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">4% tint + full-chroma label + border. <strong>One per page — the conversion point.</strong> Pre-attentive capture draws the eye here in 50-500ms. Saturation contrast (low bg, high label) reads as premium.</div>
+            </div>
           </div>
           <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
             <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand-verdigris);margin-bottom:0.375rem">Supporting</div>
-            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Teal label on white or neutral.100. The <strong>default register</strong> — present but quiet. Most sections live here.</div>
+            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Teal label on white or neutral.100. <strong>The default register.</strong> Color gives text breathing room — a wall of dark-on-white is heavy. Teal labels are scanning landmarks.</div>
           </div>
-          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+          <div style="border:1px solid var(--border);border-radius:var(--radius);padding:1rem;background:oklch(0.967 0.001 286.375);">
             <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);margin-bottom:0.375rem">Breathing room</div>
-            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Neutral label, neutral background. <strong>No color at all.</strong> Makes the accent section hit harder by contrast.</div>
+            <div style="font-size:0.75rem;color:var(--fg);line-height:1.5;">Neutral label, neutral background. <strong>No color at all.</strong> Makes the accent hit harder — the absence is the design.</div>
           </div>
+        </div>
+      </div>
+
+      <!-- Cross-surface application -->
+      <div style="margin-bottom:2.5rem;">
+        <div class="swatch-group-label" style="margin-bottom:0.75rem">Across surfaces — same principles, different budgets</div>
+        <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.75rem;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);background:var(--muted);">
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Surface</th>
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Full</th>
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Accent</th>
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Supporting</th>
+                <th style="padding:0.625rem 1rem;text-align:left;font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-fg);font-weight:500;">Why</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Web page</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Hero + footer</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">1 section</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Teal labels</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Long scroll — accent is scanning landmark</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Ad banner</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Entire ad</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">3 seconds of attention — teal only, instant recognition</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Email</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Header strip</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Teal CTA button</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Inbox is noisy — clean &gt; colorful</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Slide deck</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Title slide</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">1 per slide</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Teal chart accents</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Presenter controls pace — color supports narrative</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Data viz</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Chart frame</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Full palette</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">All 16 tokens</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">This is what the gradient was designed for</td>
+              </tr>
+              <tr>
+                <td style="padding:0.5rem 1rem;color:var(--fg);font-weight:500;">Hardware</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Teal logo</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">None</td>
+                <td style="padding:0.5rem 1rem;color:var(--muted-fg);">Physical — brand clarity is everything</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 

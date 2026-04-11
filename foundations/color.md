@@ -359,16 +359,32 @@ neutral.950 → neutral.900 → neutral.950 → [tinted accent] → neutral.900 
 - **Max lightness jump in content flow: 0.15 OKLch L*** — white (L=1.0) to neutral.100 (L=0.967) is fine; white to neutral.900 (L=0.21) is not
 - **Consistent text color** — light flow = dark text throughout; dark flow = light text throughout. Don't force the reader to re-adapt.
 
+### How Color Works Perceptually (Research Basis)
+
+These principles are grounded in color perception research and inform all the rules below.
+
+**Pre-attentive capture.** Color is processed in 50–500ms before conscious thought. A colored element captures attention *before the user decides to look at it*. Making a target visually conspicuous makes search time up to 83% faster. This means the accent section isn't just "different" — it's where the eye goes first after the hero. Place the accent on conversion-critical content. ([Attentional Capture of Colour in Visual Interface Design](https://www.researchgate.net/publication/320433843_The_Attentional_Capture_of_Colour_in_Visual_Interface_Design_A_Controlled-Environment_Study))
+
+**Saturation contrast = premium.** Research shows lower saturation enhances perceived luxury — consumers associate desaturated color with "rich continuity heritage." The mechanism that makes our intensity scale work is saturation contrast: large areas of near-zero chroma (4% background tints) against small areas of full chroma (labels, borders, icons). The gap between them IS the design. Don't desaturate labels to match the tint. Don't raise tint opacity to match the labels. ([Color Saturation and Perceived Status of Luxury Brands](https://academic.oup.com/jcr/advance-article/doi/10.1093/jcr/ucaf029/8120421), [Spatial Color Efficacy in Perceived Luxury](https://pmc.ncbi.nlm.nih.gov/articles/PMC7136482/))
+
+**Teal backgrounds aid readability.** Studies on background color and visual search found cyan-family backgrounds boost reading accuracy and comfort, while red backgrounds hinder search. Our brand teal is cyan-family — teal tints on light backgrounds aren't just on-brand, they're measurably better for reading. ([Background Colour and Line Spacing on Visual Search](https://www.sciencedirect.com/science/article/abs/pii/S0141938225000563))
+
+**Color as scanning landmark.** Users scrolling a long page don't read linearly — they scan for color changes to locate content. Palette accents create page landmarks at the pre-attentive level. Consistent color-to-content mapping across pages builds wayfinding familiarity — a returning visitor looking for detection capabilities will scan for the energy-region accent.
+
+**Color adjacency (Albers).** The same color looks different depending on what surrounds it. A magenta label on white reads differently than magenta on neutral.100. Test accent sections in context with their neighboring sections, not in isolation. Token values are absolute; perceived color is relative.
+
 ### Usage Rules
 
 1. **Teal first** — teal + neutrals dominate every surface (70%+ minimum)
 2. **Max 2 regions on a web page** — trust + at most 1 accent region (earned, not automatic)
-3. **No random assignment** — section accent colors must match the content category above
-4. **Breathing room** — at least 70% neutral sections; never two colored sections adjacent
-5. **Subtlety** — palette accents are tints and labels, not saturated backgrounds
-6. **Section flow** — commit to a lightness direction; max one dark accent moment per light page
-7. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
-8. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)
+3. **Accent = conversion point** — the accented section should be the page's primary value proposition or CTA, not just the section whose content matches a palette region
+4. **No random assignment** — section accent colors must match the content category above
+5. **Saturation contrast** — backgrounds stay desaturated (tints 4–15%), foreground signals stay full chroma (labels, borders, icons)
+6. **Breathing room** — at least 70% neutral sections; never two colored sections adjacent
+7. **Scanning landmarks** — consistent color-to-content mapping across pages builds wayfinding
+8. **Section flow** — commit to a lightness direction; max one dark accent moment per light page
+9. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
+10. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)
 
 See `rules/visual-rules.yml` → `color.palette_semantics` for the machine-consumable version of this guidance.
 

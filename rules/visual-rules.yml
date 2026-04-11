@@ -394,6 +394,53 @@ color:
         description: "Section palette accents should be subtle — background tints and label colors, NOT full-saturation section backgrounds. The palette region informs a hint, not a paint job."
         severity: "error"
         type: "constraint"
+      - id: "color.palette-semantics.accent-is-conversion-point"
+        description: "The earned accent section should be the page's primary conversion point or key value proposition — not just the section whose content happens to match a palette region. Color captures attention pre-attentively (50-500ms, before conscious thought). The accented section is where the eye goes first after the hero. Place it on what matters most to the business goal."
+        severity: "warning"
+        type: "constraint"
+      - id: "color.palette-semantics.saturation-contrast"
+        description: "Backgrounds stay desaturated (tints at 4-15% opacity). Foreground signals stay full chroma (labels, borders, icons). This saturation contrast — small high-chroma against large near-zero-chroma — is what reads as premium. Do not desaturate labels to match the tint; do not raise tint opacity to match the labels. The gap between them IS the design."
+        severity: "error"
+        type: "constraint"
+      - id: "color.palette-semantics.scanning-landmark"
+        description: "Palette accents are page landmarks, not just atmosphere. Users scrolling a long page scan for color changes to locate content without reading headers. Consistent color-to-content mapping across pages builds wayfinding familiarity — a returning visitor looking for detection capabilities will scan for the energy-region accent."
+        severity: "warning"
+        type: "reference"
+      - id: "color.palette-semantics.surface-intensity"
+        description: "The same intensity principles apply across all surfaces, but the color budget scales with attention duration and surface complexity. Longer attention = more color budget. Simpler surface = less color."
+        severity: "warning"
+        type: "reference"
+        surfaces:
+          web_page:
+            attention: "30-120 seconds (scroll)"
+            full_expression: "hero + footer"
+            earned_accent: "1 section (conversion point)"
+            supporting: "teal labels throughout"
+          ad_banner:
+            attention: "1-3 seconds (glance)"
+            full_expression: "entire ad — teal on dark or teal accent on white"
+            earned_accent: "none — no time for nuance"
+            supporting: "none"
+          email:
+            attention: "5-15 seconds (scan)"
+            full_expression: "header strip"
+            earned_accent: "none"
+            supporting: "teal CTA button"
+          slide_deck:
+            attention: "presenter-paced (60s per slide)"
+            full_expression: "title slide"
+            earned_accent: "1 per slide — supports the narrative point"
+            supporting: "teal chart accents"
+          data_visualization:
+            attention: "analyst-paced (minutes)"
+            full_expression: "chart frame"
+            earned_accent: "full palette — this is what the 16-stop gradient was designed for"
+            supporting: "all tokens available as categorical colors"
+          hardware:
+            attention: "physical presence"
+            full_expression: "teal logo"
+            earned_accent: "none"
+            supporting: "none — brand clarity is everything on physical goods"
 
   # ---------------------------------------------------------------------------
   # Section flow rules — lightness rhythm and transition discipline
