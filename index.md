@@ -33,37 +33,36 @@ title: Home
   <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1rem;max-width:40rem;line-height:1.6">Colors have meaning. 70% teal + neutrals, max 2 accent regions per page. Color is earned, not automatic.</p>
   <!-- Live rendered page scroll showing palette in use -->
   <div style="border-radius:0.625rem;overflow:hidden;border:1px solid var(--border);">
-    <!-- Hero: trust region (teal on dark) -->
+    <!-- Hero: dark, teal accent -->
     <div style="background:oklch(0.141 0.005 285.823);padding:1.5rem 2rem 1.25rem;">
       <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.75 0.1286 191.57);">Trust &middot; Technology</div>
       <div style="font-family:Lato,sans-serif;font-size:1.25rem;font-weight:700;color:oklch(0.985 0 0);margin-top:0.375rem;letter-spacing:-0.02em;">Electrical Intelligence for AI Data Centers</div>
       <div style="font-size:0.75rem;color:oklch(0.705 0.015 286.067);margin-top:0.25rem;">Brand teal anchors 70%+ of the page. The default register.</div>
     </div>
-    <!-- Neutral breathing room -->
-    <div style="background:oklch(0.967 0.001 286.375);padding:0.875rem 2rem;">
-      <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.552 0.016 285.938);">Neutral &middot; Breathing room</div>
+    <!-- Light content flow: white → neutral.100 → white (gentle tonal shift, not dark/light strobe) -->
+    <div style="background:white;padding:0.875rem 2rem;">
+      <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.552 0.016 285.938);">Neutral &middot; Platform</div>
       <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Platform capabilities. No accent needed — every element earns its place.</div>
     </div>
-    <!-- Energy accent: detection section with tinted dark background -->
-    <div style="background:oklch(0.141 0.005 285.823);padding:0.875rem 2rem;position:relative;">
+    <div style="background:oklch(0.967 0.001 286.375);padding:0.875rem 2rem;">
+      <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.552 0.016 285.938);">Neutral &middot; Data quality</div>
+      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Teal label, neutral background. Gentle tonal shift — white to neutral.100, not dark to light.</div>
+    </div>
+    <!-- One earned dark accent: energy region for detection -->
+    <div style="background:oklch(0.141 0.005 285.823);padding:1rem 2rem;position:relative;">
       <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 12%)"></div>
       <div style="position:relative;">
         <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Energy &middot; Detection</div>
-        <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">Real-time fault detection. One earned accent — content matches the energy palette region.</div>
+        <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">Real-time fault detection. The one dark accent moment — earned, not automatic.</div>
       </div>
     </div>
-    <!-- Neutral -->
+    <!-- Back to light, gentle exit -->
     <div style="background:white;padding:0.875rem 2rem;">
-      <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.552 0.016 285.938);">Neutral &middot; Breathing room</div>
-      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Deploy at scale. Neutral sections separate colored ones — never adjacent.</div>
-    </div>
-    <!-- Neutral -->
-    <div style="background:oklch(0.141 0.005 285.823);padding:0.875rem 2rem;">
       <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.75 0.1286 191.57);">Trust &middot; Results</div>
-      <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">Proof points and metrics. Teal, not yellow — restraint over variety.</div>
+      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Proof points. Teal accent, light background — restraint over variety.</div>
     </div>
   </div>
-  <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">5 sections: 4 teal/neutral, 1 energy accent. That's the ratio. <a href="foundations/color" style="font-size:0.75rem">Full palette semantics &rarr;</a></p>
+  <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">Dark hero → light content flow → one dark accent → light exit. <a href="foundations/color" style="font-size:0.75rem">Full palette semantics &rarr;</a></p>
 </div>
 
 <div class="v-demo">
