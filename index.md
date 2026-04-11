@@ -30,52 +30,40 @@ title: Home
 
 <div class="v-demo">
   <p class="v-label">Palette Semantics</p>
-  <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1rem;max-width:40rem;line-height:1.6">The palette defines what colors <strong>mean</strong>, not just what they are. AI agents and evaluators use this to select contextually appropriate colors for each surface.</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:0.75rem;">
-    <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
-      <div style="height:3px;background:linear-gradient(90deg in oklch,oklch(0.75 0.1286 191.57),oklch(0.52 0.1396 240.45))"></div>
-      <div style="padding:0.75rem;">
-        <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.75 0.1286 191.57);margin-bottom:0.125rem;">Trust</div>
-        <div style="font-size:0.75rem;font-weight:600;">Technology &amp; Platform</div>
+  <p style="font-size:0.875rem;color:var(--muted-fg);margin-bottom:1rem;max-width:40rem;line-height:1.6">Colors have meaning. 70% teal + neutrals, max 2 accent regions per page. Color is earned, not automatic.</p>
+  <!-- Live rendered page scroll showing palette in use -->
+  <div style="border-radius:0.625rem;overflow:hidden;border:1px solid var(--border);">
+    <!-- Hero: trust region (teal on dark) -->
+    <div style="background:oklch(0.141 0.005 285.823);padding:1.5rem 2rem 1.25rem;">
+      <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.75 0.1286 191.57);">Trust &middot; Technology</div>
+      <div style="font-family:Lato,sans-serif;font-size:1.25rem;font-weight:700;color:oklch(0.985 0 0);margin-top:0.375rem;letter-spacing:-0.02em;">Electrical Intelligence for AI Data Centers</div>
+      <div style="font-size:0.75rem;color:oklch(0.705 0.015 286.067);margin-top:0.25rem;">Brand teal anchors 70%+ of the page. The default register.</div>
+    </div>
+    <!-- Neutral breathing room -->
+    <div style="background:oklch(0.967 0.001 286.375);padding:0.875rem 2rem;">
+      <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.552 0.016 285.938);">Neutral &middot; Breathing room</div>
+      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Platform capabilities. No accent needed — every element earns its place.</div>
+    </div>
+    <!-- Energy accent: detection section with tinted dark background -->
+    <div style="background:oklch(0.141 0.005 285.823);padding:0.875rem 2rem;position:relative;">
+      <div style="position:absolute;inset:0;background:oklch(0.495 0.1708 336.72 / 12%)"></div>
+      <div style="position:relative;">
+        <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.495 0.1708 336.72);">Energy &middot; Detection</div>
+        <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">Real-time fault detection. One earned accent — content matches the energy palette region.</div>
       </div>
     </div>
-    <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
-      <div style="height:3px;background:linear-gradient(90deg in oklch,oklch(0.405 0.1451 264.89),oklch(0.29 0.1506 289.33))"></div>
-      <div style="padding:0.75rem;">
-        <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.495 0.1708 336.72);margin-bottom:0.125rem;">Depth</div>
-        <div style="font-size:0.75rem;font-weight:600;">Intelligence &amp; Premium</div>
-      </div>
+    <!-- Neutral -->
+    <div style="background:white;padding:0.875rem 2rem;">
+      <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.552 0.016 285.938);">Neutral &middot; Breathing room</div>
+      <div style="font-size:0.75rem;color:oklch(0.21 0.006 285.885);margin-top:0.125rem;">Deploy at scale. Neutral sections separate colored ones — never adjacent.</div>
     </div>
-    <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
-      <div style="height:3px;background:linear-gradient(90deg in oklch,oklch(0.3925 0.1607 313.03),oklch(0.5975 0.1808 0.42))"></div>
-      <div style="padding:0.75rem;">
-        <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.495 0.1708 336.72);margin-bottom:0.125rem;">Energy</div>
-        <div style="font-size:0.75rem;font-weight:600;">Detection &amp; Alerting</div>
-      </div>
-    </div>
-    <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
-      <div style="height:3px;background:linear-gradient(90deg in oklch,oklch(0.7 0.1909 24.11),oklch(0.7425 0.1878 41.14))"></div>
-      <div style="padding:0.75rem;">
-        <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.7 0.1909 24.11);margin-bottom:0.125rem;">Warmth</div>
-        <div style="font-size:0.75rem;font-weight:600;">People &amp; Action</div>
-      </div>
-    </div>
-    <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
-      <div style="height:3px;background:linear-gradient(90deg in oklch,oklch(0.785 0.1848 58.17),oklch(0.87 0.1786 92.23))"></div>
-      <div style="padding:0.75rem;">
-        <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.87 0.1786 92.23);margin-bottom:0.125rem;">Results</div>
-        <div style="font-size:0.75rem;font-weight:600;">Metrics &amp; Outcomes</div>
-      </div>
-    </div>
-    <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
-      <div style="height:3px;background:linear-gradient(90deg in oklch,oklch(0.8142 0.1695 113.33),oklch(0.7486 0.1412 163.85))"></div>
-      <div style="padding:0.75rem;">
-        <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.05em;color:oklch(0.7698 0.1588 137.1);margin-bottom:0.125rem;">Growth</div>
-        <div style="font-size:0.75rem;font-weight:600;">Sustainability &amp; Recovery</div>
-      </div>
+    <!-- Neutral -->
+    <div style="background:oklch(0.141 0.005 285.823);padding:0.875rem 2rem;">
+      <div style="font-family:var(--font-mono);font-size:0.5625rem;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.75 0.1286 191.57);">Trust &middot; Results</div>
+      <div style="font-size:0.75rem;color:oklch(0.985 0 0);margin-top:0.125rem;">Proof points and metrics. Teal, not yellow — restraint over variety.</div>
     </div>
   </div>
-  <p style="margin-top:0.5rem;font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted-fg)">70% teal + neutrals minimum per surface. Max 2 accent regions per page. <a href="foundations/color" style="font-size:0.6875rem">Taste boundaries &rarr;</a></p>
+  <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted-fg);line-height:1.5;">5 sections: 4 teal/neutral, 1 energy accent. That's the ratio. <a href="foundations/color" style="font-size:0.75rem">Full palette semantics &rarr;</a></p>
 </div>
 
 <div class="v-demo">
