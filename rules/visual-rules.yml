@@ -395,6 +395,71 @@ color:
         severity: "error"
         type: "constraint"
 
+  # ---------------------------------------------------------------------------
+  # Section flow rules — lightness rhythm and transition discipline
+  #
+  # Pages have a lightness direction. Alternating dark/light sections
+  # creates a strobe effect. Commit to a direction and vary within it;
+  # reserve dark moments for deliberate emphasis.
+  # ---------------------------------------------------------------------------
+  section_flow:
+    id: "color.section-flow"
+    type: "reference"
+    description: "Rules governing how section background lightness changes as the user scrolls. Prevents dark/light strobing and creates cohesive page rhythm."
+
+    lightness_direction:
+      id: "color.section-flow.lightness-direction"
+      severity: "error"
+      type: "constraint"
+      description: "Commit to a lightness direction within content sections. A light-mode page flows through light backgrounds (white ↔ neutral.100 ↔ neutral.50). A dark-mode page flows through dark backgrounds (neutral.950 ↔ neutral.900 ↔ neutral.800). Do not alternate between dark and light sections within the same content flow."
+
+    tonal_variation:
+      id: "color.section-flow.tonal-variation"
+      type: "reference"
+      description: "Differentiate adjacent neutral sections with subtle tonal shifts, not lightness jumps."
+      light_mode:
+        backgrounds: ["white", "oklch(0.985 0 0)", "oklch(0.967 0.001 286.375)"]  # white, neutral.50, neutral.100
+        description: "Alternate between white and neutral.100 for gentle rhythm. Never jump to neutral.800+ within a light flow."
+      dark_mode:
+        backgrounds: ["oklch(0.141 0.005 285.823)", "oklch(0.21 0.006 285.885)", "oklch(0.274 0.006 286.033)"]  # neutral.950, neutral.900, neutral.800
+        description: "Alternate between neutral.950 and neutral.900 for gentle rhythm. Never jump to white within a dark flow."
+
+    dark_accent_moment:
+      id: "color.section-flow.dark-accent-moment"
+      severity: "error"
+      type: "constraint"
+      description: "A light-mode page may include at most ONE dark-background section as a deliberate accent moment (e.g., a hero, a detection callout, or a CTA strip). This is the only justified lightness inversion. More than one dark section in a light page creates strobing."
+      test:
+        max: 1
+      exceptions:
+        - "Hero section (always dark) does not count toward the limit — it precedes the content flow"
+        - "Footer (always dark) does not count — it closes the page"
+
+    hero_transition:
+      id: "color.section-flow.hero-transition"
+      severity: "warning"
+      type: "constraint"
+      description: "If the hero is dark and the content flow is light, the transition should happen once at the hero boundary. Do not return to dark until the accent moment (if any)."
+
+    rules:
+      - id: "color.section-flow.no-strobe"
+        description: "Never alternate dark/light/dark/light across consecutive sections. If three adjacent sections have backgrounds with OKLch lightness values that alternate high/low/high or low/high/low, this is a strobe pattern."
+        severity: "error"
+        type: "pattern"
+        test:
+          description: "Check that consecutive section backgrounds do not alternate between L>0.8 and L<0.3"
+      - id: "color.section-flow.max-lightness-jump"
+        description: "Adjacent sections should not have a lightness difference greater than 0.5 OKLch L*, except at the hero boundary and footer boundary. Within the content flow, keep jumps under 0.15 L*."
+        severity: "warning"
+        type: "constraint"
+        test:
+          content_flow_max_delta: 0.15
+          boundary_exception: ["hero", "footer"]
+      - id: "color.section-flow.consistent-text-color"
+        description: "Within a content flow, text color should stay consistent. Light flow = dark text throughout. Dark flow = light text throughout. Do not force the reader to re-adapt between sections."
+        severity: "warning"
+        type: "constraint"
+
 
 # =============================================================================
 # TYPOGRAPHY
