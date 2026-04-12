@@ -1,0 +1,152 @@
+/*
+ * Tally Dark Mode Override — Verdigris Design System
+ * Generated from: rules/visual-rules.yml → components.forms
+ * Target: Tally form rjlakp (rectifier audit) embedded on dark close sections
+ *
+ * HOW TO APPLY:
+ * 1. Open Tally form editor for the target form
+ * 2. Go to Design > Custom CSS (requires Tally Pro)
+ * 3. Paste this entire file
+ * 4. Preview and publish
+ *
+ * These selectors are from Tally's stable CSS API (tally.so/help/add-custom-styles).
+ * Do NOT use hashed class names — they break on Tally deploys.
+ */
+
+/* -- Base: typography + color on dark background ──────────────────── */
+.tally-app {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: oklch(0.985 0 0); /* neutral.50 */
+}
+
+/* -- Headings + labels ────────────────────────────────────────────── */
+.tally-block-form-title,
+.tally-block-title {
+  color: oklch(0.985 0 0); /* neutral.50 */
+}
+
+.tally-block-label {
+  color: oklch(0.705 0.015 286.067); /* neutral.400 */
+  font-weight: 500;
+}
+
+.tally-block-text {
+  color: oklch(0.705 0.015 286.067); /* neutral.400 */
+}
+
+.tally-required-indicator {
+  color: oklch(0.75 0.1286 191.57); /* brand verdigris — not red */
+}
+
+/* -- Input fields ─────────────────────────────────────────────────── */
+.tally-block-input-text input,
+.tally-block-input-email input,
+.tally-block-input-number input,
+.tally-block-input-phone-number input,
+.tally-block-input-link input,
+.tally-block-input-date input,
+.tally-block-input-time input,
+.tally-other-option-input input {
+  background: oklch(0.274 0.006 286.033); /* neutral.800 */
+  border: 1px solid oklch(1 0 0 / 0.15); /* semi-transparent white */
+  border-radius: 0.375rem;
+  color: oklch(0.985 0 0); /* neutral.50 */
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 0.875rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.tally-block-input-text input::placeholder,
+.tally-block-input-email input::placeholder,
+.tally-block-input-number input::placeholder,
+.tally-block-input-phone-number input::placeholder,
+.tally-block-input-link input::placeholder {
+  color: oklch(0.552 0.016 285.938); /* neutral.500 */
+}
+
+.tally-block-input-text input:focus,
+.tally-block-input-email input:focus,
+.tally-block-input-number input:focus,
+.tally-block-input-phone-number input:focus,
+.tally-block-input-link input:focus,
+.tally-block-input-date input:focus,
+.tally-block-input-time input:focus {
+  border-color: oklch(0.75 0.1286 191.57); /* brand verdigris */
+  box-shadow: 0 0 0 3px oklch(0.75 0.1286 191.57 / 0.25); /* teal ring at 25% */
+  outline: none;
+}
+
+/* -- Textarea ─────────────────────────────────────────────────────── */
+.tally-block-textarea textarea {
+  background: oklch(0.274 0.006 286.033);
+  border: 1px solid oklch(1 0 0 / 0.15);
+  border-radius: 0.375rem;
+  color: oklch(0.985 0 0);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 0.875rem;
+  min-height: 6rem;
+  padding: 0.5rem 0.75rem;
+  resize: vertical;
+}
+
+.tally-block-textarea textarea::placeholder {
+  color: oklch(0.552 0.016 285.938);
+}
+
+.tally-block-textarea textarea:focus {
+  border-color: oklch(0.75 0.1286 191.57);
+  box-shadow: 0 0 0 3px oklch(0.75 0.1286 191.57 / 0.25);
+  outline: none;
+}
+
+/* -- Dropdown ─────────────────────────────────────────────────────── */
+.tally-block-dropdown select,
+.tally-block-dropdown [class*="control"] {
+  background: oklch(0.274 0.006 286.033);
+  border: 1px solid oklch(1 0 0 / 0.15);
+  border-radius: 0.375rem;
+  color: oklch(0.985 0 0);
+  min-height: 2.5rem;
+}
+
+/* -- Checkbox + multiple choice ───────────────────────────────────── */
+.tally-block-checkbox,
+.tally-block-multiple-choice-option {
+  color: oklch(0.985 0 0);
+}
+
+.tally-multiple-choice-option {
+  border-color: oklch(1 0 0 / 0.15);
+}
+
+.tally-multiple-choice-option-selected,
+.tally-checkbox-selected {
+  border-color: oklch(0.75 0.1286 191.57); /* teal for selected state */
+  background: oklch(0.75 0.1286 191.57 / 0.1); /* subtle teal fill */
+}
+
+/* -- Submit button ────────────────────────────────────────────────── */
+.tally-submit-button button {
+  background: oklch(0.75 0.1286 191.57) !important; /* brand verdigris */
+  color: oklch(0.141 0.005 285.823) !important; /* neutral.950 */
+  border: none !important;
+  border-radius: 0.375rem;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  min-height: 2.5rem;
+  padding: 0.625rem 1.5rem;
+  cursor: pointer;
+}
+
+/* -- Validation errors ────────────────────────────────────────────── */
+.tally-validation-error {
+  color: oklch(0.7 0.19 24.11); /* pastel-red — visible on dark */
+  font-size: 0.75rem;
+}
+
+/* -- Dividers ─────────────────────────────────────────────────────── */
+.tally-block-divider {
+  border-color: oklch(1 0 0 / 0.1);
+}
