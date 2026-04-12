@@ -782,9 +782,9 @@ motion:
   patterns:
     hover-lift:
       description: "Card/element lifts on hover with shadow"
-      duration: "500ms"
+      duration: "300ms"                             # duration.moderate — matches hover-states.md
       easing: "ease"
-      css: "transition: transform 500ms ease, box-shadow 500ms ease"
+      css: "transition: transform 300ms ease, box-shadow 300ms ease"
       transform: "translateY(-4px)"
       requires_hover_query: true
     slide-up:
@@ -1093,6 +1093,26 @@ components:
       regex: "cta-link|font-medium[^;]*hover:.*underline"
 
   # ---------------------------------------------------------------------------
+  # CTA arrow link pattern (page section patterns)
+  # ---------------------------------------------------------------------------
+  cta_arrow_link:
+    id: "components.cta-arrow-link"
+    severity: "warning"
+    type: "value"
+    description: "Inline CTA link with trailing arrow. Gap between text and arrow expands on hover. Used in section CTAs where a full button is too heavy. Distinct from cta-link (which uses underline hover)."
+    font_weight: 500                                # Matches cta-link weight — lighter than buttons
+    color: "var(--color-brand-verdigris)"            # Brand teal — signals interactivity on light bg
+    arrow_character: "→"
+    display: "inline-flex"
+    align_items: "center"
+    min_gap: "0.25rem"                              # 4px — default gap
+    max_gap: "0.5rem"                               # 8px — hover gap (the expansion target)
+    transition: "gap 200ms ease"                    # duration.normal + easing.default
+    requires_hover_query: true
+    test:
+      regex: "gap.*transition|transition.*gap"
+
+  # ---------------------------------------------------------------------------
   # Stats row pattern (homepage overhaul — Z2O-995)
   # ---------------------------------------------------------------------------
   stats_row:
@@ -1104,10 +1124,13 @@ components:
       color: "var(--color-semantic-primary)"
       font_weight: 700
       min_size: "2rem"                              # 32px — large enough for visual impact
+      max_size: "3.5rem"                            # 56px — larger loses hierarchy with headings
     label:
       text_transform: "uppercase"
       letter_spacing: "0.05em"                      # Matches typography.letter-spacing.uppercase rule
       font_weight: 500
+      min_size: "0.6875rem"                         # 11px — readable at smallest
+      max_size: "0.875rem"                          # 14px — larger competes with stat number
       color: "var(--color-semantic-muted-foreground)"
     layout: "horizontal"
     responsive: "stack vertical below sm (640px)"
@@ -1121,9 +1144,11 @@ components:
     type: "reference"
     description: "Trust bar with scrolling logos. Requires overflow-hidden container, duplicated logo set for seamless loop. Animation defined in motion.patterns.logo-marquee."
     overflow: "hidden"
+    logo_min_height: "1.25rem"                      # 20px — readable at smallest size
     logo_max_height: "2rem"                         # 32px — consistent sizing
     logo_opacity: 0.7                               # Muted to avoid competing with content
-    gap: "3rem"                                     # 48px between logos
+    min_gap: "2rem"                                 # 32px — minimum breathing room
+    max_gap: "4rem"                                 # 64px — wider loses visual grouping
     animation_ref: "motion.patterns.logo-marquee"
     requires_reduced_motion: true                   # Falls back to static display
 
@@ -1137,7 +1162,8 @@ components:
     description: "Dark wrapper (bg-neutral-900) for showcasing dark-themed screenshots/images on light pages. Prevents jarring contrast between light page and dark UI screenshots."
     background: "oklch(0.21 0.006 285.885)"         # neutral.900
     border_radius: "0.625rem"                       # base radius
-    padding: "2rem"                                 # 32px internal padding
+    min_padding: "1.5rem"                           # 24px — tighter for small images
+    max_padding: "3rem"                             # 48px — wider for hero-scale screenshots
     overflow: "hidden"
 
   # ---------------------------------------------------------------------------
@@ -1151,6 +1177,7 @@ components:
     layout: "horizontal"
     gap: "1.5rem"                                   # 24px
     card_min_width: "16rem"                         # 256px
+    card_max_width: "24rem"                         # 384px — wider loses card proportion
     card_padding: "1.5rem"                          # 24px
     card_border_radius: "0.625rem"                  # base radius
     hover_effect_ref: "motion.patterns.hover-lift"

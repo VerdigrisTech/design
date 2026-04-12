@@ -43,6 +43,8 @@ Composition rules are organized by purpose (what the page does) and surface (wha
 | Assist x Embedded | **Defined** | Visual marker for AI content, provenance metadata, EU AI Act compliance |
 | Instruct x Machine | **Defined** | Floors AND ceilings, id paths, canonical tokens only |
 
+For implementation patterns (hero sections, stats rows, trust bars, CTA strips), see `categories/web-components/page-sections.md`.
+
 ## Persuade x Web Page
 
 For homepages, landing pages, and campaign pages. Narrative pacing with coupling rules.
@@ -91,5 +93,36 @@ Color, type, and spacing aren't independent on a persuasive page. They're couple
 Generous whitespace is the primary signal of quality on persuasive pages. Perceived luxury correlates with empty space (spatial color efficacy research). When in doubt, add more space, not more content.
 
 See `rules/visual-rules.yml` -> `composition.persuade_web_page` for the machine-consumable version.
+
+## Narrate x Web Page
+
+For long-form editorial essays, design retrospectives, case narratives. Not persuade (no funnel). Not inform (not flat). The reader follows a journey with depth.
+
+This purpose type was created when the evolution essay needed composition rules and no existing type fit. The framework grew to accommodate a surface it couldn't serve.
+
+### Structure
+
+Narrate uses episodes, not narrative roles. Episodes are prose + figure pairs, repeatable in any order.
+
+| Element | Purpose | Color | Padding |
+|---------|---------|-------|---------|
+| **Opening** | Set the scene | Full or supporting | 8rem |
+| **Episode** | A chapter with prose + figure | Breathing or supporting | 5rem |
+| **Figure** | Visual evidence within an episode | Varies (the figure itself may use any intensity) | 3rem margin |
+| **Reflection** | Honest assessment of limits | Breathing | 5rem |
+| **Closing** | Invitation, not CTA | Full or supporting | 8rem |
+
+### Key Differences from Persuade
+
+- **Color is illustrative, not atmospheric.** Color appears inside figures (specimens, before/after comparisons), not as section background tints. Between figures, the page is neutral.
+- **No marketing patterns.** No CTA buttons in prose. No gradient strips. No card grids as content. The page is an essay.
+- **Body text is 1.125rem at 1.7 line-height.** Looser than persuade (1.6) for sustained reading.
+- **The closing is an invitation, not a conversion.** The reader leaves thinking, not clicking.
+
+### When to Use Narrate
+
+Design essays, retrospectives, case studies with depth, process documentation that tells a story. If the piece has a beginning, middle, and end and the reader should experience the journey (not just scan for information), it's narrate.
+
+See `rules/visual-rules.yml` -> `composition.narrate_web_page` for the machine-consumable version.
 
 </details>
