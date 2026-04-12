@@ -43,6 +43,8 @@ Composition rules are organized by purpose (what the page does) and surface (wha
 | Assist x Embedded | **Defined** | Visual marker for AI content, provenance metadata, EU AI Act compliance |
 | Instruct x Machine | **Defined** | Floors AND ceilings, id paths, canonical tokens only |
 
+For implementation patterns (hero sections, stats rows, trust bars, CTA strips), see `categories/web-components/page-sections.md`.
+
 ## Persuade x Web Page
 
 For homepages, landing pages, and campaign pages. Narrative pacing with coupling rules.
