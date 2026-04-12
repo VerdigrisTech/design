@@ -887,6 +887,65 @@ motion:
 
 
 # =============================================================================
+# 3D COMPOSITION (narrative integration)
+# =============================================================================
+three_d_composition:
+  # ---------------------------------------------------------------------------
+  # Narrative role mapping for 3D scenes
+  # ---------------------------------------------------------------------------
+  narrative_roles:
+    id: "three-d.narrative-roles"
+    type: "reference"
+    description: "3D scenes serve narrative roles within the composition framework. The role determines complexity, interaction model, and performance budget."
+    hook:
+      usage: "Atmospheric background (waveform, particle field)"
+      interaction: "Passive or subtle parallax"
+      max_bundle: "1.5MB"
+      fps_target: 60
+    evidence:
+      usage: "Product showcase (hardware exploder, component cutaway)"
+      interaction: "Scroll-driven reveal, step-by-step"
+      max_bundle: "2MB"
+      fps_floor: 30
+    turn:
+      usage: "Data visualization (3D chart, real-time render)"
+      interaction: "Interactive (hover, rotate)"
+      max_bundle: "1MB"
+      note: "Lazy-loaded, not in critical path"
+    proof:
+      usage: "Static 3D render (product photo replacement)"
+      interaction: "None (pre-rendered image)"
+      runtime_cost: "0"
+
+  # ---------------------------------------------------------------------------
+  # Scroll-driven hardware exploder rules
+  # ---------------------------------------------------------------------------
+  hardware_exploder:
+    id: "three-d.hardware-exploder"
+    type: "reference"
+    description: "Scroll-driven product reveal for hardware pages. One layer per scroll viewport. Outside-in reveal order. Engineering annotations, not marketing copy."
+    pacing: "One reveal per scroll viewport"
+    reveal_order: "Outside in — enclosure, sensing layer, processing layer"
+    annotation_font: "JetBrains Mono, uppercase, 0.05em tracking, muted color"
+    annotation_style: "Engineering documentation, not marketing copy"
+    exit_state: "Hero-angle still after full reveal; scene does not follow scroll"
+    fallback: "High-resolution static images of each reveal step, vertical stack"
+    rules:
+      - id: "three-d.hardware-exploder.no-inform"
+        description: "Do not use scroll-driven 3D on inform pages. 3D adds visual weight that conflicts with metronomic rhythm."
+        severity: "warning"
+        type: "constraint"
+      - id: "three-d.hardware-exploder.no-convert"
+        description: "Do not use 3D on convert pages. 3D is a distraction from the single action."
+        severity: "warning"
+        type: "constraint"
+      - id: "three-d.hardware-exploder.fallback-required"
+        description: "Every scroll-driven 3D scene must have a static image fallback for devices without WebGL."
+        severity: "error"
+        type: "constraint"
+
+
+# =============================================================================
 # COMPONENTS
 # =============================================================================
 components:
@@ -1448,6 +1507,15 @@ composition:
     type: "reference"
     description: "Composition rules for persuasive web pages (homepage, landing, campaign). Narrative pacing drives color intensity, type scale, and spacing. Coupling rules ensure readability."
 
+    # --- Surface register ---
+    # How this surface earns trust. Not enforceable — guides judgment calls.
+    register:
+      id: "composition.persuade-web-page.register"
+      type: "reference"
+      description: "Restraint earns trust. The page opens with conformity signals (precise data, clean layout) and earns permission for boldness through the scroll. The hook is quiet confidence, not spectacle. The turn is the one earned moment where craft shows. Visitors from LLMs arrive with intent — the page must do all the emotional work by itself."
+      trust_sequence: "Conformity (hook) → credibility (evidence) → craft (turn) → conviction (close)"
+      dominant_register: "Refined — generous space, controlled palette, every element earning its place"
+
     # --- Narrative roles ---
     # Each section on a persuasive page serves a role in the story.
     # The role determines its visual treatment.
@@ -1592,6 +1660,14 @@ composition:
     id: "composition.inform-web-page"
     type: "reference"
     description: "Composition for informational web pages. Color becomes wayfinding, not atmosphere. Spacing tightens and steadies. Typography shifts from display to body. No narrative arc."
+
+    register:
+      id: "composition.inform-web-page.register"
+      type: "reference"
+      description: "Clarity earns trust. The reader arrives with a question and expects a precise answer. No narrative arc, no emotional journey. Metronomic rhythm signals reliability. Color marks navigation state, not atmosphere. The page earns trust by being exactly what it claims to be: a reference."
+      trust_sequence: "Question (arrival) → answer (scannable, immediate) → depth (available but not forced)"
+      dominant_register: "Precise — tight spacing, uniform rhythm, data-forward, no decoration"
+
     section_roles:
       title:        { color_intensity: "supporting", type_max: "h1", section_padding: "3rem", note: "Page-level framing. One per page. H1 used only here." }
       explanation:  { color_intensity: "breathing",  type_max: "h2", section_padding: "3rem", note: "Core content. Body text runs the page." }
@@ -1646,6 +1722,14 @@ composition:
     id: "composition.analyze-dashboard"
     type: "reference"
     description: "Dashboards and data visualization. Full palette allowed (this is what the gradient was designed for). Grid layout, compact spacing, data-dense typography. Fundamentally different from persuade."
+
+    register:
+      id: "composition.analyze-dashboard.register"
+      type: "reference"
+      description: "Competence earns trust. The user is an operator making decisions under time pressure. Every pixel serves the data. The dashboard earns trust by showing exactly what's happening with zero interpretation overhead. Full palette is earned here because color encodes meaning (status, trend, category), not atmosphere."
+      trust_sequence: "Status (KPI strip) → detail (drill into panels) → action (alerts, thresholds)"
+      dominant_register: "Precise — tabular-nums, compact density, functional color, zero decoration"
+
     panel_roles:
       kpi_strip:    { color_intensity: "supporting", type: "Large numbers (24-32px, weight 700) + trend arrows + sparklines. 4-6 metrics.", layout: "horizontal row" }
       chart_panel:  { color_intensity: "full_palette", type: "Chart title H3, axis labels 12px mono, legend 12px.", layout: "grid cell, min 300px wide" }
@@ -1685,6 +1769,14 @@ composition:
     id: "composition.convert-web-page"
     type: "reference"
     description: "Convert pages strip away everything that does not serve the action. Funnel, not narrative. Color is functional (CTA only). Spacing creates momentum, not luxury."
+
+    register:
+      id: "composition.convert-web-page.register"
+      type: "reference"
+      description: "Focus earns trust. The visitor has already been persuaded — they're here to act. Every element that doesn't serve the conversion is friction. Micro-reassurance (no credit card, cancel anytime) does the trust work. Restraint is not luxury here — it's momentum."
+      trust_sequence: "Value (one sentence) → options (max 3 tiers) → reassurance (micro-copy) → action (single CTA)"
+      dominant_register: "Precise — functional color, tight spacing, zero distraction"
+
     funnel_roles:
       value:   { color_intensity: "breathing", type_max: "h2", section_padding: "4rem", note: "Value proposition. One sentence, clear benefit." }
       trust:   { color_intensity: "breathing", type_max: "h3", section_padding: "3rem", note: "Social proof. Logos, testimonials, deployment count. Compact." }
@@ -1912,6 +2004,13 @@ composition:
     id: "composition.narrate-web-page"
     type: "reference"
     description: "Long-form editorial for design essays, retrospectives, case narratives. The reader follows a journey with depth. Visuals are figures within prose, not marketing sections. Generous whitespace, steady reading rhythm, honesty about process."
+
+    register:
+      id: "composition.narrate-web-page.register"
+      type: "reference"
+      description: "Honesty earns trust. The reader follows a journey that shows process, including failures. No marketing patterns in prose — the essay earns trust by being transparent about what worked and what didn't. Mastery is demonstrated through the depth of thinking, not through visual spectacle."
+      trust_sequence: "Curiosity (opening) → understanding (episodes) → respect (reflection) → thinking (closing)"
+      dominant_register: "Masterful — depth through honesty, craft visible in the thinking not the polish"
 
     # --- Narrative structure ---
     # Not roles like persuade (hook/turn/close). Narrate uses a looser structure:
