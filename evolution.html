@@ -695,6 +695,37 @@ title: Can a Design System Describe Taste?
   </div>
 
   <!-- ================================================================ -->
+  <!-- EPISODE 9: What we learned from the feedback -->
+  <!-- ================================================================ -->
+  <div class="episode">
+    <div class="container">
+      <div class="label" style="color: var(--muted-fg); margin-bottom: 0.75rem;">Feedback</div>
+      <h2>Three things the essay didn't answer</h2>
+      <div class="prose">
+        <p>We shared the essay internally and got the kind of feedback that changes the shape of the project. Three questions surfaced that the framework had no answer for.</p>
+      </div>
+
+      <div class="prose" style="margin-top: 2rem;">
+        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Where are the brand values?</h3>
+        <p>Precision, Masterful, Refined, Pioneering. They show up in the taste boundaries to justify the 70% teal ceiling. But they don't do structural work. Should each composition cell trace to a brand value?</p>
+        <p>We decided: no. Brand values are expressed through concrete guardrails, not declared as labels. The strobe problem was solved by <code style="font-family: var(--font-mono); font-size: 0.875em; padding: 0.1em 0.3em; background: var(--muted); border-radius: 4px;">max_lightness_jump: 0.15</code>, not by writing "Refined means no strobing." The coupling rules ARE the brand values in mechanical form. If you add <code style="font-family: var(--font-mono); font-size: 0.875em; padding: 0.1em 0.3em; background: var(--muted); border-radius: 4px;">primary_brand_value: "Refined"</code> to a composition cell, an AI agent now has a justification layer above the concrete rules. "I'm making this more Refined" becomes a reason to override a padding minimum. The concrete rules are the immune system. Brand-value labels are an attack surface.</p>
+      </div>
+
+      <div class="prose" style="margin-top: 2rem;">
+        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">How do pages earn trust?</h3>
+        <p>Infrastructure buyers operate in tight culture. High consequence of failure, strong norms around vendor selection. They need conformity signals first, craft second, vision third. Leading with Pioneering is a loose-culture pitch that works at a startup competition and terrifies an infrastructure buyer.</p>
+        <p>With 60%+ of traffic arriving from LLMs with intent already shaped, each page has to do all the emotional work by itself. So we added surface registers: behavioral descriptions of how each purpose type earns trust within its own scroll. Persuade pages open with restraint and earn permission for boldness through the narrative arc. Inform pages earn trust through precision. Narrate pages earn trust through honesty. Not brand-value labels. Trust-earning sequences.</p>
+      </div>
+
+      <div class="prose" style="margin-top: 2rem;">
+        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">What makes this visually unmistakable?</h3>
+        <p>The essay solved "how do we use our 16 colors." It did not solve "what visual element is uniquely ours." We capture electrical behavior at 8,000 samples per second. That data, made visible, is a design asset no competitor can replicate. The composition rules encode color restraint. A signature motif is what makes it ours.</p>
+        <p>We don't know the answer yet. Real waveform data might be beautiful at hero scale or it might be noise. Stylizing it risks looking like every other tech company's decorative wave. We opened a research spike to find out. If real data can be beautiful, it becomes the visual signature. If it can't, it stays a proof point. The decision depends on seeing it, not theorizing about it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
   <!-- CLOSING -->
   <!-- ================================================================ -->
   <div style="background: var(--neutral-950); padding: 8rem 0;">
@@ -704,11 +735,11 @@ title: Can a Design System Describe Taste?
       <div class="prose" style="margin-top: 1.5rem;">
         <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">If you work on the product, pick a component and check it against the dashboard rules. If you work on marketing, run the next email or ad through its composition cell. If you work on analytics, compare a dashboard view to the specimen. If you lead the company, look at the before/after at the top. Does the "after" feel like the brand you want?</p>
         <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">The framework sets boundaries so poor choices get caught. But the best choices still need people who care about the feeling. That's what makes this a design system and not just a style guide.</p>
-        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">The obvious next step: apply this to verdigris.co. The homepage, the product pages, the whole site. See what the composition rules produce against what exists today. That's the real test of whether a design system can describe taste.</p>
-        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">One last thing. This essay exposed a gap in the framework. When we sat down to write it, no composition type fit. It wasn't persuade (no funnel, no conversion). It wasn't inform (not flat, not reference). It was a story with depth, figures within prose, magazine pacing. So we created a new purpose type: narrate. The framework grew because it encountered a surface it couldn't serve. That might be the best evidence that the approach works. The system adapts when it meets reality instead of forcing reality into boxes that don't fit.</p>
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">The obvious next step: apply this to verdigris.co. The <a href="specimen-persuade" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">persuade specimen</a> now demonstrates a full page composition from hook to close. That's the reference implementation. See what the composition rules produce against what exists today.</p>
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">This essay exposed two gaps. The first: no composition type fit an editorial essay, so we created narrate. The second: the framework encoded how to use color and space, but not what makes Verdigris visually unmistakable. The waveform question is open. The framework grew again because it encountered surfaces it couldn't serve. That might be the best evidence that the approach works.</p>
       </div>
       <div class="prose" style="margin-top: 2rem;">
-        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">Start with the <a href="specimen" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">full specimen</a>, the <a href="foundations/composition" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">composition rules</a>, or the <a href="foundations/color" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">palette semantics</a>.</p>
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">Start with the <a href="specimen-persuade" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">persuade specimen</a>, the <a href="foundations/composition" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">composition rules</a>, or the <a href="foundations/color" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">palette semantics</a>.</p>
       </div>
     </div>
   </div>

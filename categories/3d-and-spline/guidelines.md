@@ -265,6 +265,35 @@ function getWebGLSupport() {
 }
 ```
 
+## 3D in Page Composition
+
+3D scenes are not standalone elements. They serve narrative roles within the composition framework (`foundations/composition.md`). The role determines the scene's complexity, interaction model, and performance budget.
+
+### Narrative Role Mapping
+
+| Narrative role | 3D usage | Interaction | Performance budget |
+|---------------|----------|-------------|-------------------|
+| **Hook** (hero) | Atmospheric background (waveform, particle field) | Passive or subtle parallax on scroll | 1.5MB bundle, 60fps target |
+| **Evidence** (feature section) | Product showcase (gateway exploder, component cutaway) | Scroll-driven reveal, step-by-step | 2MB bundle (max), 30fps floor |
+| **Turn** (accent moment) | Data visualization (3D chart, real-time render) | Interactive (hover, rotate) | 1MB budget, lazy-loaded |
+| **Proof** (credibility) | Static 3D render (product photo replacement) | None (pre-rendered image) | 0 runtime cost |
+
+### Scroll-Driven Hardware Exploders
+
+For product pages where the hardware is the proof (gateway, sensors, metering infrastructure):
+
+1. **Pacing:** One reveal per scroll viewport. The viewer sees one layer, absorbs it, then scrolls to see the next. No continuous animation.
+2. **Layer order:** Outside in. Start with the enclosure (what the customer touches), then peel into the sensing layer, then the processing layer. The viewer builds understanding progressively.
+3. **Annotation:** No marketing annotations. Let the viewer see the craft. If a label is needed, use mono font (JetBrains Mono), uppercase, 0.05em tracking, muted color. The component names should read like engineering documentation, not marketing copy.
+4. **Exit state:** After the full reveal, the scene holds on a hero-angle still. The scroll continues to the next section. The 3D scene does not follow the user down the page.
+5. **Fallback:** High-resolution static images of each reveal step. The scroll-driven experience degrades to a vertical image stack on devices without WebGL.
+
+### When Not to Use 3D
+
+- **Inform pages:** 3D adds visual weight that conflicts with the metronomic rhythm. Use diagrams and screenshots.
+- **Convert pages:** 3D is a distraction from the single action. Use product photography if needed.
+- **Narrate pages:** 3D may appear as a figure within an episode if the essay is about the hardware. But it never replaces prose.
+
 ## Templates & Starting Points
 
 - **Spline scene template:** Request from the design team. Template includes pre-configured lighting rig, camera constraints, and brand-color materials matching the token palette.

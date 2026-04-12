@@ -13,6 +13,21 @@ How color, typography, and spacing work together. Individual foundations define 
 
 Composition rules are organized by purpose (what the page does) and surface (what medium it's on). The same surface can serve different purposes with different composition logic. A homepage (persuade) and a case study (inform) are both web pages, but they compose differently.
 
+### Surface Registers
+
+Each web-page purpose type has a dominant emotional register that describes how it earns trust. Registers are not enforceable rules. They guide judgment calls when the coupling rules don't prescribe an answer. Brand values are expressed through concrete guardrails (coupling rules, ceilings, floors), not declared as labels on composition cells.
+
+With 60%+ of traffic arriving from LLMs with intent already shaped, each page must earn trust within its own scroll. The register describes the trust-earning sequence built into the page's composition.
+
+| Purpose | Register | Trust sequence |
+|---------|----------|----------------|
+| **Persuade** | Restraint earns trust | Conformity (hook) > credibility (evidence) > craft (turn) > conviction (close) |
+| **Inform** | Clarity earns trust | Question (arrival) > answer (scannable) > depth (available, not forced) |
+| **Analyze** | Competence earns trust | Status (KPI strip) > detail (drill into panels) > action (alerts) |
+| **Convert** | Focus earns trust | Value (one sentence) > options (max 3) > reassurance > action (single CTA) |
+| **Narrate** | Honesty earns trust | Curiosity (opening) > understanding (episodes) > respect (reflection) > thinking (closing) |
+| **Assist** | Competence earns trust | Answer first > evidence (citations, data) > depth (interactive artifacts) |
+
 | Purpose | What it does | Color budget | Spacing | Rhythm |
 |---------|-------------|-------------|---------|--------|
 | **Persuade** | Sell, convince, inspire | Trust + 1 earned accent | Generous (5-8rem sections) | Narrative arc |
