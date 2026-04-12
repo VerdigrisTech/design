@@ -202,6 +202,71 @@ For elements where spatial movement would be distracting (buttons, links, naviga
 
 Note: Button hover does not require the compound media query because color changes are not motion-based. They affect neither spatial position nor vestibular response. However, if you combine a color change with a transform, the compound query is required.
 
+### Ghost-on-Dark Hover
+
+The `ghost-on-dark` button variant transitions from transparent to white at 10% opacity on hover. Used for secondary CTAs on dark hero sections.
+
+**Tokens:** `duration.normal` (200ms) + `easing.default` (ease)
+
+```css
+.ghost-on-dark {
+  background: transparent;
+  color: white;
+  border: 1px solid oklch(1 0 0 / 0.6);
+  transition: background 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .ghost-on-dark:hover {
+    background: oklch(1 0 0 / 0.1);
+  }
+}
+```
+
+This is a color-only transition, so the compound media query is technically not required. It is used here for consistency because ghost-on-dark buttons appear alongside transform-based effects on dark hero sections.
+
+See `categories/web-components/buttons.md` for the full ghost-on-dark variant spec. See `rules/visual-rules.yml` -> `components.buttons.ghost-on-dark` for machine rules.
+
+### CTA Arrow-Link Hover (Gap Expansion)
+
+Inline CTA links with a trailing arrow (`→`) use gap expansion for their hover effect. The gap between text and arrow widens from 0.25rem to 0.5rem. This is distinct from the `cta-link` pattern, which uses underline hover.
+
+**Tokens:** `duration.normal` (200ms) + `easing.default` (ease)
+
+```css
+.cta-arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: gap 0.2s ease;
+}
+
+.cta-arrow-link span[aria-hidden] {
+  /* Arrow is decorative, not content */
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cta-arrow-link:hover {
+    gap: 0.5rem;
+  }
+}
+```
+
+| Property | Value | Token |
+|----------|-------|-------|
+| Duration | 200ms | `duration.normal` |
+| Easing | `ease` | `easing.default` |
+| Default gap | 0.25rem | (fixed) |
+| Hover gap | 0.5rem | (fixed) |
+
+**When to use:** Section-level secondary CTAs where a full button is too heavy. Placed at the end of content sections to guide the reader forward.
+
+The compound media query is required because `gap` is a layout property that triggers reflow, and the animation should not fire on touch devices or for reduced-motion users.
+
+See `categories/web-components/page-sections.md` for usage context. See `rules/visual-rules.yml` -> `components.cta-arrow-link` for machine rules.
+
 ### Team Member Photo Reveal
 
 A specialized pattern: static photo cross-fades to an animated GIF on hover. Used on the About page.
