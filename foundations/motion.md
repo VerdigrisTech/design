@@ -194,6 +194,8 @@ Animation at Verdigris serves three purposes:
 
 Animation should never be decorative for its own sake. Every animation should have a clear purpose.
 
+See `categories/animation/guidelines.md` for the Three Gates operational framework and duration/easing decision trees.
+
 ## Duration Scale
 
 | Token | Value | Use |

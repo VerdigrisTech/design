@@ -425,27 +425,11 @@ These section patterns map to narrative roles defined in `foundations/compositio
 
 ### Arc rules
 
-- Every page needs a hook (hero) and a close
-- At most one turn (the stats/accent moment)
-- Max 3 consecutive low-energy sections before a turn or visual break
-- The turn follows at least one evidence section
+See `foundations/composition.md` for the full narrative arc rules governing section ordering and pacing.
 
-### Section flow (lightness rhythm)
+### Section flow
 
-Pages commit to a lightness direction. Alternating dark and light creates a strobe that forces the eye to re-adapt at every boundary.
-
-Light-mode page flow:
-```
-Dark hero > white > neutral.100 > white > [one dark accent] > white > footer
-```
-
-- Content sections flow through white and neutral.100 (subtle tonal shift, not a contrast flip)
-- At most ONE dark-background section as a deliberate accent moment (e.g., CTA strip, detection callout)
-- Hero and footer are always dark and don't count toward the limit
-- Never place two colored sections adjacent. Separate with neutral.
-- Max lightness jump in content flow: 0.15 OKLch L*
-
-See `foundations/color.md` for the full section flow rules and dark-mode equivalent.
+Pages must follow the lightness rhythm rules to avoid strobing (alternating dark/light sections). See `foundations/color.md` for context and `rules/visual-rules.yml` -> `color.section_flow` for machine rules.
 
 See `foundations/composition.md` for the coupling rules (color-to-spacing, color-to-typography, type-to-spacing) and whitespace principle.
 

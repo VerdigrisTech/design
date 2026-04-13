@@ -236,73 +236,45 @@ The brand palette has 16 tokens but the design system must define **what they me
 
 The palette divides into 6 semantic regions based on content category:
 
-### Trust (Teal → Blue, hue 191°–240°)
+### Trust (Teal → Blue)
 
-**Tokens:** `verdigris`, `mix-step-1`, `mix-step-2`
-**Content:** Technology, platform capabilities, data quality, primary brand expression
-**Why:** The anchor of the Verdigris brand. Bright, authoritative, technically precise. This is what a customer should associate with the company name.
+The anchor of the Verdigris brand. Bright, authoritative, technically precise. Use for technology, platform capabilities, data quality, and primary brand expression. Safe as text on dark backgrounds. NOT safe as text on white (fails WCAG AA).
 
-- Use as section accents for technology and platform content
-- Safe as text on dark backgrounds (12.3:1 contrast on neutral.950)
-- NOT safe as text on white (fails WCAG at ~2.9:1)
-- Dark mode tint: `oklch(0.75 0.1286 191.57 / 15%)` over neutral.950
+See `rules/visual-rules.yml` -> `color.palette_semantics.trust` for tokens, hue ranges, and tint values.
 
-### Depth (Deep Blue → Purple, hue 265°–289°)
+### Depth (Deep Blue → Purple)
 
-**Tokens:** `mix-step-3`, `midnight-purple`
-**Content:** AI/intelligence features, premium sections, dark hero backgrounds, footer
-**Why:** The darkest region (L=0.29–0.41). Creates gravitas and sophistication. Works best as backgrounds, not foreground elements.
+The darkest palette region. Creates gravitas and sophistication. Works as dark section backgrounds, hero overlays, and gradient endpoints paired with teal. Too dark for text use.
 
-- Use for dark section backgrounds and hero overlays
-- NOT as text — too dark, invisible on dark backgrounds
-- Dark mode tint: use **18%+ opacity** — below 15%, midnight-purple (chroma 0.15) is indistinguishable from neutral gray
-- Excellent for gradient endpoints paired with teal
+See `rules/visual-rules.yml` -> `color.palette_semantics.depth` for tokens, hue ranges, and minimum opacity requirements.
 
-### Energy (Purple → Magenta, hue 313°–0°)
+### Energy (Purple → Magenta)
 
-**Tokens:** `midnight-purple-step-1`, `midnight-purple-step-2`, `midnight-purple-step-3`
-**Content:** Fault detection, real-time monitoring, anomaly indicators, alerting
-**Why:** High chroma, vibrant mid-range. These colors demand attention without being aggressive — appropriate for detection and signal content.
+High chroma, vibrant mid-range. Demands attention without being aggressive. Use for fault detection, real-time monitoring, anomaly indicators, and alerting.
 
-- `mp-step-2` (L=0.50) and `mp-step-3` (L=0.60) work as text on both light and dark backgrounds
-- Use as accent borders, icon tints, alert section backgrounds
-- Dark mode tint: `oklch(0.495 0.1708 336.72 / 12%)` over neutral.950
+See `rules/visual-rules.yml` -> `color.palette_semantics.energy` for tokens, hue ranges, and tint values.
 
-### Warmth (Red → Coral, hue 24°–41°)
+### Warmth (Red → Coral)
 
-**Tokens:** `pastel-red`, `pastel-red-step-1`
-**Content:** Contact/conversation, CTA hover states, team sections, customer stories
-**Why:** Warm tones invite human connection. The sidebar-primary color in Patina. Appropriate for sections where the brand becomes personal.
+Warm tones invite human connection. The sidebar-primary color in Patina. Use for contact, CTA hover states, team sections, and customer stories.
 
-- Use for CTA hover shifts (teal → warm on hover)
-- Pastel red (L=0.70) works as text on dark backgrounds only
-- Dark mode tint: `oklch(0.7 0.1909 24.11 / 10%)` over neutral.950
+See `rules/visual-rules.yml` -> `color.palette_semantics.warmth` for tokens, hue ranges, and tint values.
 
-### Results (Orange → Yellow, hue 58°–92°)
+### Results (Orange → Yellow)
 
-**Tokens:** `pastel-red-step-2`, `pastel-red-step-3`, `cyber-yellow`
-**Content:** Metrics, ROI, stranded capacity recovery, financial outcomes, proof points
-**Why:** Bright, optimistic tones (L=0.79–0.87) that say "look at these numbers." Natural for stats and outcomes.
+Bright, optimistic tones (high lightness). Natural for metrics, ROI, stranded capacity recovery, and financial outcomes. Use on dark backgrounds only — high lightness means poor contrast on white.
 
-- HIGH CONTRAST RISK — very light tokens. Only use on dark backgrounds.
-- Use as metric/stat highlights, warm section accents
-- Dark mode tint: `oklch(0.87 0.1786 92.23 / 8%)` — visible despite low opacity due to high lightness
+See `rules/visual-rules.yml` -> `color.palette_semantics.results` for tokens, hue ranges, and tint values.
 
-### Growth (Yellow → Green, hue 113°–164°)
+### Growth (Yellow → Green)
 
-**Tokens:** `cyber-yellow-step-1`, `cyber-yellow-step-2`, `cyber-yellow-step-3`
-**Content:** M&V results, capacity recovery, sustainability, environmental impact, completion
-**Why:** Green-teal tones that close the chromatic loop back to brand teal. Natural for sustainability and recovery outcomes.
+Green-teal tones that close the chromatic loop back to brand teal. Natural for M&V results, capacity recovery, sustainability, and completion narratives.
 
-- Light tokens (L=0.75–0.81) — dark backgrounds only
-- Dark mode tint: `oklch(0.7698 0.1588 137.1 / 10%)` over neutral.950
-- Bridges back to the trust region — use for sections that resolve/conclude
+See `rules/visual-rules.yml` -> `color.palette_semantics.growth` for tokens, hue ranges, and tint values.
 
 ### Neutral (Breathing Room)
 
-**Tokens:** `neutral.50` through `neutral.950`
-**Content:** Body text, structural sections, form backgrounds, breathing room between colored sections
-**Rule:** At least 30% of page sections should use neutral backgrounds to prevent chromatic fatigue.
+Body text, structural sections, form backgrounds, and breathing room between colored sections. At least 30% of page sections should use neutral backgrounds to prevent chromatic fatigue.
 
 ### Taste Boundaries — Restraint Rules
 
@@ -317,18 +289,7 @@ Color is earned, not assigned by lookup table. An accent region appears because 
 
 **Teal dominance:** Teal + neutrals must comprise at least 70% of any surface's color expression. Other palette regions are rare accents, not co-primaries. The brand IS teal.
 
-**Maximum regions per surface:**
-
-| Surface | Max non-neutral regions | Rationale |
-|---------|------------------------|-----------|
-| Web page (homepage) | 2 (trust + 1 accent) | Controlled palette; 2 accents only for 10+ section pages with justification |
-| Landing page | 1 (brand teal only) | Focused message, no chromatic distraction |
-| Ad banner | 1 (brand teal only) | Instant recognition, not variety |
-| Email | 1 (brand teal only) | Inbox is noisy — stay clean |
-| White paper | 2 (trust + 1 accent for data) | Professional restraint |
-| Physical goods | 1 (brand teal only) | Hardware/packaging: maximum brand clarity |
-| Data visualization | 6 (full palette) | This is what the gradient was designed for |
-| Slide deck | 2 per slide | One accent per point |
+See `rules/visual-rules.yml` -> `color.palette_semantics` for maximum regions per surface type.
 
 **Section limits (web pages):**
 - No more than 30% of sections should have non-neutral palette accents — the rest should breathe
@@ -337,40 +298,9 @@ Color is earned, not assigned by lookup table. An accent region appears because 
 
 ### Section Flow — Lightness Rhythm
 
-Pages have a lightness direction. Alternating dark and light sections creates a strobe — the eye has to re-adapt at every boundary. Commit to a direction and vary within it.
+Pages commit to a lightness direction. Alternating dark and light sections creates a strobe effect that forces the eye to re-adapt at every boundary. Content sections flow through subtle tonal shifts (white, neutral.50, neutral.100), not contrast flips.
 
-**Light-mode page flow:**
-```
-Dark hero → white → neutral.100 → white → [one dark accent] → white → footer
-```
-- Content sections flow through white and neutral.100 (subtle tonal shift, not a contrast flip)
-- At most ONE dark-background section as a deliberate accent moment (e.g., detection callout, CTA strip)
-- Hero and footer are always dark — they don't count toward the limit
-
-**Dark-mode page flow:**
-```
-neutral.950 → neutral.900 → neutral.950 → [tinted accent] → neutral.900 → footer
-```
-- Content sections flow through neutral.950 and neutral.900
-- Brand-tinted sections provide variety without lightness jumps
-
-**Rules:**
-- **No strobe** — never alternate dark/light/dark/light across consecutive sections
-- **Max lightness jump in content flow: 0.15 OKLch L*** — white (L=1.0) to neutral.100 (L=0.967) is fine; white to neutral.900 (L=0.21) is not
-- **Consistent text color** — light flow = dark text throughout; dark flow = light text throughout. Don't force the reader to re-adapt.
-
-### Usage Rules
-
-1. **Teal first** — teal + neutrals dominate every surface (70%+ minimum)
-2. **Max 2 regions on a web page** — trust + at most 1 accent region (earned, not automatic)
-3. **No random assignment** — section accent colors must match the content category above
-4. **Breathing room** — at least 70% neutral sections; never two colored sections adjacent
-5. **Subtlety** — palette accents are tints and labels, not saturated backgrounds
-6. **Section flow** — commit to a lightness direction; max one dark accent moment per light page
-7. **Dark tint minimum** — depth region needs 18%+ opacity; all others need 10%+
-8. **Verify contrast** — text on brand-tinted backgrounds must still pass WCAG AA (4.5:1)
-
-See `rules/visual-rules.yml` → `color.palette_semantics` for the machine-consumable version of this guidance.
+See `rules/visual-rules.yml` -> `color.section_flow` for the machine-enforceable rules: max lightness jump, dark accent limits, hero/footer boundary exceptions.
 
 ## Neutral Scale
 

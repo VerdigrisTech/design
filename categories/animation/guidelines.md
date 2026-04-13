@@ -38,7 +38,9 @@ status_note: Includes the core motion rules plus hover, scroll, and reduced-moti
 
 ## Overview
 
-Animation at Verdigris serves three specific purposes: **feedback** (confirming user actions), **orientation** (helping users understand spatial relationships), and **brand** (reinforcing the "electrical intelligence" identity). Animation is never decorative for its own sake. Every animation must pass the three gates before it ships.
+Animation philosophy and duration/easing tokens are defined in `foundations/motion.md`. This guide covers the operational framework for applying them.
+
+Every animation must pass the three gates before it ships.
 
 ## The Three Gates
 
