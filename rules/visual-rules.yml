@@ -1642,7 +1642,7 @@ composition:
       instruct_machine: "defined"        # machine-to-machine (AI agents consuming design system)
 
   # ---------------------------------------------------------------------------
-  # SITE-LEVEL COMPOSITION — cross-page rules
+  # SITE-LEVEL COMPOSITION -- cross-page rules
   # ---------------------------------------------------------------------------
   # Page-level composition governs sections within a page.
   # Site-level composition governs how pages relate across a visit.
@@ -1667,7 +1667,9 @@ composition:
           max_pages: 1
         secondary:
           hero: "Compact: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding"
-          turn_allowed: "conditional — only if page has 6+ sections"
+          turn_allowed:
+            value: true
+            condition: "page_section_count >= 6"
           color_budget: "trust only (teal + neutrals)"
           example: "Product, Platform"
         tertiary:
@@ -1683,49 +1685,57 @@ composition:
 
     rules:
       - id: "composition.site-level.hero-hierarchy"
-        description: "Only the primary page (homepage) uses the full-expression dark hero with gradient strip. Secondary pages use compact or light heroes. Two full-expression heroes in a visitor session feels like two homepages."
+        description: "Only the primary page (homepage) uses the full-expression dark hero with gradient strip. Secondary pages use compact or light heroes. Two full-expression heroes in a visitor session feels like two homepages. The site must have exactly one full-expression hero (the homepage)."
         severity: "warning"
         type: "constraint"
         test:
-          max_full_expression_heroes: 1
+          min_full_expression_heroes: 1   # homepage must have one
+          max_full_expression_heroes: 1   # only homepage gets one
 
       - id: "composition.site-level.turn-scarcity"
-        description: "At most one turn moment (earned accent) per 3-page navigation depth. The homepage gets priority. If every page has a turn, the accent becomes wallpaper."
+        description: "At most one turn moment (earned accent) per 3-page navigation depth. The homepage gets priority. At least one turn must exist across the persuade pages (the homepage). If every page has a turn, the accent becomes wallpaper. If no page has a turn, the brand palette is underused."
         severity: "warning"
         type: "constraint"
         test:
+          min_turns_per_site: 1           # at least one turn across persuade pages
           max_turns_per_session_depth: 1
           session_depth_window: 3
+          secondary_page_turn_condition: "page_section_count >= 6"
 
       - id: "composition.site-level.accent-diversity"
         description: "When multiple pages use accent moments, they must use different palette regions. Two identical accents in a session feels like a template, not a design."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Do any two pages that both have accent/turn moments use the same palette region (e.g., both midnight-purple, both cyber-yellow)? Answer YES if accents repeat across pages, NO if they use different regions."
 
       - id: "composition.site-level.purpose-de-escalation"
         description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch."
         severity: "warning"
         type: "constraint"
         transitions:
-          persuade_to_persuade: "Reduce: secondary hero, no turn"
+          persuade_to_persuade: "Reduce: secondary hero, no turn unless page has 6+ sections"
           persuade_to_inform: "Reduce: no hero, metronomic rhythm"
           persuade_to_convert: "Reduce sharply: minimal hero, single CTA, no turn"
           inform_to_convert: "Maintain: both are low-energy"
           any_to_narrate: "Reset: narrate has its own register"
+        test:
+          llm_eval: "Compare the visual intensity (hero weight, accent usage, section count) of this page to the page that links to it. Does the current page maintain or increase intensity relative to a higher-tier page? Answer YES if intensity fails to de-escalate, NO if it de-escalates or maintains appropriately."
 
       - id: "composition.site-level.navigation-continuity"
-        description: "Header and footer are compositional invariants across all pages. No per-page header or footer styling. The header is always the lightest element; the footer is always dark."
+        description: "Header and footer are compositional invariants across all pages. No per-page header or footer styling. The header is always the lightest element; the footer is always dark. Structural invariant -- violations break site identity across every page."
         severity: "error"
         type: "constraint"
         invariants:
           header: "Lightest element on every page. No per-page styling."
           footer: "Always dark. Same structure across pages."
           breadcrumb: "Teal as functional color (trust region). Not decorative."
+        test:
+          llm_eval: "Does any page have a header or footer with styling that differs from other pages (different background color, modified structure, per-page color scheme, or unique layout)? Answer YES if a violation exists, NO if header and footer are consistent."
 
       - id: "composition.site-level.entry-point-awareness"
-        description: "Every page works standalone (self-contained rule). When standalone and sequence rules conflict, standalone wins — a product page must earn its own trust even if the visitor skipped the homepage."
-        severity: "warning"
-        type: "constraint"
+        description: "Every page works standalone (self-contained rule). When standalone and sequence rules conflict, standalone wins. A product page must earn its own trust even if the visitor skipped the homepage."
+        type: "reference"
 
   # ---------------------------------------------------------------------------
   # PERSUADE x WEB PAGE — homepage, landing pages, campaign pages
@@ -1841,14 +1851,14 @@ composition:
           type: "constraint"
           test:
             when: { background_lightness: { max: 0.3 } }
-            then: { section_padding: { min: "8rem" } }
+            then: { section_padding: { min: "8rem", max: "14rem" } }
         - id: "composition.persuade-web-page.coupling.tinted-padding"
-          description: "Tinted background sections (chroma > 0.01) need at least medium padding."
+          description: "Tinted background sections (chroma > 0.01) need medium padding. Floor: 5rem for breathing room. Ceiling: 10rem to avoid wasted space."
           severity: "warning"
           type: "constraint"
           test:
             when: { background_chroma: { min: 0.01 } }
-            then: { section_padding: { min: "5rem" } }
+            then: { section_padding: { min: "5rem", max: "10rem" } }
       color_to_typography:
         - id: "composition.persuade-web-page.coupling.tinted-line-height"
           description: "Tinted or dark backgrounds loosen body line-height to 1.65-1.75 for readability. Cyan-family tints aid reading; other tints slightly reduce it."
@@ -1870,16 +1880,16 @@ composition:
           type: "constraint"
           test:
             when: { background_lightness: { max: 0.3 } }
-            then: { body_letter_spacing: { min: "0.01em" } }
+            then: { body_letter_spacing: { min: "0.01em", max: "0.03em" } }
       type_to_spacing:
         - id: "composition.persuade-web-page.coupling.heading-padding"
           description: "Section padding scales with the largest heading in the section. H1 sections need large padding; H3-led sections can use standard."
           severity: "warning"
           type: "constraint"
           test:
-            h1: { section_padding: { min: "8rem" } }
-            h2: { section_padding: { min: "5rem" } }
-            h3: { section_padding: { min: "4rem" } }
+            h1: { section_padding: { min: "8rem", max: "14rem" } }
+            h2: { section_padding: { min: "5rem", max: "10rem" } }
+            h3: { section_padding: { min: "4rem", max: "6rem" } }
 
     # --- Whitespace principle ---
     whitespace:

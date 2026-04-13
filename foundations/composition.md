@@ -73,7 +73,7 @@ Each section on a persuasive page serves a role in the story. The role determine
 | **Hook** | First impression, value prop | Full expression (dark bg, teal) | H1 (4rem) | 8rem |
 | **Context** | Set up the problem | Breathing room (neutral.200) | H2 (3rem) | 4rem |
 | **Evidence** | Show proof | Supporting (teal label, white bg) | H2 + cards | 4rem |
-| **Turn** | Shift the feeling | Earned accent (tint + border + label) | H2 + stats | 5rem+ |
+| **Turn** | Shift the feeling | Earned accent (tint + border + label) | H2 + stats | 5-10rem |
 | **Proof** | Hard numbers, logos | Supporting (teal label) | H2 + body | 4rem |
 | **Close** | Final CTA | Full expression (dark bg) | H2 | 4rem+ |
 
@@ -89,19 +89,19 @@ Each section on a persuasive page serves a role in the story. The role determine
 Color, type, and spacing aren't independent on a persuasive page. They're coupled.
 
 **Color to spacing:** Visual weight needs room.
-- Dark sections (L < 0.3): padding at least 8rem
-- Tinted sections (chroma > 0.01): padding at least 5rem
-- Neutral sections: padding at least 4rem
+- Dark sections (L < 0.3): padding 8-14rem
+- Tinted sections (chroma > 0.01): padding 5-10rem
+- Neutral sections: padding 4-6rem
 
 **Color to typography:** Background changes how text reads.
 - Tinted or dark backgrounds: body line-height 1.65-1.75 (looser than 1.6 default)
 - Tinted or dark backgrounds: max line-length 65ch (tighter than 75ch default)
-- Dark backgrounds: body letter-spacing +0.01em
+- Dark backgrounds: body letter-spacing +0.01em to +0.03em
 
 **Type to spacing:** Larger headings need more room.
-- H1-led section: padding at least 8rem
-- H2-led section: padding at least 5rem
-- H3 or body-led: padding at least 4rem
+- H1-led section: padding 8-14rem
+- H2-led section: padding 5-10rem
+- H3 or body-led: padding 4-6rem
 
 ### Whitespace Principle
 
@@ -173,7 +173,7 @@ Visitors typically move from high-energy pages (persuade) toward low-energy page
 
 | Transition | Intensity shift | Why |
 |-----------|----------------|-----|
-| Persuade → Persuade | Reduce: secondary hero, no turn | Avoids pitch fatigue |
+| Persuade → Persuade | Reduce: secondary hero, no turn unless 6+ sections | Avoids pitch fatigue |
 | Persuade → Inform | Reduce: no hero, metronomic rhythm | Visitor wants answers, not spectacle |
 | Persuade → Convert | Reduce sharply: minimal hero, single CTA, no turn | Focus earns trust at decision point |
 | Inform → Convert | Maintain: both are low-energy | Natural transition |
