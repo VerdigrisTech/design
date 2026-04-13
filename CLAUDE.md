@@ -17,22 +17,45 @@ This repo (`VerdigrisTech/design`) is the canonical design system for all Verdig
 ## Development Commands
 
 ```bash
-npm run validate   # Check token JSON for broken references and missing $type
-npm run build      # Generate build/dist/ outputs from token source
+npm run validate        # Check token JSON for broken references and missing $type
+npm run validate:rules  # Check visual-rules.yml (YAML syntax, test blocks, emdashes, convention, sidebar)
+npm run validate:all    # Run both validators
+npm run build           # Generate build/dist/ outputs from token source
 ```
 
 ## Pre-Commit Checklist
 
 Before every commit that changes tokens:
-1. `npm run validate` — must pass with 0 errors
-2. `npm run build` — regenerate outputs
+1. `npm run validate` -- must pass with 0 errors
+2. `npm run build` -- regenerate outputs
 3. Commit build outputs alongside token changes
 
-Before every commit that changes content (foundations, specimens, rules, examples):
-1. `npm run lint:external` — no internal content in public files
-2. Check for AI writing artifacts (emdashes, jargon, overexplaining)
-3. Verify cross-file consistency (values in rules must match foundations and specimens)
-4. YAML validation: `python3 -c "import yaml; yaml.safe_load(open('rules/visual-rules.yml'))"`
+Before every commit that changes rules (visual-rules.yml):
+1. `npm run validate:rules` -- must pass with 0 errors
+2. Every `type: "constraint"` rule must have a `test` block
+3. Every `min` must have a `max` (floors need ceilings)
+4. Every `llm_eval` prompt must use YES = violation convention
+5. No emdashes anywhere in the file
+
+Before every commit that changes content (foundations, specimens, examples):
+1. `npm run lint:external` -- no internal content in public files
+2. `npm run validate:rules` -- checks sidebar coverage for new pages
+3. Check for AI writing artifacts (emdashes, jargon, overexplaining)
+4. Verify cross-file consistency (values in rules must match foundations and specimens)
+
+## Release Process
+
+Batch changes into a single PR before publishing. Do not publish per-commit.
+
+1. Branch + PR -- never push directly to main
+2. Run `npm run validate:all` on the branch
+3. Adversarial review before merge (at least 1 round)
+4. Merge PR to main
+5. `npm version <major|minor|patch>` -- bump version
+6. `npm run build` -- regenerate outputs
+7. Commit version bump + build outputs
+8. `gh release create v<version>` -- triggers publish workflow
+9. Verify publish workflow completes on GitHub Actions
 
 ## Commit Message Format
 

@@ -33,6 +33,8 @@
   "scripts": {
     "build": "tsx build/config.ts",
     "validate": "tsx build/validate.ts",
+    "validate:rules": "tsx build/validate-rules.ts",
+    "validate:all": "npm run validate && npm run validate:rules",
     "lint:external": "tsx build/lint-external.ts",
     "clean": "rm -rf build/dist"
   },
