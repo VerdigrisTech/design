@@ -24,7 +24,7 @@ See `tokens/color/base.json` for the full 16-stop gradient from teal through pur
 
 | Step | OKLch | Hex | Use |
 |------|-------|-----|-----|
-| 950 | oklch(0.141 0.005 285.823) | #1C1917 | Dark backgrounds, primary text |
+| 950 | oklch(0.141 0.005 285.823) | #09090b | Dark backgrounds, primary text |
 | 900 | oklch(0.21 0.006 285.885) | #292524 | Dark containers, input backgrounds |
 | 500 | oklch(0.552 0.016 285.938) | #78716C | Muted text, placeholders |
 | 200 | oklch(0.92 0.004 286.32) | #E7E5E4 | Borders, dividers |

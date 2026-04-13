@@ -8,7 +8,7 @@
 |------|-------|--------|
 | `icon-teal.svg` | Brand teal (#0FC8C3) | Light backgrounds, primary usage |
 | `icon-white.svg` | White (#FFFFFF) | Dark backgrounds |
-| `icon-dark.svg` | Neutral.950 (#1C1917) | Light backgrounds, formal/print contexts |
+| `icon-dark.svg` | Neutral.950 (#09090b) | Light backgrounds, formal/print contexts |
 
 ### Full Lockup (icon + wordmark)
 
@@ -31,7 +31,7 @@ The canonical brand teal in OKLch: `oklch(0.75 0.1286 191.57)`
 
 Web fallbacks:
 - Hex: `#0FC8C3`
-- HSL: `hsl(178, 85%, 42%)`
+- HSL: `hsl(178, 86%, 42%)`
 - RGB: `rgb(15, 200, 195)`
 
 See `tokens/color/base.json` for the full palette.
