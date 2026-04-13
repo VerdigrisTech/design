@@ -623,10 +623,12 @@ typography:
       type: "constraint"
       context: "body"
       named_scale: "relaxed"
-      value: 1.6
-      description: "All body text uses 1.6 line-height"
+      min: 1.6
+      max: 1.75
+      description: "Base body line-height. Coupling rules on dark/tinted backgrounds may require 1.65-1.75."
       test:
-        value: 1.6
+        min: 1.6
+        max: 1.75
     - id: "typography.line-height.ui-compact"
       severity: "warning"
       type: "constraint"
@@ -787,6 +789,13 @@ motion:
       css: "transition: transform 300ms ease, box-shadow 300ms ease"
       transform: "translateY(-4px)"
       requires_hover_query: true
+    hover-scale:
+      description: "Container scales up subtly on hover"
+      duration: "500ms"                             # duration.slow
+      easing: "ease"
+      css: "transition: transform 500ms ease"
+      transform: "scale(1.02)"
+      requires_hover_query: true
     slide-up:
       description: "Element slides up into view on scroll/mount"
       duration: "500ms"
@@ -874,10 +883,10 @@ motion:
     severity: "error"
     type: "pattern"
     required: true
-    media_query: "@media (hover: hover) and (pointer: fine)"
-    description: "All :hover effects must be wrapped in this media query to prevent sticky hover on touch devices"
+    media_query: "@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
+    description: "All :hover effects must be wrapped in this media query to prevent sticky hover on touch devices and respect reduced-motion preference"
     test:
-      regex: ":hover(?![\\s\\S]*@media\\s*\\(hover:\\s*hover\\))"
+      regex: "hover:\\s*hover.*pointer:\\s*fine.*prefers-reduced-motion:\\s*no-preference"
     example_css: |
       @media (hover: hover) and (pointer: fine) {
         .card:hover {
@@ -972,9 +981,11 @@ components:
       value: "9999px"
       description: "Pill shape — tags, badges, avatars"
     button:
-      value: "0.375rem"    # 6px — www legacy
-      description: "Button radius (www). Deviation from Patina's shadcn default."
-      migration_target: "sm"
+      value: "calc(0.625rem - 2px)"  # ~8px — Patina canonical
+      description: "Button radius — Patina canonical (~8px). See button_www_legacy for www override."
+    button_www_legacy:
+      value: "0.375rem"    # 6px
+      description: "www legacy button radius (6px). Pending migration to Patina canonical."
     www_legacy:
       value: "0.5rem"      # 8px
       description: "www's current --radius. Should migrate to base (0.625rem)."
@@ -1022,7 +1033,7 @@ components:
       background: "oklch(0.21 0.006 285.885)"    # neutral.900
       text_color: "oklch(0.985 0 0)"              # neutral.50
       hover_background: "oklch(0.21 0.006 285.885 / 0.9)"
-      border_radius: "0.375rem"                    # www button radius
+      border_radius: "calc(0.625rem - 2px)"        # Patina canonical — 8px
       font_weight: 600
       min_height: "2.5rem"                         # 40px — touch target
       min_width: "6rem"
@@ -1032,7 +1043,7 @@ components:
       text_color: "oklch(0.21 0.006 285.885)"     # neutral.900
       border: "1px solid oklch(0.92 0.004 286.32)" # neutral.200
       hover_background: "oklch(0.967 0.001 286.375)" # neutral.100
-      border_radius: "0.375rem"
+      border_radius: "calc(0.625rem - 2px)"          # Patina canonical — 8px
       font_weight: 600
       min_height: "2.5rem"
       padding: "0.5rem 1rem"
@@ -1046,7 +1057,7 @@ components:
       text_color: "oklch(1 0 0)"                    # white
       border: "1px solid oklch(1 0 0 / 0.6)"        # white/60
       hover_background: "oklch(1 0 0 / 0.1)"        # white/10
-      border_radius: "0.375rem"                      # www button radius
+      border_radius: "calc(0.625rem - 2px)"            # Patina canonical — 8px
       font_weight: 600
       min_height: "2.5rem"                           # 40px — touch target
       padding: "0.5rem 1rem"
@@ -1055,7 +1066,7 @@ components:
         regex: "border-white\\/60|border-color:\\s*oklch\\(1\\s+0\\s+0\\s*\\/\\s*0?\\.?6"
     rules:
       - id: "components.buttons.touch-target"
-        description: "Buttons must have min 44px touch target (WCAG 2.5.8)"
+        description: "Buttons must have min 44px touch target (WCAG 2.5.5)"
         type: "constraint"
         min_touch_target: "44px"
         severity: "warning"
@@ -1088,12 +1099,12 @@ components:
       light:
         background: "oklch(0.985 0 0)"               # neutral.50
         border: "oklch(0.92 0.004 286.32)"            # neutral.200 (semantic input token)
-        border_radius: "0.375rem"                     # radius.md — matches buttons
+        border_radius: "calc(0.625rem - 2px)"           # Patina canonical button/input radius — 8px
         text_color: "oklch(0.141 0.005 285.823)"      # neutral.950
         placeholder_color: "oklch(0.552 0.016 285.938)" # neutral.500 (muted-foreground)
         font_family: "Inter"
         font_size: "0.875rem"                         # 14px
-        min_height: "2.5rem"                          # 40px — WCAG 2.5.8 touch target
+        min_height: "2.5rem"                          # 40px — WCAG 2.5.5 touch target
         max_height: "3rem"                            # 48px — taller loses proportion
         padding: "0.5rem 0.75rem"
         shadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)"      # shadow-xs (form control pattern)
@@ -1111,7 +1122,7 @@ components:
         cursor: "not-allowed"
       rules:
         - id: "components.forms.input.touch-target"
-          description: "Form inputs must have min 2.5rem (40px) height for WCAG 2.5.8 touch target compliance."
+          description: "Form inputs must have min 2.5rem (40px) height for WCAG 2.5.5 touch target compliance."
           severity: "warning"
           type: "constraint"
           test:
@@ -1176,7 +1187,7 @@ components:
         background: "oklch(0.75 0.1286 191.57)"       # brand verdigris
         text_color: "oklch(0.141 0.005 285.823)"      # neutral.950
         hover_background: "oklch(0.7 0.12 191.57)"    # slightly darker teal
-        border_radius: "0.375rem"
+        border_radius: "calc(0.625rem - 2px)"          # Patina canonical — 8px
         font_weight: 600
         min_height: "2.5rem"
         padding: "0.625rem 1.5rem"
@@ -1212,7 +1223,7 @@ components:
         dark: "oklch(0.705 0.015 286.067)"         # neutral.400
       - token: "border"
         light: "oklch(0.92 0.004 286.32)"          # neutral.200
-        dark: "oklch(0.274 0.006 286.033)"         # neutral.800
+        dark: "oklch(1 0 0 / 0.1)"                 # white/10% — semi-transparent (matches dark-mode.md)
       - token: "ring"
         light: "oklch(0.705 0.015 286.067)"        # neutral.400
         dark: "oklch(0.552 0.016 285.938)"         # neutral.500
@@ -1298,6 +1309,7 @@ components:
     description: "Stats display row — large numbers in primary color, uppercase labels with tracking. Used for trust/metric bars on homepage and landing pages."
     number:
       color: "var(--color-semantic-primary)"
+      font_family: "display"                        # Lato — display font for visual impact
       font_weight: 700
       min_size: "2rem"                              # 32px — large enough for visual impact
       max_size: "3.5rem"                            # 56px — larger loses hierarchy with headings
@@ -1308,6 +1320,8 @@ components:
       min_size: "0.6875rem"                         # 11px — readable at smallest
       max_size: "0.875rem"                          # 14px — larger competes with stat number
       color: "var(--color-semantic-muted-foreground)"
+    min_count: 3                                    # fewer looks sparse
+    max_count: 4                                    # more overwhelms
     layout: "horizontal"
     responsive: "stack vertical below sm (640px)"
 
@@ -1550,7 +1564,7 @@ accessibility:
   require_aria_labels: true
   require_focus_indicators: true   # See components.focus for specifics
   min_contrast_ratio: 4.5          # See color.contrast for full breakdown
-  touch_target_min: "44px"         # WCAG 2.5.8
+  touch_target_min: "44px"         # WCAG 2.5.5
   rules:
     - id: "accessibility.alt-text"
       description: "Images must have alt text (empty string for decorative)"
@@ -1685,7 +1699,7 @@ composition:
         description: "Final CTA. Returns to full expression — bookends the hook."
         color_intensity: "full"
         type_max: "h2"
-        section_padding: "4rem"
+        section_padding: { min: "4rem" }
         position: "last section"
         elements: ["heading", "primary CTA"]
 
@@ -1739,7 +1753,7 @@ composition:
           type: "constraint"
           test:
             when: { background_chroma: { min: 0.01 } }
-            then: { body_line_height: { min: 1.65 } }
+            then: { body_line_height: { min: 1.65, max: 1.75 } }
         - id: "composition.persuade-web-page.coupling.tinted-line-length"
           description: "Tinted or dark backgrounds use tighter max line length (65ch vs 75ch default). Colored backgrounds add visual noise — shorter lines reduce cognitive load."
           severity: "warning"
@@ -1919,10 +1933,10 @@ composition:
         type: "constraint"
     coupling:
       - id: "composition.convert-web-page.coupling.tight-spacing"
-        description: "4rem section padding max. Momentum over luxury. No 8rem hero-scale padding."
+        description: "Section padding 3rem-4rem. Momentum over luxury. No 8rem hero-scale padding."
         severity: "warning"
         type: "constraint"
-        test: { section_padding: { max: "4rem" } }
+        test: { section_padding: { min: "3rem", max: "4rem" } }
       - id: "composition.convert-web-page.coupling.functional-color"
         description: "CTA button and the recommended-tier highlight are the only saturated elements. Everything else neutral. No tinted section backgrounds, no gradient strips. The recommended-tier highlight is functional (guides the decision, users spend 42% more time on highlighted plans), not decorative."
         severity: "error"
@@ -2172,7 +2186,7 @@ composition:
     # --- Color usage ---
     color:
       description: "Color is illustrative, not atmospheric. The palette appears IN the figures (specimens, before/after comparisons) not as section background tints. Between figures, the page is neutral. This lets the illustrated colors speak without competing with ambient color."
-      page_background: "White and neutral.200 for prose sections. Dark only for opening and closing."
+      page_background: "White and neutral.100 for prose sections. Dark only for opening and closing."
       figure_background: "Figures may use any palette region as needed for illustration."
       accent_budget: "No earned accent in the persuade sense. Color appears as part of the content (the things being shown), not as a compositional device on the page itself."
 
@@ -2183,10 +2197,10 @@ composition:
         severity: "warning"
         type: "constraint"
       - id: "composition.narrate-web-page.coupling.long-form-line-height"
-        description: "Body line-height 1.7 for sustained reading. Looser than persuade (1.6) or inform (1.5-1.6). Magazine-grade readability."
+        description: "Body line-height 1.7 for sustained reading. Looser than persuade (1.6). Magazine-grade readability."
         severity: "warning"
         type: "constraint"
-        test: { body_line_height: { min: 1.7 } }
+        test: { body_line_height: { min: 1.7, max: 1.85 } }
       - id: "composition.narrate-web-page.coupling.figure-margin"
         description: "Figures have 2rem margin above and below within their episode. They breathe separately from prose."
         severity: "warning"

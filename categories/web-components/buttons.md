@@ -18,10 +18,12 @@ title: Buttons
 </div>
 
 <p class="v-label">Ghost on Dark (Hero CTA)</p>
+<!-- Demo container: neutral.900 background — this is the dark section background, not the button background. The button itself is transparent with a white/60 border. -->
 <div class="v-demo">
   <div class="v-comp-demo" style="background: oklch(0.21 0.006 285.885); padding: 2rem; border-radius: 0.625rem;">
+    <!-- Container bg: neutral.900. Button bg: transparent (ghost-on-dark spec). -->
     <div class="v-comp-row">
-      <button class="v-btn v-btn-default" style="background: oklch(0.21 0.006 285.885); color: white; border: 1px solid oklch(1 0 0 / 0.6); font-weight: 600;">Ghost on Dark</button>
+      <button class="v-btn v-btn-default" style="background: transparent; color: white; border: 1px solid oklch(1 0 0 / 0.6); font-weight: 600;">Ghost on Dark</button>
       <button class="v-btn v-btn-default" style="background: oklch(1 0 0 / 0.1); color: white; border: 1px solid oklch(1 0 0 / 0.6); font-weight: 600;">Ghost on Dark (hover)</button>
     </div>
   </div>
