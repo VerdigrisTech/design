@@ -164,11 +164,13 @@ All values from production CSS. This repo is the canonical source of truth.
 
 ### Headings
 
-| Level | Desktop | Mobile (<991px) | Weight | Line Height | Letter Spacing |
+| Level | Desktop | Mobile (<1024px) | Weight | Line Height | Letter Spacing |
 |-------|---------|-----------------|--------|-------------|----------------|
 | H1 | 4rem (64px) | 2.75rem (44px) | 700 | 1.1 | -0.02em |
 | H2 | 3rem (48px) | 2rem (32px) | 700 | 1.2 | -0.02em |
 | H3 | 2rem (32px) | 1.5rem (24px) | 700 | 1.3 | — |
+
+Note: www currently uses 991px as its mobile breakpoint. The canonical target is 1024px (Tailwind lg) pending migration.
 
 ### Body
 
