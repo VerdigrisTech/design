@@ -1642,6 +1642,92 @@ composition:
       instruct_machine: "defined"        # machine-to-machine (AI agents consuming design system)
 
   # ---------------------------------------------------------------------------
+  # SITE-LEVEL COMPOSITION — cross-page rules
+  # ---------------------------------------------------------------------------
+  # Page-level composition governs sections within a page.
+  # Site-level composition governs how pages relate across a visit.
+  # These rules prevent the site from feeling like a collection of
+  # disconnected landing pages.
+  # ---------------------------------------------------------------------------
+  site_level:
+    id: "composition.site-level"
+    type: "reference"
+    description: "Cross-page composition rules. Pages are self-contained (each earns trust within its own scroll), but visitors who navigate between pages will notice identical composition. The site needs an arc too."
+
+    page_hierarchy:
+      id: "composition.site-level.page-hierarchy"
+      type: "reference"
+      description: "Not all pages have equal visual weight. The homepage is the loudest; secondary pages progressively quiet down."
+      tiers:
+        primary:
+          hero: "Full expression: dark bg, gradient strip, H1, 8rem padding"
+          turn_allowed: true
+          color_budget: "trust + 1 earned accent"
+          example: "Homepage"
+          max_pages: 1
+        secondary:
+          hero: "Compact: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding"
+          turn_allowed: "conditional — only if page has 6+ sections"
+          color_budget: "trust only (teal + neutrals)"
+          example: "Product, Platform"
+        tertiary:
+          hero: "No hero. Section opens directly with H1."
+          turn_allowed: false
+          color_budget: "trust only"
+          example: "Docs, blog posts, legal"
+        convert:
+          hero: "Minimal: single heading + CTA, neutral or dark bg, no narrative arc"
+          turn_allowed: false
+          color_budget: "1 accent (CTA only)"
+          example: "Pricing, demo request, signup"
+
+    rules:
+      - id: "composition.site-level.hero-hierarchy"
+        description: "Only the primary page (homepage) uses the full-expression dark hero with gradient strip. Secondary pages use compact or light heroes. Two full-expression heroes in a visitor session feels like two homepages."
+        severity: "warning"
+        type: "constraint"
+        test:
+          max_full_expression_heroes: 1
+
+      - id: "composition.site-level.turn-scarcity"
+        description: "At most one turn moment (earned accent) per 3-page navigation depth. The homepage gets priority. If every page has a turn, the accent becomes wallpaper."
+        severity: "warning"
+        type: "constraint"
+        test:
+          max_turns_per_session_depth: 1
+          session_depth_window: 3
+
+      - id: "composition.site-level.accent-diversity"
+        description: "When multiple pages use accent moments, they must use different palette regions. Two identical accents in a session feels like a template, not a design."
+        severity: "warning"
+        type: "constraint"
+
+      - id: "composition.site-level.purpose-de-escalation"
+        description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch."
+        severity: "warning"
+        type: "constraint"
+        transitions:
+          persuade_to_persuade: "Reduce: secondary hero, no turn"
+          persuade_to_inform: "Reduce: no hero, metronomic rhythm"
+          persuade_to_convert: "Reduce sharply: minimal hero, single CTA, no turn"
+          inform_to_convert: "Maintain: both are low-energy"
+          any_to_narrate: "Reset: narrate has its own register"
+
+      - id: "composition.site-level.navigation-continuity"
+        description: "Header and footer are compositional invariants across all pages. No per-page header or footer styling. The header is always the lightest element; the footer is always dark."
+        severity: "error"
+        type: "constraint"
+        invariants:
+          header: "Lightest element on every page. No per-page styling."
+          footer: "Always dark. Same structure across pages."
+          breadcrumb: "Teal as functional color (trust region). Not decorative."
+
+      - id: "composition.site-level.entry-point-awareness"
+        description: "Every page works standalone (self-contained rule). When standalone and sequence rules conflict, standalone wins — a product page must earn its own trust even if the visitor skipped the homepage."
+        severity: "warning"
+        type: "constraint"
+
+  # ---------------------------------------------------------------------------
   # PERSUADE x WEB PAGE — homepage, landing pages, campaign pages
   # ---------------------------------------------------------------------------
   # Narrative pacing + coupling rules. Each section has a role in the story.

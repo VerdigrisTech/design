@@ -140,35 +140,128 @@ Design essays, retrospectives, case studies with depth, process documentation th
 
 See `rules/visual-rules.yml` -> `composition.narrate-web-page` for the machine-consumable version.
 
-## Narrate x Web Page
+## Site-Level Composition
 
-For long-form editorial essays, design retrospectives, case narratives. Not persuade (no funnel). Not inform (not flat). The reader follows a journey with depth.
+Page-level composition governs sections within a page. Site-level composition governs how pages relate to each other across a visit. Individual pages are self-contained (each earns trust within its own scroll), but visitors who navigate between pages will notice if every page uses identical composition. The site needs an arc too.
 
-This purpose type was created when the evolution essay needed composition rules and no existing type fit. The framework grew to accommodate a surface it couldn't serve.
+### Page Hierarchy
 
-### Structure
+Not all pages have equal visual weight. The homepage is the loudest; secondary pages progressively quiet down.
 
-Narrate uses episodes, not narrative roles. Episodes are prose + figure pairs, repeatable in any order.
+| Page tier | Hero treatment | Turn allowed | Color budget | Example |
+|-----------|---------------|-------------|-------------|---------|
+| **Primary** (1 page) | Full expression: dark bg, gradient strip, H1, 8rem | Yes — the earned accent moment | Trust + 1 accent | Homepage |
+| **Secondary** | Compact hero: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding | Conditional — only if the page has 6+ sections | Trust only | Product, Platform |
+| **Tertiary** | No hero. Section opens directly with H1 at standard weight. | No | Trust only | Docs, blog posts, legal |
+| **Convert** | Minimal: single heading + CTA, neutral or dark bg, no narrative arc | No | 1 accent (CTA) | Pricing, demo request, signup |
 
-| Element | Purpose | Color | Padding |
-|---------|---------|-------|---------|
-| **Opening** | Set the scene | Full or supporting | 8rem |
-| **Episode** | A chapter with prose + figure | Breathing or supporting | 5rem |
-| **Figure** | Visual evidence within an episode | Varies (the figure itself may use any intensity) | 3rem margin |
-| **Reflection** | Honest assessment of limits | Breathing | 5rem |
-| **Closing** | Invitation, not CTA | Full or supporting | 8rem |
+The homepage owns the full-expression hero with gradient strip. If secondary pages also use full-expression heroes, the homepage loses its primacy and the site feels like a collection of landing pages rather than a coherent product.
 
-### Key Differences from Persuade
+### Cross-Page Turn Scarcity
 
-- **Color is illustrative, not atmospheric.** Color appears inside figures (specimens, before/after comparisons), not as section background tints. Between figures, the page is neutral.
-- **No marketing patterns.** No CTA buttons in prose. No gradient strips. No card grids as content. The page is an essay.
-- **Body text is 1.125rem at 1.7 line-height.** Looser than persuade (1.6) for sustained reading.
-- **The closing is an invitation, not a conversion.** The reader leaves thinking, not clicking.
+The turn moment (earned accent) is powerful because it's rare. At page level, the rule is "at most one turn per page." At site level: at most one turn per 3-page navigation depth. In practice, this means the homepage gets the turn and secondary pages do not, unless the visitor is deep enough (3+ clicks from homepage) that the earlier turn has faded.
 
-### When to Use Narrate
+If every page has a turn, the accent becomes wallpaper. The scarcity rule preserves its emotional impact.
 
-Design essays, retrospectives, case studies with depth, process documentation that tells a story. If the piece has a beginning, middle, and end and the reader should experience the journey (not just scan for information), it's narrate.
+### Accent Diversity
 
-See `rules/visual-rules.yml` -> `composition.narrate_web_page` for the machine-consumable version.
+When multiple pages do use accent moments (homepage + a deep product page), they must use different palette regions. If the homepage turn uses midnight-purple (energy region), the product page turn should use cyber-yellow (results region) or skip the turn. Two identical accents in a session feels like a template, not a design.
+
+### Purpose De-Escalation
+
+Visitors typically move from high-energy pages (persuade) toward low-energy pages (convert, inform). The visual intensity should de-escalate to match.
+
+| Transition | Intensity shift | Why |
+|-----------|----------------|-----|
+| Persuade → Persuade | Reduce: secondary hero, no turn | Avoids pitch fatigue |
+| Persuade → Inform | Reduce: no hero, metronomic rhythm | Visitor wants answers, not spectacle |
+| Persuade → Convert | Reduce sharply: minimal hero, single CTA, no turn | Focus earns trust at decision point |
+| Inform → Convert | Maintain: both are low-energy | Natural transition |
+| Any → Narrate | Reset: narrate has its own register (honesty) | Editorial stands alone |
+
+### Navigation Continuity
+
+Header and footer are the compositional spine — consistent across every page.
+
+- **Header:** lightest element on every page. Breathing room. No per-page header styling. The header provides orientation; the page provides expression.
+- **Footer:** always dark. Provides closure. Same structure across pages. The footer is the site's consistent ending, not a per-page design surface.
+- **Breadcrumb / wayfinding:** uses teal as functional color (trust region). Not decorative.
+
+These invariants make page-level variation feel coherent. Without them, a dark homepage followed by a light product page feels like two different sites.
+
+### Entry Point Awareness
+
+Not every visitor starts at the homepage. With 60%+ arriving from LLMs, many land on secondary or tertiary pages. Site-level composition must accommodate this:
+
+- Every page works standalone (the self-contained rule from page-level composition)
+- But pages also work in sequence (the de-escalation and scarcity rules above)
+- When in conflict, standalone wins — a product page must earn its own trust even if the visitor skipped the homepage
+
+See `rules/visual-rules.yml` -> `composition.site-level` for the machine-consumable version.
+
+## Spoken Voice
+
+How Verdigris sounds when content is spoken aloud. Extends the written voice rules from Assist x Chat to any surface with audio output: video narration, AI assistant speech, ad voiceovers, accessibility.
+
+### Voice Pillars
+
+The same brand pillars that govern written voice govern spoken voice. Each maps to a concrete vocal quality.
+
+| Pillar | Written rule (Assist x Chat) | Spoken equivalent | Floor | Ceiling |
+|--------|----------------------------|-------------------|-------|---------|
+| **Precise** | Exact values, no hedging, citation-forward | Measured pace, clear enunciation, no filler words | 140 wpm | 170 wpm |
+| **Masterful** | AI as infrastructure, no personality theater | Calm authority, steady pitch, no vocal fry or uptalk | Pitch variance: 30Hz | Pitch variance: 80Hz |
+| **Refined** | Interface disappears, content dominates | Unhurried delivery, natural pauses at clause boundaries | Pause at periods: 400ms | Pause at periods: 700ms |
+| **Pioneering** | Active artifacts, response IS the tool | Confident forward momentum, no hedging qualifiers | N/A (behavioral) | N/A (behavioral) |
+
+### Single Voice, Purpose-Adapted
+
+One primary voice builds brand recognition (like teal). Style parameters adapt by purpose.
+
+| Purpose | Adaptation | Example |
+|---------|-----------|---------|
+| **Persuade** (video, ads) | Warmer, slightly slower. Earns trust through restraint. | Brand video narration, webinar intro |
+| **Inform** (docs, tutorials) | Neutral, steady, scannable rhythm. Clarity over feeling. | Product walkthrough, help content |
+| **Analyze** (dashboards) | Clipped, precise. Data-forward. Faster pace. | Alert readout, KPI summary |
+| **Narrate** (case studies) | More spacious, natural. Room for reflection. | Case study video, retrospective |
+| **Assist** (AI chat) | Direct, professional. Answer-first cadence. | AI assistant reading a response aloud |
+
+### Voice Brief Format
+
+A voice brief is the spoken equivalent of a color token: a declarative description that a TTS pipeline resolves into audio. The brief should be specific enough to reproduce consistently.
+
+```
+voice.brand.primary:
+  age_range: [pending stakeholder decision]
+  gender: [pending stakeholder decision]
+  qualities:
+    - calm authority without coldness
+    - measured pace, unhurried but not slow
+    - clear enunciation, no mumbling or trailing off
+    - natural breath pauses at clause boundaries
+    - steady pitch with subtle emphasis on key data
+  anti-qualities:
+    - no vocal fry or uptalk
+    - no filler words (um, uh, like, you know)
+    - no breathy or ASMR quality
+    - no announcer energy or radio voice
+    - no synthetic flatness (must sound like a person)
+  reference_prompt: "The voice of a senior engineer presenting
+    findings to a board. They know the data cold. They respect
+    the audience's time. They are confident without performing
+    confidence."
+```
+
+### Demographic Attributes
+
+Gender, age, and accent carry cultural weight. These attributes require stakeholder input and cannot be decided by design-system logic alone. Options analysis and recommendation tracked in Linear (Z2O-1044).
+
+### Constraints
+
+- Voice must pass the same "no personality theater" test as written Assist x Chat content
+- Pace must stay within 140-170 wpm (floor: comprehension; ceiling: rushed feeling)
+- No background music or sound design in voice-only content. Music is a separate design decision.
+- Reduced-motion users who have opted out of animation should not receive auto-playing audio. Audio requires explicit user action.
+- All spoken content must have a text transcript (accessibility, EU AI Act Article 50 for AI-generated speech)
 
 </details>
