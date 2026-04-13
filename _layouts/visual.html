@@ -249,17 +249,24 @@ layout: default
     font-family: var(--font-body);
     font-size: 0.875rem;
     padding: 0.5rem 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg);
+    border: 1px solid var(--neutral-200);
+    border-radius: calc(var(--radius) - 2px);
+    background: oklch(0.985 0 0);  /* neutral.50 — slightly off-white to distinguish from white container */
     color: var(--fg);
     width: 100%;
     max-width: 20rem;
+    height: 2.25rem;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+  html.dark .v-input {
+    background: oklch(0.274 0.006 286.033);  /* neutral.800 — distinct from neutral.950 container */
+    border-color: oklch(1 0 0 / 0.15);  /* semi-transparent white — matches semantic input token */
+    box-shadow: none;
   }
   .v-input:focus {
     outline: 2px solid var(--brand-teal);
     outline-offset: 2px;
+    border-color: var(--brand-teal);
   }
   .v-input::placeholder { color: var(--muted-fg); }
 

@@ -30,6 +30,20 @@ title: Forms
   </div>
 </div>
 
+<p class="v-label">Input on Dark Background</p>
+<div class="v-demo">
+  <div class="v-comp-demo" style="background: oklch(0.141 0.005 285.823); padding: 2rem; border-radius: 0.625rem;">
+    <div style="display: flex; flex-direction: column; gap: 0.375rem;">
+      <label style="font-size: 0.875rem; font-weight: 500; color: oklch(0.985 0 0);">Email address</label>
+      <input class="v-input" type="email" placeholder="you@example.com" style="background: oklch(0.274 0.006 286.033); border-color: oklch(1 0 0 / 0.15); color: oklch(0.985 0 0); box-shadow: none;" />
+    </div>
+    <div class="v-comp-row" style="margin-top: 1rem;">
+      <input class="v-input" type="email" placeholder="you@example.com" style="flex: 1; background: oklch(0.274 0.006 286.033); border-color: oklch(1 0 0 / 0.15); color: oklch(0.985 0 0); box-shadow: none;" />
+      <button class="v-btn v-btn-default" style="background: oklch(0.75 0.1286 191.57); color: oklch(0.141 0.005 285.823);">Subscribe</button>
+    </div>
+  </div>
+</div>
+
 <details class="v-details" markdown="1">
 <summary>Documentation</summary>
 
