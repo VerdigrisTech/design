@@ -16,6 +16,7 @@
 #     min/max:   numeric bounds
 #     value:     exact required value
 #     values:    set of allowed values
+#     llm_eval:  prompt for LLM-based evaluation (pass/fail or rubric)
 
 # =============================================================================
 # COLOR
@@ -26,7 +27,7 @@ color:
   # ---------------------------------------------------------------------------
   brand_teal:
     id: "color.brand-teal"
-    type: "value"
+    type: "reference"
     oklch: "oklch(0.75 0.1286 191.57)"
     hex: "#0fc8c3"
     hsl: "hsl(178, 86%, 42%)"
@@ -45,6 +46,8 @@ color:
         description: "Brand teal on light backgrounds is decorative only — not for text"
         severity: "error"
         type: "constraint"
+        test:
+          regex: "color:\\s*oklch\\(0\\.75\\s+0\\.1286|color:\\s*#0fc8c3|color:\\s*var\\(--brand-verdigris\\)"
 
   # ---------------------------------------------------------------------------
   # Brand gradient stops (for reference — enforce order only)
@@ -1727,6 +1730,8 @@ composition:
         description: "The turn should follow at least one evidence or proof section. The shift hits harder after the reader has absorbed information."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Does the page have an accent or highlighted section that appears before any evidence or proof section? Answer YES if the accent comes too early, NO if it follows evidence."
 
     # --- Coupling rules (mechanical floor) ---
     # Grounded in readability research. Apply regardless of narrative role.
@@ -1927,10 +1932,14 @@ composition:
         description: "Every primary CTA needs micro-reassurance within 1rem below: 'No credit card required,' 'Cancel anytime,' '30-second setup.'"
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Does the primary CTA button have micro-reassurance text (e.g., 'No credit card required', 'Cancel anytime', '30-second setup') within 1rem below it? Answer YES if reassurance is present, NO if missing."
       - id: "composition.convert-web-page.funnel.no-escape"
         description: "Convert pages should minimize navigation distractions. Reduced header, no sidebar, no competing links in the main content area."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Does this convert page have a full navigation header, sidebar, or competing links in the main content area that distract from the primary conversion action? Answer YES if distractions are present, NO if the page is focused."
     coupling:
       - id: "composition.convert-web-page.coupling.tight-spacing"
         description: "Section padding 3rem-4rem. Momentum over luxury. No 8rem hero-scale padding."
@@ -1981,6 +1990,8 @@ composition:
         description: "Single column layout, 600px max. Multi-column breaks on mobile email clients."
         severity: "error"
         type: "constraint"
+        test:
+          max: 600
       - id: "composition.persuade-email.cta-per-section"
         description: "One CTA per content section. Multiple competing CTAs reduce click-through."
         severity: "warning"
@@ -2094,10 +2105,25 @@ composition:
         description: "B2B AI interactions favor competence over personality. No emoji in AI responses, no casual tone, no character-driven interactions."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval:
+            prompt: "Evaluate this AI chat response for personality signals that conflict with B2B infrastructure professionalism."
+            rubric:
+              - criterion: "Emoji usage"
+                score: "0 = none, 5 = occasional, 10 = frequent"
+                fail_threshold: 1
+              - criterion: "Casual or informal tone"
+                score: "0 = professional, 5 = mixed, 10 = chatbot personality"
+                fail_threshold: 3
+              - criterion: "Character-driven language"
+                score: "0 = infrastructure voice, 5 = some personality, 10 = animated avatar energy"
+                fail_threshold: 2
       - id: "composition.assist-chat.flat-layout"
         description: "AI responses use flat document layout, not chat bubbles. Bubbles are for consumer messaging, not expert tools."
         severity: "warning"
         type: "constraint"
+        test:
+          regex: "chat-bubble|message-bubble|bubble-|rounded-full.*message"
 
   # ---------------------------------------------------------------------------
   # ASSIST x EMBEDDED — AI-generated content within other surfaces
@@ -2119,6 +2145,8 @@ composition:
         description: "AI-generated content on non-chat surfaces must have a consistent visual marker distinguishing it from human-authored content."
         severity: "error"
         type: "constraint"
+        test:
+          regex: "border-l-2|border-left.*2px|ai-marker|provenance|data-ai-generated"
       - id: "composition.assist-embedded.provenance"
         description: "AI-generated content must include machine-readable provenance metadata. EU AI Act Article 50 compliance required by August 2026."
         severity: "error"
@@ -2205,10 +2233,14 @@ composition:
         description: "Figures have 2rem margin above and below within their episode. They breathe separately from prose."
         severity: "warning"
         type: "constraint"
+        test:
+          min: "2rem"
       - id: "composition.narrate-web-page.coupling.no-marketing-patterns"
         description: "No CTA buttons in prose sections. No gradient strips. No card grids as content (cards may appear inside figures). The page is an essay, not a landing page."
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Does this editorial/narrate page section contain CTA buttons in prose, gradient strips, card grids used as content, or other marketing landing page patterns? Answer YES if marketing patterns are found, NO if the section is pure editorial."
 
   # ---------------------------------------------------------------------------
   # INSTRUCT x MACHINE — AI agents consuming the design system
@@ -2226,5 +2258,4 @@ composition:
     rules:
       - id: "composition.instruct-machine.floors-and-ceilings"
         description: "Every guidance rule that sets a minimum must also set a maximum. AI agents interpret 'at least 2' as 'use as many as possible.'"
-        severity: "error"
-        type: "constraint"
+        type: "reference"
