@@ -757,12 +757,16 @@ spacing:
   # Responsive hero heights
   # ---------------------------------------------------------------------------
   hero_height:
-    base: "22rem"           # 352px — mobile
-    sm: "25rem"             # 400px at 640px+
-    md: "31.25rem"          # 500px at 768px+
+    base: "min(100svh, 50rem)"    # full viewport on mobile, capped at 800px on large screens
+    sm: "min(100svh, 50rem)"      # 640px+
+    md: "min(100svh, 50rem)"      # 768px+
+    min: "22rem"                  # floor — never shorter than 352px regardless of viewport
+    preferred_unit: "svh"         # small viewport height — excludes mobile browser chrome
+    fallback_unit: "vh"           # for browsers without svh support
     breakpoints:
       sm: "640px"
       md: "768px"
+    description: "Hero fills the viewport using svh (small viewport height) to avoid content hiding behind mobile browser chrome. Capped at 50rem (800px) so the hero doesn't become an empty wasteland on tall monitors. The 22rem floor ensures content is visible even in extreme landscape orientations."
 
 
 # =============================================================================

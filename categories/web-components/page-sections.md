@@ -216,9 +216,9 @@ The first section on a persuade page. Serves the **hook** narrative role: captur
 | Property | Value | Rule reference |
 |----------|-------|----------------|
 | Background | `color.neutral.950` (dark) | `composition.persuade-web-page.hook` |
-| Min height (mobile) | 22rem | `spacing.hero_height.base` |
-| Min height (sm 640px+) | 25rem | `spacing.hero_height.sm` |
-| Min height (md 768px+) | 31.25rem | `spacing.hero_height.md` |
+| Min height | `min(100svh, 50rem)` with 22rem floor | `spacing.hero_height.base` |
+| Viewport unit | `svh` (small viewport height), `vh` fallback | `spacing.hero_height.preferred_unit` |
+| Max height | 50rem (800px) cap on tall screens | `spacing.hero_height.base` |
 | Section padding | 8rem minimum | `composition.persuade-web-page.coupling.dark-padding` |
 | Body line-height | 1.65-1.75 | `composition.persuade-web-page.coupling.tinted-line-height` |
 | Max line length | 65ch | `composition.persuade-web-page.coupling.tinted-line-length` |
