@@ -27,10 +27,12 @@ With 60%+ of traffic arriving from LLMs with intent already shaped, each page mu
 | **Convert** | Focus earns trust | Value (one sentence) > options (max 3) > reassurance > action (single CTA) |
 | **Narrate** | Honesty earns trust | Curiosity (opening) > understanding (episodes) > respect (reflection) > thinking (closing) |
 | **Assist** | Competence earns trust | Answer first > evidence (citations, data) > depth (interactive artifacts) |
+| **Identify** | N/A (single moment, not a trust sequence) | Recognition in under 3 seconds. No narrative arc. |
+| **Instruct** | N/A (machine-to-machine, structural) | Rule clarity > completeness > enforceability. No visual register. |
 
 | Purpose | What it does | Color budget | Spacing | Rhythm |
 |---------|-------------|-------------|---------|--------|
-| **Persuade** | Sell, convince, inspire | Trust + 1 earned accent | Generous (5-8rem sections) | Narrative arc |
+| **Persuade** | Sell, convince, inspire | Trust + 1 earned accent | Generous (4-14rem; see coupling rules) | Narrative arc |
 | **Inform** | Explain, document, teach | Teal only | Tight (3rem sections) | Steady, scannable |
 | **Analyze** | Show data, monitor, compare | Full palette | Compact (1-3rem panels) | Dashboard grid |
 | **Convert** | Drive a single action | 1 accent (CTA only) | Focused (4rem) | Linear funnel |

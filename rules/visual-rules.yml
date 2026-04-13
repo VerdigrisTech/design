@@ -1667,9 +1667,7 @@ composition:
           max_pages: 1
         secondary:
           hero: "Compact: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding"
-          turn_allowed:
-            value: true
-            condition: "page_section_count >= 6"
+          turn_allowed: true  # conditional: only if page_section_count >= 6 (enforced in turn-scarcity rule)
           color_budget: "trust only (teal + neutrals)"
           example: "Product, Platform"
         tertiary:
@@ -1708,19 +1706,15 @@ composition:
         type: "constraint"
         test:
           llm_eval: "Do any two pages that both have accent/turn moments use the same palette region (e.g., both midnight-purple, both cyber-yellow)? Answer YES if accents repeat across pages, NO if they use different regions."
+          input_scope: ["all_pages_with_turn_moments"]
 
       - id: "composition.site-level.purpose-de-escalation"
-        description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch."
+        description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch. Transitions: persuade-to-persuade reduces (secondary hero, no turn unless 6+ sections); persuade-to-inform reduces (no hero, metronomic rhythm); persuade-to-convert reduces sharply (minimal hero, single CTA, no turn); inform-to-convert maintains (both low-energy); any-to-narrate resets (own register)."
         severity: "warning"
         type: "constraint"
-        transitions:
-          persuade_to_persuade: "Reduce: secondary hero, no turn unless page has 6+ sections"
-          persuade_to_inform: "Reduce: no hero, metronomic rhythm"
-          persuade_to_convert: "Reduce sharply: minimal hero, single CTA, no turn"
-          inform_to_convert: "Maintain: both are low-energy"
-          any_to_narrate: "Reset: narrate has its own register"
         test:
-          llm_eval: "Compare the visual intensity (hero weight, accent usage, section count) of this page to the page that links to it. Does the current page maintain or increase intensity relative to a higher-tier page? Answer YES if intensity fails to de-escalate, NO if it de-escalates or maintains appropriately."
+          llm_eval: "Given the upstream page (the page that links to this one) and this page, compare their visual intensity (hero weight, accent usage, section count, color budget). Does this page maintain or increase intensity when it should de-escalate? Answer YES if intensity fails to de-escalate, NO if it de-escalates or maintains appropriately."
+          input_scope: ["upstream_page", "current_page"]
 
       - id: "composition.site-level.navigation-continuity"
         description: "Header and footer are compositional invariants across all pages. No per-page header or footer styling. The header is always the lightest element; the footer is always dark. Structural invariant -- violations break site identity across every page."
@@ -1793,7 +1787,7 @@ composition:
         description: "Shift the feeling. The one earned accent moment — this is the conversion point. Pre-attentive capture draws the eye here. Place on the most important value proposition."
         color_intensity: "accent"
         type_max: "h2"
-        section_padding: "5rem"
+        section_padding: { min: "5rem", max: "10rem" }
         elements: ["heading", "body copy", "stats row", "CTA link"]
         accent_rule: "The turn section gets the palette accent. Choose the palette region that matches the content category (e.g., detection -> energy region)."
       proof:
@@ -1861,18 +1855,24 @@ composition:
             then: { section_padding: { min: "5rem", max: "10rem" } }
       color_to_typography:
         - id: "composition.persuade-web-page.coupling.tinted-line-height"
-          description: "Tinted or dark backgrounds loosen body line-height to 1.65-1.75 for readability. Cyan-family tints aid reading; other tints slightly reduce it."
+          description: "Tinted or dark backgrounds loosen body line-height to 1.65-1.75 for readability."
           severity: "warning"
           type: "constraint"
           test:
-            when: { background_chroma: { min: 0.01 } }
+            when:
+              any_of:
+                - { background_chroma: { min: 0.01 } }
+                - { background_lightness: { max: 0.3 } }
             then: { body_line_height: { min: 1.65, max: 1.75 } }
         - id: "composition.persuade-web-page.coupling.tinted-line-length"
-          description: "Tinted or dark backgrounds use tighter max line length (65ch vs 75ch default). Colored backgrounds add visual noise — shorter lines reduce cognitive load."
+          description: "Tinted or dark backgrounds use tighter max line length (65ch vs 75ch default). Reduced line length offsets the cognitive load of colored or dark surfaces."
           severity: "warning"
           type: "constraint"
           test:
-            when: { background_chroma: { min: 0.01 } }
+            when:
+              any_of:
+                - { background_chroma: { min: 0.01 } }
+                - { background_lightness: { max: 0.3 } }
             then: { max_line_length: "65ch" }
         - id: "composition.persuade-web-page.coupling.dark-letter-spacing"
           description: "Body text on dark backgrounds gets slightly looser letter-spacing (+0.01em) for readability."
@@ -2330,20 +2330,25 @@ composition:
     # --- Coupling rules ---
     coupling:
       - id: "composition.narrate-web-page.coupling.prose-spacing"
-        description: "Prose sections use 5rem padding. Figures within episodes use 3rem padding. Opening and closing use 8rem."
+        description: "Prose sections use 5rem padding. Figures within episodes use 3rem margin. Opening and closing use 8rem."
         severity: "warning"
         type: "constraint"
+        test:
+          opening: { section_padding: { min: "8rem", max: "14rem" } }
+          episode: { section_padding: { min: "5rem", max: "8rem" } }
+          figure:  { margin: { min: "3rem", max: "5rem" } }
+          closing: { section_padding: { min: "8rem", max: "14rem" } }
       - id: "composition.narrate-web-page.coupling.long-form-line-height"
         description: "Body line-height 1.7 for sustained reading. Looser than persuade (1.6). Magazine-grade readability."
         severity: "warning"
         type: "constraint"
         test: { body_line_height: { min: 1.7, max: 1.85 } }
       - id: "composition.narrate-web-page.coupling.figure-margin"
-        description: "Figures have 2rem margin above and below within their episode. They breathe separately from prose."
+        description: "Figures have 3rem margin above and below within their episode. They breathe separately from prose."
         severity: "warning"
         type: "constraint"
         test:
-          min: "2rem"
+          figure_margin: { min: "3rem", max: "5rem" }
       - id: "composition.narrate-web-page.coupling.no-marketing-patterns"
         description: "No CTA buttons in prose sections. No gradient strips. No card grids as content (cards may appear inside figures). The page is an essay, not a landing page."
         severity: "error"
