@@ -37,19 +37,44 @@
       "$description": "80px vertical padding for secondary sections"
     },
     "hero-height": {
-      "$value": "22rem",
+      "$value": "60vh",
       "$type": "dimension",
-      "$description": "352px mobile hero height"
+      "$description": "Mobile hero min-height. Viewport-relative so the hero scales with screen size."
     },
     "hero-height-sm": {
-      "$value": "25rem",
+      "$value": "70vh",
       "$type": "dimension",
-      "$description": "400px at 640px+"
+      "$description": "Hero min-height at 640px+"
     },
     "hero-height-md": {
-      "$value": "31.25rem",
+      "$value": "75vh",
       "$type": "dimension",
-      "$description": "500px at 768px+"
+      "$description": "Hero min-height at 768px+"
+    },
+    "section-pad-hook": {
+      "$value": "8rem",
+      "$type": "dimension",
+      "$description": "Hook/close sections: generous padding. Desktop value; use section-pad-hook-mobile on small screens."
+    },
+    "section-pad-hook-mobile": {
+      "$value": "4rem",
+      "$type": "dimension",
+      "$description": "Hook/close sections on mobile (< 640px)"
+    },
+    "section-pad-hook-tablet": {
+      "$value": "6rem",
+      "$type": "dimension",
+      "$description": "Hook/close sections on tablet (640-767px)"
+    },
+    "section-pad-turn": {
+      "$value": "5rem",
+      "$type": "dimension",
+      "$description": "Turn section padding. The earned accent moment needs room to breathe."
+    },
+    "section-pad-turn-mobile": {
+      "$value": "4rem",
+      "$type": "dimension",
+      "$description": "Turn section padding on mobile"
     }
   }
 }
