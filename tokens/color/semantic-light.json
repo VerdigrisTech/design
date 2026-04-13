@@ -79,6 +79,51 @@
         "$value": "{color.brand.pastel-red}",
         "$type": "color",
         "$description": "Sidebar uses brand pastel-red for active state — both light and dark"
+      },
+      "section-hook-bg": {
+        "$value": "{color.neutral.950}",
+        "$type": "color",
+        "$description": "Hook/close section background. Full expression — dark."
+      },
+      "section-hook-fg": {
+        "$value": "{color.neutral.50}",
+        "$type": "color",
+        "$description": "Hook/close section foreground text."
+      },
+      "section-context-bg": {
+        "$value": "{color.neutral.100}",
+        "$type": "color",
+        "$description": "Context section background. Breathing room — light neutral."
+      },
+      "section-evidence-bg": {
+        "$value": "{color.neutral.white}",
+        "$type": "color",
+        "$description": "Evidence/proof section background. Clean white with optional teal label."
+      },
+      "section-turn-bg-from": {
+        "$value": "hsl(34, 100%, 53%, 0.06)",
+        "$type": "color",
+        "$description": "Turn section gradient start. Earned accent — warm tint from brand palette (cyber-yellow region)."
+      },
+      "section-turn-bg-to": {
+        "$value": "hsl(49, 100%, 50%, 0.04)",
+        "$type": "color",
+        "$description": "Turn section gradient end."
+      },
+      "section-turn-border": {
+        "$value": "hsl(34, 100%, 53%, 0.4)",
+        "$type": "color",
+        "$description": "Turn section left border accent."
+      },
+      "section-close-bg": {
+        "$value": "{color.neutral.950}",
+        "$type": "color",
+        "$description": "Close section background. Bookends the hook — returns to full expression."
+      },
+      "section-close-fg": {
+        "$value": "{color.neutral.50}",
+        "$type": "color",
+        "$description": "Close section foreground text."
       }
     }
   }

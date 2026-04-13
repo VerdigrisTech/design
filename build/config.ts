@@ -185,6 +185,9 @@ function generateOklchCss(
     const val = String(token.$value);
     if (val.includes("oklch") || val.startsWith("#")) {
       out += `  ${toCssVarName(path)}: ${val};\n`;
+    } else if (val.includes("hsl") || val.includes("rgb")) {
+      // Pass through raw HSL/RGB values (e.g., semi-transparent section-role tokens)
+      out += `  ${toCssVarName(path)}: ${val};\n`;
     }
   }
   out += "}\n\n";
@@ -209,6 +212,9 @@ function generateHslCss(
     if (val.includes("oklch")) {
       const hsl = oklchToHsl(val);
       if (hsl) out += `  ${toCssVarName(path)}: ${hsl};\n`;
+    } else if (val.includes("hsl") || val.includes("rgb")) {
+      // Raw HSL/RGB values (e.g., semi-transparent section-role tokens) — pass through
+      out += `  ${toCssVarName(path)}: ${val};\n`;
     }
   }
   out += "}\n\n";
@@ -219,7 +225,7 @@ function generateHslCss(
       const hsl = oklchToHsl(val);
       if (hsl) out += `  ${toCssVarName(path)}: ${hsl};\n`;
     } else {
-      // Semi-transparent values (e.g., "oklch(1 0 0 / 10%)") — pass through
+      // Semi-transparent values (e.g., raw hsl/oklch with alpha) — pass through
       out += `  ${toCssVarName(path)}: ${val};\n`;
     }
   }

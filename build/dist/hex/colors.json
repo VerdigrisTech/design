@@ -48,5 +48,11 @@
   "color.semantic.border": "#e4e4e7",
   "color.semantic.input": "#e4e4e7",
   "color.semantic.ring": "#9f9fa9",
-  "color.semantic.sidebar-primary": "#ff6361"
+  "color.semantic.sidebar-primary": "#ff6361",
+  "color.semantic.section-hook-bg": "#09090b",
+  "color.semantic.section-hook-fg": "#fafafa",
+  "color.semantic.section-context-bg": "#f4f4f5",
+  "color.semantic.section-evidence-bg": "#ffffff",
+  "color.semantic.section-close-bg": "#09090b",
+  "color.semantic.section-close-fg": "#fafafa"
 }

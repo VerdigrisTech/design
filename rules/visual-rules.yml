@@ -2,8 +2,8 @@
 # Machine-enforceable rules for evaluator pipelines.
 # Consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
 #
-# Version: 2.1.0
-# Last updated: 2026-04-10
+# Version: 2.2.0
+# Last updated: 2026-04-13
 #
 # Schema: visual-rules/2.1.0
 # Every enforceable rule entry MUST have:
@@ -11,12 +11,21 @@
 #   severity:    "error" | "warning"
 #   type:        "value" | "pattern" | "constraint" | "reference"
 #   description: human-readable explanation
-#   test:        machine-testable field — one of:
+#   test:        machine-testable field -- one of:
 #     regex:     regex pattern to match/flag in source
 #     min/max:   numeric bounds
 #     value:     exact required value
 #     values:    set of allowed values
-#     llm_eval:  prompt for LLM-based evaluation (pass/fail or rubric)
+#     llm_eval:  LLM-based evaluation -- two formats:
+#       (string)  simple yes/no prompt, e.g. "Does this page have...? Answer YES/NO"
+#       (object)  structured evaluation with:
+#         prompt:       evaluation instruction for the LLM
+#         rubric:       array of { criterion, score, fail_threshold }
+#         aggregation:  pass/fail logic across rubric criteria
+#       Convention: YES = violation found (rule FAILS). NO = condition met (rule PASSES).
+#     input_scope: (optional, peer of llm_eval inside test block) array of context labels
+#                  for multi-page evaluation. Tells the evaluator what pages to provide.
+#                  e.g. ["all_pages_with_turn_moments"] or ["upstream_page", "current_page"]
 
 # =============================================================================
 # COLOR
@@ -31,7 +40,7 @@ color:
     oklch: "oklch(0.75 0.1286 191.57)"
     hex: "#0fc8c3"
     hsl: "hsl(178, 86%, 42%)"
-    usage: "Decorative brand color — backgrounds, illustrations, data viz"
+    usage: "Decorative brand color -- backgrounds, illustrations, data viz"
     never_as_text_on_white: true   # Fails WCAG AA (contrast ~2.9:1 on white)
     ok_on_dark_backgrounds: true   # Passes AA on neutral.950 and darker
     min_background_lightness: 0.35 # OKLch L* of background must be <= this for teal text
@@ -43,14 +52,14 @@ color:
         test:
           max: 0.35              # OKLch L* of background for teal text
       - id: "color.brand-teal.decorative-only-light"
-        description: "Brand teal on light backgrounds is decorative only — not for text"
+        description: "Brand teal on light backgrounds is decorative only -- not for text"
         severity: "error"
         type: "constraint"
         test:
           regex: "color:\\s*oklch\\(0\\.75\\s+0\\.1286|color:\\s*#0fc8c3|color:\\s*var\\(--brand-verdigris\\)"
 
   # ---------------------------------------------------------------------------
-  # Brand gradient stops (for reference — enforce order only)
+  # Brand gradient stops (for reference -- enforce order only)
   # ---------------------------------------------------------------------------
   brand_gradient:
     id: "color.brand-gradient"
@@ -124,41 +133,41 @@ color:
       value: "oklch(0.552 0.016 285.938)"    # neutral.500
 
   # ---------------------------------------------------------------------------
-  # Banned colors — flag if found in source
+  # Banned colors -- flag if found in source
   # ---------------------------------------------------------------------------
   banned_colors:
     id: "color.banned"
     type: "pattern"
     severity: "error"
-    description: "Flag banned color literals in source — use design tokens instead"
+    description: "Flag banned color literals in source -- use design tokens instead"
     items:
       - value: "#ff0000"
-        reason: "Pure red — use status.destructive-light or destructive-dark"
+        reason: "Pure red -- use status.destructive-light or destructive-dark"
       - value: "#00ff00"
-        reason: "Pure green — off-brand"
+        reason: "Pure green -- off-brand"
       - value: "#0000ff"
-        reason: "Pure blue — off-brand"
+        reason: "Pure blue -- off-brand"
       - value: "#000000"
-        reason: "Pure black — use neutral.950 oklch(0.141 0.005 285.823)"
+        reason: "Pure black -- use neutral.950 oklch(0.141 0.005 285.823)"
         context: "background"  # Only banned as background; OK in SVG strokes
       - value: "#ffffff"
         reason: "Prefer neutral.50 for foreground in dark mode"
         context: "dark_mode_text"
         severity: "warning"
       - value: "rgb(0, 0, 255)"
-        reason: "Pure blue — off-brand"
+        reason: "Pure blue -- off-brand"
       - value: "rgb(255, 0, 0)"
-        reason: "Pure red — use status tokens"
+        reason: "Pure red -- use status tokens"
       - value: "rgb(0, 255, 0)"
-        reason: "Pure green — off-brand"
+        reason: "Pure green -- off-brand"
       - value: "#ff00ff"
-        reason: "Magenta — off-brand"
+        reason: "Magenta -- off-brand"
       - value: "#800080"
-        reason: "Generic purple — use brand.midnight-purple"
+        reason: "Generic purple -- use brand.midnight-purple"
       - value: "#ffa500"
-        reason: "Generic orange — off-brand"
+        reason: "Generic orange -- off-brand"
       - value: "#008000"
-        reason: "Generic green — off-brand"
+        reason: "Generic green -- off-brand"
 
   # ---------------------------------------------------------------------------
   # Neutral palette (for rule cross-referencing)
@@ -189,7 +198,7 @@ color:
     destructive_dark: "oklch(0.704 0.191 22.216)"
 
   # ---------------------------------------------------------------------------
-  # Palette semantic roles — machine-consumable color usage guidance
+  # Palette semantic roles -- machine-consumable color usage guidance
   # Maps palette regions to content categories for AI agents and evaluators.
   # The design system defines what colors MEAN, not just what they ARE.
   # ---------------------------------------------------------------------------
@@ -220,7 +229,7 @@ color:
       depth:
         id: "color.palette-semantics.depth"
         type: "reference"
-        description: "Intelligence, sophistication, premium. The deep end of the palette — works exceptionally in dark mode."
+        description: "Intelligence, sophistication, premium. The deep end of the palette -- works exceptionally in dark mode."
         tokens: ["color.brand.mix-step-3", "color.brand.midnight-purple"]
         hue_range: "265°–289°"
         lightness_range: "0.29–0.41"
@@ -231,8 +240,8 @@ color:
           - "footer and deep navigation"
         usage:
           section_accent: "Dark section backgrounds, hero overlays, gradient endpoints"
-          text: "NOT as text — too dark (L=0.29-0.41), invisible on dark backgrounds"
-          dark_mode_tint: "oklch(0.29 0.1506 289.33 / 18%) over neutral.950 — use 18%+ for perceptibility"
+          text: "NOT as text -- too dark (L=0.29-0.41), invisible on dark backgrounds"
+          dark_mode_tint: "oklch(0.29 0.1506 289.33 / 18%) over neutral.950 -- use 18%+ for perceptibility"
         constraints:
           min_tint_opacity: 0.15
           reason: "Below 15% opacity, midnight-purple (chroma 0.15) is indistinguishable from neutral gray"
@@ -285,8 +294,8 @@ color:
           - "positive performance indicators"
         usage:
           section_accent: "Metric highlights, stat number accents, subtle warm backgrounds"
-          text: "HIGH CONTRAST RISK — these are very light (L=0.79-0.87). Only use on dark backgrounds."
-          dark_mode_tint: "oklch(0.87 0.1786 92.23 / 8%) over neutral.950 — visible due to high lightness"
+          text: "HIGH CONTRAST RISK -- these are very light (L=0.79-0.87). Only use on dark backgrounds."
+          dark_mode_tint: "oklch(0.87 0.1786 92.23 / 8%) over neutral.950 -- visible due to high lightness"
 
       growth:
         id: "color.palette-semantics.growth"
@@ -302,7 +311,7 @@ color:
           - "completion and success states"
         usage:
           section_accent: "Background tints for outcome/success sections"
-          text: "Light (L=0.75-0.81) — dark backgrounds only"
+          text: "Light (L=0.75-0.81) -- dark backgrounds only"
           dark_mode_tint: "oklch(0.7698 0.1588 137.1 / 10%) over neutral.950"
 
       neutral:
@@ -316,7 +325,7 @@ color:
           - "breathing room between colored sections"
           - "form and input backgrounds"
         usage:
-          section_accent: "Default section backgrounds — white/neutral.100 (light), neutral.950/900 (dark)"
+          section_accent: "Default section backgrounds -- white/neutral.100 (light), neutral.950/900 (dark)"
           text: "Primary text color in both modes"
 
     # --- Taste boundaries (upper AND lower) ---
@@ -328,7 +337,7 @@ color:
     # "Every element earns its place." (Precision)
     #
     # These rules codify restraint. Without ceilings, an AI agent will
-    # optimize toward maximum palette coverage — which reads as a rainbow.
+    # optimize toward maximum palette coverage -- which reads as a rainbow.
     # Color is earned, not assigned by lookup table.
     #
     taste_boundaries:
@@ -336,14 +345,18 @@ color:
         id: "color.palette-semantics.teal-dominance"
         severity: "error"
         type: "constraint"
-        description: "Teal (trust region) + neutrals must comprise at least 70% of any surface's color expression. The brand IS teal — other palette regions are rare accents, not co-primaries. 'Controlled color palette, no visual clutter.' (Masterful pillar)"
+        description: "Teal (trust region) + neutrals must comprise at least 70% of any surface's color expression. The brand IS teal -- other palette regions are rare accents, not co-primaries. 'Controlled color palette, no visual clutter.' (Masterful pillar)"
         test:
           min: 0.7
+        measurement_heuristic: "Count colored elements on the page (buttons, borders, badges, gradient stops, icons with non-neutral fill). No more than 3 of every 10 colored elements should use non-teal accents. Neutral elements (text, backgrounds, borders using gray/white/black) are excluded from the count."
       max_regions_per_surface:
         id: "color.palette-semantics.max-regions"
         severity: "error"
         type: "constraint"
-        description: "Maximum non-neutral palette regions per surface. 'Subtle use of the brand gradient.' (Refined pillar) — every accent must earn its place."
+        description: "Maximum non-neutral palette regions per surface. 'Subtle use of the brand gradient.' (Refined pillar) -- every accent must earn its place."
+        test:
+          max: 2
+          note: "Default max is 2 (web_page). Specific surface limits: landing_page=1, ad_banner=1, email=1, data_visualization=6. Count distinct non-neutral palette regions used."
         web_page: 2           # Homepage/landing: trust + 1 accent (2 accents for long pages with 10+ sections, requires justification)
         landing_page: 1       # Focused landing pages: trust only (+ neutrals)
         ad_banner: 1          # Ads: brand teal only (+ neutrals)
@@ -363,24 +376,31 @@ color:
     # --- Section color rules (evaluator-enforceable) ---
     rules:
       - id: "color.palette-semantics.no-monotone"
-        description: "Homepage should use at least 1 palette region beyond teal + neutrals for visual interest (but no more than 2 total non-neutral regions — see max-regions)"
+        description: "Homepage should use at least 1 palette region beyond teal + neutrals for visual interest (but no more than 2 total non-neutral regions -- see max-regions)"
         severity: "warning"
         type: "constraint"
         test:
           min: 1
           max: 2
       - id: "color.palette-semantics.no-random-color"
-        description: "Section accent colors must match the content category — do not assign palette regions arbitrarily"
+        description: "Section accent colors must match the content category -- do not assign palette regions arbitrarily"
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Does any non-neutral colored section use a palette region that does not match its content category (as defined in color.palette-semantics.regions)? Answer YES if any accent color is arbitrary or unjustified, NO if every accent matches its section content."
       - id: "color.palette-semantics.adjacent-colored-sections"
         description: "Never place two non-neutral colored sections adjacent to each other. Always separate with a neutral section."
         severity: "error"
         type: "constraint"
+        test:
+          max: 0
       - id: "color.palette-semantics.dark-tint-opacity"
-        description: "Dark mode brand tints must use 15%+ opacity for depth region, 10%+ for others — below this they are imperceptible"
+        description: "Dark mode brand tints must use 15%+ opacity for depth region, 10%+ for others -- below this they are imperceptible"
         severity: "error"
         type: "constraint"
+        test:
+          min: 0.10
+          note: "depth region requires min 0.15; all other regions require min 0.10"
       - id: "color.palette-semantics.tint-contrast"
         description: "Text on brand-tinted dark backgrounds must still pass WCAG AA (4.5:1). Verify contrast after applying tint."
         severity: "error"
@@ -388,12 +408,14 @@ color:
         test:
           min: 4.5
       - id: "color.palette-semantics.accent-subtlety"
-        description: "Section palette accents should be subtle — background tints and label colors, NOT full-saturation section backgrounds. The palette region informs a hint, not a paint job."
+        description: "Section palette accents should be subtle -- background tints and label colors, NOT full-saturation section backgrounds. The palette region informs a hint, not a paint job."
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Does any section use a brand color at full saturation as its background rather than as a subtle tint, border, or label? Answer YES if any accent is used at full saturation as a section background, NO if all accents are restrained hints."
 
   # ---------------------------------------------------------------------------
-  # Section flow rules — lightness rhythm and transition discipline
+  # Section flow rules -- lightness rhythm and transition discipline
   #
   # Pages have a lightness direction. Alternating dark/light sections
   # creates a strobe effect. Commit to a direction and vary within it;
@@ -409,6 +431,8 @@ color:
       severity: "error"
       type: "constraint"
       description: "Commit to a lightness direction within content sections. A light-mode page flows through light backgrounds (white ↔ neutral.100 ↔ neutral.50). A dark-mode page flows through dark backgrounds (neutral.950 ↔ neutral.900 ↔ neutral.800). Do not alternate between dark and light sections within the same content flow."
+      test:
+        llm_eval: "Do the content sections (excluding hero and footer) alternate between dark and light backgrounds rather than committing to a single lightness direction? Answer YES if sections break lightness consistency, NO if they maintain a consistent lightness range throughout."
 
     tonal_variation:
       id: "color.section-flow.tonal-variation"
@@ -429,14 +453,16 @@ color:
       test:
         max: 1
       exceptions:
-        - "Hero section (always dark) does not count toward the limit — it precedes the content flow"
-        - "Footer (always dark) does not count — it closes the page"
+        - "Hero section (always dark) does not count toward the limit -- it precedes the content flow"
+        - "Footer (always dark) does not count -- it closes the page"
 
     hero_transition:
       id: "color.section-flow.hero-transition"
       severity: "warning"
       type: "constraint"
       description: "If the hero is dark and the content flow is light, the transition should happen once at the hero boundary. Do not return to dark until the accent moment (if any)."
+      test:
+        llm_eval: "After the hero-to-content transition, does the page return to a dark background before the allowed accent moment or footer? Answer YES if there are additional dark sections within the content flow, NO if the dark-to-light transition happens exactly once at the hero boundary."
 
     rules:
       - id: "color.section-flow.no-strobe"
@@ -456,6 +482,8 @@ color:
         description: "Within a content flow, text color should stay consistent. Light flow = dark text throughout. Dark flow = light text throughout. Do not force the reader to re-adapt between sections."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Within the content flow (excluding hero and footer), does the text color change between sections? Answer YES if text color varies across content sections, NO if it stays uniform throughout."
 
 
 # =============================================================================
@@ -463,13 +491,13 @@ color:
 # =============================================================================
 typography:
   # ---------------------------------------------------------------------------
-  # Font stacks — enforceable via CSS audit
+  # Font stacks -- enforceable via CSS audit
   # ---------------------------------------------------------------------------
   font_stacks:
     id: "typography.font-stacks"
     type: "value"
     severity: "error"
-    description: "Required font families — flag if other fonts appear in source"
+    description: "Required font families -- flag if other fonts appear in source"
     body:
       family: "Inter"
       fallback: "Inter, ui-sans-serif, system-ui, -apple-system, sans-serif"
@@ -485,7 +513,7 @@ typography:
       usage: "Code blocks, technical values, data labels"
 
   # ---------------------------------------------------------------------------
-  # Heading sizes — desktop AND mobile breakpoints
+  # Heading sizes -- desktop AND mobile breakpoints
   # Source of truth: tokens/typography/scale.json
   # ---------------------------------------------------------------------------
   headings:
@@ -556,7 +584,7 @@ typography:
       type: "constraint"
       element: "h1, h2, h3"
       allowed_weights: [700]
-      description: "Headings must be bold (700). brand_rules.yml says 600 for H2 — WRONG, CSS is truth."
+      description: "Headings must be bold (700). brand_rules.yml says 600 for H2 -- WRONG, CSS is truth."
       test:
         values: [700]
     - id: "typography.weight.subheadings"
@@ -695,9 +723,11 @@ spacing:
   # 4px grid compliance
   # ---------------------------------------------------------------------------
   grid:
+    id: "spacing.grid"
+    type: "reference"
+    description: "All spacing values must be multiples of 4px"
     base_unit: "4px"
     base_rem: "0.25rem"
-    description: "All spacing values must be multiples of 4px"
     allowed_scale:
       - { token: "0", value: "0" }
       - { token: "1", value: "0.25rem" }    #  4px
@@ -713,29 +743,31 @@ spacing:
       - { token: "20", value: "5rem" }      # 80px
       - { token: "24", value: "6rem" }      # 96px
       - { token: "32", value: "8rem" }      # 128px
-    enforce: true
-    id: "spacing.grid"
-    severity: "error"
-    type: "constraint"
-    description: "All spacing values must be multiples of 4px"
-    exceptions:
-      - "1px"       # borders
-      - "0.375rem"  # 6px button radius (legacy)
-      - "0.625rem"  # 10px canonical radius
-      - "9999px"    # pill radius
+    rules:
+      - id: "spacing.grid.compliance"
+        description: "All spacing values must be multiples of 4px"
+        severity: "error"
+        type: "constraint"
+        exceptions:
+          - "1px"       # borders
+          - "0.375rem"  # 6px button radius (legacy)
+          - "0.625rem"  # 10px canonical radius
+          - "9999px"    # pill radius
+        test:
+          llm_eval: "Are any spacing values (margin, padding, gap, inset, width, height) not a multiple of 4px (excluding the listed exceptions: 1px, 0.375rem, 0.625rem, 9999px)? Answer YES if any non-exception spacing value is not a 4px multiple, NO if all comply."
 
   # ---------------------------------------------------------------------------
-  # Section padding — desktop and mobile
+  # Section padding -- desktop and mobile
   # ---------------------------------------------------------------------------
   section_padding:
     standard:
       desktop: "4rem"       # 64px vertical
-      mobile: "4rem"        # Same — standard sections don't shrink
+      mobile: "4rem"        # Same -- standard sections don't shrink
     large:
-      desktop: "8rem"       # 128px — hero/feature sections
+      desktop: "8rem"       # 128px -- hero/feature sections
       mobile: "5rem"        # 80px
     medium:
-      desktop: "5rem"       # 80px — secondary sections
+      desktop: "5rem"       # 80px -- secondary sections
       mobile: "5rem"
 
   # ---------------------------------------------------------------------------
@@ -757,16 +789,16 @@ spacing:
   # Responsive hero heights
   # ---------------------------------------------------------------------------
   hero_height:
-    base: "min(100svh, 50rem)"    # full viewport on mobile, capped at 800px on large screens
-    sm: "min(100svh, 50rem)"      # 640px+
-    md: "min(100svh, 50rem)"      # 768px+
-    min: "22rem"                  # floor — never shorter than 352px regardless of viewport
-    preferred_unit: "svh"         # small viewport height — excludes mobile browser chrome
-    fallback_unit: "vh"           # for browsers without svh support
+    base: "60vh"                  # mobile -- conservative to avoid scroll trap
+    sm: "70vh"                    # 640px+
+    md: "75vh"                    # 768px+
+    min: "22rem"                  # floor -- never shorter than 352px regardless of viewport
+    preferred_unit: "vh"          # viewport height -- universal support
+    note_on_svh: "svh (small viewport height) is preferable to avoid mobile browser chrome overlap, but vh has broader support. Use svh when the project's browser baseline allows it."
     breakpoints:
       sm: "640px"
       md: "768px"
-    description: "Hero fills the viewport using svh (small viewport height) to avoid content hiding behind mobile browser chrome. Capped at 50rem (800px) so the hero doesn't become an empty wasteland on tall monitors. The 22rem floor ensures content is visible even in extreme landscape orientations."
+    description: "Hero uses viewport-relative heights so it scales with screen size. 60/70/75vh provides a strong visual impression without trapping the user in a full-viewport scroll barrier. The 22rem floor ensures content visibility in extreme landscape orientations. IMPORTANT: Fixed rem values (22rem, 31rem) must not be used -- they break on non-standard viewports."
 
 
 # =============================================================================
@@ -792,12 +824,12 @@ motion:
     linear: "linear"        # Continuous rotation only
 
   # ---------------------------------------------------------------------------
-  # Named animation patterns — required CSS for each
+  # Named animation patterns -- required CSS for each
   # ---------------------------------------------------------------------------
   patterns:
     hover-lift:
       description: "Card/element lifts on hover with shadow"
-      duration: "300ms"                             # duration.moderate — matches hover-states.md
+      duration: "300ms"                             # duration.moderate -- matches hover-states.md
       easing: "ease"
       css: "transition: transform 300ms ease, box-shadow 300ms ease"
       transform: "translateY(-4px)"
@@ -860,7 +892,7 @@ motion:
       max: 500
 
   # ---------------------------------------------------------------------------
-  # Reduced motion — REQUIRED
+  # Reduced motion -- REQUIRED
   # ---------------------------------------------------------------------------
   reduced_motion:
     id: "motion.reduced-motion"
@@ -891,7 +923,7 @@ motion:
       }
 
   # ---------------------------------------------------------------------------
-  # Hover media query — REQUIRED for hover effects
+  # Hover media query -- REQUIRED for hover effects
   # ---------------------------------------------------------------------------
   hover_gate:
     id: "motion.hover-gate"
@@ -949,7 +981,7 @@ three_d_composition:
     type: "reference"
     description: "Scroll-driven product reveal for hardware pages. One layer per scroll viewport. Outside-in reveal order. Engineering annotations, not marketing copy."
     pacing: "One reveal per scroll viewport"
-    reveal_order: "Outside in — enclosure, sensing layer, processing layer"
+    reveal_order: "Outside in -- enclosure, sensing layer, processing layer"
     annotation_font: "JetBrains Mono, uppercase, 0.05em tracking, muted color"
     annotation_style: "Engineering documentation, not marketing copy"
     exit_state: "Hero-angle still after full reveal; scene does not follow scroll"
@@ -959,14 +991,20 @@ three_d_composition:
         description: "Do not use scroll-driven 3D on inform pages. 3D adds visual weight that conflicts with metronomic rhythm."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Does this inform-purpose page contain a scroll-driven 3D scene (WebGL canvas, Three.js, scroll-triggered 3D animation)? Answer YES if an inform page uses scroll-driven 3D, NO if it does not."
       - id: "three-d.hardware-exploder.no-convert"
         description: "Do not use 3D on convert pages. 3D is a distraction from the single action."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Does this convert-purpose page contain a 3D scene (WebGL canvas, Three.js, 3D animation)? Answer YES if a convert page uses 3D, NO if it does not."
       - id: "three-d.hardware-exploder.fallback-required"
         description: "Every scroll-driven 3D scene must have a static image fallback for devices without WebGL."
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Does every scroll-driven 3D scene on this page have a static image fallback (noscript img, picture element, or hidden static version) for devices without WebGL support? Answer YES if any 3D scene lacks a fallback, NO if all have fallbacks."
 
 
 # =============================================================================
@@ -978,26 +1016,26 @@ components:
   # ---------------------------------------------------------------------------
   radius:
     base:
-      value: "0.625rem"    # 10px — Patina canonical
+      value: "0.625rem"    # 10px -- Patina canonical
       description: "Primary radius. www should migrate from 0.5rem."
     sm:
       value: "calc(0.625rem - 4px)"  # ~6px
-      description: "Tight radius — inner elements, badges"
+      description: "Tight radius -- inner elements, badges"
     md:
       value: "calc(0.625rem - 2px)"  # ~8px
-      description: "Medium radius — inputs, small cards"
+      description: "Medium radius -- inputs, small cards"
     lg:
-      value: "0.625rem"    # 10px — same as base
-      description: "Large radius — cards, dialogs"
+      value: "0.625rem"    # 10px -- same as base
+      description: "Large radius -- cards, dialogs"
     xl:
       value: "calc(0.625rem + 4px)"  # ~14px
-      description: "Extra large — modals, prominent surfaces"
+      description: "Extra large -- modals, prominent surfaces"
     full:
       value: "9999px"
-      description: "Pill shape — tags, badges, avatars"
+      description: "Pill shape -- tags, badges, avatars"
     button:
-      value: "calc(0.625rem - 2px)"  # ~8px — Patina canonical
-      description: "Button radius — Patina canonical (~8px). See button_www_legacy for www override."
+      value: "calc(0.625rem - 2px)"  # ~8px -- Patina canonical
+      description: "Button radius -- Patina canonical (~8px). See button_www_legacy for www override."
     button_www_legacy:
       value: "0.375rem"    # 6px
       description: "www legacy button radius (6px). Pending migration to Patina canonical."
@@ -1035,10 +1073,14 @@ components:
         description: "Focus indicators must be visible in both light and dark modes"
         type: "constraint"
         severity: "error"
+        test:
+          llm_eval: "Does every interactive element's focus indicator remain visible in both light and dark modes? Answer YES if any focus indicator is invisible or nearly invisible in either mode, NO if all are visible in both."
       - id: "components.focus.not-color-only"
         description: "Focus must not rely solely on color change"
         type: "constraint"
         severity: "error"
+        test:
+          llm_eval: "Does any interactive element indicate focus using only a color change (no outline, border, shadow, or other non-color visual change)? Answer YES if focus relies solely on color, NO if a non-color indicator is present."
 
   # ---------------------------------------------------------------------------
   # Button styling rules
@@ -1048,9 +1090,9 @@ components:
       background: "oklch(0.21 0.006 285.885)"    # neutral.900
       text_color: "oklch(0.985 0 0)"              # neutral.50
       hover_background: "oklch(0.21 0.006 285.885 / 0.9)"
-      border_radius: "calc(0.625rem - 2px)"        # Patina canonical — 8px
+      border_radius: "calc(0.625rem - 2px)"        # Patina canonical -- 8px
       font_weight: 600
-      min_height: "2.5rem"                         # 40px — touch target
+      min_height: "2.5rem"                         # 40px -- touch target
       min_width: "6rem"
       padding: "0.5rem 1rem"
     secondary:
@@ -1058,7 +1100,7 @@ components:
       text_color: "oklch(0.21 0.006 285.885)"     # neutral.900
       border: "1px solid oklch(0.92 0.004 286.32)" # neutral.200
       hover_background: "oklch(0.967 0.001 286.375)" # neutral.100
-      border_radius: "calc(0.625rem - 2px)"          # Patina canonical — 8px
+      border_radius: "calc(0.625rem - 2px)"          # Patina canonical -- 8px
       font_weight: 600
       min_height: "2.5rem"
       padding: "0.5rem 1rem"
@@ -1066,15 +1108,21 @@ components:
       id: "components.buttons.ghost-on-dark"
       severity: "error"
       type: "value"
-      description: "Ghost button for dark backgrounds — transparent with white border. Used for secondary hero CTAs. Validated across 7/12 B2B infra competitor audits."
+      description: "Ghost button for dark backgrounds -- transparent with white border. Used for secondary hero CTAs. Validated across 7/12 B2B infra competitor audits."
+      usage_guidance: |
+        Use ghost (secondary) for light backgrounds (section-bg, section-alt-bg, context, evidence).
+        Use ghost-on-dark for dark backgrounds (hook, close, dark hero sections).
+        The distinction is about contrast: secondary uses neutral.200 border on white,
+        ghost-on-dark uses white/60 border on dark. Using the wrong variant fails WCAG contrast.
+        Rule of thumb: if the section uses --section-hook-bg or --section-close-bg, use ghost-on-dark.
       context: "dark_background"
       background: "transparent"
       text_color: "oklch(1 0 0)"                    # white
       border: "1px solid oklch(1 0 0 / 0.6)"        # white/60
       hover_background: "oklch(1 0 0 / 0.1)"        # white/10
-      border_radius: "calc(0.625rem - 2px)"            # Patina canonical — 8px
+      border_radius: "calc(0.625rem - 2px)"            # Patina canonical -- 8px
       font_weight: 600
-      min_height: "2.5rem"                           # 40px — touch target
+      min_height: "2.5rem"                           # 40px -- touch target
       padding: "0.5rem 1rem"
       requires_hover_query: true
       test:
@@ -1114,13 +1162,13 @@ components:
       light:
         background: "oklch(0.985 0 0)"               # neutral.50
         border: "oklch(0.92 0.004 286.32)"            # neutral.200 (semantic input token)
-        border_radius: "calc(0.625rem - 2px)"           # Patina canonical button/input radius — 8px
+        border_radius: "calc(0.625rem - 2px)"           # Patina canonical button/input radius -- 8px
         text_color: "oklch(0.141 0.005 285.823)"      # neutral.950
         placeholder_color: "oklch(0.552 0.016 285.938)" # neutral.500 (muted-foreground)
         font_family: "Inter"
         font_size: "0.875rem"                         # 14px
-        min_height: "2.5rem"                          # 40px — WCAG 2.5.5 touch target
-        max_height: "3rem"                            # 48px — taller loses proportion
+        min_height: "2.5rem"                          # 40px -- WCAG 2.5.5 touch target
+        max_height: "3rem"                            # 48px -- taller loses proportion
         padding: "0.5rem 0.75rem"
         shadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)"      # shadow-xs (form control pattern)
       dark:
@@ -1147,8 +1195,8 @@ components:
       id: "components.forms.textarea"
       type: "reference"
       description: "Long-form text input. Same styling as input, but with vertical resize and min 6rem height."
-      min_height: "6rem"                              # 96px — room for multi-line input
-      max_height: "20rem"                             # 320px — prevent page takeover
+      min_height: "6rem"                              # 96px -- room for multi-line input
+      max_height: "20rem"                             # 320px -- prevent page takeover
       resize: "vertical"
 
     label:
@@ -1157,7 +1205,7 @@ components:
       type: "value"
       description: "Form field labels. Must be visually associated with their input."
       font_family: "Inter"
-      font_weight: 500                                # medium — lighter than headings (700), heavier than body (400)
+      font_weight: 500                                # medium -- lighter than headings (700), heavier than body (400)
       font_size: "0.875rem"                           # 14px
       light:
         color: "oklch(0.21 0.006 285.885)"            # neutral.900
@@ -1169,6 +1217,8 @@ components:
           description: "Every form input must have an associated label via for/id or wrapping. Unlabeled inputs fail WCAG 1.3.1."
           severity: "error"
           type: "constraint"
+          test:
+            llm_eval: "Does every visible form input (input, select, textarea) have an associated label element (via for/id pairing, wrapping label, or aria-label/aria-labelledby)? Answer YES if any input lacks a label association, NO if all inputs are labeled."
 
     helper_text:
       id: "components.forms.helper-text"
@@ -1178,7 +1228,7 @@ components:
       light:
         color: "oklch(0.552 0.016 285.938)"           # neutral.500 (muted-foreground)
       dark:
-        color: "oklch(0.552 0.016 285.938)"           # same in dark — muted stays muted
+        color: "oklch(0.552 0.016 285.938)"           # same in dark -- muted stays muted
       margin_top: "0.375rem"                          # 6px above helper text
 
     error_text:
@@ -1193,6 +1243,8 @@ components:
           description: "Error messages must be associated with their input via aria-describedby. Screen readers must announce the error."
           severity: "error"
           type: "constraint"
+          test:
+            regex: "aria-describedby"
 
     submit_button:
       id: "components.forms.submit-button"
@@ -1202,7 +1254,7 @@ components:
         background: "oklch(0.75 0.1286 191.57)"       # brand verdigris
         text_color: "oklch(0.141 0.005 285.823)"      # neutral.950
         hover_background: "oklch(0.7 0.12 191.57)"    # slightly darker teal
-        border_radius: "calc(0.625rem - 2px)"          # Patina canonical — 8px
+        border_radius: "calc(0.625rem - 2px)"          # Patina canonical -- 8px
         font_weight: 600
         min_height: "2.5rem"
         padding: "0.625rem 1.5rem"
@@ -1213,7 +1265,7 @@ components:
       description: "Vertical rhythm between form elements."
       field_gap: "1.25rem"                            # 20px between fields
       section_gap: "2rem"                             # 32px between field groups
-      form_max_width: "32rem"                         # 512px — optimal form width
+      form_max_width: "32rem"                         # 512px -- optimal form width
 
   # ---------------------------------------------------------------------------
   # Dark mode token swap rules
@@ -1238,7 +1290,7 @@ components:
         dark: "oklch(0.705 0.015 286.067)"         # neutral.400
       - token: "border"
         light: "oklch(0.92 0.004 286.32)"          # neutral.200
-        dark: "oklch(1 0 0 / 0.1)"                 # white/10% — semi-transparent (matches dark-mode.md)
+        dark: "oklch(1 0 0 / 0.1)"                 # white/10% -- semi-transparent (matches dark-mode.md)
       - token: "ring"
         light: "oklch(0.705 0.015 286.067)"        # neutral.400
         dark: "oklch(0.552 0.016 285.938)"         # neutral.500
@@ -1250,6 +1302,8 @@ components:
         description: "Every semantic color token must have both light and dark values"
         type: "constraint"
         severity: "error"
+        test:
+          llm_eval: "Does every semantic color token (background, foreground, card, muted, border, ring, destructive, etc.) have both a light and a dark value defined? Answer YES if any token is missing a dark or light counterpart, NO if all tokens have both."
       - id: "components.dark-mode.no-pure-black"
         description: "Dark mode must not use pure black (#000000) as background"
         type: "pattern"
@@ -1261,13 +1315,15 @@ components:
         type: "pattern"
         severity: "warning"
       - id: "components.dark-mode.code-block-bg"
-        description: "Code blocks (pre) must have distinct background from page in dark mode — use neutral.800 not neutral.950"
+        description: "Code blocks (pre) must have distinct background from page in dark mode -- use neutral.800 not neutral.950"
         type: "value"
         severity: "error"
       - id: "components.dark-mode.link-distinction"
-        description: "Links must be visually distinguishable from body text in dark mode — use brand teal or underline"
+        description: "Links must be visually distinguishable from body text in dark mode -- use brand teal or underline"
         type: "constraint"
         severity: "error"
+        test:
+          llm_eval: "In dark mode, are links visually distinguishable from surrounding body text (via color difference, underline, or other non-color indicator)? Answer YES if any link is indistinguishable from body text in dark mode, NO if all links are clearly distinct."
       - id: "components.dark-mode.persist-preference"
         description: "Dark mode preference must persist across page navigation via localStorage"
         type: "pattern"
@@ -1278,14 +1334,14 @@ components:
         severity: "error"
 
   # ---------------------------------------------------------------------------
-  # CTA link pattern (homepage overhaul — Z2O-995)
+  # CTA link pattern (homepage overhaul -- Z2O-995)
   # ---------------------------------------------------------------------------
   cta_link:
     id: "components.cta-link"
     severity: "warning"
     type: "value"
-    description: "CTA inline link — medium weight (not semibold), with hover-gated underline animation. Typographically lighter than buttons. Distinct from button link variant."
-    font_weight: 500                                # Intentional: 500 not 600 — CTA links are lighter than buttons
+    description: "CTA inline link -- medium weight (not semibold), with hover-gated underline animation. Typographically lighter than buttons. Distinct from button link variant."
+    font_weight: 500                                # Intentional: 500 not 600 -- CTA links are lighter than buttons
     text_decoration: "none"
     hover_text_decoration: "underline"
     hover_underline_offset: "4px"
@@ -1302,38 +1358,38 @@ components:
     severity: "warning"
     type: "value"
     description: "Inline CTA link with trailing arrow. Gap between text and arrow expands on hover. Used in section CTAs where a full button is too heavy. Distinct from cta-link (which uses underline hover)."
-    font_weight: 500                                # Matches cta-link weight — lighter than buttons
-    color: "var(--color-brand-verdigris)"            # Brand teal — signals interactivity on light bg
+    font_weight: 500                                # Matches cta-link weight -- lighter than buttons
+    color: "var(--color-brand-verdigris)"            # Brand teal -- signals interactivity on light bg
     arrow_character: "→"
     display: "inline-flex"
     align_items: "center"
-    min_gap: "0.25rem"                              # 4px — default gap
-    max_gap: "0.5rem"                               # 8px — hover gap (the expansion target)
+    min_gap: "0.25rem"                              # 4px -- default gap
+    max_gap: "0.5rem"                               # 8px -- hover gap (the expansion target)
     transition: "gap 200ms ease"                    # duration.normal + easing.default
     requires_hover_query: true
     test:
       regex: "gap.*transition|transition.*gap"
 
   # ---------------------------------------------------------------------------
-  # Stats row pattern (homepage overhaul — Z2O-995)
+  # Stats row pattern (homepage overhaul -- Z2O-995)
   # ---------------------------------------------------------------------------
   stats_row:
     id: "components.stats-row"
     severity: "warning"
     type: "value"
-    description: "Stats display row — large numbers in primary color, uppercase labels with tracking. Used for trust/metric bars on homepage and landing pages."
+    description: "Stats display row -- large numbers in primary color, uppercase labels with tracking. Used for trust/metric bars on homepage and landing pages."
     number:
       color: "var(--color-semantic-primary)"
-      font_family: "display"                        # Lato — display font for visual impact
+      font_family: "display"                        # Lato -- display font for visual impact
       font_weight: 700
-      min_size: "2rem"                              # 32px — large enough for visual impact
-      max_size: "3.5rem"                            # 56px — larger loses hierarchy with headings
+      min_size: "2rem"                              # 32px -- large enough for visual impact
+      max_size: "3.5rem"                            # 56px -- larger loses hierarchy with headings
     label:
       text_transform: "uppercase"
       letter_spacing: "0.05em"                      # Matches typography.letter-spacing.uppercase rule
       font_weight: 500
-      min_size: "0.6875rem"                         # 11px — readable at smallest
-      max_size: "0.875rem"                          # 14px — larger competes with stat number
+      min_size: "0.6875rem"                         # 11px -- readable at smallest
+      max_size: "0.875rem"                          # 14px -- larger competes with stat number
       color: "var(--color-semantic-muted-foreground)"
     min_count: 3                                    # fewer looks sparse
     max_count: 4                                    # more overwhelms
@@ -1341,7 +1397,7 @@ components:
     responsive: "stack vertical below sm (640px)"
 
   # ---------------------------------------------------------------------------
-  # Logo marquee bar (homepage overhaul — Z2O-995)
+  # Logo marquee bar (homepage overhaul -- Z2O-995)
   # ---------------------------------------------------------------------------
   logo_marquee_bar:
     id: "components.logo-marquee-bar"
@@ -1349,16 +1405,20 @@ components:
     type: "reference"
     description: "Trust bar with scrolling logos. Requires overflow-hidden container, duplicated logo set for seamless loop. Animation defined in motion.patterns.logo-marquee."
     overflow: "hidden"
-    logo_min_height: "1.25rem"                      # 20px — readable at smallest size
-    logo_max_height: "2rem"                         # 32px — consistent sizing
+    logo_min_height: "1.25rem"                      # 20px -- readable at smallest size
+    logo_max_height: "2rem"                         # 32px -- consistent sizing
     logo_opacity: 0.7                               # Muted to avoid competing with content
-    min_gap: "2rem"                                 # 32px — minimum breathing room
-    max_gap: "4rem"                                 # 64px — wider loses visual grouping
+    min_gap: "2rem"                                 # 32px -- minimum breathing room
+    max_gap: "4rem"                                 # 64px -- wider loses visual grouping
     animation_ref: "motion.patterns.logo-marquee"
     requires_reduced_motion: true                   # Falls back to static display
+    display_mode_threshold:
+      static_max: 5                                 # 5 or fewer logos: static grid, no animation
+      marquee_min: 6                                # 6+ logos: marquee scroll
+      description: "Static grid for ≤5 logos (all visible, no motion needed). Marquee for 6+ (too many for a row without overflow). Avoids gratuitous animation on sparse trust bars and prevents horizontal overflow on dense ones."
 
   # ---------------------------------------------------------------------------
-  # Dark image container (homepage overhaul — Z2O-995)
+  # Dark image container (homepage overhaul -- Z2O-995)
   # ---------------------------------------------------------------------------
   dark_image_container:
     id: "components.dark-image-container"
@@ -1367,12 +1427,12 @@ components:
     description: "Dark wrapper (bg-neutral-900) for showcasing dark-themed screenshots/images on light pages. Prevents jarring contrast between light page and dark UI screenshots."
     background: "oklch(0.21 0.006 285.885)"         # neutral.900
     border_radius: "0.625rem"                       # base radius
-    min_padding: "1.5rem"                           # 24px — tighter for small images
-    max_padding: "3rem"                             # 48px — wider for hero-scale screenshots
+    min_padding: "1.5rem"                           # 24px -- tighter for small images
+    max_padding: "3rem"                             # 48px -- wider for hero-scale screenshots
     overflow: "hidden"
 
   # ---------------------------------------------------------------------------
-  # CTA strip cards (homepage overhaul — Z2O-995)
+  # CTA strip cards (homepage overhaul -- Z2O-995)
   # ---------------------------------------------------------------------------
   cta_strip_cards:
     id: "components.cta-strip-cards"
@@ -1382,7 +1442,7 @@ components:
     layout: "horizontal"
     gap: "1.5rem"                                   # 24px
     card_min_width: "16rem"                         # 256px
-    card_max_width: "24rem"                         # 384px — wider loses card proportion
+    card_max_width: "24rem"                         # 384px -- wider loses card proportion
     card_padding: "1.5rem"                          # 24px
     card_border_radius: "0.625rem"                  # base radius
     hover_effect_ref: "motion.patterns.hover-lift"
@@ -1401,23 +1461,23 @@ breakpoints:
     sm:
       value: "640px"
       rem: "40rem"
-      description: "Small — landscape phones, small tablets"
+      description: "Small -- landscape phones, small tablets"
     md:
       value: "768px"
       rem: "48rem"
-      description: "Medium — tablets"
+      description: "Medium -- tablets"
     lg:
       value: "1024px"
       rem: "64rem"
-      description: "Large — small laptops, landscape tablets"
+      description: "Large -- small laptops, landscape tablets"
     xl:
       value: "1280px"
       rem: "80rem"
-      description: "Extra large — desktops"
+      description: "Extra large -- desktops"
     "2xl":
       value: "1536px"
       rem: "96rem"
-      description: "2X large — large desktops"
+      description: "2X large -- large desktops"
 
   # ---------------------------------------------------------------------------
   # Patina custom breakpoints (ultra-wide displays)
@@ -1426,27 +1486,27 @@ breakpoints:
     "3xl":
       value: "1792px"
       rem: "112rem"
-      description: "Patina custom — wide monitors"
+      description: "Patina custom -- wide monitors"
     "4xl":
       value: "2048px"
       rem: "128rem"
-      description: "Patina custom — 2K displays"
+      description: "Patina custom -- 2K displays"
     "5xl":
       value: "2304px"
       rem: "144rem"
-      description: "Patina custom — ultrawide"
+      description: "Patina custom -- ultrawide"
     "6xl":
       value: "2560px"
       rem: "160rem"
-      description: "Patina custom — QHD"
+      description: "Patina custom -- QHD"
     "7xl":
       value: "2816px"
       rem: "176rem"
-      description: "Patina custom — large ultrawide"
+      description: "Patina custom -- large ultrawide"
     "8xl":
       value: "3072px"
       rem: "192rem"
-      description: "Patina custom — 4K and beyond"
+      description: "Patina custom -- 4K and beyond"
 
   # ---------------------------------------------------------------------------
   # Migration notes
@@ -1486,32 +1546,32 @@ breakpoints:
 # =============================================================================
 elevation:
   # ---------------------------------------------------------------------------
-  # Shadow scale — only these tokens are allowed
+  # Shadow scale -- only these tokens are allowed
   # Source: tokens/elevation/shadow.json (Tailwind v4 defaults from Patina)
   # ---------------------------------------------------------------------------
   shadows:
     allowed_tokens:
       none:
         value: "none"
-        usage: "Reset/removal — sidebar-header, input-group, toggle-group flush"
+        usage: "Reset/removal -- sidebar-header, input-group, toggle-group flush"
       xs:
         value: "0 1px 2px 0 rgb(0 0 0 / 0.05)"
-        usage: "Form controls — input, textarea, select, checkbox, switch, button (outline)"
+        usage: "Form controls -- input, textarea, select, checkbox, switch, button (outline)"
       sm:
         value: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
-        usage: "Containers — card, slider thumb, tabs (active), sidebar (floating)"
+        usage: "Containers -- card, slider thumb, tabs (active), sidebar (floating)"
       md:
         value: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
-        usage: "Floating elements — dropdown, select content, popover, hover-card"
+        usage: "Floating elements -- dropdown, select content, popover, hover-card"
       lg:
         value: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
-        usage: "Overlays — dialog, alert-dialog, sheet, dropdown sub-content"
+        usage: "Overlays -- dialog, alert-dialog, sheet, dropdown sub-content"
       xl:
         value: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
-        usage: "Maximum elevation — chart tooltips"
+        usage: "Maximum elevation -- chart tooltips"
     rules:
       - id: "elevation.shadows.no-adhoc"
-        description: "Ad-hoc box-shadow values are banned — use shadow tokens (none/xs/sm/md/lg/xl)"
+        description: "Ad-hoc box-shadow values are banned -- use shadow tokens (none/xs/sm/md/lg/xl)"
         type: "pattern"
         severity: "error"
         detection: "box-shadow values not matching any allowed_tokens value"
@@ -1520,13 +1580,17 @@ elevation:
         description: "Shadow elevation must match component context (e.g., cards use sm, modals use lg)"
         type: "constraint"
         severity: "warning"
+        test:
+          llm_eval: "Does each component use the correct shadow token for its context (xs for form controls, sm for cards, md for dropdowns/popovers, lg for dialogs/sheets, xl for tooltips)? Answer YES if any component uses a shadow token that does not match its context, NO if all shadow usage matches the expected elevation."
       - id: "elevation.shadows.hover-transition"
         description: "Hover states that add shadow must transition from a lower token, not from none to lg"
         type: "constraint"
         severity: "warning"
+        test:
+          llm_eval: "Do any hover states jump more than one shadow level (e.g., from none directly to lg or xl, skipping intermediate tokens)? Answer YES if any hover transition skips more than one shadow level, NO if all hover shadow transitions are incremental."
 
   # ---------------------------------------------------------------------------
-  # Z-index layers — strict layer system
+  # Z-index layers -- strict layer system
   # Source: tokens/elevation/z-index.json (Tailwind v4 defaults from Patina)
   # ---------------------------------------------------------------------------
   z_index:
@@ -1539,13 +1603,13 @@ elevation:
         usage: "Scroll-area scrollbar thumb"
       raised:
         value: 10
-        usage: "Locally raised — sidebar panel, resize handle, focused group item"
+        usage: "Locally raised -- sidebar panel, resize handle, focused group item"
       sticky:
         value: 20
-        usage: "Sticky/resize affordances — sidebar resize handle"
+        usage: "Sticky/resize affordances -- sidebar resize handle"
       overlay:
         value: 50
-        usage: "Top-level overlays — dialog, sheet, dropdown, popover, tooltip, header"
+        usage: "Top-level overlays -- dialog, sheet, dropdown, popover, tooltip, header"
     rules:
       - id: "elevation.z-index.no-custom"
         description: "Custom z-index values outside the allowed layer set are banned"
@@ -1556,7 +1620,7 @@ elevation:
         test:
           values: [0, 1, 10, 20, 50]
       - id: "elevation.z-index.max-50"
-        description: "Z-index must not exceed 50 — no z-[999] or z-[9999] hacks"
+        description: "Z-index must not exceed 50 -- no z-[999] or z-[9999] hacks"
         type: "constraint"
         severity: "error"
         test:
@@ -1565,10 +1629,14 @@ elevation:
         description: "Elements at z-overlay (50) must have a backdrop or dismiss mechanism"
         type: "constraint"
         severity: "warning"
+        test:
+          llm_eval: "Does every element using z-index 50 (overlay layer) have either a visible backdrop overlay or a dismiss mechanism (click-outside, Escape key, close button)? Answer YES if any z-50 element lacks both backdrop and dismiss, NO if all have at least one."
       - id: "elevation.z-index.stacking-context"
         description: "Z-index should only be set on elements that create a stacking context"
         type: "constraint"
         severity: "warning"
+        test:
+          llm_eval: "Is z-index applied to any element that does not create a stacking context (i.e., missing position relative/absolute/fixed/sticky, or transform, or opacity less than 1)? Answer YES if z-index is set on a non-stacking-context element, NO if all z-index usage is on proper stacking contexts."
 
 
 # =============================================================================
@@ -1595,14 +1663,18 @@ accessibility:
       description: "Color must not be the sole means of conveying information"
       type: "constraint"
       severity: "error"
+      test:
+        llm_eval: "Is color used as the sole means of conveying information anywhere (e.g., error states indicated only by red text, status shown only by color, links distinguished only by color)? Answer YES if color is the only indicator, NO if a non-color cue (icon, underline, text label, pattern) is also present."
     - id: "accessibility.text-resize"
       description: "Text resizing to 200% must not break layout"
       type: "constraint"
       severity: "warning"
+      test:
+        llm_eval: "When text is resized to 200% (browser zoom or font-size override), does any content overflow its container, get clipped, or overlap other elements? Answer YES if layout breaks at 200% text size, NO if layout adapts without content loss."
 
 
 # =============================================================================
-# COMPOSITION — purpose x surface matrix
+# COMPOSITION -- purpose x surface matrix
 # =============================================================================
 # Composition rules govern how color, typography, and spacing interact.
 # Organized by purpose (what the page is trying to do) x surface (what
@@ -1612,7 +1684,7 @@ accessibility:
 # Purposes: persuade, inform, analyze, convert, identify, narrate, assist, instruct
 # Surfaces: web_page, ad_banner, email, slide_deck, dashboard, hardware, chat
 #
-# Build incrementally — only filled cells are enforced.
+# Build incrementally -- only filled cells are enforced.
 # =============================================================================
 
 composition:
@@ -1667,7 +1739,8 @@ composition:
           max_pages: 1
         secondary:
           hero: "Compact: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding"
-          turn_allowed: true  # conditional: only if page_section_count >= 6 (enforced in turn-scarcity rule)
+          turn_allowed: false
+          turn_condition: "page_section_count >= 6"  # enforced in turn-scarcity rule; default false, overridden when condition met
           color_budget: "trust only (teal + neutrals)"
           example: "Product, Platform"
         tertiary:
@@ -1732,7 +1805,7 @@ composition:
         type: "reference"
 
   # ---------------------------------------------------------------------------
-  # PERSUADE x WEB PAGE — homepage, landing pages, campaign pages
+  # PERSUADE x WEB PAGE -- homepage, landing pages, campaign pages
   # ---------------------------------------------------------------------------
   # Narrative pacing + coupling rules. Each section has a role in the story.
   # Composition follows from the role. Coupling rules provide a mechanical
@@ -1744,13 +1817,13 @@ composition:
     description: "Composition rules for persuasive web pages (homepage, landing, campaign). Narrative pacing drives color intensity, type scale, and spacing. Coupling rules ensure readability."
 
     # --- Surface register ---
-    # How this surface earns trust. Not enforceable — guides judgment calls.
+    # How this surface earns trust. Not enforceable -- guides judgment calls.
     register:
       id: "composition.persuade-web-page.register"
       type: "reference"
-      description: "Restraint earns trust. The page opens with conformity signals (precise data, clean layout) and earns permission for boldness through the scroll. The hook is quiet confidence, not spectacle. The turn is the one earned moment where craft shows. Visitors from LLMs arrive with intent — the page must do all the emotional work by itself."
+      description: "Restraint earns trust. The page opens with conformity signals (precise data, clean layout) and earns permission for boldness through the scroll. The hook is quiet confidence, not spectacle. The turn is the one earned moment where craft shows. Visitors from LLMs arrive with intent -- the page must do all the emotional work by itself."
       trust_sequence: "Conformity (hook) → credibility (evidence) → craft (turn) → conviction (close)"
-      dominant_register: "Refined — generous space, controlled palette, every element earning its place"
+      dominant_register: "Refined -- generous space, controlled palette, every element earning its place"
 
     # --- Narrative roles ---
     # Each section on a persuasive page serves a role in the story.
@@ -1768,7 +1841,7 @@ composition:
       context:
         id: "composition.persuade-web-page.context"
         type: "reference"
-        description: "Set up the problem or category. Low visual weight — let the hook land before adding information."
+        description: "Set up the problem or category. Low visual weight -- let the hook land before adding information."
         color_intensity: "breathing"
         type_max: "h2"
         section_padding: "4rem"
@@ -1776,7 +1849,7 @@ composition:
       evidence:
         id: "composition.persuade-web-page.evidence"
         type: "reference"
-        description: "Show proof — cards, feature grids, technical specs. Supporting visual weight."
+        description: "Show proof -- cards, feature grids, technical specs. Supporting visual weight."
         color_intensity: "supporting"
         type_max: "h2"
         section_padding: "4rem"
@@ -1784,7 +1857,7 @@ composition:
       turn:
         id: "composition.persuade-web-page.turn"
         type: "reference"
-        description: "Shift the feeling. The one earned accent moment — this is the conversion point. Pre-attentive capture draws the eye here. Place on the most important value proposition."
+        description: "Shift the feeling. The one earned accent moment -- this is the conversion point. Pre-attentive capture draws the eye here. Place on the most important value proposition."
         color_intensity: "accent"
         type_max: "h2"
         section_padding: { min: "5rem", max: "10rem" }
@@ -1801,10 +1874,10 @@ composition:
       close:
         id: "composition.persuade-web-page.close"
         type: "reference"
-        description: "Final CTA. Returns to full expression — bookends the hook."
+        description: "Final CTA. Returns to full expression -- bookends the hook. Dark background, so dark-padding coupling rule applies."
         color_intensity: "full"
         type_max: "h2"
-        section_padding: { min: "4rem" }
+        section_padding: { min: "8rem", max: "14rem" }  # must match dark-padding coupling rule (dark bg)
         position: "last section"
         elements: ["heading", "primary CTA"]
 
@@ -1817,7 +1890,7 @@ composition:
         test:
           required: ["hook", "close"]
       - id: "composition.persuade-web-page.arc.single-turn"
-        description: "At most one turn section per page. The turn is the earned accent moment — more than one dilutes it."
+        description: "At most one turn section per page. The turn is the earned accent moment -- more than one dilutes it."
         severity: "error"
         type: "constraint"
         test:
@@ -1835,24 +1908,69 @@ composition:
         test:
           llm_eval: "Does the page have an accent or highlighted section that appears before any evidence or proof section? Answer YES if the accent comes too early, NO if it follows evidence."
 
+    # --- Minimal arc (short pages with 3-6 sections) ---
+    # Product pages, solution pages, and partner pages may only have 3-6 sections.
+    # The full arc (hook-context-evidence-turn-proof-close) doesn't fit.
+    # Minimal arc: Hook → Evidence → Close. No turn required.
+    minimal_arc:
+      id: "composition.persuade-web-page.minimal-arc"
+      type: "reference"
+      description: "For pages with ≤6 sections, a reduced arc is allowed: Hook → Evidence(s) → Close. No turn required -- the page is too short for an earned accent moment to land. The turn rule relaxes, but hook+close remain mandatory."
+      applies_when:
+        max_sections: 6
+      required_roles: ["hook", "close"]
+      optional_roles: ["context", "evidence", "proof"]
+      turn_required: false
+      rules:
+        - id: "composition.persuade-web-page.minimal-arc.hook-close"
+          description: "Even short persuasive pages need a hook (first) and close (last)."
+          severity: "error"
+          type: "constraint"
+          test:
+            required: ["hook", "close"]
+        - id: "composition.persuade-web-page.minimal-arc.no-turn-ok"
+          description: "Pages with ≤6 sections may omit the turn. The page is too short for the accent to feel earned."
+          severity: "info"
+          type: "reference"
+
     # --- Coupling rules (mechanical floor) ---
     # Grounded in readability research. Apply regardless of narrative role.
     coupling:
       color_to_spacing:
         - id: "composition.persuade-web-page.coupling.dark-padding"
-          description: "Dark background sections (L < 0.3) need generous padding. Visual weight needs room to breathe. Dark surfaces signal premium when given space."
+          description: "Dark background sections (L < 0.3) need generous padding. Visual weight needs room to breathe. Dark surfaces signal premium when given space. Values are responsive -- mobile gets less padding to avoid wasting screen real estate."
           severity: "warning"
           type: "constraint"
           test:
             when: { background_lightness: { max: 0.3 } }
-            then: { section_padding: { min: "8rem", max: "14rem" } }
+            then:
+              section_padding:
+                mobile: { min: "4rem", max: "6rem" }       # < 640px
+                tablet: { min: "6rem", max: "10rem" }       # 640-767px
+                desktop: { min: "8rem", max: "14rem" }      # 768px+
+          note: "8rem is ~20% of a mobile viewport -- too aggressive. 4rem on mobile preserves the generous feel without wasting half the screen."
         - id: "composition.persuade-web-page.coupling.tinted-padding"
-          description: "Tinted background sections (chroma > 0.01) need medium padding. Floor: 5rem for breathing room. Ceiling: 10rem to avoid wasted space."
+          description: "Tinted background sections (chroma > 0.01) need medium padding."
           severity: "warning"
           type: "constraint"
           test:
             when: { background_chroma: { min: 0.01 } }
-            then: { section_padding: { min: "5rem", max: "10rem" } }
+            then:
+              section_padding:
+                mobile: { min: "3rem", max: "5rem" }
+                tablet: { min: "4rem", max: "7rem" }
+                desktop: { min: "5rem", max: "10rem" }
+        - id: "composition.persuade-web-page.coupling.neutral-padding"
+          description: "Neutral background sections (low chroma, not dark) use standard padding."
+          severity: "warning"
+          type: "constraint"
+          test:
+            when: { background_chroma: { max: 0.01 }, background_lightness: { min: 0.3 } }
+            then:
+              section_padding:
+                mobile: { min: "3rem", max: "4rem" }
+                tablet: { min: "3rem", max: "5rem" }
+                desktop: { min: "4rem", max: "6rem" }
       color_to_typography:
         - id: "composition.persuade-web-page.coupling.tinted-line-height"
           description: "Tinted or dark backgrounds loosen body line-height to 1.65-1.75 for readability."
@@ -1883,13 +2001,24 @@ composition:
             then: { body_letter_spacing: { min: "0.01em", max: "0.03em" } }
       type_to_spacing:
         - id: "composition.persuade-web-page.coupling.heading-padding"
-          description: "Section padding scales with the largest heading in the section. H1 sections need large padding; H3-led sections can use standard."
+          description: "Section padding scales with the largest heading in the section. H1 sections need large padding; H3-led sections can use standard. All values are responsive."
           severity: "warning"
           type: "constraint"
           test:
-            h1: { section_padding: { min: "8rem", max: "14rem" } }
-            h2: { section_padding: { min: "5rem", max: "10rem" } }
-            h3: { section_padding: { min: "4rem", max: "6rem" } }
+            h1:
+              section_padding:
+                mobile: { min: "4rem", max: "6rem" }
+                tablet: { min: "6rem", max: "10rem" }
+                desktop: { min: "8rem", max: "14rem" }
+            h2:
+              section_padding:
+                mobile: { min: "3rem", max: "5rem" }
+                tablet: { min: "4rem", max: "7rem" }
+                desktop: { min: "5rem", max: "10rem" }
+            h3:
+              section_padding:
+                mobile: { min: "3rem", max: "4rem" }
+                desktop: { min: "4rem", max: "6rem" }
 
     # --- Whitespace principle ---
     whitespace:
@@ -1898,7 +2027,7 @@ composition:
       description: "Generous whitespace is the primary signal of quality on persuasive pages. Perceived luxury correlates with empty space. When in doubt, add more space, not more content. The default section padding for persuasive pages is the medium spacing (5rem), not the standard (4rem). Standard padding is for inform-purpose pages."
 
   # ---------------------------------------------------------------------------
-  # INFORM x WEB PAGE — docs, blog, case studies, technical guides
+  # INFORM x WEB PAGE -- docs, blog, case studies, technical guides
   # ---------------------------------------------------------------------------
   inform_web_page:
     id: "composition.inform-web-page"
@@ -1910,7 +2039,7 @@ composition:
       type: "reference"
       description: "Clarity earns trust. The reader arrives with a question and expects a precise answer. No narrative arc, no emotional journey. Metronomic rhythm signals reliability. Color marks navigation state, not atmosphere. The page earns trust by being exactly what it claims to be: a reference."
       trust_sequence: "Question (arrival) → answer (scannable, immediate) → depth (available but not forced)"
-      dominant_register: "Precise — tight spacing, uniform rhythm, data-forward, no decoration"
+      dominant_register: "Precise -- tight spacing, uniform rhythm, data-forward, no decoration"
 
     section_roles:
       title:        { color_intensity: "supporting", type_max: "h1", section_padding: "3rem", note: "Page-level framing. One per page. H1 used only here." }
@@ -1935,9 +2064,11 @@ composition:
         description: "Color marks navigation state (active sidebar, section indicator), not atmosphere. No tinted section backgrounds. Brand accent on interactive elements only."
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Does this inform page use brand color for atmospheric or decorative purposes (tinted section backgrounds, gradient strips, colored dividers)? Color should only mark navigation state and interactive elements. Answer YES if decorative color is found, NO if color is restricted to wayfinding and interactivity."
 
   # ---------------------------------------------------------------------------
-  # INFORM x SLIDE DECK — training materials, technical presentations
+  # INFORM x SLIDE DECK -- training materials, technical presentations
   # ---------------------------------------------------------------------------
   inform_slide_deck:
     id: "composition.inform-slide-deck"
@@ -1958,9 +2089,11 @@ composition:
         description: "60% minimum whitespace per slide. Inform slides are sparse."
         severity: "warning"
         type: "constraint"
+        test:
+          whitespace_percent: { min: 60 }
 
   # ---------------------------------------------------------------------------
-  # ANALYZE x DASHBOARD — analytics, monitoring, data viz
+  # ANALYZE x DASHBOARD -- analytics, monitoring, data viz
   # ---------------------------------------------------------------------------
   analyze_dashboard:
     id: "composition.analyze-dashboard"
@@ -1972,7 +2105,7 @@ composition:
       type: "reference"
       description: "Competence earns trust. The user is an operator making decisions under time pressure. Every pixel serves the data. The dashboard earns trust by showing exactly what's happening with zero interpretation overhead. Full palette is earned here because color encodes meaning (status, trend, category), not atmosphere."
       trust_sequence: "Status (KPI strip) → detail (drill into panels) → action (alerts, thresholds)"
-      dominant_register: "Precise — tabular-nums, compact density, functional color, zero decoration"
+      dominant_register: "Precise -- tabular-nums, compact density, functional color, zero decoration"
 
     panel_roles:
       kpi_strip:    { color_intensity: "supporting", type: "Large numbers (24-32px, weight 700) + trend arrows + sparklines. 4-6 metrics.", layout: "horizontal row" }
@@ -1994,6 +2127,8 @@ composition:
         description: "Teal is the default/primary series color. Teal-dominance rule (70%) relaxes for dashboards but teal remains the first color in any categorical set."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Does any categorical data visualization on this dashboard use a non-teal color as the first/default/primary series color? Answer YES if another color leads instead of teal, NO if teal is the first color in each categorical set."
     typography:
       body_size: "13-14px"
       kpi_size: "24-32px"
@@ -2005,9 +2140,12 @@ composition:
         description: "Whitespace is compressed with discipline, not eliminated. Panel gap 0.75-1rem, card padding 1-1.5rem. Tighter than persuade but never cramped."
         severity: "warning"
         type: "constraint"
+        test:
+          panel_gap: { min: "0.75rem", max: "1rem" }
+          card_padding: { min: "1rem", max: "1.5rem" }
 
   # ---------------------------------------------------------------------------
-  # CONVERT x WEB PAGE — pricing, signup, demo request
+  # CONVERT x WEB PAGE -- pricing, signup, demo request
   # ---------------------------------------------------------------------------
   convert_web_page:
     id: "composition.convert-web-page"
@@ -2017,9 +2155,9 @@ composition:
     register:
       id: "composition.convert-web-page.register"
       type: "reference"
-      description: "Focus earns trust. The visitor has already been persuaded — they're here to act. Every element that doesn't serve the conversion is friction. Micro-reassurance (no credit card, cancel anytime) does the trust work. Restraint is not luxury here — it's momentum."
+      description: "Focus earns trust. The visitor has already been persuaded -- they're here to act. Every element that doesn't serve the conversion is friction. Micro-reassurance (no credit card, cancel anytime) does the trust work. Restraint is not luxury here -- it's momentum."
       trust_sequence: "Value (one sentence) → options (max 3 tiers) → reassurance (micro-copy) → action (single CTA)"
-      dominant_register: "Precise — functional color, tight spacing, zero distraction"
+      dominant_register: "Precise -- functional color, tight spacing, zero distraction"
 
     funnel_roles:
       value:   { color_intensity: "breathing", type_max: "h2", section_padding: "4rem", note: "Value proposition. One sentence, clear benefit." }
@@ -2031,6 +2169,8 @@ composition:
         description: "One primary filled CTA button per page. Secondary actions use ghost or text-link treatment only."
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Does this convert page have more than one primary filled CTA button? Count only filled/solid-background buttons, not ghost or text-link treatments. Answer YES if there is more than one primary filled CTA, NO if there is exactly one."
       - id: "composition.convert-web-page.funnel.max-tiers"
         description: "Max 3 pricing tiers. More than 6 options drops conversion from 30% to 3% (Hick's Law)."
         severity: "error"
@@ -2041,7 +2181,7 @@ composition:
         severity: "warning"
         type: "constraint"
         test:
-          llm_eval: "Does the primary CTA button have micro-reassurance text (e.g., 'No credit card required', 'Cancel anytime', '30-second setup') within 1rem below it? Answer YES if reassurance is present, NO if missing."
+          llm_eval: "Is the primary CTA button missing micro-reassurance text (e.g., 'No credit card required', 'Cancel anytime', '30-second setup') within 1rem below it? Answer YES if reassurance is missing, NO if present."
       - id: "composition.convert-web-page.funnel.no-escape"
         description: "Convert pages should minimize navigation distractions. Reduced header, no sidebar, no competing links in the main content area."
         severity: "warning"
@@ -2058,9 +2198,11 @@ composition:
         description: "CTA button and the recommended-tier highlight are the only saturated elements. Everything else neutral. No tinted section backgrounds, no gradient strips. The recommended-tier highlight is functional (guides the decision, users spend 42% more time on highlighted plans), not decorative."
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Are there saturated or brand-colored elements on this convert page beyond the primary CTA button and the recommended-tier highlight? Look for tinted section backgrounds, gradient strips, or decorative color. Answer YES if non-functional saturated elements exist, NO if color is restricted to CTA and tier highlight only."
 
   # ---------------------------------------------------------------------------
-  # PERSUADE x AD BANNER — display ads (Google, LinkedIn, social)
+  # PERSUADE x AD BANNER -- display ads (Google, LinkedIn, social)
   # ---------------------------------------------------------------------------
   persuade_ad_banner:
     id: "composition.persuade-ad-banner"
@@ -2081,9 +2223,11 @@ composition:
         description: "Logo must be visible within 1 second. Place in top-left or top-center."
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Is the Verdigris logo missing, hidden, or placed outside top-left/top-center of this ad banner? Answer YES if the logo is absent or misplaced, NO if it is prominent and correctly positioned."
 
   # ---------------------------------------------------------------------------
-  # PERSUADE x EMAIL — marketing emails
+  # PERSUADE x EMAIL -- marketing emails
   # ---------------------------------------------------------------------------
   persuade_email:
     id: "composition.persuade-email"
@@ -2104,9 +2248,11 @@ composition:
         description: "One CTA per content section. Multiple competing CTAs reduce click-through."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Does any content section in this email contain more than one CTA button or CTA link? Answer YES if any section has multiple competing CTAs, NO if each section has at most one CTA."
 
   # ---------------------------------------------------------------------------
-  # PERSUADE x SLIDE DECK — investor pitch, sales deck, conference talk
+  # PERSUADE x SLIDE DECK -- investor pitch, sales deck, conference talk
   # ---------------------------------------------------------------------------
   persuade_slide_deck:
     id: "composition.persuade-slide-deck"
@@ -2145,14 +2291,18 @@ composition:
         description: "Dark slides restricted to hook and close (bookends). Mid-deck dark slides break the light flow."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Are there any dark-background slides in the middle of this deck (not the first or last slide)? Answer YES if dark slides appear mid-deck, NO if dark backgrounds are restricted to the opening and closing slides only."
       - id: "composition.persuade-slide-deck.coupling.chart-colors"
         description: "Max 3 colors per chart. Data viz limited to 60% of slide content zone."
         severity: "warning"
         type: "constraint"
+        test:
+          llm_eval: "Does any chart on this slide use more than 3 distinct colors, or does any data visualization occupy more than 60% of the slide content zone? Answer YES if either limit is exceeded, NO if charts use 3 or fewer colors and fit within 60%."
     spacing: "8% safe margin inset from slide edges for 16:9. Content zone centered. Vertical centering default."
 
   # ---------------------------------------------------------------------------
-  # IDENTIFY x AD BANNER — brand recognition ads
+  # IDENTIFY x AD BANNER -- brand recognition ads
   # ---------------------------------------------------------------------------
   identify_ad_banner:
     id: "composition.identify-ad-banner"
@@ -2167,9 +2317,11 @@ composition:
         description: "Verdigris teal + neutrals only. No other palette regions. Instant recognition requires consistency."
         severity: "error"
         type: "constraint"
+        test:
+          llm_eval: "Does this identify ad banner use any colors beyond Verdigris teal and neutrals (white, gray, black)? Look for secondary palette regions like purple, yellow, or blue. Answer YES if non-teal/non-neutral colors are present, NO if only teal and neutrals are used."
 
   # ---------------------------------------------------------------------------
-  # IDENTIFY x HARDWARE — physical products, labels, trade show
+  # IDENTIFY x HARDWARE -- physical products, labels, trade show
   # ---------------------------------------------------------------------------
   identify_hardware:
     id: "composition.identify-hardware"
@@ -2181,11 +2333,10 @@ composition:
     rules:
       - id: "composition.identify-hardware.single-accent"
         description: "One brand teal accent on the physical surface. The logo is the only decorative element."
-        severity: "error"
-        type: "constraint"
+        type: "reference"
 
   # ---------------------------------------------------------------------------
-  # ASSIST x CHAT — human-to-AI conversational interface
+  # ASSIST x CHAT -- human-to-AI conversational interface
   # ---------------------------------------------------------------------------
   assist_chat:
     id: "composition.assist-chat"
@@ -2235,7 +2386,7 @@ composition:
           regex: "chat-bubble|message-bubble|bubble-|rounded-full.*message"
 
   # ---------------------------------------------------------------------------
-  # ASSIST x EMBEDDED — AI-generated content within other surfaces
+  # ASSIST x EMBEDDED -- AI-generated content within other surfaces
   # ---------------------------------------------------------------------------
   assist_embedded:
     id: "composition.assist-embedded"
@@ -2260,9 +2411,11 @@ composition:
         description: "AI-generated content must include machine-readable provenance metadata. EU AI Act Article 50 compliance required by August 2026."
         severity: "error"
         type: "constraint"
+        test:
+          regex: "data-ai-provenance|data-ai-source|ai-provenance|content-credentials|c2pa|data-generated-by"
 
   # ---------------------------------------------------------------------------
-  # NARRATE x WEB PAGE — long-form editorial, design essays, retrospectives
+  # NARRATE x WEB PAGE -- long-form editorial, design essays, retrospectives
   # ---------------------------------------------------------------------------
   # Not persuade (no funnel, no conversion). Not inform (not flat, not reference).
   # The reader follows a journey. Specimens and visuals are figures within prose.
@@ -2276,9 +2429,9 @@ composition:
     register:
       id: "composition.narrate-web-page.register"
       type: "reference"
-      description: "Honesty earns trust. The reader follows a journey that shows process, including failures. No marketing patterns in prose — the essay earns trust by being transparent about what worked and what didn't. Mastery is demonstrated through the depth of thinking, not through visual spectacle."
+      description: "Honesty earns trust. The reader follows a journey that shows process, including failures. No marketing patterns in prose -- the essay earns trust by being transparent about what worked and what didn't. Mastery is demonstrated through the depth of thinking, not through visual spectacle."
       trust_sequence: "Curiosity (opening) → understanding (episodes) → respect (reflection) → thinking (closing)"
-      dominant_register: "Masterful — depth through honesty, craft visible in the thinking not the polish"
+      dominant_register: "Masterful -- depth through honesty, craft visible in the thinking not the polish"
 
     # --- Narrative structure ---
     # Not roles like persuade (hook/turn/close). Narrate uses a looser structure:
@@ -2357,17 +2510,17 @@ composition:
           llm_eval: "Does this editorial/narrate page section contain CTA buttons in prose, gradient strips, card grids used as content, or other marketing landing page patterns? Answer YES if marketing patterns are found, NO if the section is pure editorial."
 
   # ---------------------------------------------------------------------------
-  # INSTRUCT x MACHINE — AI agents consuming the design system
+  # INSTRUCT x MACHINE -- AI agents consuming the design system
   # ---------------------------------------------------------------------------
   instruct_machine:
     id: "composition.instruct-machine"
     type: "reference"
-    description: "Machine-to-machine surface. The consumer is an AI agent reading YAML, JSON, and markdown to build visual outputs. No visual design — the design is the structure and clarity of the rules themselves."
+    description: "Machine-to-machine surface. The consumer is an AI agent reading YAML, JSON, and markdown to build visual outputs. No visual design -- the design is the structure and clarity of the rules themselves."
     principles:
       - "Every rule has id, severity, type, description. Machines parse structure, not prose."
       - "Numeric values have explicit units and bounds (floor AND ceiling)."
       - "Cross-references use id paths, not prose descriptions."
-      - "Token values are canonical — never fabricate oklch values outside the token set."
+      - "Token values are canonical -- never fabricate oklch values outside the token set."
       - "Guidance rules include both what TO do and what NOT to do. Machines optimize toward maximums without upper bounds."
     rules:
       - id: "composition.instruct-machine.floors-and-ceilings"

@@ -52,6 +52,15 @@
   --color-semantic-input: hsl(240, 6%, 90%);
   --color-semantic-ring: hsl(240, 5%, 64%);
   --color-semantic-sidebar-primary: hsl(1, 100%, 69%);
+  --color-semantic-section-hook-bg: hsl(240, 10%, 4%);
+  --color-semantic-section-hook-fg: hsl(0, 0%, 98%);
+  --color-semantic-section-context-bg: hsl(240, 5%, 96%);
+  --color-semantic-section-evidence-bg: hsl(0, 0%, 100%);
+  --color-semantic-section-turn-bg-from: hsl(34, 100%, 53%, 0.06);
+  --color-semantic-section-turn-bg-to: hsl(49, 100%, 50%, 0.04);
+  --color-semantic-section-turn-border: hsl(34, 100%, 53%, 0.4);
+  --color-semantic-section-close-bg: hsl(240, 10%, 4%);
+  --color-semantic-section-close-fg: hsl(0, 0%, 98%);
 }
 
 .dark {
@@ -74,4 +83,13 @@
   --color-semantic-input: hsl(0, 0%, 100%);
   --color-semantic-ring: hsl(240, 4%, 46%);
   --color-semantic-sidebar-primary: hsl(1, 100%, 69%);
+  --color-semantic-section-hook-bg: hsl(262, 30%, 8%);
+  --color-semantic-section-hook-fg: hsl(0, 0%, 98%);
+  --color-semantic-section-context-bg: hsl(240, 6%, 10%);
+  --color-semantic-section-evidence-bg: hsl(240, 10%, 4%);
+  --color-semantic-section-turn-bg-from: hsl(34, 100%, 53%, 0.08);
+  --color-semantic-section-turn-bg-to: hsl(49, 100%, 50%, 0.05);
+  --color-semantic-section-turn-border: hsl(34, 100%, 53%, 0.4);
+  --color-semantic-section-close-bg: hsl(262, 30%, 6%);
+  --color-semantic-section-close-fg: hsl(0, 0%, 98%);
 }

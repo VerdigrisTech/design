@@ -81,6 +81,49 @@
         "$value": "{color.brand.pastel-red}",
         "$type": "color",
         "$description": "Same as light — pastel-red for sidebar active"
+      },
+      "section-hook-bg": {
+        "$value": "hsl(262, 30%, 8%)",
+        "$type": "color",
+        "$description": "Hook section in dark mode. Tinted-dark using midnight-purple hue to differentiate from page bg (neutral-950)."
+      },
+      "section-hook-fg": {
+        "$value": "{color.neutral.50}",
+        "$type": "color"
+      },
+      "section-context-bg": {
+        "$value": "{color.neutral.900}",
+        "$type": "color",
+        "$description": "Context section in dark mode. One step lighter than page bg."
+      },
+      "section-evidence-bg": {
+        "$value": "{color.neutral.950}",
+        "$type": "color",
+        "$description": "Evidence section in dark mode. Same as page bg — clean separation comes from content, not color."
+      },
+      "section-turn-bg-from": {
+        "$value": "hsl(34, 100%, 53%, 0.08)",
+        "$type": "color",
+        "$description": "Turn gradient start in dark mode. Slightly more visible than light mode."
+      },
+      "section-turn-bg-to": {
+        "$value": "hsl(49, 100%, 50%, 0.05)",
+        "$type": "color",
+        "$description": "Turn gradient end in dark mode."
+      },
+      "section-turn-border": {
+        "$value": "hsl(34, 100%, 53%, 0.4)",
+        "$type": "color",
+        "$description": "Turn border — same in both modes."
+      },
+      "section-close-bg": {
+        "$value": "hsl(262, 30%, 6%)",
+        "$type": "color",
+        "$description": "Close section in dark mode. Even darker midnight-purple tint — distinct from both hook and page bg."
+      },
+      "section-close-fg": {
+        "$value": "{color.neutral.50}",
+        "$type": "color"
       }
     }
   }
