@@ -280,13 +280,9 @@ function getWebGLSupport() {
 
 ### Scroll-Driven Hardware Exploders
 
-For product pages where the hardware is the proof (gateway, sensors, metering infrastructure):
+For product pages where the hardware is the proof (gateway, sensors, metering infrastructure). Think Apple Mac Studio scroll reveal — one layer visible per viewport, building understanding from outside in.
 
-1. **Pacing:** One reveal per scroll viewport. The viewer sees one layer, absorbs it, then scrolls to see the next. No continuous animation.
-2. **Layer order:** Outside in. Start with the enclosure (what the customer touches), then peel into the sensing layer, then the processing layer. The viewer builds understanding progressively.
-3. **Annotation:** No marketing annotations. Let the viewer see the craft. If a label is needed, use mono font (JetBrains Mono), uppercase, 0.05em tracking, muted color. The component names should read like engineering documentation, not marketing copy.
-4. **Exit state:** After the full reveal, the scene holds on a hero-angle still. The scroll continues to the next section. The 3D scene does not follow the user down the page.
-5. **Fallback:** High-resolution static images of each reveal step. The scroll-driven experience degrades to a vertical image stack on devices without WebGL.
+See `rules/visual-rules.yml` -> `three_d_composition.hardware_exploder` for machine-enforceable rules (pacing, reveal order, annotation style, exit state, fallback).
 
 ### When Not to Use 3D
 

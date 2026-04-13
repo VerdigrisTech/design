@@ -166,4 +166,14 @@ Standard Tailwind breakpoints plus Patina's ultra-wide extensions:
 
 **Note:** www uses 991px as a breakpoint for heading/padding responsiveness. This is non-standard. **Recommendation:** Migrate to the standard `lg` (1024px) breakpoint.
 
+## Line Length
+
+| Context | Max width | Reference |
+|---------|-----------|-----------|
+| Persuade body (default) | 75ch | `typography.line-length.body` |
+| Inform/Narrate body | 65ch | `composition.inform-web-page.coupling.line-length` |
+| Tinted/dark backgrounds | 65ch | `composition.persuade-web-page.coupling.tinted-line-length` |
+
+Line length is a readability constraint, not a layout constraint. It limits the measure (characters per line) regardless of container width.
+
 </details>
