@@ -107,7 +107,7 @@ Color, type, and spacing aren't independent on a persuasive page. They're couple
 
 Generous whitespace is the primary signal of quality on persuasive pages. Perceived luxury correlates with empty space (spatial color efficacy research). When in doubt, add more space, not more content.
 
-See `rules/visual-rules.yml` -> `composition.persuade_web_page` for the machine-consumable version.
+See `rules/visual-rules.yml` -> `composition.persuade-web-page` for the machine-consumable version.
 
 ## Narrate x Web Page
 
@@ -131,13 +131,13 @@ Narrate uses episodes, not narrative roles. Episodes are prose + figure pairs, r
 
 - **Color is illustrative, not atmospheric.** Color appears inside figures (specimens, before/after comparisons), not as section background tints. Between figures, the page is neutral.
 - **No marketing patterns.** No CTA buttons in prose. No gradient strips. No card grids as content. The page is an essay.
-- **Body text is 1.125rem at 1.7 line-height.** Looser than persuade (1.6) for sustained reading.
+- **Body text is 1.125rem at 1.7 line-height.** Looser than the 1.6 base default.
 - **The closing is an invitation, not a conversion.** The reader leaves thinking, not clicking.
 
 ### When to Use Narrate
 
 Design essays, retrospectives, case studies with depth, process documentation that tells a story. If the piece has a beginning, middle, and end and the reader should experience the journey (not just scan for information), it's narrate.
 
-See `rules/visual-rules.yml` -> `composition.narrate_web_page` for the machine-consumable version.
+See `rules/visual-rules.yml` -> `composition.narrate-web-page` for the machine-consumable version.
 
 </details>

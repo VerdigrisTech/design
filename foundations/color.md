@@ -274,7 +274,7 @@ See `rules/visual-rules.yml` -> `color.palette_semantics.growth` for tokens, hue
 
 ### Neutral (Breathing Room)
 
-Body text, structural sections, form backgrounds, and breathing room between colored sections. At least 30% of page sections should use neutral backgrounds to prevent chromatic fatigue.
+Body text, structural sections, form backgrounds, and breathing room between colored sections. At least 70% of page sections should use neutral backgrounds to prevent chromatic fatigue.
 
 ### Taste Boundaries — Restraint Rules
 
@@ -300,7 +300,7 @@ See `rules/visual-rules.yml` -> `color.palette_semantics` for maximum regions pe
 
 Pages commit to a lightness direction. Alternating dark and light sections creates a strobe effect that forces the eye to re-adapt at every boundary. Content sections flow through subtle tonal shifts (white, neutral.50, neutral.100), not contrast flips.
 
-See `rules/visual-rules.yml` -> `color.section_flow` for the machine-enforceable rules: max lightness jump, dark accent limits, hero/footer boundary exceptions.
+See `rules/visual-rules.yml` -> `color.section-flow` for the machine-enforceable rules: max lightness jump, dark accent limits, hero/footer boundary exceptions.
 
 ## Neutral Scale
 

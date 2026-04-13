@@ -181,6 +181,8 @@ Note: www currently uses 991px as its mobile breakpoint. The canonical target is
 | Regular | 1rem (16px) | 1.6 | Body paragraphs, lists |
 | Small | 0.875rem (14px) | 1.6 | Captions, metadata, fine print |
 
+1.6 is the base default. Use 1.65-1.75 on tinted/dark backgrounds per the coupling rules, and 1.7 for Narrate prose. See `composition.persuade-web-page.coupling.tinted-line-height` and `composition.narrate-web-page.coupling.long-form-line-height`.
+
 ### Notes
 
 - CTA text-transform (uppercase) is not enforced. Buttons use sentence case.

@@ -373,12 +373,6 @@ color:
         description: "Section accent colors must match the content category — do not assign palette regions arbitrarily"
         severity: "error"
         type: "constraint"
-      - id: "color.palette-semantics.neutral-breathing-room"
-        description: "At least 70% of page sections should use neutral backgrounds. Color is the exception, not the default. 'Credibility through restraint.'"
-        severity: "warning"
-        type: "constraint"
-        test:
-          min: 0.7
       - id: "color.palette-semantics.adjacent-colored-sections"
         description: "Never place two non-neutral colored sections adjacent to each other. Always separate with a neutral section."
         severity: "error"
@@ -644,6 +638,18 @@ typography:
         max: 1.4
 
   # ---------------------------------------------------------------------------
+  # Line length rules
+  # ---------------------------------------------------------------------------
+  line_length:
+    body:
+      id: "typography.line-length.body"
+      type: "constraint"
+      severity: "warning"
+      description: "Default maximum line length for body text. Tighter values apply on tinted/dark backgrounds and inform/narrate pages."
+      test:
+        max: "75ch"
+
+  # ---------------------------------------------------------------------------
   # Letter spacing rules
   # ---------------------------------------------------------------------------
   letter_spacing_rules:
@@ -795,6 +801,8 @@ motion:
     hover-scale:
       description: "Container scales up subtly on hover"
       duration: "500ms"                             # duration.slow
+      # NOTE: 500ms is at the max-duration ceiling for user-triggered transitions.
+      # Use only for secondary/ambient surfaces, not primary interactive elements.
       easing: "ease"
       css: "transition: transform 500ms ease"
       transform: "scale(1.02)"
@@ -2118,6 +2126,7 @@ composition:
               - criterion: "Character-driven language"
                 score: "0 = infrastructure voice, 5 = some personality, 10 = animated avatar energy"
                 fail_threshold: 2
+            aggregation: "fail if ANY single criterion exceeds its fail_threshold"
       - id: "composition.assist-chat.flat-layout"
         description: "AI responses use flat document layout, not chat bubbles. Bubbles are for consumer messaging, not expert tools."
         severity: "warning"
