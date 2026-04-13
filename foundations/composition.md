@@ -140,4 +140,101 @@ Design essays, retrospectives, case studies with depth, process documentation th
 
 See `rules/visual-rules.yml` -> `composition.narrate-web-page` for the machine-consumable version.
 
+## Spoken Voice
+
+How Verdigris sounds when content is spoken aloud. Extends the written voice rules from Assist x Chat to any surface with audio output: video narration, AI assistant speech, ad voiceovers, accessibility.
+
+### Voice Pillars
+
+The same brand pillars that govern written voice govern spoken voice. Each maps to a concrete vocal quality.
+
+| Pillar | Written rule (Assist x Chat) | Spoken equivalent | Floor | Ceiling |
+|--------|----------------------------|-------------------|-------|---------|
+| **Precise** | Exact values, no hedging, citation-forward | Measured pace, clear enunciation, no filler words | 140 wpm | 170 wpm |
+| **Masterful** | AI as infrastructure, no personality theater | Calm authority, steady pitch, no vocal fry or uptalk | Pitch variance: 30Hz | Pitch variance: 80Hz |
+| **Refined** | Interface disappears, content dominates | Unhurried delivery, natural pauses at clause boundaries | Pause at periods: 400ms | Pause at periods: 700ms |
+| **Pioneering** | Active artifacts, response IS the tool | Confident forward momentum, no hedging qualifiers | N/A (behavioral) | N/A (behavioral) |
+
+### Single Voice, Purpose-Adapted
+
+One primary voice builds brand recognition (like teal). Style parameters adapt by purpose.
+
+| Purpose | Adaptation | Example |
+|---------|-----------|---------|
+| **Persuade** (video, ads) | Warmer, slightly slower. Earns trust through restraint. | Brand video narration, webinar intro |
+| **Inform** (docs, tutorials) | Neutral, steady, scannable rhythm. Clarity over feeling. | Product walkthrough, help content |
+| **Analyze** (dashboards) | Clipped, precise. Data-forward. Faster pace. | Alert readout, KPI summary |
+| **Narrate** (case studies) | More spacious, natural. Room for reflection. | Case study video, retrospective |
+| **Assist** (AI chat) | Direct, professional. Answer-first cadence. | AI assistant reading a response aloud |
+
+### Voice Brief Format
+
+A voice brief is the spoken equivalent of a color token: a declarative description that a TTS pipeline resolves into audio. The brief should be specific enough to reproduce consistently.
+
+```
+voice.brand.primary:
+  age_range: [pending stakeholder decision]
+  gender: [pending stakeholder decision]
+  qualities:
+    - calm authority without coldness
+    - measured pace, unhurried but not slow
+    - clear enunciation, no mumbling or trailing off
+    - natural breath pauses at clause boundaries
+    - steady pitch with subtle emphasis on key data
+  anti-qualities:
+    - no vocal fry or uptalk
+    - no filler words (um, uh, like, you know)
+    - no breathy or ASMR quality
+    - no announcer energy or radio voice
+    - no synthetic flatness (must sound like a person)
+  reference_prompt: "The voice of a senior engineer presenting
+    findings to a board. They know the data cold. They respect
+    the audience's time. They are confident without performing
+    confidence."
+```
+
+### Demographic Attributes
+
+Gender, age, and accent carry cultural weight. These attributes require stakeholder input and cannot be decided by design-system logic alone. See the options analysis below.
+
+**Options under evaluation:**
+
+**A. Male voice**
+- For: Matches current buyer demographic (facilities management skews ~80% male). Familiar authority signal in infrastructure contexts.
+- Against: Reinforces industry gender norms. "Default male = authority" is a dated assumption. Indistinguishable from competitors.
+- Brand alignment: Neutral. The pillars don't imply gender.
+
+**B. Female voice**
+- For: Differentiates in a male-dominated vertical. Research shows female voices rate higher for perceived helpfulness and trustworthiness in professional contexts.
+- Against: "Helpful female assistant" trope is documented and risks undermining the Masterful pillar. Could trigger "secretary, not engineer" perception in a conservative buyer base.
+- Brand alignment: Tension with Masterful if it activates the assistant archetype rather than the expert archetype.
+
+**C. Gender-ambiguous voice**
+- For: Sidesteps gendered defaults entirely. Forward-looking (Apple's Quinn voice, 2024). Strongest Pioneering signal. No demographic baggage to manage across markets.
+- Against: Newer territory for TTS quality. Some audiences find it harder to form a connection. May feel "designed by committee" if not executed well.
+- Brand alignment: Strong Pioneering fit. Consistent with "infrastructure, not personality" from Masterful. Requires high production quality to avoid uncanny valley.
+
+**D. Regional accent**
+- American English (General American) is the safe default for a US-headquartered B2B company selling globally. Avoid strong regional accents that localize the brand. For non-English markets, use native speakers or high-quality multilingual TTS rather than accented English.
+
+**Recommendation (pending stakeholder review):** Option C (gender-ambiguous) is the strongest brand-aligned choice. It avoids the gendered defaults that every competitor uses, signals Pioneering, and lets the vocal qualities (calm authority, measured pace, clear enunciation) carry the brand rather than demographic associations. If stakeholders prefer a gendered voice, Option A is the safer GTM choice for the current buyer demographic, with Option B as a differentiation play.
+
+### Hosting and Pipeline
+
+The voice framework is pipeline-agnostic. Voice briefs are declarative descriptions; the TTS engine is an implementation detail. Current options:
+
+- **API-hosted** (ElevenLabs, Azure Custom Neural Voice, Cartesia Sonic): fastest to integrate, pay-per-use, no infra to manage.
+- **Self-hosted open-source** (VoxCPM2, 2B params, Apache 2.0): full control, no data leaves the network. Requires GPU inference infrastructure.
+- **Hybrid**: API for development/iteration, self-hosted for production once the voice is locked.
+
+Evaluate hosting options before committing to a specific engine. See Linear issue for infrastructure evaluation.
+
+### Constraints
+
+- Voice must pass the same "no personality theater" test as written Assist x Chat content
+- Pace must stay within 140-170 wpm (floor: comprehension; ceiling: rushed feeling)
+- No background music or sound design in voice-only content. Music is a separate design decision.
+- Reduced-motion users who have opted out of animation should not receive auto-playing audio. Audio requires explicit user action.
+- All spoken content must have a text transcript (accessibility, EU AI Act Article 50 for AI-generated speech)
+
 </details>
