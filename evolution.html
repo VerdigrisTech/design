@@ -78,6 +78,25 @@ title: Can a Design System Describe Taste?
       .container { padding: 0 1.5rem; }
       .episode h2 { font-size: 2rem; }
     }
+
+    /* Persuade specimen styles */
+    .cta-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .cta-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+    }
+    .cta-arrow { display: inline-flex; align-items: center; gap: 0.25rem; font-weight: 500; transition: gap 0.2s ease; }
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .cta-arrow:hover { gap: 0.5rem; }
+    }
+    .marquee-track { display: flex; gap: 3rem; animation: marquee-scroll 30s linear infinite; }
+    @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+    .role-label {
+      position: absolute; top: 1rem; right: 1.5rem;
+      font-family: var(--font-mono); font-size: 0.5625rem;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      opacity: 0.5; pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -735,13 +754,154 @@ title: Can a Design System Describe Taste?
       <div class="prose" style="margin-top: 1.5rem;">
         <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">If you work on the product, pick a component and check it against the dashboard rules. If you work on marketing, run the next email or ad through its composition cell. If you work on analytics, compare a dashboard view to the specimen. If you lead the company, look at the before/after at the top. Does the "after" feel like the brand you want?</p>
         <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">The framework sets boundaries so poor choices get caught. But the best choices still need people who care about the feeling. That's what makes this a design system and not just a style guide.</p>
-        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">The obvious next step: apply this to verdigris.co. The <a href="specimen-persuade" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">persuade specimen</a> now demonstrates a full page composition from hook to close. That's the reference implementation. See what the composition rules produce against what exists today.</p>
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">The obvious next step: apply this to verdigris.co. The <a href="#persuade-specimen" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">persuade specimen</a> now demonstrates a full page composition from hook to close. That's the reference implementation. See what the composition rules produce against what exists today.</p>
         <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">This essay exposed two gaps. The first: no composition type fit an editorial essay, so we created narrate. The second: the framework encoded how to use color and space, but not what makes Verdigris visually unmistakable. The waveform question is open. The framework grew again because it encountered surfaces it couldn't serve. That might be the best evidence that the approach works.</p>
       </div>
       <div class="prose" style="margin-top: 2rem;">
-        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">Start with the <a href="specimen-persuade" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">persuade specimen</a>, the <a href="foundations/composition" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">composition rules</a>, or the <a href="foundations/color" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">palette semantics</a>.</p>
+        <p style="color: var(--neutral-400); line-height: 1.7; letter-spacing: 0.01em;">Start with the <a href="#persuade-specimen" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">persuade specimen</a>, the <a href="foundations/composition" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">composition rules</a>, or the <a href="foundations/color" style="color: var(--brand-verdigris); text-decoration: underline; text-underline-offset: 4px;">palette semantics</a>.</p>
       </div>
     </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- PERSUADE SPECIMEN — Full page composition: Hook → Close -->
+  <!-- ================================================================ -->
+  <div id="persuade-specimen" style="border-top: 4px solid var(--brand-verdigris);">
+
+    <div style="padding: 2rem 0; background: var(--muted);">
+      <div class="container">
+        <div class="label" style="color: var(--brand-verdigris);">Persuade Specimen</div>
+        <p style="font-size: 0.875rem; color: var(--muted-fg); margin-top: 0.5rem;">Full persuade-page composition. Demonstrates hook, context, evidence, turn, proof, close narrative arc.</p>
+      </div>
+    </div>
+
+    <!-- HOOK -->
+    <section style="position:relative;background:var(--neutral-950);padding:8rem 0 6rem;">
+      <span class="role-label" style="color:var(--neutral-500);">Hook</span>
+      <div class="container" style="text-align:center;max-width:52rem;">
+        <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);margin-bottom:1rem;">Electrical Intelligence</div>
+        <h1 style="font-family:var(--font-display);font-size:clamp(2.75rem,5vw,4rem);font-weight:700;color:var(--neutral-50);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1.25rem;">Buildings don't waste energy. Blind spots do.</h1>
+        <p style="font-size:1.125rem;color:var(--neutral-400);line-height:1.7;max-width:38rem;margin:0 auto 2.5rem;letter-spacing:0.01em;">Circuit-level power monitoring at 8,000 samples per second. See every load, detect every fault, recover every watt.</p>
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+          <a href="#" style="display:inline-block;background:var(--brand-verdigris);color:var(--neutral-950);padding:0.625rem 1.5rem;border-radius:0.375rem;font-weight:600;font-size:0.875rem;">Request Demo</a>
+          <a href="#" style="display:inline-block;background:transparent;color:white;border:1px solid oklch(1 0 0 / 0.6);padding:0.625rem 1.5rem;border-radius:0.375rem;font-weight:600;font-size:0.875rem;">How It Works</a>
+        </div>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(to right in oklch,var(--brand-verdigris),var(--brand-midnight-purple),var(--brand-pastel-red),var(--brand-cyber-yellow),var(--brand-verdigris));"></div>
+    </section>
+
+    <!-- CONTEXT -->
+    <section style="position:relative;background:var(--neutral-100);padding:5rem 0;">
+      <span class="role-label" style="color:var(--neutral-500);">Context</span>
+      <div class="container" style="max-width:42rem;">
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:1rem;">Most buildings are monitored at the meter, not the circuit.</h2>
+        <p style="font-size:1rem;line-height:1.6;color:var(--neutral-900);margin-bottom:1rem;">Standard utility meters report consumption every 15 minutes. Building management systems poll every 60 seconds. At that resolution, a failing compressor looks the same as a healthy one until the energy bill arrives.</p>
+        <p style="font-size:1rem;line-height:1.6;color:var(--neutral-900);">Verdigris sensors capture electrical signatures at 8,000 samples per second on every circuit. The difference is not incremental. It is a different category of visibility.</p>
+      </div>
+    </section>
+
+    <!-- EVIDENCE -->
+    <section style="position:relative;background:white;padding:5rem 0;">
+      <span class="role-label" style="color:var(--neutral-400);">Evidence</span>
+      <div class="container">
+        <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);margin-bottom:0.75rem;">Platform</div>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:2rem;">Three layers of intelligence</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.5rem;">
+          <div class="cta-card" style="padding:1.5rem;border:1px solid var(--neutral-200);border-radius:var(--radius);background:white;">
+            <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.5rem;">Real-Time Monitoring</h3>
+            <p style="font-size:0.875rem;color:var(--neutral-500);line-height:1.5;">Circuit-level visibility across your entire portfolio. Every load identified, every anomaly flagged.</p>
+            <a href="#" class="cta-arrow" style="font-size:0.875rem;color:var(--brand-verdigris);margin-top:1rem;display:inline-flex;">Learn more <span aria-hidden="true">&rarr;</span></a>
+          </div>
+          <div class="cta-card" style="padding:1.5rem;border:1px solid var(--neutral-200);border-radius:var(--radius);background:white;">
+            <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.5rem;">AI Fault Detection</h3>
+            <p style="font-size:0.875rem;color:var(--neutral-500);line-height:1.5;">Sub-cycle signature analysis finds degrading equipment weeks before failure. No false positives.</p>
+            <a href="#" class="cta-arrow" style="font-size:0.875rem;color:var(--brand-verdigris);margin-top:1rem;display:inline-flex;">Learn more <span aria-hidden="true">&rarr;</span></a>
+          </div>
+          <div class="cta-card" style="padding:1.5rem;border:1px solid var(--neutral-200);border-radius:var(--radius);background:white;">
+            <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.5rem;">Energy Analytics</h3>
+            <p style="font-size:0.875rem;color:var(--neutral-500);line-height:1.5;">Granular consumption data for M&V, demand response, and sustainability reporting.</p>
+            <a href="#" class="cta-arrow" style="font-size:0.875rem;color:var(--brand-verdigris);margin-top:1rem;display:inline-flex;">Learn more <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TURN -->
+    <section style="position:relative;background:oklch(0.495 0.1708 336.72 / 0.06);border-top:1px solid oklch(0.495 0.1708 336.72 / 0.15);border-bottom:1px solid oklch(0.495 0.1708 336.72 / 0.15);padding:5rem 0;">
+      <span class="role-label" style="color:var(--brand-mp-step-2);">Turn</span>
+      <div class="container" style="text-align:center;">
+        <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-mp-step-2);margin-bottom:0.75rem;">Detection</div>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:2.5rem;">What 8,000 samples per second finds</h2>
+        <div style="display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;">
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:var(--brand-mp-step-2);line-height:1.1;">94%</div>
+            <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);margin-top:0.25rem;">Faults Found Early</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:var(--brand-mp-step-2);line-height:1.1;">23 Days</div>
+            <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);margin-top:0.25rem;">Avg Warning Before Failure</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:var(--brand-mp-step-2);line-height:1.1;">0.02%</div>
+            <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;color:var(--neutral-500);margin-top:0.25rem;">False Positive Rate</div>
+          </div>
+        </div>
+        <p style="font-size:0.875rem;color:var(--neutral-500);max-width:36rem;margin:0 auto;line-height:1.6;">Sub-cycle signature analysis detects bearing wear, insulation degradation, and phase imbalance. The same events are invisible at 1-minute polling resolution.</p>
+      </div>
+    </section>
+
+    <!-- PROOF -->
+    <section style="position:relative;background:white;padding:5rem 0;">
+      <span class="role-label" style="color:var(--neutral-400);">Proof</span>
+      <div class="container" style="text-align:center;">
+        <div style="font-family:var(--font-mono);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brand-verdigris);margin-bottom:0.75rem;">Trusted By</div>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:2rem;">Deployed across 47,000+ meters</h2>
+        <div style="overflow:hidden;padding:1.5rem 0;margin-bottom:2.5rem;">
+          <div class="marquee-track">
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">Cushman &amp; Wakefield</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">JLL</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">Colliers</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">CBRE</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">Brookfield</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">Kilroy Realty</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">Cushman &amp; Wakefield</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">JLL</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">Colliers</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">CBRE</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">Brookfield</span>
+            <span style="font-family:var(--font-body);font-weight:600;font-size:0.875rem;color:var(--neutral-400);white-space:nowrap;flex-shrink:0;opacity:0.7;">Kilroy Realty</span>
+          </div>
+        </div>
+        <div style="background:var(--neutral-900);border-radius:var(--radius);padding:2rem;overflow:hidden;max-width:56rem;margin:0 auto;">
+          <div style="background:var(--neutral-950);border-radius:0.375rem;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:1px solid oklch(1 0 0 / 0.1);">
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-mono);font-size:0.6875rem;color:var(--neutral-500);text-transform:uppercase;letter-spacing:0.05em;">Patina Dashboard</div>
+              <div style="font-family:var(--font-body);font-size:0.75rem;color:var(--neutral-400);margin-top:0.375rem;">Real-time circuit-level monitoring across your portfolio</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSE -->
+    <section style="position:relative;background:var(--neutral-950);padding:6rem 0;">
+      <span class="role-label" style="color:var(--neutral-500);">Close</span>
+      <div class="container" style="text-align:center;max-width:42rem;">
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--neutral-50);letter-spacing:-0.02em;line-height:1.2;margin-bottom:1rem;">See what your building is actually doing.</h2>
+        <p style="font-size:1rem;color:var(--neutral-400);line-height:1.6;margin-bottom:2rem;letter-spacing:0.01em;">30-minute setup. No credit card required. Real data from day one.</p>
+        <a href="#" style="display:inline-block;background:var(--brand-verdigris);color:var(--neutral-950);padding:0.75rem 2rem;border-radius:0.375rem;font-weight:600;font-size:1rem;">Request Demo</a>
+      </div>
+    </section>
+
+    <div style="background:var(--neutral-950);border-top:1px solid oklch(1 0 0 / 0.1);padding:2rem 0;">
+      <div class="container" style="text-align:center;">
+        <p style="font-family:var(--font-mono);font-size:0.6875rem;color:var(--neutral-500);">Persuade x Web Page specimen | Verdigris Design System</p>
+        <p style="font-family:var(--font-mono);font-size:0.5625rem;color:var(--neutral-500);margin-top:0.25rem;">
+          Narrative arc: Hook &rarr; Context &rarr; Evidence &rarr; Turn &rarr; Proof &rarr; Close
+        </p>
+      </div>
+    </div>
+
   </div>
 
   <!-- Footer -->
