@@ -22,7 +22,7 @@
 
 | File | Notes |
 |------|-------|
-| `brand/logo-green.svg` | Original Sketch export, includes drop shadow filter. Use lockup-teal.svg instead. |
+| `brand/logo-green.svg` | Original Sketch export. Drop shadow filter is broken (missing merge node). Use lockup-teal.svg instead. |
 | `brand/logo-white.svg` | Original Sketch export, includes drop shadow filter. Use lockup-white.svg instead. |
 
 ## Color Reference

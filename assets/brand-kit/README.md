@@ -14,7 +14,7 @@ Both icon-only and full lockup (icon + wordmark) are available.
 | Name | OKLch | Hex | Use |
 |------|-------|-----|-----|
 | Brand Teal | oklch(0.75 0.1286 191.57) | #0FC8C3 | Primary brand color, CTAs, accents |
-| Midnight Purple | oklch(0.29 0.1506 289.33) | #1A0A4A | Dark accent, depth, overlays |
+| Midnight Purple | oklch(0.29 0.1506 289.33) | #2F0B6F | Dark accent, depth, overlays |
 
 ### Full Palette
 
@@ -25,10 +25,10 @@ See `tokens/color/base.json` for the full 16-stop gradient from teal through pur
 | Step | OKLch | Hex | Use |
 |------|-------|-----|-----|
 | 950 | oklch(0.141 0.005 285.823) | #09090b | Dark backgrounds, primary text |
-| 900 | oklch(0.21 0.006 285.885) | #292524 | Dark containers, input backgrounds |
-| 500 | oklch(0.552 0.016 285.938) | #78716C | Muted text, placeholders |
-| 200 | oklch(0.92 0.004 286.32) | #E7E5E4 | Borders, dividers |
-| 50 | oklch(0.985 0 0) | #FAFAF9 | Input backgrounds, subtle surfaces |
+| 900 | oklch(0.21 0.006 285.885) | #18181B | Dark containers, input backgrounds |
+| 500 | oklch(0.552 0.016 285.938) | #71717B | Muted text, placeholders |
+| 200 | oklch(0.92 0.004 286.32) | #E4E4E7 | Borders, dividers |
+| 50 | oklch(0.985 0 0) | #FAFAFA | Input backgrounds, subtle surfaces |
 
 ## Typography
 
