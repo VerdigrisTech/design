@@ -11,8 +11,8 @@ title: Page Sections
       <h1 style="font-family:Lato,sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;color:oklch(0.985 0 0);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem;">AI-Grade Power Monitoring</h1>
       <p style="font-size:1.125rem;color:oklch(0.705 0.015 286.067);line-height:1.7;max-width:36rem;margin:0 auto 2rem;">Precision energy intelligence that turns buildings into assets.</p>
       <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-        <button style="font-family:var(--font-body);background:oklch(0.75 0.1286 191.57);color:oklch(0.141 0.005 285.823);border:none;padding:0.625rem 1.5rem;border-radius:0.375rem;font-weight:600;font-size:0.875rem;cursor:pointer;">Request Demo</button>
-        <button style="font-family:var(--font-body);background:transparent;color:white;border:1px solid oklch(1 0 0 / 0.6);padding:0.625rem 1.5rem;border-radius:0.375rem;font-weight:600;font-size:0.875rem;cursor:pointer;">Learn More</button>
+        <button style="font-family:var(--font-body);background:oklch(0.75 0.1286 191.57);color:oklch(0.141 0.005 285.823);border:none;padding:0.625rem 1.5rem;border-radius:calc(0.625rem - 2px);font-weight:600;font-size:0.875rem;cursor:pointer;">Request Demo</button>
+        <button style="font-family:var(--font-body);background:transparent;color:white;border:1px solid oklch(1 0 0 / 0.6);padding:0.625rem 1.5rem;border-radius:calc(0.625rem - 2px);font-weight:600;font-size:0.875rem;cursor:pointer;">Learn More</button>
       </div>
     </div>
     <div style="height:4px;background:linear-gradient(to right in oklch,oklch(0.75 0.1286 191.57),oklch(0.29 0.1506 289.33),oklch(0.7 0.1909 24.11),oklch(0.87 0.1786 92.23),oklch(0.75 0.1286 191.57));"></div>
@@ -162,7 +162,7 @@ title: Page Sections
 <p class="v-label">Dark Image Container</p>
 <div class="v-demo">
   <div style="background:oklch(0.21 0.006 285.885);border-radius:0.625rem;padding:2rem;overflow:hidden;">
-    <div style="background:oklch(0.141 0.005 285.823);border-radius:0.375rem;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:1px solid oklch(1 0 0 / 0.1);">
+    <div style="background:oklch(0.141 0.005 285.823);border-radius:calc(0.625rem - 2px);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:1px solid oklch(1 0 0 / 0.1);">
       <div style="text-align:center;">
         <div style="font-family:var(--font-mono);font-size:0.6875rem;color:oklch(0.552 0.016 285.938);text-transform:uppercase;letter-spacing:0.05em;">Dark-themed screenshot</div>
         <div style="font-family:var(--font-body);font-size:0.75rem;color:oklch(0.705 0.015 286.067);margin-top:0.375rem;">neutral.900 wrapper prevents jarring contrast on light pages</div>
@@ -429,7 +429,7 @@ See `foundations/composition.md` for the full narrative arc rules governing sect
 
 ### Section flow
 
-Pages must follow the lightness rhythm rules to avoid strobing (alternating dark/light sections). See `foundations/color.md` for context and `rules/visual-rules.yml` -> `color.section_flow` for machine rules.
+Pages must follow the lightness rhythm rules to avoid strobing (alternating dark/light sections). See `foundations/color.md` for context and `rules/visual-rules.yml` -> `color.section-flow` for machine rules.
 
 See `foundations/composition.md` for the coupling rules (color-to-spacing, color-to-typography, type-to-spacing) and whitespace principle.
 
