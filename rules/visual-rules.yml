@@ -2,8 +2,8 @@
 # Machine-enforceable rules for evaluator pipelines.
 # Consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
 #
-# Version: 2.1.0
-# Last updated: 2026-04-10
+# Version: 2.2.0
+# Last updated: 2026-04-13
 #
 # Schema: visual-rules/2.1.0
 # Every enforceable rule entry MUST have:
@@ -339,6 +339,7 @@ color:
         description: "Teal (trust region) + neutrals must comprise at least 70% of any surface's color expression. The brand IS teal — other palette regions are rare accents, not co-primaries. 'Controlled color palette, no visual clutter.' (Masterful pillar)"
         test:
           min: 0.7
+        measurement_heuristic: "Count colored elements on the page (buttons, borders, badges, gradient stops, icons with non-neutral fill). No more than 3 of every 10 colored elements should use non-teal accents. Neutral elements (text, backgrounds, borders using gray/white/black) are excluded from the count."
       max_regions_per_surface:
         id: "color.palette-semantics.max-regions"
         severity: "error"
@@ -757,16 +758,16 @@ spacing:
   # Responsive hero heights
   # ---------------------------------------------------------------------------
   hero_height:
-    base: "min(100svh, 50rem)"    # full viewport on mobile, capped at 800px on large screens
-    sm: "min(100svh, 50rem)"      # 640px+
-    md: "min(100svh, 50rem)"      # 768px+
+    base: "60vh"                  # mobile — conservative to avoid scroll trap
+    sm: "70vh"                    # 640px+
+    md: "75vh"                    # 768px+
     min: "22rem"                  # floor — never shorter than 352px regardless of viewport
-    preferred_unit: "svh"         # small viewport height — excludes mobile browser chrome
-    fallback_unit: "vh"           # for browsers without svh support
+    preferred_unit: "vh"          # viewport height — universal support
+    note_on_svh: "svh (small viewport height) is preferable to avoid mobile browser chrome overlap, but vh has broader support. Use svh when the project's browser baseline allows it."
     breakpoints:
       sm: "640px"
       md: "768px"
-    description: "Hero fills the viewport using svh (small viewport height) to avoid content hiding behind mobile browser chrome. Capped at 50rem (800px) so the hero doesn't become an empty wasteland on tall monitors. The 22rem floor ensures content is visible even in extreme landscape orientations."
+    description: "Hero uses viewport-relative heights so it scales with screen size. 60/70/75vh provides a strong visual impression without trapping the user in a full-viewport scroll barrier. The 22rem floor ensures content visibility in extreme landscape orientations. IMPORTANT: Fixed rem values (22rem, 31rem) must not be used — they break on non-standard viewports."
 
 
 # =============================================================================
@@ -1067,6 +1068,12 @@ components:
       severity: "error"
       type: "value"
       description: "Ghost button for dark backgrounds — transparent with white border. Used for secondary hero CTAs. Validated across 7/12 B2B infra competitor audits."
+      usage_guidance: |
+        Use ghost (secondary) for light backgrounds (section-bg, section-alt-bg, context, evidence).
+        Use ghost-on-dark for dark backgrounds (hook, close, dark hero sections).
+        The distinction is about contrast: secondary uses neutral.200 border on white,
+        ghost-on-dark uses white/60 border on dark. Using the wrong variant fails WCAG contrast.
+        Rule of thumb: if the section uses --section-hook-bg or --section-close-bg, use ghost-on-dark.
       context: "dark_background"
       background: "transparent"
       text_color: "oklch(1 0 0)"                    # white
@@ -1356,6 +1363,10 @@ components:
     max_gap: "4rem"                                 # 64px — wider loses visual grouping
     animation_ref: "motion.patterns.logo-marquee"
     requires_reduced_motion: true                   # Falls back to static display
+    display_mode_threshold:
+      static_max: 5                                 # 5 or fewer logos: static grid, no animation
+      marquee_min: 6                                # 6+ logos: marquee scroll
+      description: "Static grid for ≤5 logos (all visible, no motion needed). Marquee for 6+ (too many for a row without overflow). Avoids gratuitous animation on sparse trust bars and prevents horizontal overflow on dense ones."
 
   # ---------------------------------------------------------------------------
   # Dark image container (homepage overhaul — Z2O-995)
@@ -1667,7 +1678,8 @@ composition:
           max_pages: 1
         secondary:
           hero: "Compact: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding"
-          turn_allowed: true  # conditional: only if page_section_count >= 6 (enforced in turn-scarcity rule)
+          turn_allowed: false
+          turn_condition: "page_section_count >= 6"  # enforced in turn-scarcity rule; default false, overridden when condition met
           color_budget: "trust only (teal + neutrals)"
           example: "Product, Platform"
         tertiary:
@@ -1801,10 +1813,10 @@ composition:
       close:
         id: "composition.persuade-web-page.close"
         type: "reference"
-        description: "Final CTA. Returns to full expression — bookends the hook."
+        description: "Final CTA. Returns to full expression -- bookends the hook. Dark background, so dark-padding coupling rule applies."
         color_intensity: "full"
         type_max: "h2"
-        section_padding: { min: "4rem" }
+        section_padding: { min: "8rem", max: "14rem" }  # must match dark-padding coupling rule (dark bg)
         position: "last section"
         elements: ["heading", "primary CTA"]
 
@@ -1835,24 +1847,69 @@ composition:
         test:
           llm_eval: "Does the page have an accent or highlighted section that appears before any evidence or proof section? Answer YES if the accent comes too early, NO if it follows evidence."
 
+    # --- Minimal arc (short pages with 3-6 sections) ---
+    # Product pages, solution pages, and partner pages may only have 3-6 sections.
+    # The full arc (hook-context-evidence-turn-proof-close) doesn't fit.
+    # Minimal arc: Hook → Evidence → Close. No turn required.
+    minimal_arc:
+      id: "composition.persuade-web-page.minimal-arc"
+      type: "reference"
+      description: "For pages with ≤6 sections, a reduced arc is allowed: Hook → Evidence(s) → Close. No turn required — the page is too short for an earned accent moment to land. The turn rule relaxes, but hook+close remain mandatory."
+      applies_when:
+        max_sections: 6
+      required_roles: ["hook", "close"]
+      optional_roles: ["context", "evidence", "proof"]
+      turn_required: false
+      rules:
+        - id: "composition.persuade-web-page.minimal-arc.hook-close"
+          description: "Even short persuasive pages need a hook (first) and close (last)."
+          severity: "error"
+          type: "constraint"
+          test:
+            required: ["hook", "close"]
+        - id: "composition.persuade-web-page.minimal-arc.no-turn-ok"
+          description: "Pages with ≤6 sections may omit the turn. The page is too short for the accent to feel earned."
+          severity: "info"
+          type: "reference"
+
     # --- Coupling rules (mechanical floor) ---
     # Grounded in readability research. Apply regardless of narrative role.
     coupling:
       color_to_spacing:
         - id: "composition.persuade-web-page.coupling.dark-padding"
-          description: "Dark background sections (L < 0.3) need generous padding. Visual weight needs room to breathe. Dark surfaces signal premium when given space."
+          description: "Dark background sections (L < 0.3) need generous padding. Visual weight needs room to breathe. Dark surfaces signal premium when given space. Values are responsive — mobile gets less padding to avoid wasting screen real estate."
           severity: "warning"
           type: "constraint"
           test:
             when: { background_lightness: { max: 0.3 } }
-            then: { section_padding: { min: "8rem", max: "14rem" } }
+            then:
+              section_padding:
+                mobile: { min: "4rem", max: "6rem" }       # < 640px
+                tablet: { min: "6rem", max: "10rem" }       # 640-767px
+                desktop: { min: "8rem", max: "14rem" }      # 768px+
+          note: "8rem is ~20% of a mobile viewport — too aggressive. 4rem on mobile preserves the generous feel without wasting half the screen."
         - id: "composition.persuade-web-page.coupling.tinted-padding"
-          description: "Tinted background sections (chroma > 0.01) need medium padding. Floor: 5rem for breathing room. Ceiling: 10rem to avoid wasted space."
+          description: "Tinted background sections (chroma > 0.01) need medium padding."
           severity: "warning"
           type: "constraint"
           test:
             when: { background_chroma: { min: 0.01 } }
-            then: { section_padding: { min: "5rem", max: "10rem" } }
+            then:
+              section_padding:
+                mobile: { min: "3rem", max: "5rem" }
+                tablet: { min: "4rem", max: "7rem" }
+                desktop: { min: "5rem", max: "10rem" }
+        - id: "composition.persuade-web-page.coupling.neutral-padding"
+          description: "Neutral background sections (low chroma, not dark) use standard padding."
+          severity: "warning"
+          type: "constraint"
+          test:
+            when: { background_chroma: { max: 0.01 }, background_lightness: { min: 0.3 } }
+            then:
+              section_padding:
+                mobile: { min: "3rem", max: "4rem" }
+                tablet: { min: "3rem", max: "5rem" }
+                desktop: { min: "4rem", max: "6rem" }
       color_to_typography:
         - id: "composition.persuade-web-page.coupling.tinted-line-height"
           description: "Tinted or dark backgrounds loosen body line-height to 1.65-1.75 for readability."
@@ -1883,13 +1940,24 @@ composition:
             then: { body_letter_spacing: { min: "0.01em", max: "0.03em" } }
       type_to_spacing:
         - id: "composition.persuade-web-page.coupling.heading-padding"
-          description: "Section padding scales with the largest heading in the section. H1 sections need large padding; H3-led sections can use standard."
+          description: "Section padding scales with the largest heading in the section. H1 sections need large padding; H3-led sections can use standard. All values are responsive."
           severity: "warning"
           type: "constraint"
           test:
-            h1: { section_padding: { min: "8rem", max: "14rem" } }
-            h2: { section_padding: { min: "5rem", max: "10rem" } }
-            h3: { section_padding: { min: "4rem", max: "6rem" } }
+            h1:
+              section_padding:
+                mobile: { min: "4rem", max: "6rem" }
+                tablet: { min: "6rem", max: "10rem" }
+                desktop: { min: "8rem", max: "14rem" }
+            h2:
+              section_padding:
+                mobile: { min: "3rem", max: "5rem" }
+                tablet: { min: "4rem", max: "7rem" }
+                desktop: { min: "5rem", max: "10rem" }
+            h3:
+              section_padding:
+                mobile: { min: "3rem", max: "4rem" }
+                desktop: { min: "4rem", max: "6rem" }
 
     # --- Whitespace principle ---
     whitespace:

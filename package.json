@@ -1,6 +1,6 @@
 {
   "name": "@verdigristech/design-tokens",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Verdigris design system tokens — OKLch-first, multi-format output",
   "license": "UNLICENSED",
   "private": false,

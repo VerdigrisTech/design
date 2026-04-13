@@ -77,7 +77,7 @@ Each section on a persuasive page serves a role in the story. The role determine
 | **Evidence** | Show proof | Supporting (teal label, white bg) | H2 + cards | 4rem |
 | **Turn** | Shift the feeling | Earned accent (tint + border + label) | H2 + stats | 5-10rem |
 | **Proof** | Hard numbers, logos | Supporting (teal label) | H2 + body | 4rem |
-| **Close** | Final CTA | Full expression (dark bg) | H2 | 4rem+ |
+| **Close** | Final CTA | Full expression (dark bg) | H2 | 8-14rem |
 
 ### Arc Rules
 
@@ -86,14 +86,21 @@ Each section on a persuasive page serves a role in the story. The role determine
 - Max 3 consecutive low-energy sections before a turn or visual break
 - The turn should follow at least one evidence section
 
+### Minimal Arc (Short Pages)
+
+Pages with 3-6 sections (product, solution, partner pages) use a reduced arc: **Hook → Evidence(s) → Close**. No turn required -- the page is too short for the earned accent to land. Hook and close remain mandatory.
+
 ### Coupling Rules
 
-Color, type, and spacing aren't independent on a persuasive page. They're coupled.
+Color, type, and spacing aren't independent on a persuasive page. They're coupled. All spacing values are **responsive** -- mobile gets less padding to avoid wasting screen real estate.
 
 **Color to spacing:** Visual weight needs room.
-- Dark sections (L < 0.3): padding 8-14rem
-- Tinted sections (chroma > 0.01): padding 5-10rem
-- Neutral sections: padding 4-6rem
+
+| Background | Mobile (< 640px) | Tablet (640-767px) | Desktop (768px+) |
+|------------|------|--------|---------|
+| Dark (L < 0.3) | 4-6rem | 6-10rem | 8-14rem |
+| Tinted (chroma > 0.01) | 3-5rem | 4-7rem | 5-10rem |
+| Neutral | 3-4rem | 3-5rem | 4-6rem |
 
 **Color to typography:** Background changes how text reads.
 - Tinted or dark backgrounds: body line-height 1.65-1.75 (looser than 1.6 default)
@@ -101,9 +108,45 @@ Color, type, and spacing aren't independent on a persuasive page. They're couple
 - Dark backgrounds: body letter-spacing +0.01em to +0.03em
 
 **Type to spacing:** Larger headings need more room.
-- H1-led section: padding 8-14rem
-- H2-led section: padding 5-10rem
-- H3 or body-led: padding 4-6rem
+
+| Heading | Mobile | Tablet | Desktop |
+|---------|--------|--------|---------|
+| H1-led | 4rem+ | 6rem+ | 8rem+ |
+| H2-led | 3rem+ | 4rem+ | 5rem+ |
+| H3-led | 3rem+ | 3rem+ | 4rem+ |
+
+### Section Role Tokens
+
+Pre-mixed CSS custom properties for narrative role backgrounds. Use these instead of hardcoding hex/HSL values.
+
+| Token | Light mode | Dark mode | Use for |
+|-------|-----------|-----------|---------|
+| `--section-hook-bg` | neutral.950 | midnight-purple tinted dark | Hook, hero sections |
+| `--section-hook-fg` | neutral.50 | neutral.50 | Text on hook/hero |
+| `--section-context-bg` | neutral.100 | neutral.900 | Context sections |
+| `--section-evidence-bg` | white | neutral.950 | Evidence, proof sections |
+| `--section-turn-bg-from/to` | warm gradient (6%/4% opacity) | warm gradient (8%/5% opacity) | Turn section gradient |
+| `--section-turn-border` | cyber-yellow/40% | cyber-yellow/40% | Turn left border |
+| `--section-close-bg` | neutral.950 | deeper midnight-purple tint | Close/CTA sections |
+| `--section-close-fg` | neutral.50 | neutral.50 | Text on close sections |
+
+Dark-on-dark differentiation: hook uses `hsl(262, 30%, 8%)` and close uses `hsl(262, 30%, 6%)` -- both midnight-purple tinted, subtly different from the page background (`neutral.950 = hsl(240, 10%, 4%)`).
+
+### Ghost vs Ghost-on-Dark Buttons
+
+| Button variant | Use on | Why |
+|---------------|--------|-----|
+| Ghost (secondary) | Light backgrounds (context, evidence, proof sections) | Uses neutral.200 border -- visible on light |
+| Ghost-on-dark | Dark backgrounds (hook, close, hero sections) | Uses white/60 border -- visible on dark |
+
+Rule of thumb: if the section uses `--section-hook-bg` or `--section-close-bg`, use ghost-on-dark.
+
+### Logo Display Mode
+
+| Logo count | Display | Why |
+|-----------|---------|-----|
+| ≤ 5 | Static grid | All visible at once, no motion needed |
+| 6+ | Marquee scroll | Too many for a single row without overflow |
 
 ### Whitespace Principle
 
@@ -152,8 +195,8 @@ Not all pages have equal visual weight. The homepage is the loudest; secondary p
 
 | Page tier | Hero treatment | Turn allowed | Color budget | Example |
 |-----------|---------------|-------------|-------------|---------|
-| **Primary** (1 page) | Full expression: dark bg, gradient strip, H1, 8rem | Yes — the earned accent moment | Trust + 1 accent | Homepage |
-| **Secondary** | Compact hero: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding | Conditional — only if the page has 6+ sections | Trust only | Product, Platform |
+| **Primary** (1 page) | Full expression: dark bg, gradient strip, H1, 8rem | Yes | Trust + 1 accent | Homepage |
+| **Secondary** | Compact hero: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding | Only if 6+ sections | Trust only | Product, Platform |
 | **Tertiary** | No hero. Section opens directly with H1 at standard weight. | No | Trust only | Docs, blog posts, legal |
 | **Convert** | Minimal: single heading + CTA, neutral or dark bg, no narrative arc | No | 1 accent (CTA) | Pricing, demo request, signup |
 
@@ -183,7 +226,7 @@ Visitors typically move from high-energy pages (persuade) toward low-energy page
 
 ### Navigation Continuity
 
-Header and footer are the compositional spine — consistent across every page.
+Header and footer are the compositional spine, consistent across every page.
 
 - **Header:** lightest element on every page. Breathing room. No per-page header styling. The header provides orientation; the page provides expression.
 - **Footer:** always dark. Provides closure. Same structure across pages. The footer is the site's consistent ending, not a per-page design surface.
@@ -197,7 +240,7 @@ Not every visitor starts at the homepage. With 60%+ arriving from LLMs, many lan
 
 - Every page works standalone (the self-contained rule from page-level composition)
 - But pages also work in sequence (the de-escalation and scarcity rules above)
-- When in conflict, standalone wins — a product page must earn its own trust even if the visitor skipped the homepage
+- When in conflict, standalone wins. A product page must earn its own trust even if the visitor skipped the homepage.
 
 See `rules/visual-rules.yml` -> `composition.site-level` for the machine-consumable version.
 

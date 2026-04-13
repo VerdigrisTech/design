@@ -52,6 +52,15 @@
   --color-semantic-input: oklch(0.92 0.004 286.32);
   --color-semantic-ring: oklch(0.705 0.015 286.067);
   --color-semantic-sidebar-primary: oklch(0.7 0.1909 24.11);
+  --color-semantic-section-hook-bg: oklch(0.141 0.005 285.823);
+  --color-semantic-section-hook-fg: oklch(0.985 0 0);
+  --color-semantic-section-context-bg: oklch(0.967 0.001 286.375);
+  --color-semantic-section-evidence-bg: oklch(1 0 0);
+  --color-semantic-section-turn-bg-from: hsl(34, 100%, 53%, 0.06);
+  --color-semantic-section-turn-bg-to: hsl(49, 100%, 50%, 0.04);
+  --color-semantic-section-turn-border: hsl(34, 100%, 53%, 0.4);
+  --color-semantic-section-close-bg: oklch(0.141 0.005 285.823);
+  --color-semantic-section-close-fg: oklch(0.985 0 0);
 }
 
 .dark {
@@ -74,4 +83,13 @@
   --color-semantic-input: oklch(1 0 0 / 15%);
   --color-semantic-ring: oklch(0.552 0.016 285.938);
   --color-semantic-sidebar-primary: oklch(0.7 0.1909 24.11);
+  --color-semantic-section-hook-bg: hsl(262, 30%, 8%);
+  --color-semantic-section-hook-fg: oklch(0.985 0 0);
+  --color-semantic-section-context-bg: oklch(0.21 0.006 285.885);
+  --color-semantic-section-evidence-bg: oklch(0.141 0.005 285.823);
+  --color-semantic-section-turn-bg-from: hsl(34, 100%, 53%, 0.08);
+  --color-semantic-section-turn-bg-to: hsl(49, 100%, 50%, 0.05);
+  --color-semantic-section-turn-border: hsl(34, 100%, 53%, 0.4);
+  --color-semantic-section-close-bg: hsl(262, 30%, 6%);
+  --color-semantic-section-close-fg: oklch(0.985 0 0);
 }
