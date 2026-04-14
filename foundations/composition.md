@@ -29,6 +29,7 @@ With 60%+ of traffic arriving from LLMs with intent already shaped, each page mu
 | **Assist** | Competence earns trust | Answer first > evidence (citations, data) > depth (interactive artifacts) |
 | **Identify** | N/A (single moment, not a trust sequence) | Recognition in under 3 seconds. No narrative arc. |
 | **Instruct** | N/A (machine-to-machine, structural) | Rule clarity > completeness > enforceability. No visual register. |
+| **Demonstrate** | Revelation earns trust | Curiosity (hook) > comprehension (context) > revelation (evidence) > conviction (turn) > credibility (proof) > action (close) |
 
 | Purpose | What it does | Color budget | Spacing | Rhythm |
 |---------|-------------|-------------|---------|--------|
@@ -40,6 +41,7 @@ With 60%+ of traffic arriving from LLMs with intent already shaped, each page mu
 | **Narrate** | Tell a story with depth | Illustrative (in figures) | Generous (5-8rem) | Episode + figure pairs |
 | **Assist** | AI interaction (chat, embedded) | Monochrome + functional | Content-driven | Conversational |
 | **Instruct** | Machine-to-machine | N/A (structural) | N/A | Rule clarity |
+| **Demonstrate** | Show product capability through data | Trust + data_viz exception | Generous (4-14rem; see coupling) | Revelation arc |
 
 ### Defined Cells
 
@@ -59,6 +61,7 @@ With 60%+ of traffic arriving from LLMs with intent already shaped, each page mu
 | Assist x Chat | **Defined** | Flat layout (no bubbles), 680-720px, competence over personality |
 | Assist x Embedded | **Defined** | Visual marker for AI content, provenance metadata, EU AI Act compliance |
 | Instruct x Machine | **Defined** | Floors AND ceilings, id paths, canonical tokens only |
+| Demonstrate x Web page | **Defined** | Pretext + Canvas effects, revelation arc, max 2 animated per viewport, effects exclusive to this cell |
 
 For implementation patterns (hero sections, stats rows, trust bars, CTA strips), see `categories/web-components/page-sections.md`.
 
@@ -356,7 +359,11 @@ Some brand effects require rendering text to Canvas rather than DOM. This is a s
 
 ### Named Text Effects
 
-Three named effects are part of the visual signature. Each has exact specifications for timing, color, and behavior.
+Three named effects are part of the visual signature. Each has exact specifications for timing, color, and behavior. These effects are **exclusive to the Demonstrate x Web Page composition cell** (Technology/Signal page). They do not appear on the homepage, product pages, or any other page type. The homepage earns its impact through composition restraint, not Canvas effects.
+
+**Attention budget:** At most 2 animated elements visible in any single viewport at any time. The ambient waveform counts as one if its opacity exceeds 10%. Named effects count when actively animating (not after completion). The resolution slider counts when the user is interacting with it.
+
+**Reading constraint:** Heading text must reach full legibility (final color, complete letterforms) before expected reading completion. For headings under 40 characters, fully legible within 600ms. For longer headings, within 800ms. If the full effect duration exceeds the legibility deadline, text resolves first and ambient glow/color continues after.
 
 **1. Measurement Bar Reveal**
 
@@ -404,32 +411,35 @@ Section heading starts as a continuous oscilloscope trace spanning the full text
 | Total duration | 1200ms | Custom (below 1.5x `duration.spin`) |
 | Easing | ease-out (cubic) | `easing.out` |
 | Waveform structure | 60Hz fundamental + 3rd/5th/7th harmonics | Real electrical harmonic structure |
-| Color during transition | Sweeps through full brand palette (teal > blue > purple > red > yellow > teal) | 16-stop gradient |
+| Color during transition | Starts at teal, sweeps through palette, terminates at the Turn section's designated accent region | Must end at section accent, not cycle freely |
 | Final text color | neutral.50 (dark bg) or neutral.950 (light bg) | `color.semantic.foreground` |
 | Gate 1 purpose | Brand + Orientation (signal becomes language, section entering) | N/A |
-| Reduced-motion fallback | Static text with 3px teal left border accent | HTML + CSS |
-| Use on | H2 headings at the Turn section | Once per page (the earned accent) |
-| Constraint | The waveform phase must be a continuous trace across the full heading width, not per-character noise | Structural |
+| Reduced-motion fallback | Static text with 3px teal left border + one static phase portrait or harmonic spectrum illustration | HTML + CSS + static brand viz |
+| Use on | H2 headings at the Turn section on Demonstrate pages only | Once per page (the earned accent) |
+| Constraint | The waveform phase must be a continuous trace across the full heading width, not per-character noise. The palette sweep must resolve to the section's accent color, not cycle through all 16 stops independently. | Structural + accent alignment |
 
 ### Ambient Waveform Layer
 
 A persistent 60Hz sine wave that runs behind page content at low opacity. This is the page's "heartbeat" -- the AC power frequency made visible.
 
-| Section role | Opacity | Harmonics | Color |
-|-------------|---------|-----------|-------|
-| Hook | 15% | 1st (fundamental) only | teal |
-| Context | 5% or off | None (quiet) | teal |
-| Evidence | 10-20% | 1st + 3rd (if data shown) | teal |
-| Turn | 20-25% | 1st + 3rd + 5th | palette sweep |
-| Proof | 8% | 1st only | teal |
-| Close | 12% | 1st + 3rd + 5th (builds) | palette crawl |
+| Section role | Dark bg opacity | Light bg opacity | Harmonics | Color |
+|-------------|----------------|-----------------|-----------|-------|
+| Hook | 15% | N/A (Hook is always dark) | 1st only | teal |
+| Context | Off | Off | None | N/A |
+| Evidence | 10-15% | Off (use static illustration) | 1st + 3rd | teal |
+| Turn | 15-20% | Off (accent tint handles it) | 1st + 3rd + 5th | section accent |
+| Proof | Off | Off | None | N/A |
+| Close | 12% | N/A (Close is always dark) | 1st + 3rd + 5th | teal |
+
+The ambient layer appears only on dark-background sections. On light backgrounds (Context, Proof, light-mode Evidence), the waveform layer is hidden -- the section's neutral background does the work. This prevents a teal tint from contaminating neutral breathing-room sections.
 
 **Constraints:**
 - Rendered as a single Canvas layer behind all content
-- Never more than 25% opacity (it's ambient, not a feature)
-- Must not interfere with text readability (test contrast ratios with wave at peak opacity)
+- Never more than 20% opacity (reduced from 25% -- it's ambient, not a feature)
+- On dark sections: contrast ratio of foreground text vs (background + wave at peak opacity) must meet WCAG AA for large text (3.0:1)
 - `prefers-reduced-motion`: static thin line at 8% opacity, no animation
 - The waveform frequency (60Hz visual cycles per screen width) is a design constant, not adjustable per page
+- The ambient layer counts toward the attention budget (see Named Text Effects) when its opacity exceeds 10%
 
 ### Interactive Data Visualization
 
@@ -441,7 +451,7 @@ Data visualizations on marketing pages follow different rules than dashboards.
 | Max interactive elements per page | 1 (the resolution slider or equivalent) | Unlimited |
 | Sticky behavior | Max 1.5 scroll-heights per sticky section | N/A |
 | Auto-play | Yes, with pause on user interaction | No |
-| Data source | Synthetic or anonymized real data | Live customer data |
+| Data source | Synthetic (labeled as "representative") or anonymized real data | Live customer data |
 | Color budget | Trust region + data_visualization exception | Full palette |
 | Labels | Pretext-measured, appear sequentially | Standard DOM |
 | Performance budget | 60fps target, 30fps floor, single active Canvas | Application-level |
@@ -458,8 +468,11 @@ The Technology/Signal page is a new composition cell: **Demonstrate x Web Page**
 | Hero treatment | Dark, compact (not full-expression -- homepage owns that) |
 | Turn allowed | Yes (the page has 8+ sections) |
 | Color budget | Trust + data_visualization exception for viz sections |
-| Canvas text effects | Up to 3 named effects (measurement bar reveal, harmonic typography, waveform-to-text reveal) |
-| Ambient layer | Yes (60Hz waveform, per opacity table above) |
+| Canvas text effects | Up to 3 named effects (measurement bar reveal, harmonic typography, waveform-to-text reveal). Exclusive to this page type. |
+| Ambient layer | Yes, dark sections only (per opacity table above) |
+| Attention budget | Max 2 animated elements visible in any viewport simultaneously |
+| Synthetic data | Must be labeled "Representative electrical data" or similar. Synthetic fault events acceptable but must not claim to be real measurements. |
+| Reduced-motion minimum | Page must include at least one static phase portrait or harmonic spectrum illustration for visual signature even without animation. The CSS gradient-clip fallback on Harmonic Typography is the baseline. |
 | Interactive elements | 1 primary (resolution slider), secondary interactions on viz elements |
 
 </details>

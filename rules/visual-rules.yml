@@ -1926,7 +1926,7 @@ composition:
         total_duration: "1200ms"
         easing: "ease-out (cubic)"
       color:
-        during_transition: "sweeps through full 16-stop brand palette"
+        during_transition: "starts at teal, sweeps through palette, terminates at section's designated accent region"
         final_text: "color.semantic.foreground"
       constraints:
         max_per_page: 1
@@ -1941,15 +1941,16 @@ composition:
     type: "reference"
     description: "A persistent 60Hz sine wave behind page content. The AC heartbeat. Varies in opacity and harmonic complexity by section role."
     frequency: "60Hz visual cycles per screen width"
-    max_opacity: 0.25
+    max_opacity: 0.20
+    light_mode: "off -- ambient waveform only on dark-background sections"
     reduced_motion: "static thin line at 8% opacity, no animation"
     opacity_by_role:
-      hook: 0.15
-      context: 0.05
-      evidence: { min: 0.10, max: 0.20 }
-      turn: { min: 0.20, max: 0.25 }
-      proof: 0.08
-      close: 0.12
+      hook: { dark: 0.15, light: 0 }
+      context: { dark: 0, light: 0 }       # off on context (breathing room)
+      evidence: { dark: { min: 0.10, max: 0.15 }, light: 0 }
+      turn: { dark: { min: 0.15, max: 0.20 }, light: 0 }
+      proof: { dark: 0, light: 0 }         # off on proof (quiet)
+      close: { dark: 0.12, light: 0 }
     harmonics_by_role:
       hook: "1st only"
       context: "none"
@@ -1974,9 +1975,12 @@ composition:
     hero: "Dark, compact (not full-expression -- homepage owns that)"
     turn_allowed: true
     color_budget: "trust + data_visualization exception for viz sections"
-    canvas_effects: "up to 3 named effects per page"
-    ambient_layer: true
+    canvas_effects: "up to 3 named effects per page, exclusive to this cell"
+    ambient_layer: "dark sections only"
     interactive_elements: "1 primary (slider or equivalent), secondary interactions on viz elements"
+    attention_budget: "max 2 animated elements visible in any single viewport"
+    synthetic_data: "must be labeled as representative, not claimed as real measurements"
+    reduced_motion_minimum: "at least 1 static phase portrait or harmonic spectrum illustration"
     rules:
       - id: "composition.demonstrate-web-page.effects-serve-content"
         description: "Every Canvas effect on the page must demonstrate a product capability. If removing the effect loses information (not just visual interest), it belongs. If removing it loses nothing, it does not."
@@ -1984,6 +1988,29 @@ composition:
         type: "constraint"
         test:
           llm_eval: "Does this Canvas text effect or data visualization demonstrate a specific product capability (8kHz resolution, fault detection, load identification), or is it purely decorative? Answer YES if purely decorative, NO if it demonstrates capability."
+
+      - id: "composition.demonstrate-web-page.attention-budget"
+        description: "At most 2 animated elements visible in any single viewport simultaneously. The ambient waveform counts when opacity exceeds 10%. Named effects count when actively animating. This prevents the page from becoming a tech demo."
+        severity: "error"
+        type: "constraint"
+        test:
+          max_simultaneous_animated: 2
+
+      - id: "composition.demonstrate-web-page.effects-exclusive"
+        description: "Named text effects (measurement bar reveal, harmonic typography, waveform-to-text reveal) are exclusive to the Demonstrate x Web Page cell. They do not appear on the homepage, product pages, or any other page type."
+        severity: "error"
+        type: "constraint"
+        test:
+          llm_eval: "Are any named Canvas text effects (measurement bar reveal, harmonic typography, waveform-to-text reveal) used on a page that is not the Technology/Signal page? Answer YES if effects appear on other pages, NO if they are restricted to the Technology page."
+
+      - id: "composition.demonstrate-web-page.reading-constraint"
+        description: "Heading text must reach full legibility within 600ms (under 40 chars) or 800ms (40+ chars). The animation may continue after legibility but the text must be readable. This prevents effects from blocking comprehension at the highest-stakes moments."
+        severity: "error"
+        type: "constraint"
+        test:
+          legibility_deadline_short: "600ms"
+          legibility_deadline_long: "800ms"
+          threshold_chars: 40
 
   # ---------------------------------------------------------------------------
   # PERSUADE x WEB PAGE -- homepage, landing pages, campaign pages
