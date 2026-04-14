@@ -45,17 +45,30 @@ Before every commit that changes content (foundations, specimens, examples):
 
 ## Release Process
 
-Batch changes into a single PR before publishing. Do not publish per-commit.
+Releases are automatic. When a PR merges to main, the `auto-release.yml` workflow:
+1. Determines the version bump (from PR labels or commit prefixes)
+2. Bumps package.json, rebuilds, commits, tags, creates a GitHub Release
+3. Publishes to GitHub Packages
+
+**You just merge the PR. Everything else is automated.**
+
+### Versioning Rules
+
+| Bump | Trigger | When to use |
+|------|---------|------------|
+| **Major** | PR label `major` or `BREAKING CHANGE` in commit body | Breaking changes: renamed tokens, removed tokens, changed YAML rule ID paths, schema changes that break evaluator pipelines |
+| **Minor** | PR label `minor` or any `feat()` commit prefix | New tokens, new rules, new composition cells, new foundation sections, new assets |
+| **Patch** | Default (no label, no feat prefix) | Fixes to values, docs updates, YAML corrections, adversarial review fixes |
+
+To control the bump, either:
+- Add a `major`, `minor`, or `patch` label to the PR before merging
+- Or rely on commit message prefixes: `feat()` triggers minor, everything else triggers patch
+
+### Pre-Merge Checklist
 
 1. Branch + PR -- never push directly to main
-2. Run `npm run validate:all` on the branch
-3. Adversarial review before merge (at least 1 round)
-4. Merge PR to main
-5. `npm version <major|minor|patch>` -- bump version
-6. `npm run build` -- regenerate outputs
-7. Commit version bump + build outputs
-8. `gh release create v<version>` -- triggers publish workflow
-9. Verify publish workflow completes on GitHub Actions
+2. `npm run validate:all` on the branch
+3. Adversarial review before merge (at least 1 round for rules/composition changes)
 
 ## Commit Message Format
 
