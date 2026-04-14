@@ -57,18 +57,20 @@ jobs:
             exit 0
           fi
 
-          # Auto-detect from merge commit message
-          MERGE_MSG=$(git log -1 --format="%s" HEAD)
+          # Auto-detect from PR's merge commit
+          # The merge commit message contains the PR commits
+          PR_COMMITS="${{ github.event.pull_request.commits }}"
+          SCAN_DEPTH=$((PR_COMMITS + 1))
 
-          # Major: BREAKING CHANGE in any commit body on the PR
-          if git log HEAD~20..HEAD --format="%B" | grep -q "BREAKING CHANGE"; then
+          # Major: BREAKING CHANGE in PR commit bodies
+          if git log -"$SCAN_DEPTH" --format="%B" | grep -q "BREAKING CHANGE"; then
             echo "type=major" >> "$GITHUB_OUTPUT"
             echo "Bump: major (BREAKING CHANGE in commit)"
             exit 0
           fi
 
-          # Minor: any feat() commit prefix
-          if git log HEAD~20..HEAD --oneline | grep -qE '^[a-f0-9]+ feat'; then
+          # Minor: any feat() commit in the PR
+          if git log -"$SCAN_DEPTH" --oneline | grep -qE '^[a-f0-9]+ feat'; then
             echo "type=minor" >> "$GITHUB_OUTPUT"
             echo "Bump: minor (feat commit detected)"
             exit 0
@@ -90,30 +92,25 @@ jobs:
       - name: Build outputs
         run: npm run build
 
-      - name: Commit and tag
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          NEW_VERSION=${{ steps.version.outputs.new_version }}
-          git add package.json build/
-          git commit -m "chore(release): v${NEW_VERSION} [skip ci]"
-          git tag "v${NEW_VERSION}"
-          git push origin main --tags
-
-      - name: Create GitHub Release
+      - name: Tag and release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
           NEW_VERSION: ${{ steps.version.outputs.new_version }}
-          BUMP_TYPE: ${{ steps.bump.outputs.type }}
         run: |
+          # Tag the merge commit directly (no push to protected branch needed)
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "v${NEW_VERSION}"
+          git push origin "v${NEW_VERSION}"
+
+          # Create release with auto-generated notes
           gh release create "v${NEW_VERSION}" \
             --title "v${NEW_VERSION}" \
             --generate-notes
 
       - name: Publish to GitHub Packages
-        run: npm publish
+        run: |
+          # Build with the bumped version (in-memory, not committed)
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
