@@ -1,0 +1,119 @@
+name: Auto-Release on Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com
+          scope: '@verdigristech'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install pyyaml
+
+      - run: npm install
+
+      - name: Validate
+        run: npm run validate:all
+
+      - name: Determine version bump
+        id: bump
+        run: |
+          # Check PR labels first (highest priority)
+          LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          if echo "$LABELS" | grep -q '"major"'; then
+            echo "type=major" >> "$GITHUB_OUTPUT"
+            echo "Bump: major (from PR label)"
+            exit 0
+          fi
+          if echo "$LABELS" | grep -q '"minor"'; then
+            echo "type=minor" >> "$GITHUB_OUTPUT"
+            echo "Bump: minor (from PR label)"
+            exit 0
+          fi
+          if echo "$LABELS" | grep -q '"patch"'; then
+            echo "type=patch" >> "$GITHUB_OUTPUT"
+            echo "Bump: patch (from PR label)"
+            exit 0
+          fi
+
+          # Auto-detect from merge commit message
+          MERGE_MSG=$(git log -1 --format="%s" HEAD)
+
+          # Major: BREAKING CHANGE in any commit body on the PR
+          if git log HEAD~20..HEAD --format="%B" | grep -q "BREAKING CHANGE"; then
+            echo "type=major" >> "$GITHUB_OUTPUT"
+            echo "Bump: major (BREAKING CHANGE in commit)"
+            exit 0
+          fi
+
+          # Minor: any feat() commit prefix
+          if git log HEAD~20..HEAD --oneline | grep -qE '^[a-f0-9]+ feat'; then
+            echo "type=minor" >> "$GITHUB_OUTPUT"
+            echo "Bump: minor (feat commit detected)"
+            exit 0
+          fi
+
+          # Patch: fix, refactor, docs, chore, or anything else
+          echo "type=patch" >> "$GITHUB_OUTPUT"
+          echo "Bump: patch (default)"
+
+      - name: Bump version
+        id: version
+        run: |
+          BUMP=${{ steps.bump.outputs.type }}
+          npm version "$BUMP" --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Bumped to v$NEW_VERSION ($BUMP)"
+
+      - name: Build outputs
+        run: npm run build
+
+      - name: Commit and tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          NEW_VERSION=${{ steps.version.outputs.new_version }}
+          git add package.json build/
+          git commit -m "chore(release): v${NEW_VERSION} [skip ci]"
+          git tag "v${NEW_VERSION}"
+          git push origin main --tags
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          NEW_VERSION: ${{ steps.version.outputs.new_version }}
+          BUMP_TYPE: ${{ steps.bump.outputs.type }}
+        run: |
+          gh release create "v${NEW_VERSION}" \
+            --title "v${NEW_VERSION}" \
+            --generate-notes
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

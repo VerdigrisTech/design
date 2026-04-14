@@ -1,0 +1,684 @@
+---
+layout: null
+title: Visual Signature Demo
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Signal — Proof of Concept | Verdigris</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%230fc8c3'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #0fc8c3;
+  --mp: #2f0b6f;
+  --mp2: #9a2f85;
+  --mix1: #009dbe;
+  --mix2: #0070b0;
+  --cy: #fecf00;
+  --cy2: #81cb61;
+  --pr: #ff6361;
+  --n950: #09090b;
+  --n900: #18181b;
+  --n800: #27272a;
+  --n500: #71717b;
+  --n400: #9f9fa9;
+  --n50: #fafafa;
+  --font-body: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-display: Lato, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; }
+body { background: var(--n950); color: var(--n50); font-family: var(--font-body); overflow-x: hidden; }
+
+/* Reduced motion: show fallbacks */
+.effect-canvas { display: block; }
+.effect-fallback { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .effect-canvas { display: none !important; }
+  .effect-fallback { display: block !important; }
+}
+
+section { position: relative; overflow: hidden; }
+.container { max-width: 72rem; margin: 0 auto; padding: 0 2rem; }
+.label { font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); }
+.note { font-family: var(--font-mono); font-size: 0.5625rem; color: var(--n500); }
+</style>
+</head>
+<body>
+
+<!-- ================================================================ -->
+<!-- EFFECT 1: Measurement Bar Reveal                                -->
+<!-- The H1 materializes from oscilloscope cursor bars               -->
+<!-- ================================================================ -->
+<section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--n950);">
+  <div style="text-align: center; padding: 2rem; width: 100%;">
+    <div class="label" style="margin-bottom: 2rem;">Effect 1 / Measurement Bar Reveal</div>
+
+    <div style="position: relative; height: 5rem; margin-bottom: 1.5rem;">
+      <canvas id="reveal-headline" class="effect-canvas" style="width: 100%; height: 100%;"></canvas>
+      <h1 class="effect-fallback" style="font-family: var(--font-display); font-size: 4rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--n50);">Every building has a voice.</h1>
+    </div>
+
+    <p style="font-size: 1.125rem; color: var(--n400); max-width: 38rem; margin: 0 auto; line-height: 1.65;">
+      <span style="font-family: var(--font-mono); color: var(--teal);">8,000</span> times per second, the electrical system speaks.
+      Most people hear noise. We hear language.
+    </p>
+
+    <div class="note" style="margin-top: 3rem;">Click anywhere to replay. Characters materialize from 1px measurement bars over 800ms, staggered 35ms per character.</div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- EFFECT 2: Harmonic Typography                                   -->
+<!-- "8,000" as windows into three-phase waveforms                   -->
+<!-- ================================================================ -->
+<section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--n950); border-top: 1px solid var(--n800);">
+  <div style="text-align: center; padding: 2rem; width: 100%;">
+    <div class="label" style="margin-bottom: 2rem;">Effect 2 / Harmonic Typography</div>
+
+    <div style="position: relative; height: clamp(6rem, 18vw, 14rem); margin-bottom: 1rem;">
+      <canvas id="harmonic-type" class="effect-canvas" style="width: 100%; height: 100%;"></canvas>
+      <div class="effect-fallback" style="font-family: var(--font-display); font-weight: 700; font-size: clamp(5rem, 15vw, 12rem); line-height: 1; background: linear-gradient(135deg, var(--teal), var(--mix2)); -webkit-background-clip: text; background-clip: text; color: transparent;">8,000</div>
+    </div>
+
+    <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--n500); margin-bottom: 1rem;">samples/sec x 42 circuits x 86,400 sec/day = 29,030,400,000 data points</p>
+    <p style="font-size: 1.25rem; color: var(--n400); max-width: 32rem; margin: 0 auto; line-height: 1.6;">That's not a spec. It's a superpower.</p>
+
+    <div class="note" style="margin-top: 3rem;">Digits are clipping masks revealing live three-phase waveforms. Teal = Phase A, Purple = Phase B, Yellow = Phase C.</div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- EFFECT 3: Waveform-to-Text Reveal                               -->
+<!-- Section heading starts as oscilloscope trace, resolves to text   -->
+<!-- ================================================================ -->
+<section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--n950); border-top: 1px solid var(--n800);">
+  <div style="text-align: center; padding: 2rem; width: 100%;">
+    <div class="label" style="margin-bottom: 2rem;">Effect 3 / Waveform-to-Text Reveal</div>
+
+    <div style="position: relative; height: 4.5rem; margin-bottom: 2rem;">
+      <canvas id="wave-reveal" class="effect-canvas" style="width: 100%; height: 100%;"></canvas>
+      <h2 class="effect-fallback" style="font-family: var(--font-display); font-size: 3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--n50);">Every building has an electrical signature.</h2>
+    </div>
+
+    <p style="font-size: 1.125rem; color: var(--n400); max-width: 42rem; margin: 0 auto 3rem; line-height: 1.65;">A chiller starting. A server rack at 80% load. A failing bearing in an air handler. Each leaves a distinct pattern in the power signal.</p>
+
+    <!-- Lissajous figures below -->
+    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+      <div style="text-align: center;">
+        <canvas id="liss-1" width="160" height="160" style="width: 160px; height: 160px;"></canvas>
+        <div style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--teal); margin-top: 0.5rem;">HVAC CHILLER</div>
+        <div style="font-family: var(--font-mono); font-size: 0.625rem; color: var(--n500);">142 kW | PF 0.87</div>
+      </div>
+      <div style="text-align: center;">
+        <canvas id="liss-2" width="160" height="160" style="width: 160px; height: 160px;"></canvas>
+        <div style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--teal); margin-top: 0.5rem;">GPU SERVER RACK</div>
+        <div style="font-family: var(--font-mono); font-size: 0.625rem; color: var(--n500);">38 kW | PF 0.99</div>
+      </div>
+      <div style="text-align: center;">
+        <canvas id="liss-3" width="160" height="160" style="width: 160px; height: 160px;"></canvas>
+        <div style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--pr); margin-top: 0.5rem;">BEARING FAULT</div>
+        <div style="font-family: var(--font-mono); font-size: 0.625rem; color: var(--n500);">12 kW | PF 0.72 | ALERT</div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top: 3rem;">Click anywhere to replay. Text starts as waveform trace and resolves over 1200ms with palette sweep. Lissajous figures trace themselves.</div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div style="padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--n800);">
+  <p style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--n500);">The Signal / Proof of Concept / Z2O-1040</p>
+  <p style="font-family: var(--font-mono); font-size: 0.5625rem; color: var(--n800); margin-top: 0.5rem;">Character positions simulated. Production version uses Pretext for sub-pixel measurement.</p>
+</div>
+
+<script>
+// ================================================================
+// SHARED UTILITIES
+// ================================================================
+const TEAL = '#0fc8c3';
+const MIX1 = '#009dbe';
+const MIX2 = '#0070b0';
+const MP = '#2f0b6f';
+const MP2 = '#9a2f85';
+const CY = '#fecf00';
+const CY2 = '#81cb61';
+const PR = '#ff6361';
+const N950 = '#09090b';
+const N900 = '#18181b';
+const N800 = '#27272a';
+const N500 = '#71717b';
+const N50 = '#fafafa';
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function initCanvas(el) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const rect = el.getBoundingClientRect();
+  el.width = rect.width * dpr;
+  el.height = rect.height * dpr;
+  const ctx = el.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return { ctx, w: rect.width, h: rect.height };
+}
+
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+
+// Simulate character measurements (production would use Pretext)
+function measureChars(ctx, text, fontSpec, containerW) {
+  ctx.font = fontSpec;
+  const metrics = ctx.measureText(text);
+  const totalW = metrics.width;
+  const startX = (containerW - totalW) / 2;
+
+  const chars = [];
+  let x = startX;
+  for (const ch of text) {
+    const w = ctx.measureText(ch).width;
+    chars.push({ ch, x, w });
+    x += w;
+  }
+  return chars;
+}
+
+// ================================================================
+// EFFECT 1: MEASUREMENT BAR REVEAL
+// ================================================================
+if (!prefersReducedMotion) {
+(function() {
+  const el = document.getElementById('reveal-headline');
+  const { ctx, w, h } = initCanvas(el);
+  const text = 'Every building has a voice.';
+  const fontSize = Math.min(w * 0.065, 64);
+  const fontSpec = `700 ${fontSize}px Lato, sans-serif`;
+  const chars = measureChars(ctx, text, fontSpec, w);
+  const baseline = h * 0.65;
+
+  let startTime = null;
+  let playing = true;
+  const STAGGER = 35;
+  const CHAR_DURATION = 500;
+  const TOTAL = STAGGER * (chars.length - 1) + CHAR_DURATION;
+
+  function draw(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+
+    ctx.clearRect(0, 0, w, h);
+
+    chars.forEach((c, i) => {
+      const charStart = i * STAGGER;
+      const charElapsed = Math.max(0, elapsed - charStart);
+      const t = Math.min(charElapsed / CHAR_DURATION, 1);
+      const eased = easeOutCubic(t);
+
+      if (t <= 0) return;
+
+      // Phase 1: measurement bar (0-0.3)
+      // Phase 2: bar widens to character (0.3-1.0)
+      const barPhase = Math.min(t / 0.3, 1);
+      const revealPhase = t > 0.3 ? (t - 0.3) / 0.7 : 0;
+      const revealEased = easeOutQuart(revealPhase);
+
+      if (revealPhase <= 0) {
+        // Draw measurement bar
+        const barOpacity = easeOutCubic(barPhase);
+        const barH = fontSize * 1.2 * barOpacity;
+        ctx.fillStyle = `rgba(15, 200, 195, ${0.4 + barOpacity * 0.4})`;
+        ctx.fillRect(c.x + c.w / 2 - 0.5, baseline - fontSize + (fontSize * 1.2 - barH) / 2, 1, barH);
+      } else {
+        // Draw character fading in
+        ctx.save();
+        ctx.font = fontSpec;
+        ctx.textBaseline = 'alphabetic';
+
+        // Clip to widening region
+        const revealW = c.w * revealEased;
+        const clipX = c.x + (c.w - revealW) / 2;
+        ctx.beginPath();
+        ctx.rect(clipX, 0, revealW, h);
+        ctx.clip();
+
+        // Character fill
+        const charOpacity = easeOutCubic(revealPhase);
+        ctx.fillStyle = `rgba(250, 250, 250, ${charOpacity})`;
+        ctx.fillText(c.ch, c.x, baseline);
+
+        // Teal edge glow on the character
+        if (revealPhase < 0.8) {
+          const glowOpacity = (1 - revealPhase / 0.8) * 0.15;
+          ctx.shadowColor = TEAL;
+          ctx.shadowBlur = 8;
+          ctx.fillStyle = `rgba(15, 200, 195, ${glowOpacity})`;
+          ctx.fillText(c.ch, c.x, baseline);
+          ctx.shadowBlur = 0;
+        }
+
+        ctx.restore();
+
+        // Residual measurement bar fading out
+        if (revealPhase < 0.5) {
+          const barFade = 1 - revealPhase / 0.5;
+          ctx.fillStyle = `rgba(15, 200, 195, ${barFade * 0.3})`;
+          ctx.fillRect(c.x + c.w / 2 - 0.5, baseline - fontSize, 1, fontSize * 1.2);
+        }
+      }
+    });
+
+    if (elapsed < TOTAL + 200) {
+      requestAnimationFrame(draw);
+    } else {
+      playing = false;
+      // Draw final state
+      ctx.clearRect(0, 0, w, h);
+      ctx.font = fontSpec;
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = N50;
+      chars.forEach(c => ctx.fillText(c.ch, c.x, baseline));
+    }
+  }
+
+  // Start after fonts load
+  document.fonts.ready.then(() => {
+    requestAnimationFrame(draw);
+  });
+
+  // Replay on click
+  el.parentElement.parentElement.addEventListener('click', () => {
+    startTime = null;
+    playing = true;
+    requestAnimationFrame(draw);
+  });
+})();
+}
+
+// ================================================================
+// EFFECT 2: HARMONIC TYPOGRAPHY
+// ================================================================
+if (!prefersReducedMotion) {
+(function() {
+  const el = document.getElementById('harmonic-type');
+  const { ctx, w, h } = initCanvas(el);
+  const text = '8,000';
+  const fontSize = Math.min(w * 0.18, 180);
+  const fontSpec = `700 ${fontSize}px Lato, sans-serif`;
+
+  let frame = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+
+    // Measure characters
+    ctx.font = fontSpec;
+    const metrics = ctx.measureText(text);
+    const totalW = metrics.width;
+    const startX = (w - totalW) / 2;
+    const baseline = h * 0.75;
+
+    // Draw waveform layer first (will be masked by text)
+    const waveCanvas = document.createElement('canvas');
+    waveCanvas.width = w * 2;
+    waveCanvas.height = h * 2;
+    const wCtx = waveCanvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    wCtx.scale(dpr, dpr);
+
+    const offset = frame * 1.5;
+    const phases = [
+      { color: TEAL, phaseOffset: 0, amp: 0.35 },
+      { color: MP2, phaseOffset: Math.PI * 2 / 3, amp: 0.3 },
+      { color: CY, phaseOffset: Math.PI * 4 / 3, amp: 0.25 },
+    ];
+
+    phases.forEach(phase => {
+      wCtx.strokeStyle = phase.color;
+      wCtx.lineWidth = 2.5;
+      wCtx.globalAlpha = 0.8;
+      wCtx.beginPath();
+      for (let x = 0; x < w; x++) {
+        const t = ((x + offset) / w) * Math.PI * 8 + phase.phaseOffset;
+        let y = Math.sin(t) * h * phase.amp;
+        y += Math.sin(t * 3) * h * phase.amp * 0.12;
+        y += Math.sin(t * 5) * h * phase.amp * 0.05;
+        const py = h / 2 + y;
+        x === 0 ? wCtx.moveTo(x, py) : wCtx.lineTo(x, py);
+      }
+      wCtx.stroke();
+      wCtx.globalAlpha = 1;
+    });
+
+    // Use text as clipping mask
+    ctx.save();
+    ctx.font = fontSpec;
+    ctx.textBaseline = 'alphabetic';
+
+    // Create text path for clipping
+    ctx.beginPath();
+    ctx.rect(0, 0, w, h);
+    ctx.clip();
+
+    // Draw text filled with a dark color to create the mask shape
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = N950;
+    ctx.fillRect(0, 0, w, h);
+
+    // Draw the text shape
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'white';
+    ctx.fillText(text, startX, baseline);
+    ctx.restore();
+
+    // Now draw waveforms, they show through the text-shaped holes
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.drawImage(waveCanvas, 0, 0, w * dpr, h * dpr, 0, 0, w, h);
+    ctx.restore();
+
+    // The comma should be solid, not a window
+    ctx.save();
+    ctx.font = fontSpec;
+    ctx.textBaseline = 'alphabetic';
+    let cx = startX;
+    for (const ch of text) {
+      const chW = ctx.measureText(ch).width;
+      if (ch === ',') {
+        ctx.fillStyle = N500;
+        ctx.fillText(ch, cx, baseline);
+      }
+      cx += chW;
+    }
+    ctx.restore();
+
+    frame++;
+    requestAnimationFrame(draw);
+  }
+
+  document.fonts.ready.then(() => requestAnimationFrame(draw));
+})();
+}
+
+// ================================================================
+// EFFECT 3: WAVEFORM-TO-TEXT REVEAL
+// ================================================================
+if (!prefersReducedMotion) {
+(function() {
+  const el = document.getElementById('wave-reveal');
+  const { ctx, w, h } = initCanvas(el);
+  const text = 'Every building has an electrical signature.';
+  const fontSize = Math.min(w * 0.042, 48);
+  const fontSpec = `700 ${fontSize}px Lato, sans-serif`;
+  const chars = measureChars(ctx, text, fontSpec, w);
+  const baseline = h * 0.65;
+
+  // Palette for the color sweep
+  const palette = [TEAL, MIX1, MIX2, MP, MP2, PR, CY, CY2, TEAL];
+
+  function paletteColor(t) {
+    const idx = t * (palette.length - 1);
+    const i = Math.floor(idx);
+    const frac = idx - i;
+    if (i >= palette.length - 1) return palette[palette.length - 1];
+    // Simple hex lerp
+    const a = palette[i], b = palette[i + 1];
+    const r1 = parseInt(a.slice(1,3),16), g1 = parseInt(a.slice(3,5),16), b1 = parseInt(a.slice(5,7),16);
+    const r2 = parseInt(b.slice(1,3),16), g2 = parseInt(b.slice(3,5),16), b2 = parseInt(b.slice(5,7),16);
+    const r = Math.round(r1 + (r2-r1)*frac), g = Math.round(g1 + (g2-g1)*frac), bl = Math.round(b1 + (b2-b1)*frac);
+    return `rgb(${r},${g},${bl})`;
+  }
+
+  let startTime = null;
+  const TOTAL_DURATION = 1800;
+  const RESOLVE_START = 0.15; // waveform phase lasts 15% of total
+  const RESOLVE_END = 0.85;
+  const STAGGER_PER_CHAR = 15;
+
+  function draw(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const globalT = Math.min(elapsed / TOTAL_DURATION, 1);
+
+    ctx.clearRect(0, 0, w, h);
+
+    chars.forEach((c, i) => {
+      const charDelay = (i / chars.length) * 0.3;
+      const localT = Math.max(0, Math.min((globalT - charDelay) / (1 - charDelay), 1));
+      const resolveT = localT < RESOLVE_START ? 0 : Math.min((localT - RESOLVE_START) / (RESOLVE_END - RESOLVE_START), 1);
+      const resolveEased = easeOutCubic(resolveT);
+
+      // Color sweep: each character gets a slightly offset palette position
+      const colorT = (globalT * 1.5 + i / chars.length * 0.3) % 1;
+
+      if (resolveEased >= 0.99) {
+        // Fully resolved: draw normal text fading to white
+        const fadeToWhite = Math.min((localT - RESOLVE_END) / (1 - RESOLVE_END), 1);
+        const finalColor = fadeToWhite >= 1 ? N50 : paletteColor(colorT);
+        ctx.font = fontSpec;
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = fadeToWhite >= 0.5 ? N50 : finalColor;
+        ctx.fillText(c.ch, c.x, baseline);
+        return;
+      }
+
+      // Waveform phase: draw a waveform segment in the character's column
+      const waveAmp = (1 - resolveEased) * fontSize * 0.4;
+      const charMidY = baseline - fontSize * 0.35;
+
+      ctx.save();
+      // Clip to character bounds (widening as it resolves)
+      const clipW = c.w;
+      ctx.beginPath();
+      ctx.rect(c.x - 1, 0, clipW + 2, h);
+      ctx.clip();
+
+      if (resolveEased > 0) {
+        // Blend: draw character with increasing opacity
+        ctx.font = fontSpec;
+        ctx.textBaseline = 'alphabetic';
+        ctx.globalAlpha = resolveEased;
+        ctx.fillStyle = paletteColor(colorT);
+        ctx.fillText(c.ch, c.x, baseline);
+        ctx.globalAlpha = 1;
+      }
+
+      // Draw waveform that fades as text resolves
+      ctx.globalAlpha = (1 - resolveEased) * 0.9;
+      ctx.strokeStyle = paletteColor(colorT);
+      ctx.lineWidth = 1.5 + (1 - resolveEased);
+
+      ctx.beginPath();
+      const segments = 30;
+      for (let s = 0; s <= segments; s++) {
+        const sx = c.x + (s / segments) * c.w;
+        const freq = 0.15 + i * 0.02;
+        const phase = elapsed * 0.003 + i * 0.5;
+        let sy = charMidY + Math.sin(sx * freq + phase) * waveAmp;
+        sy += Math.sin(sx * freq * 3 + phase * 1.5) * waveAmp * 0.2;
+        sy += Math.sin(sx * freq * 5 + phase * 0.7) * waveAmp * 0.1;
+        s === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    });
+
+    if (globalT < 1) {
+      requestAnimationFrame(draw);
+    } else {
+      // Final state
+      ctx.clearRect(0, 0, w, h);
+      ctx.font = fontSpec;
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = N50;
+      chars.forEach(c => ctx.fillText(c.ch, c.x, baseline));
+    }
+  }
+
+  // Trigger on viewport entry
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startTime = null;
+        document.fonts.ready.then(() => requestAnimationFrame(draw));
+      }
+    });
+  }, { threshold: 0.5 });
+  observer.observe(el);
+
+  // Replay on click
+  el.parentElement.parentElement.addEventListener('click', () => {
+    startTime = null;
+    requestAnimationFrame(draw);
+  });
+})();
+}
+
+// ================================================================
+// LISSAJOUS FIGURES (trace themselves on viewport entry)
+// ================================================================
+if (!prefersReducedMotion) {
+(function() {
+  const configs = [
+    { id: 'liss-1', phase: 0.56, harmonics: [], color: TEAL },
+    { id: 'liss-2', phase: 0.35, harmonics: [
+      {fx:3,fy:3,ax:0.15,ay:0.12,px:0.3,py:0.7},
+      {fx:5,fy:5,ax:0.1,ay:0.08,px:0.9,py:1.3},
+      {fx:7,fy:7,ax:0.06,ay:0.05,px:1.5,py:0.4},
+    ], color: TEAL },
+    { id: 'liss-3', phase: 0.4, harmonics: [
+      {fx:2,fy:3,ax:0.2,ay:0.15,px:0.2,py:0.6},
+      {fx:3,fy:5,ax:0.15,ay:0.12,px:0.8,py:1.4},
+      {fx:5,fy:7,ax:0.1,ay:0.08,px:1.5,py:0.3},
+      {fx:2,fy:1,ax:0.12,ay:0.1,px:3,py:0.1},
+    ], color: PR },
+  ];
+
+  configs.forEach(cfg => {
+    const el = document.getElementById(cfg.id);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    el.width = 160 * dpr;
+    el.height = 160 * dpr;
+    const ctx = el.getContext('2d');
+    ctx.scale(dpr, dpr);
+    const size = 160;
+    const cx = size / 2, cy = size / 2, r = size * 0.38;
+
+    const totalPoints = 1500;
+
+    // Compute all points
+    const points = [];
+    for (let i = 0; i <= totalPoints; i++) {
+      const t = (i / totalPoints) * Math.PI * 2;
+      let x = Math.sin(t), y = Math.sin(t + cfg.phase);
+      for (const h of cfg.harmonics) {
+        x += h.ax * Math.sin(h.fx * t + h.px);
+        y += h.ay * Math.sin(h.fy * t + h.py);
+      }
+      const maxA = 1 + cfg.harmonics.reduce((s, h) => s + Math.max(Math.abs(h.ax), Math.abs(h.ay)), 0);
+      points.push({ x: cx + (x / maxA) * r, y: cy + (y / maxA) * r });
+    }
+
+    let startTime = null;
+    const TRACE_DURATION = 2000;
+
+    function draw(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const t = Math.min(elapsed / TRACE_DURATION, 1);
+      const pointCount = Math.floor(easeOutCubic(t) * totalPoints);
+
+      ctx.fillStyle = N950;
+      ctx.fillRect(0, 0, size, size);
+
+      // Grid
+      ctx.strokeStyle = N800;
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      ctx.moveTo(cx, 8); ctx.lineTo(cx, size - 8);
+      ctx.moveTo(8, cy); ctx.lineTo(size - 8, cy);
+      ctx.stroke();
+
+      // Circle guide
+      ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Draw trace
+      if (pointCount > 1) {
+        // Trail (faded)
+        ctx.strokeStyle = cfg.color;
+        ctx.globalAlpha = 0.12;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let i = 0; i < pointCount; i++) {
+          i === 0 ? ctx.moveTo(points[i].x, points[i].y) : ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+        // Main trace (recent portion)
+        const recentStart = Math.max(0, pointCount - 300);
+        ctx.strokeStyle = cfg.color;
+        ctx.lineWidth = 2;
+        ctx.shadowColor = cfg.color;
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        for (let i = recentStart; i < pointCount; i++) {
+          const fadeIn = Math.min((i - recentStart) / 50, 1);
+          if (i === recentStart) ctx.moveTo(points[i].x, points[i].y);
+          else ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Bright dot at trace head
+        const head = points[pointCount - 1];
+        ctx.fillStyle = cfg.color;
+        ctx.shadowColor = cfg.color;
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        ctx.arc(head.x, head.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      if (t < 1) {
+        requestAnimationFrame(draw);
+      } else {
+        // Final: full trace, no head dot
+        ctx.fillStyle = N950;
+        ctx.fillRect(0, 0, size, size);
+        ctx.strokeStyle = N800; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(cx,8); ctx.lineTo(cx,size-8); ctx.moveTo(8,cy); ctx.lineTo(size-8,cy); ctx.stroke();
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+        ctx.strokeStyle = cfg.color; ctx.lineWidth = 2; ctx.shadowColor = cfg.color; ctx.shadowBlur = 8;
+        ctx.beginPath();
+        points.forEach((p,i) => i === 0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
+        ctx.stroke(); ctx.shadowBlur = 0;
+      }
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startTime = null;
+          requestAnimationFrame(draw);
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(el);
+  });
+})();
+}
+</script>
+</body>
+</html>
