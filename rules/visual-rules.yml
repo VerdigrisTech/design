@@ -1805,6 +1805,187 @@ composition:
         type: "reference"
 
   # ---------------------------------------------------------------------------
+  # VISUAL SIGNATURE -- data-derived brand elements
+  # ---------------------------------------------------------------------------
+  visual_signature:
+    id: "composition.visual-signature"
+    type: "reference"
+    description: "The Verdigris visual signature derives from the product: 8kHz electrical data made visible. A family of data-derived patterns, not decorative illustration."
+
+    canonical_elements:
+      phase_portrait:
+        id: "composition.visual-signature.phase-portrait"
+        type: "reference"
+        description: "V-I Lissajous figure. Each load type produces a unique shape. Primary brand mark candidate."
+        use: ["card icons", "hero illustrations", "loading states", "favicon"]
+      harmonic_spectrum:
+        id: "composition.visual-signature.harmonic-spectrum"
+        type: "reference"
+        description: "Frequency-domain bars showing harmonic content. Teal only for texture use."
+        use: ["section dividers (2-4px)", "card top borders", "dashboard headers"]
+        color_constraint: "teal only when used as texture. Full palette only in data_visualization context."
+      waveform_trace:
+        id: "composition.visual-signature.waveform-trace"
+        type: "reference"
+        description: "Time-domain 60Hz signal with harmonics. Supporting element, not primary."
+        use: ["section separators", "ambient background", "resolution comparisons"]
+
+    rules:
+      - id: "composition.visual-signature.no-generic-waves"
+        description: "Waveform visualizations must have real harmonic structure (3rd, 5th, 7th harmonics of 60Hz fundamental). Generic sine waves with no harmonic content could belong to any company."
+        severity: "warning"
+        type: "constraint"
+        test:
+          llm_eval: "Does this waveform visualization show only a smooth sine wave with no harmonic content or distortion? Answer YES if it is a generic sine, NO if it has visible harmonic structure."
+
+      - id: "composition.visual-signature.no-decorative-particles"
+        description: "Particle systems and dot fields must derive from electrical data concepts (circuit topology, sampling density). Generic floating particles are not brand elements."
+        severity: "warning"
+        type: "constraint"
+        test:
+          llm_eval: "Does this particle/dot visualization represent a specific electrical concept (circuit paths, sampling points, load distribution), or is it a generic decorative particle effect? Answer YES if generic, NO if electrically grounded."
+
+  # ---------------------------------------------------------------------------
+  # CANVAS TEXT -- rules for rendering text to Canvas instead of DOM
+  # ---------------------------------------------------------------------------
+  canvas_text:
+    id: "composition.canvas-text"
+    type: "reference"
+    description: "Rules for when and how to render text via Canvas/Pretext instead of DOM. Canvas text is a significant architectural decision with accessibility implications."
+
+    rules:
+      - id: "composition.canvas-text.html-fallback"
+        description: "Every Canvas-rendered text element must have an identical HTML fallback using the same typography tokens. The fallback is shown for prefers-reduced-motion and when Canvas is unavailable."
+        severity: "error"
+        type: "constraint"
+        test:
+          llm_eval: "Does this Canvas text element have a corresponding HTML fallback that uses the same font family, weight, size, and color? Is the fallback visible when prefers-reduced-motion is active? Answer YES if the fallback is missing or mismatched, NO if it exists and matches."
+
+      - id: "composition.canvas-text.no-body-copy"
+        description: "Never render body copy, paragraphs, or readable text to Canvas. Canvas text is for display headings with effects only."
+        severity: "error"
+        type: "constraint"
+        test:
+          llm_eval: "Is body copy, paragraph text, or text meant to be read at length rendered via Canvas instead of DOM? Answer YES if body copy uses Canvas, NO if Canvas is limited to display headings."
+
+      - id: "composition.canvas-text.aria-label"
+        description: "Canvas elements rendering text must have role='img' and aria-label matching the text content."
+        severity: "error"
+        type: "constraint"
+        test:
+          regex: "role=['\"]img['\"].*aria-label|aria-label.*role=['\"]img['\"]"
+
+  # ---------------------------------------------------------------------------
+  # NAMED TEXT EFFECTS -- three specified brand effects
+  # ---------------------------------------------------------------------------
+  named_effects:
+    id: "composition.named-effects"
+    type: "reference"
+    description: "Three named text effects that are part of the visual signature. Each has exact timing, color, and behavior specs."
+
+    measurement_bar_reveal:
+      id: "composition.named-effects.measurement-bar-reveal"
+      type: "reference"
+      description: "Characters materialize from 1px teal cursor bars that widen to reveal letterforms. Oscilloscope measurement metaphor."
+      timing:
+        total_duration: "800ms"
+        stagger_per_char: "35ms"
+        easing: "ease-out (cubic)"
+      color:
+        bar: "color.brand.verdigris at 40-80% opacity"
+        glow: "color.brand.verdigris at 15% opacity, fades during reveal"
+        final_text: "color.semantic.foreground"
+      constraints:
+        max_per_page: 1
+        reprise_in_close: true
+        use_on: "H1 headlines on dark hero sections (Hook and Close roles)"
+
+    harmonic_typography:
+      id: "composition.named-effects.harmonic-typography"
+      type: "reference"
+      description: "Large display text where digit shapes are clipping masks revealing three-phase waveforms. The text reveals the data."
+      timing:
+        waveform_speed: "one 60Hz cycle per 500ms"
+        pin_duration: "0.5 scroll-heights"
+        freeze_on_scroll_past: "800ms ease-out"
+      color:
+        phase_a: "color.brand.verdigris (teal)"
+        phase_b: "color.brand.mp-step-2 (purple)"
+        phase_c: "color.brand.cyber-yellow (yellow)"
+        non_digit_chars: "solid neutral fill (commas, units are punctuation)"
+      constraints:
+        max_per_page: 1
+        use_on: "key stat numbers in Evidence sections"
+        font: "Lato 700, clamp(5rem, 15vw, 12rem)"
+
+    waveform_to_text_reveal:
+      id: "composition.named-effects.waveform-to-text-reveal"
+      type: "reference"
+      description: "Heading starts as continuous oscilloscope trace with real harmonic structure, resolves into readable text with palette sweep."
+      timing:
+        total_duration: "1200ms"
+        easing: "ease-out (cubic)"
+      color:
+        during_transition: "sweeps through full 16-stop brand palette"
+        final_text: "color.semantic.foreground"
+      constraints:
+        max_per_page: 1
+        use_on: "H2 headings at the Turn section (the earned accent)"
+        waveform_structure: "continuous trace across full heading width, 60Hz + 3rd/5th/7th harmonics. NOT per-character random noise."
+
+  # ---------------------------------------------------------------------------
+  # AMBIENT WAVEFORM LAYER
+  # ---------------------------------------------------------------------------
+  ambient_waveform:
+    id: "composition.ambient-waveform"
+    type: "reference"
+    description: "A persistent 60Hz sine wave behind page content. The AC heartbeat. Varies in opacity and harmonic complexity by section role."
+    frequency: "60Hz visual cycles per screen width"
+    max_opacity: 0.25
+    reduced_motion: "static thin line at 8% opacity, no animation"
+    opacity_by_role:
+      hook: 0.15
+      context: 0.05
+      evidence: { min: 0.10, max: 0.20 }
+      turn: { min: 0.20, max: 0.25 }
+      proof: 0.08
+      close: 0.12
+    harmonics_by_role:
+      hook: "1st only"
+      context: "none"
+      evidence: "1st + 3rd"
+      turn: "1st + 3rd + 5th"
+      proof: "1st only"
+      close: "1st + 3rd + 5th (builds through section)"
+
+  # ---------------------------------------------------------------------------
+  # DEMONSTRATE x WEB PAGE -- technology showcase composition
+  # ---------------------------------------------------------------------------
+  demonstrate_web_page:
+    id: "composition.demonstrate-web-page"
+    type: "reference"
+    description: "Technology/Signal page. The data IS the content. Effects demonstrate product capability, not decorate marketing copy."
+    register:
+      id: "composition.demonstrate-web-page.register"
+      type: "reference"
+      description: "Revelation earns trust. The page makes invisible data visible. Each section reveals more than the last."
+      trust_sequence: "Curiosity (hook) > comprehension (context) > revelation (evidence) > conviction (turn) > credibility (proof) > action (close)"
+    page_tier: "secondary"
+    hero: "Dark, compact (not full-expression -- homepage owns that)"
+    turn_allowed: true
+    color_budget: "trust + data_visualization exception for viz sections"
+    canvas_effects: "up to 3 named effects per page"
+    ambient_layer: true
+    interactive_elements: "1 primary (slider or equivalent), secondary interactions on viz elements"
+    rules:
+      - id: "composition.demonstrate-web-page.effects-serve-content"
+        description: "Every Canvas effect on the page must demonstrate a product capability. If removing the effect loses information (not just visual interest), it belongs. If removing it loses nothing, it does not."
+        severity: "warning"
+        type: "constraint"
+        test:
+          llm_eval: "Does this Canvas text effect or data visualization demonstrate a specific product capability (8kHz resolution, fault detection, load identification), or is it purely decorative? Answer YES if purely decorative, NO if it demonstrates capability."
+
+  # ---------------------------------------------------------------------------
   # PERSUADE x WEB PAGE -- homepage, landing pages, campaign pages
   # ---------------------------------------------------------------------------
   # Narrative pacing + coupling rules. Each section has a role in the story.

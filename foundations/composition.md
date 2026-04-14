@@ -309,4 +309,157 @@ Gender, age, and accent carry cultural weight. These attributes require stakehol
 - Reduced-motion users who have opted out of animation should not receive auto-playing audio. Audio requires explicit user action.
 - All spoken content must have a text transcript (accessibility, EU AI Act Article 50 for AI-generated speech)
 
+## Visual Signature
+
+The Verdigris visual signature derives from the product: 8,000 samples per second of electrical data, made visible. The signature is not a logo treatment or an illustration style. It is a family of data-derived visual patterns that only an electrical intelligence company can produce.
+
+### Canonical Brand Visualizations
+
+These are the official visual signature elements. They appear on marketing pages, in Remotion videos, and as design system specimens. Each is grounded in real electrical engineering concepts.
+
+| Element | What it shows | Where to use | Priority |
+|---------|-------------|-------------|----------|
+| **Phase Portrait (Lissajous)** | V-I relationship as XY figure. Each load type produces a unique shape. | Card icons, hero illustrations, loading states, favicon candidate | Primary mark |
+| **Harmonic Spectrum** | Frequency-domain bars showing harmonic content of a load. | Section dividers (2-4px), card top borders, dashboard headers | Texture system |
+| **Waveform Trace** | Time-domain electrical signal showing 60Hz fundamental + harmonics. | Section separators, ambient background, resolution comparisons | Supporting |
+| **Resolution Comparison** | Same data at different sample rates (1/min vs 8kHz). | Evidence sections, product demos, slide decks | Narrative device |
+
+### What Is NOT a Brand Visualization
+
+- Generic sine waves with no harmonic content (could be any company)
+- Particle systems or dot fields not derived from electrical data
+- Abstract gradient meshes (the Stripe look)
+- Network/node graphs that don't represent actual circuit topology
+- Waveforms used as pure decoration without connection to section content
+
+### Canvas-Rendered Text
+
+Some brand effects require rendering text to Canvas rather than DOM. This is a significant architectural decision with accessibility, performance, and SEO implications.
+
+**When to use Canvas text:**
+- Character-level effects that CSS cannot achieve (per-character displacement, SDF morphing, text as clipping mask)
+- Text that must interact with Canvas visualizations (labels positioned on waveform data points)
+- Effects requiring sub-pixel character positioning (Pretext measurement)
+
+**When NOT to use Canvas text:**
+- Body copy, paragraphs, any text meant to be read at length
+- Navigation, buttons, form labels, or any interactive text
+- Text that needs to be selectable, translatable, or indexed by search engines
+- Anything that can be achieved with CSS transforms, opacity, or clip-path
+
+**Mandatory requirements for Canvas text:**
+1. Every Canvas text element must have an identical HTML fallback, hidden when Canvas is active
+2. The HTML fallback must use the same typography tokens (font family, weight, size, color)
+3. `prefers-reduced-motion: reduce` must show the HTML fallback and hide the Canvas
+4. The Canvas element must have `role="img"` and `aria-label` matching the text content
+5. No Canvas text in the critical rendering path. Fonts load first, Canvas initializes after.
+
+### Named Text Effects
+
+Three named effects are part of the visual signature. Each has exact specifications for timing, color, and behavior.
+
+**1. Measurement Bar Reveal**
+
+Characters materialize from 1px vertical bars (oscilloscope cursor metaphor) that widen to reveal the full letterform.
+
+| Property | Value | Token |
+|----------|-------|-------|
+| Total duration | 800ms | Below `duration.spin` ceiling |
+| Stagger per character | 35ms | N/A (custom) |
+| Easing | ease-out (cubic) | `easing.out` |
+| Bar color | brand teal at 40-80% opacity | `color.brand.verdigris` |
+| Bar width | 1px, widening to character width | N/A |
+| Final text color | neutral.50 (dark bg) or neutral.950 (light bg) | `color.semantic.foreground` |
+| Glow | teal edge glow at 15% opacity, fades during reveal | `color.brand.verdigris` |
+| Gate 1 purpose | Brand (measurement becomes meaning) | N/A |
+| Reduced-motion fallback | Static text, no animation | HTML fallback |
+| Use on | H1 headlines on dark hero sections | Hook and Close roles |
+| Max frequency | Once per page (Hook), optionally reprised in Close | Scarcity principle |
+
+**2. Harmonic Typography**
+
+Large display text where digit shapes are clipping masks revealing live waveform data scrolling behind them.
+
+| Property | Value | Token |
+|----------|-------|-------|
+| Font | Lato 700 | `font.display` |
+| Size | clamp(5rem, 15vw, 12rem) | Responsive |
+| Waveform phases | Three, offset 120 degrees | Real three-phase power |
+| Phase A color | teal (#0fc8c3) | `color.brand.verdigris` |
+| Phase B color | purple (#9a2f85) | `color.brand.mp-step-2` |
+| Phase C color | yellow (#fecf00) | `color.brand.cyber-yellow` |
+| Waveform speed | One 60Hz cycle per 500ms | Matches AC power frequency |
+| Scroll behavior | Pins briefly (0.5 scroll-heights), waveforms freeze on scroll-past | N/A |
+| Non-digit characters | Solid fill (commas, units are punctuation, not data) | N/A |
+| Gate 1 purpose | Brand (text reveals the data the company measures) | N/A |
+| Reduced-motion fallback | CSS `background-clip: text` with static teal-to-blue gradient | HTML + CSS |
+| Use on | Key stat numbers in Evidence sections | Once per page |
+
+**3. Waveform-to-Text Reveal**
+
+Section heading starts as a continuous oscilloscope trace spanning the full text width, then resolves into readable letterforms.
+
+| Property | Value | Token |
+|----------|-------|-------|
+| Total duration | 1200ms | Custom (below 1.5x `duration.spin`) |
+| Easing | ease-out (cubic) | `easing.out` |
+| Waveform structure | 60Hz fundamental + 3rd/5th/7th harmonics | Real electrical harmonic structure |
+| Color during transition | Sweeps through full brand palette (teal > blue > purple > red > yellow > teal) | 16-stop gradient |
+| Final text color | neutral.50 (dark bg) or neutral.950 (light bg) | `color.semantic.foreground` |
+| Gate 1 purpose | Brand + Orientation (signal becomes language, section entering) | N/A |
+| Reduced-motion fallback | Static text with 3px teal left border accent | HTML + CSS |
+| Use on | H2 headings at the Turn section | Once per page (the earned accent) |
+| Constraint | The waveform phase must be a continuous trace across the full heading width, not per-character noise | Structural |
+
+### Ambient Waveform Layer
+
+A persistent 60Hz sine wave that runs behind page content at low opacity. This is the page's "heartbeat" -- the AC power frequency made visible.
+
+| Section role | Opacity | Harmonics | Color |
+|-------------|---------|-----------|-------|
+| Hook | 15% | 1st (fundamental) only | teal |
+| Context | 5% or off | None (quiet) | teal |
+| Evidence | 10-20% | 1st + 3rd (if data shown) | teal |
+| Turn | 20-25% | 1st + 3rd + 5th | palette sweep |
+| Proof | 8% | 1st only | teal |
+| Close | 12% | 1st + 3rd + 5th (builds) | palette crawl |
+
+**Constraints:**
+- Rendered as a single Canvas layer behind all content
+- Never more than 25% opacity (it's ambient, not a feature)
+- Must not interfere with text readability (test contrast ratios with wave at peak opacity)
+- `prefers-reduced-motion`: static thin line at 8% opacity, no animation
+- The waveform frequency (60Hz visual cycles per screen width) is a design constant, not adjustable per page
+
+### Interactive Data Visualization
+
+Data visualizations on marketing pages follow different rules than dashboards.
+
+| Rule | Marketing page | Dashboard (Patina) |
+|------|---------------|-------------------|
+| Interaction model | Scroll-driven + one interactive widget | Direct manipulation |
+| Max interactive elements per page | 1 (the resolution slider or equivalent) | Unlimited |
+| Sticky behavior | Max 1.5 scroll-heights per sticky section | N/A |
+| Auto-play | Yes, with pause on user interaction | No |
+| Data source | Synthetic or anonymized real data | Live customer data |
+| Color budget | Trust region + data_visualization exception | Full palette |
+| Labels | Pretext-measured, appear sequentially | Standard DOM |
+| Performance budget | 60fps target, 30fps floor, single active Canvas | Application-level |
+
+### Technology Page Composition Cell
+
+The Technology/Signal page is a new composition cell: **Demonstrate x Web Page**.
+
+| Property | Value |
+|----------|-------|
+| Purpose | Show what the product sees -- the data IS the content |
+| Trust sequence | Curiosity (hook) > comprehension (context) > revelation (evidence) > conviction (turn) > credibility (proof) > action (close) |
+| Page tier | Secondary |
+| Hero treatment | Dark, compact (not full-expression -- homepage owns that) |
+| Turn allowed | Yes (the page has 8+ sections) |
+| Color budget | Trust + data_visualization exception for viz sections |
+| Canvas text effects | Up to 3 named effects (measurement bar reveal, harmonic typography, waveform-to-text reveal) |
+| Ambient layer | Yes (60Hz waveform, per opacity table above) |
+| Interactive elements | 1 primary (resolution slider), secondary interactions on viz elements |
+
 </details>
