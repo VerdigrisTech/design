@@ -402,14 +402,10 @@ function main() {
   writeFileSync(join(DIST, "tailwind/preset.js"), tailwind);
   console.log(`  tailwind/preset.js (+ semantic color vars)`);
 
-  // Index file — compatible with Node 18+ (no import attributes)
+  // Index file — values inlined so the module works in any environment
+  // (Node, Vite, Webpack, Remotion). No runtime filesystem dependency.
   const indexJs = `// Auto-generated — do not edit
-import { readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dir = dirname(fileURLToPath(import.meta.url));
-export const hexColors = JSON.parse(readFileSync(join(__dir, 'hex/colors.json'), 'utf-8'));
+export const hexColors = ${JSON.stringify(hexJson, null, 2)};
 `;
   writeFileSync(join(DIST, "index.js"), indexJs);
 
