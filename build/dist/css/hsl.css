@@ -61,6 +61,8 @@
   --color-semantic-section-turn-border: hsl(34, 100%, 53%, 0.4);
   --color-semantic-section-close-bg: hsl(240, 10%, 4%);
   --color-semantic-section-close-fg: hsl(0, 0%, 98%);
+  --color-semantic-wave-color-low: hsl(187, 92%, 69%);
+  --color-semantic-wave-color-high: hsl(156, 72%, 67%);
 }
 
 .dark {
@@ -92,4 +94,7 @@
   --color-semantic-section-turn-border: hsl(34, 100%, 53%, 0.4);
   --color-semantic-section-close-bg: hsl(262, 30%, 6%);
   --color-semantic-section-close-fg: hsl(0, 0%, 98%);
+  --color-semantic-wave-color-low: hsl(187, 92%, 69%);
+  --color-semantic-wave-color-high: hsl(156, 72%, 67%);
+  --color-semantic-wave-opacity: 0.6;
 }
