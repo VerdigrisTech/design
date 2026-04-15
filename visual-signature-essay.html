@@ -128,6 +128,8 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
     <span style="font-family:var(--fm);font-size:.6875rem;color:var(--t)">8kHz</span>
   </div>
   <div class="vc"><canvas id="res-canvas" style="width:100%;height:350px;display:block" aria-label="Waveform at selected resolution" role="img"></canvas><div class="vi" id="res-info">1-minute polling | 2 data points | Fault: invisible</div></div>
+  <div class="fc" style="margin-top:1.5rem;margin-bottom:.75rem">For readers who don't interact, the same event at minimum and maximum resolution:</div>
+  <div class="cmp"><div class="cmp-s"><div class="cmp-l">1/minute polling</div><canvas id="sbs-low" style="width:100%;height:160px;display:block" aria-label="Waveform at 1/minute resolution" role="img"></canvas></div><div class="cmp-s"><div class="cmp-l">8 kHz continuous</div><canvas id="sbs-high" style="width:100%;height:160px;display:block" aria-label="Waveform at 8kHz resolution" role="img"></canvas></div></div>
 </div></div>
 
 <!-- ═══ 4. THE FOUR ELEMENTS ═══ -->
@@ -158,6 +160,15 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
   </div>
   <div class="vc"><canvas id="morph-canvas" style="width:100%;height:450px;display:block" aria-label="Phase portrait morphing between load types" role="img"></canvas><div class="vi" id="morph-info">Load: Resistive | PF: 1.00 | THD: 0%</div></div>
   <div class="fc">500ms ease-out transition. The shape change IS the information -- each load type has a unique V-I figure.</div>
+  <div class="fc" style="margin-top:2.5rem;margin-bottom:.75rem">All six load types for reference:</div>
+  <div class="vg">
+    <div class="vg-cell"><canvas id="ref-resistive" width="180" height="180" style="width:180px;height:180px" aria-label="Resistive load Lissajous" role="img"></canvas><div class="vg-lbl">Resistive</div></div>
+    <div class="vg-cell"><canvas id="ref-motor" width="180" height="180" style="width:180px;height:180px" aria-label="Motor load Lissajous" role="img"></canvas><div class="vg-lbl">Motor</div></div>
+    <div class="vg-cell"><canvas id="ref-led" width="180" height="180" style="width:180px;height:180px" aria-label="LED driver Lissajous" role="img"></canvas><div class="vg-lbl">LED Driver</div></div>
+    <div class="vg-cell"><canvas id="ref-vfd" width="180" height="180" style="width:180px;height:180px" aria-label="VFD motor Lissajous" role="img"></canvas><div class="vg-lbl">VFD + Motor</div></div>
+    <div class="vg-cell"><canvas id="ref-gpu" width="180" height="180" style="width:180px;height:180px" aria-label="GPU training Lissajous" role="img"></canvas><div class="vg-lbl">GPU Training</div></div>
+    <div class="vg-cell"><canvas id="ref-fault" width="180" height="180" style="width:180px;height:180px" aria-label="Fault condition Lissajous" role="img"></canvas><div class="vg-lbl" style="color:var(--pr)">Fault</div></div>
+  </div>
 </div></div>
 
 <!-- ═══ 6. AI DATA CENTER SIGNATURES ═══ -->
@@ -166,7 +177,7 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
   <h2>Signatures only GPU-dense facilities produce</h2>
   <div class="pw"><p>Having established the visual vocabulary, we explored what's unique to AI data centers. A training job launches: hundreds of GPUs activate in under 100ms. Checkpoint saves create periodic spikes. Thermal throttling creates a sawtooth. These patterns exist nowhere else.</p></div>
 </div>
-  <div class="vb"><canvas id="train" width="1400" height="280" style="width:100%;height:280px" aria-label="Training pulse waveform" role="img"></canvas><div class="vi"><span>Training pulse: idle > ramp > training > checkpoint > resume</span><span>256x H100</span></div></div>
+  <div class="vb"><canvas id="train" width="1400" height="280" style="width:100%;height:280px" aria-label="Animated training pulse waveform" role="img"></canvas><div class="vi"><span>Training pulse: idle > ramp > training > checkpoint > resume (animated, 12s cycle)</span><span>256x H100 | Live kW readout top-right</span></div></div>
   <div style="height:4rem"></div>
   <div class="vb"><canvas id="throttle" width="1400" height="280" style="width:100%;height:280px" aria-label="Thermal throttle oscillation" role="img"></canvas><div class="vi"><span>Thermal throttle: power ramps, hits limit, drops, recovers</span><span>Teal: power / Amber: temp</span></div></div>
   <div style="height:4rem"></div>
