@@ -158,7 +158,7 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
     <button class="ctrl-btn morph-btn" data-target="gpu-training">GPU Training</button>
     <button class="ctrl-btn morph-btn" data-target="fault" style="color:var(--pr)">Fault</button>
   </div>
-  <div class="vc"><canvas id="morph-canvas" style="width:100%;height:450px;display:block" aria-label="Phase portrait morphing between load types" role="img"></canvas><div class="vi" id="morph-info">Load: Resistive | PF: 1.00 | THD: 0%</div></div>
+  <div class="vc"><canvas id="morph-canvas" tabindex="0" style="width:100%;height:450px;display:block" aria-label="Phase portrait morphing between load types" role="img"></canvas><div class="vi" id="morph-info">Load: Resistive | PF: 1.00 | THD: 0%</div></div>
   <div class="fc">500ms ease-out transition. The shape change IS the information -- each load type has a unique V-I figure.</div>
   <div class="fc" style="margin-top:2.5rem;margin-bottom:.75rem">All six load types for reference:</div>
   <div class="vg">
@@ -215,14 +215,14 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
   <!-- Effect 1: Measurement Bar Reveal -->
   <div style="padding:5rem 2.5rem;text-align:center;position:relative;cursor:pointer" id="mbr-section">
     <div class="ol" style="text-align:center;margin-bottom:2rem">Effect 1 / Measurement Bar Reveal</div>
-    <div style="position:relative;height:5.5rem;max-width:56rem;margin:0 auto"><canvas id="mbr" style="width:100%;height:100%" aria-label="Measurement bar reveal text effect" role="img"></canvas><div class="replay-hint" id="mbr-hint">Click to replay</div></div>
+    <div style="position:relative;height:5.5rem;max-width:56rem;margin:0 auto"><canvas id="mbr" tabindex="0" style="width:100%;height:100%" aria-label="Measurement bar reveal text effect" role="img"></canvas><div class="replay-hint" id="mbr-hint">Click to replay</div></div>
     <p style="font-size:1.125rem;color:var(--n4);max-width:38rem;margin:1.5rem auto 0;font-weight:300"><span style="font-family:var(--fm);color:var(--t)">8,000</span> times per second, the electrical system speaks. Most people hear noise. We hear language.</p>
   </div>
 
   <!-- Effect 2: Harmonic Typography -->
   <div style="padding:5rem 2.5rem;text-align:center;border-top:1px solid var(--n7);cursor:pointer" id="ht-section">
     <div class="ol" style="text-align:center;margin-bottom:2rem">Effect 2 / Harmonic Typography</div>
-    <div style="position:relative;height:clamp(6rem,18vw,14rem);max-width:56rem;margin:0 auto"><canvas id="ht" style="width:100%;height:100%" aria-label="8,000 with three-phase waveforms inside digits" role="img"></canvas></div>
+    <div style="position:relative;height:clamp(6rem,18vw,14rem);max-width:56rem;margin:0 auto"><canvas id="ht" tabindex="0" style="width:100%;height:100%" aria-label="8,000 with three-phase waveforms inside digits" role="img"></canvas></div>
     <p style="font-family:var(--fm);font-size:.75rem;color:var(--n5);margin:1rem auto">samples/sec x 42 circuits x 86,400 sec/day = 29,030,400,000 data points</p>
     <p style="font-size:1.25rem;color:var(--n4);font-weight:300;margin:0 auto">That's not a spec. It's a superpower.</p>
     <div class="fc" style="text-align:center;margin:1.5rem auto 0;color:var(--t)">This runs continuously. That's by design -- the data never stops. Click to reset.</div>
@@ -231,7 +231,7 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
   <!-- Effect 3: Waveform-to-Text Reveal -->
   <div style="padding:5rem 2.5rem;text-align:center;border-top:1px solid var(--n7);position:relative;cursor:pointer" id="wtr-section">
     <div class="ol" style="text-align:center;margin-bottom:2rem">Effect 3 / Waveform-to-Text Reveal</div>
-    <div style="position:relative;height:4.5rem;max-width:56rem;margin:0 auto"><canvas id="wtr" style="width:100%;height:100%" aria-label="Waveform resolving into text" role="img"></canvas><div class="replay-hint" id="wtr-hint">Click to replay</div></div>
+    <div style="position:relative;height:4.5rem;max-width:56rem;margin:0 auto"><canvas id="wtr" tabindex="0" style="width:100%;height:100%" aria-label="Waveform resolving into text" role="img"></canvas><div class="replay-hint" id="wtr-hint">Click to replay</div></div>
     <p style="font-size:1.125rem;color:var(--n4);max-width:42rem;margin:1.5rem auto 0;font-weight:300">A chiller starting. A server rack at 80% load. A failing bearing. Each leaves a distinct pattern in the power signal.</p>
     <div style="display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin:3rem auto 0">
       <div style="text-align:center"><canvas id="lt1" width="160" height="160" style="width:160px;height:160px" aria-label="HVAC chiller Lissajous" role="img"></canvas><div style="font-family:var(--fm);font-size:.625rem;color:var(--t);margin-top:.5rem">HVAC CHILLER</div><div style="font-family:var(--fm);font-size:.5625rem;color:var(--n5)">142 kW | PF 0.87</div></div>
@@ -260,7 +260,7 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
       <button class="ctrl-btn harm-btn" data-profile="gpu">GPU Rack</button>
       <button class="ctrl-btn harm-btn" data-profile="fault" style="color:var(--pr)">Fault</button>
     </div>
-    <div class="vc" style="position:relative"><canvas id="harm-canvas" style="width:100%;height:250px;display:block" aria-label="Harmonic spectrum switcher" role="img"></canvas><div id="harm-tooltip" style="position:absolute;display:none;background:var(--n9);border:1px solid var(--n7);border-radius:4px;padding:.375rem .5rem;font-family:var(--fm);font-size:.625rem;color:var(--n0);pointer-events:none"></div><div class="vi" id="harm-info">Profile: Clean power | THD: 3%</div></div>
+    <div class="vc" style="position:relative"><canvas id="harm-canvas" tabindex="0" style="width:100%;height:250px;display:block" aria-label="Harmonic spectrum switcher" role="img"></canvas><div id="harm-tooltip" style="position:absolute;display:none;background:var(--n9);border:1px solid var(--n7);border-radius:4px;padding:.375rem .5rem;font-family:var(--fm);font-size:.625rem;color:var(--n0);pointer-events:none"></div><div class="vi" id="harm-info">Profile: Clean power | THD: 3%</div></div>
   </div>
 </div>
 
