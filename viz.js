@@ -64,7 +64,7 @@ const bl=H*.75,idleA=H*.03,fullA=H*.3,samples=2000;let frame=0;const totalF=720;
 function getAmp(pos){if(pos<.15)return idleA;if(pos<.2){const r=(pos-.15)/.05;return idleA+(fullA-idleA)*r*r}if(pos<.65)return fullA;if(pos<.7){const s=(pos-.65)/.05;return fullA*(1+Math.sin(s*Math.PI)*.4)}if(pos<.85)return fullA;if(pos<.9){const r=(pos-.85)/.05;return fullA+(idleA-fullA)*r}return idleA}
 function getCol(pos){if(pos<.15)return T;if(pos<.2)return M1;if(pos<.65)return T;if(pos<.7)return CY;if(pos<.85)return T;if(pos<.9)return M1;return T}
 const phases=[{start:.15,label:'JOB START',color:CY},{start:.65,label:'CHECKPOINT',color:CY},{start:.85,label:'JOB END',color:M1}];
-function draw(){if(visMap.get(el)===false){requestAnimationFrame(draw);return}
+function draw(){if(visMap.get(el)===false)return;
 c.fillStyle=N9;c.fillRect(0,0,W,H);c.strokeStyle=N7;c.lineWidth=.5;for(let i=1;i<6;i++){c.beginPath();c.moveTo(0,i*(H/6));c.lineTo(W,i*(H/6));c.stroke()}
 const sc=frame/totalF;
 const grad=c.createLinearGradient(0,0,W,0);for(let i=0;i<=20;i++){const p=i/20,dp=(p+sc)%1;grad.addColorStop(p,getCol(dp))}
@@ -148,7 +148,7 @@ c=ic(document.getElementById('t-final'),tW,tH);c.fillStyle=N9;c.fillRect(0,0,tW,
 // Live data
 let c=ic(document.getElementById('dir-live'),120,80);c.fillStyle=N9;c.fillRect(0,0,120,80);c.font='700 24px "JetBrains Mono"';c.fillStyle=T;c.textAlign='center';c.fillText('0.91',60,48);c.font='400 8px "JetBrains Mono"';c.fillStyle=N5;c.fillText('Power Factor',60,64);
 // Tech page
-c=ic(document.getElementById('dir-tech'),120,80);c.fillStyle=N9;c.fillRect(0,0,120,80);c.fillStyle=`rgba(15,200,195,.5)`;for(let i=0;i<8;i++)c.fillRect(10+i*13,25+Math.random()*20,1,20-Math.random()*15);c.font='400 7px "JetBrains Mono"';c.fillStyle=N5;c.fillText('Measurement bars',60,70);c.textAlign='center';
+c=ic(document.getElementById('dir-tech'),120,80);c.fillStyle=N9;c.fillRect(0,0,120,80);c.fillStyle=`rgba(15,200,195,.5)`;for(let i=0;i<8;i++)c.fillRect(10+i*13,25+Math.random()*20,1,20-Math.random()*15);c.font='400 7px "JetBrains Mono"';c.fillStyle=N5;c.textAlign='center';c.fillText('Measurement bars',60,70);
 // Video tile
 c=ic(document.getElementById('dir-video'),120,80);c.fillStyle=N9;c.fillRect(0,0,120,80);c.strokeStyle='rgba(15,200,195,.3)';c.lineWidth=1;c.beginPath();for(let i=0;i<=200;i++){const t=(i/200)*Math.PI*2;c.lineTo(60+Math.sin(t)*25,40+Math.sin(t+.56)*25)}c.stroke();
 // Training pulse
