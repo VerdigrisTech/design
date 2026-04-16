@@ -80,7 +80,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check links in docs and content
+      # Build the Jekyll site so lychee can check resolved URLs rather than raw
+      # source files that contain {{ '/...' | relative_url }} liquid templates.
+      - name: Build Jekyll site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Check links in built site
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
@@ -89,10 +97,7 @@ jobs:
             --max-concurrency 8
             --accept '200,203,204,206,301,302,308,429'
             --exclude-loopback
-            --exclude-path './node_modules'
-            --exclude-path './_site'
-            --exclude-path './build/dist'
-            --exclude-path './playwright-report'
-            --exclude-path './test-results'
-            './**/*.md' './**/*.html'
+            --root-dir ${{ github.workspace }}/_site
+            --fallback-extensions html
+            './_site/**/*.html'
           fail: true
