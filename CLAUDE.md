@@ -17,11 +17,31 @@ This repo (`VerdigrisTech/design`) is the canonical design system for all Verdig
 ## Development Commands
 
 ```bash
-npm run validate        # Check token JSON for broken references and missing $type
-npm run validate:rules  # Check visual-rules.yml (YAML syntax, test blocks, emdashes, convention, sidebar)
-npm run validate:all    # Run both validators
-npm run build           # Generate build/dist/ outputs from token source
+npm run validate            # Check token JSON for broken references and missing $type
+npm run validate:rules      # Check visual-rules.yml (YAML syntax, test blocks, emdashes, convention, sidebar)
+npm run validate:all        # Run both validators
+npm run build               # Generate build/dist/ outputs from token source
+npm run test:browser        # Cross-browser smoke tests (Playwright, chromium/webkit/firefox)
+npm run test:browser:install # Install Playwright browser binaries (one-time setup)
 ```
+
+## Cross-browser testing
+
+Smoke tests live in `tests/browser/` and run against a locally-built Jekyll site.
+
+Local workflow (one-time):
+```bash
+bundle install                     # Jekyll + GitHub Pages deps
+npm run test:browser:install       # Playwright chromium, webkit, firefox
+```
+
+Then for each test run:
+```bash
+bundle exec jekyll build           # Build _site/
+npm run test:browser               # Runs on all 3 browsers; python3 -m http.server serves _site
+```
+
+CI runs these automatically on every PR. See `.github/workflows/build.yml` `cross-browser-smoke` job and `link-check` job.
 
 ## Pre-Commit Checklist
 
