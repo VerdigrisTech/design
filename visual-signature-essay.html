@@ -26,11 +26,14 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
 .sec-generous{padding:10rem 0}.sec-generous+.sec{border-top:1px solid var(--n7)}
 .sec-tall{padding:12rem 0}
 /* Full-bleed */
-.vb{margin:4rem calc(-50vw + 50%);background:var(--n9);overflow:hidden}
+.vb{margin:6rem calc(-50vw + 50%);background:var(--n9);overflow:hidden;position:relative}
+.vb::before,.vb::after{content:'';position:absolute;left:0;right:0;height:3rem;z-index:1;pointer-events:none}
+.vb::before{top:0;background:linear-gradient(180deg,var(--n9),transparent)}
+.vb::after{bottom:0;background:linear-gradient(0deg,var(--n9),transparent)}
 .vb canvas{display:block;width:100%}
 .vi{padding:.5rem 1rem;font-family:var(--fm);font-size:.5625rem;color:var(--n5);border-top:1px solid var(--n7);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 /* Contained */
-.vc{margin:3rem 0;background:var(--n8);border:1px solid var(--n7);border-radius:.625rem;overflow:hidden}
+.vc{margin:3rem 0;background:var(--n8);border:1px solid var(--n7);border-radius:.625rem;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 4px 24px rgba(0,0,0,.4)}
 .vc canvas{display:block;width:100%}
 /* Captions (author voice, not mono) */
 .fc{font-family:var(--fb);font-weight:300;font-size:.75rem;color:var(--n4);margin-top:.75rem;max-width:var(--pw)}
@@ -41,7 +44,8 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
 .vg-lbl{font-family:var(--fm);font-size:.625rem;color:var(--mt);margin-top:.5rem}
 /* Swatch grid */
 .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:3rem 0}
-.sw{border:1px solid var(--n7);border-radius:.625rem;overflow:hidden}
+.sw{border:1px solid var(--n7);border-radius:.625rem;overflow:hidden;transition:transform 200ms ease,box-shadow 200ms ease}
+.sw:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
 .sw canvas{display:block;width:100%;height:140px}
 .sw-info{padding:.625rem .75rem}
 .sw-name{font-family:var(--fm);font-size:.625rem;color:var(--n4);margin-bottom:.125rem}
@@ -52,7 +56,7 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
 .cmp-l{font-family:var(--fm);font-size:.5625rem;color:var(--n5);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem}
 /* Four-panel */
 .fp{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--n7);border-radius:.625rem;overflow:hidden;margin:3rem 0}
-.fp-cell{background:var(--n9);padding:1.25rem;text-align:center}
+.fp-cell{background:var(--n9);padding:1.25rem;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}
 .fp-cell canvas{display:block;margin:0 auto}
 /* Tile grid 2x2 */
 .tg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--n7);border-radius:.625rem;overflow:hidden;margin:3rem 0;max-width:42rem}
@@ -60,9 +64,10 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
 .tg-cell canvas{display:block;width:100%}
 .tg-l{padding:.375rem .625rem;font-family:var(--fm);font-size:.5rem;color:var(--n5);border-top:1px solid var(--n7)}
 /* Buttons */
-.ctrl-btn{font-family:var(--fm);font-size:.6875rem;padding:.375rem .75rem;background:var(--n8);color:var(--n0);border:1px solid var(--n7);border-radius:.375rem;cursor:pointer;transition:border-color 150ms ease}
-.ctrl-btn:hover{border-color:var(--n5)}
-.ctrl-btn.active{border-color:var(--t);color:var(--t)}
+.ctrl-btn{font-family:var(--fm);font-size:.6875rem;padding:.375rem .75rem;background:var(--n8);color:var(--n0);border:1px solid var(--n7);border-radius:.375rem;cursor:pointer;transition:border-color 150ms ease,transform 100ms ease,box-shadow 150ms ease,background 150ms ease}
+.ctrl-btn:hover{border-color:var(--n5);transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.ctrl-btn:active{transform:scale(.97)}
+.ctrl-btn.active{border-color:var(--t);color:var(--t);box-shadow:0 0 0 1px var(--t),0 0 12px rgba(15,200,195,.15);background:rgba(15,200,195,.04)}
 /* Replay hint */
 .replay-hint{position:absolute;top:.75rem;right:1rem;font-family:var(--fm);font-size:.625rem;color:var(--t);opacity:0;transition:opacity 400ms ease;pointer-events:none;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
 .replay-hint.visible{opacity:1;pointer-events:auto}
@@ -107,7 +112,7 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
 </div></div>
 
 <!-- ═══ 2. THE DESIGN MODEL ═══ -->
-<div class="sec"><div class="ctr">
+<div class="sec" style="background:radial-gradient(ellipse 80% 50% at 50% 0%,oklch(0.12 0.005 60) 0%,var(--n9) 100%)"><div class="ctr">
   <div class="ol">The design model</div>
   <h2>Quiet Reader +<br>Precision Instrument</h2>
   <div class="pw">
@@ -122,10 +127,13 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
   <div class="ol">What 8 kHz sees</div>
   <h2>The difference is categorical</h2>
   <div class="pw"><p>Drag the slider. Watch the same electrical event at different sampling rates. The fault is invisible at low resolution.</p></div>
-  <div style="display:flex;align-items:center;gap:1rem;margin:1.5rem 0;max-width:40rem">
-    <span style="font-family:var(--fm);font-size:.6875rem;color:var(--n5)">1/min</span>
-    <input type="range" id="res-slider" min="0" max="5" value="0" step="1" style="flex:1;accent-color:var(--t)" aria-label="Sampling rate slider">
-    <span style="font-family:var(--fm);font-size:.6875rem;color:var(--t)">8kHz</span>
+  <div style="max-width:40rem;margin:1.5rem 0">
+    <div style="display:flex;align-items:center;gap:1rem">
+      <span style="font-family:var(--fm);font-size:.6875rem;color:var(--n5)">1/min</span>
+      <input type="range" id="res-slider" min="0" max="5" value="0" step="any" style="flex:1;accent-color:var(--t)" aria-label="Sampling rate slider">
+      <span style="font-family:var(--fm);font-size:.6875rem;color:var(--t)">8kHz</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:0 3.5rem;margin-top:.25rem"><span style="font-family:var(--fm);font-size:.5rem;color:var(--n5)">|</span><span style="font-family:var(--fm);font-size:.5rem;color:var(--n5)">|</span><span style="font-family:var(--fm);font-size:.5rem;color:var(--n5)">|</span><span style="font-family:var(--fm);font-size:.5rem;color:var(--n5)">|</span><span style="font-family:var(--fm);font-size:.5rem;color:var(--n5)">|</span><span style="font-family:var(--fm);font-size:.5rem;color:var(--n5)">|</span></div>
   </div>
   <div class="vc"><canvas id="res-canvas" style="width:100%;height:350px;display:block" aria-label="Waveform at selected resolution" role="img"></canvas><div class="vi" id="res-info">1-minute polling | 2 data points | Fault: invisible</div></div>
   <div class="fc" style="margin-top:1.5rem;margin-bottom:.75rem">For readers who don't interact, the same event at minimum and maximum resolution:</div>
@@ -172,8 +180,8 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
 </div></div>
 
 <!-- ═══ 6. AI DATA CENTER SIGNATURES ═══ -->
-<div class="sec"><div class="ctr">
-  <div class="ol">AI data center specific</div>
+<div class="sec" style="background:radial-gradient(ellipse 80% 60% at 50% 30%,oklch(0.10 0.015 280) 0%,var(--n9) 100%)"><div class="ctr">
+  <div class="ol" style="color:var(--cy)">AI data center specific</div>
   <h2>Signatures only GPU-dense facilities produce</h2>
   <div class="pw"><p>Having established the visual vocabulary, we explored what's unique to AI data centers. A training job launches: hundreds of GPUs activate in under 100ms. Checkpoint saves create periodic spikes. Thermal throttling creates a sawtooth. These patterns exist nowhere else.</p></div>
 </div>
@@ -265,13 +273,14 @@ h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;
 </div>
 
 <!-- ═══ 10. THE COMPOSITE ═══ -->
-<div class="sec-compact"><div class="ctr">
-  <div class="ol">Layering the elements</div>
-  <h2>Spectrogram + Lissajous + crosshairs</h2>
-  <div class="pw"><p>The spectrogram shows change over time. The Lissajous shows a load at one moment. Layered with oscilloscope crosshairs, they create a composite that reads as "real measurement" to engineers and "beautiful data" to everyone else.</p></div>
-</div>
-  <div class="vb"><canvas id="comp" width="1400" height="500" style="width:100%;height:min(500px,50vh)" aria-label="Full composite visualization" role="img"></canvas></div>
-  <div class="ctr"><div class="fc">GPU Lissajous in persistence mode (12 traces) on spectrogram bed with oscilloscope crosshairs.</div></div>
+<div style="min-height:80vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 0;background:radial-gradient(ellipse 60% 40% at 50% 50%,oklch(0.08 0.012 200) 0%,var(--n9) 100%)">
+  <div class="vb" style="margin:0 calc(-50vw + 50%)"><canvas id="comp" width="1400" height="600" style="width:100%;height:min(600px,60vh)" aria-label="Full composite visualization" role="img"></canvas></div>
+  <div class="ctr" style="padding-top:3rem">
+    <div class="ol">The fullest expression</div>
+    <h2>Spectrogram + Lissajous + crosshairs</h2>
+    <div class="pw"><p>The spectrogram shows change over time. The Lissajous shows a load at one moment. Layered with oscilloscope crosshairs, they create a composite that reads as "real measurement" to engineers and "beautiful data" to everyone else.</p></div>
+    <div class="fc">GPU Lissajous in persistence mode (12 traces) on spectrogram bed with oscilloscope crosshairs.</div>
+  </div>
 </div>
 
 <!-- ═══ 11. APPLIED: RECORDER TILE ═══ -->
