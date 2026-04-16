@@ -1,0 +1,363 @@
+---
+layout: null
+title: "The Visual Signature: A Complete Exploration"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Visual Signature: A Complete Exploration | Verdigris</title>
+<meta name="description" content="The complete portfolio of Verdigris's visual identity exploration. Phase portraits, spectrograms, typography experiments, texture studies, and the data that makes it all real.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%230fc8c3'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--t:#0fc8c3;--mp2:#9a2f85;--pr:#ff6361;--cy:#fecf00;--m1:#009dbe;--m2:#0070b0;--mp:#2f0b6f;--c2:#81cb61;--n9:#09090b;--n8:#18181b;--n7:#27272a;--n5:#71717b;--n4:#9f9fa9;--n0:#fafafa;--mt:oklch(0.45 0.010 286);--pw:520px;--fb:Inter,ui-sans-serif,system-ui,sans-serif;--fd:Lato,ui-sans-serif,system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:var(--fb);background:var(--n9);color:var(--n0);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
+.ctr{max-width:72rem;margin:0 auto;padding:0 2.5rem}
+.pw{max-width:var(--pw)}
+.pw p{font-size:1.125rem;font-weight:300;line-height:1.8;color:var(--mt);margin-bottom:1.5rem}
+.ol{font-family:var(--fm);font-size:.6875rem;font-weight:400;text-transform:uppercase;letter-spacing:.05em;color:var(--t);margin-bottom:.35rem}
+h2{font-family:var(--fd);font-size:2.5rem;font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:1.5rem;max-width:18ch}
+.sec{padding:8rem 0}.sec+.sec{border-top:1px solid var(--n7)}
+.sec-short{padding:5rem 0}
+.sec-tall{padding:10rem 0}
+
+/* Full-bleed viz */
+.vb{margin:4rem calc(-50vw + 50%);background:var(--n9);overflow:hidden}
+.vb canvas{display:block;width:100%}
+.vi{padding:.5rem 1rem;font-family:var(--fm);font-size:.5625rem;color:var(--n5);border-top:1px solid var(--n7);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+
+/* Contained viz */
+.vc{margin:3rem 0;background:var(--n8);border:1px solid var(--n7);border-radius:.625rem;overflow:hidden}
+.vc canvas{display:block;width:100%}
+
+/* Grid */
+.vg{display:flex;gap:1.25rem;flex-wrap:wrap;justify-content:center;margin:3rem 0}
+.vg-cell{text-align:center}
+.vg-cell canvas{border-radius:50%;border:1px solid var(--n7)}
+.vg-lbl{font-family:var(--fm);font-size:.625rem;color:var(--mt);margin-top:.5rem}
+
+/* Swatch grid */
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:3rem 0}
+.sw{border:1px solid var(--n7);border-radius:.625rem;overflow:hidden}
+.sw canvas{display:block;width:100%;height:140px}
+.sw-info{padding:.625rem .75rem;font-size:.75rem}
+.sw-name{font-family:var(--fm);font-size:.625rem;color:var(--n0);margin-bottom:.125rem}
+.sw-desc{font-size:.6875rem;color:var(--n5)}
+
+/* Compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--n7);margin:3rem calc(-50vw + 50%);overflow:hidden}
+.cmp-s{background:var(--n9);padding:1.25rem}
+.cmp-l{font-family:var(--fm);font-size:.5625rem;color:var(--n5);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem}
+
+/* Tile row */
+.tr{display:flex;gap:1.25rem;margin:3rem 0;overflow-x:auto;padding:.25rem}
+.tf{flex-shrink:0;border:1px solid var(--n7);border-radius:.375rem;overflow:hidden}
+.tf canvas{display:block}
+.tf-l{padding:.375rem .625rem;font-family:var(--fm);font-size:.5rem;color:var(--n5);border-top:1px solid var(--n7)}
+
+.fc{font-family:var(--fm);font-size:.625rem;color:var(--n5);margin-top:.75rem;max-width:var(--pw)}
+
+/* Four-panel grid */
+.fp{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--n7);border-radius:.625rem;overflow:hidden;margin:3rem 0}
+.fp-cell{background:var(--n9);padding:1.25rem;text-align:center}
+.fp-cell canvas{display:block;margin:0 auto}
+
+@media(max-width:768px){
+  .ctr{padding:0 1.5rem}h2{font-size:2rem}
+  .cmp{margin:2rem 0;grid-template-columns:1fr}
+  .vb{margin:3rem -1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- HERO                                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden">
+  <canvas id="hero-bg" aria-label="Spectrogram and Lissajous composite" role="img" style="position:absolute;inset:0;width:100%;height:100%;opacity:.3"></canvas>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,9,11,.5) 0%,rgba(9,9,11,.15) 40%,rgba(9,9,11,.7) 100%)"></div>
+  <div class="ctr" style="position:relative;z-index:1;padding:8rem 2.5rem">
+    <div class="ol" style="margin-bottom:1.5rem">Verdigris Design System / April 2026</div>
+    <h1 style="font-family:var(--fd);font-size:clamp(3rem,7vw,5rem);font-weight:700;letter-spacing:-.04em;line-height:1;max-width:14ch;margin-bottom:2rem">The Visual<br>Signature</h1>
+    <div class="pw">
+      <p style="color:var(--n4);font-size:1.25rem;max-width:32ch">The complete exploration that found Verdigris's visual identity in the data it captures. Every experiment. Every direction. Every dead end.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 1. THE QUESTION                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">The question</div>
+    <h2>What visual element is uniquely ours?</h2>
+    <div class="pw">
+      <p>Every breakout B2B brand derives its visual motif from the product. Stripe's gradients represent money flowing. Cloudflare's entropy wall IS their security. We capture electrical behavior at 8,000 samples per second. That data, made visible, is a design asset no competitor can replicate.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 2. RESOLUTION REVEAL                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">What 8 kHz sees</div>
+    <h2>The difference is categorical</h2>
+    <div class="pw"><p>At 1-minute polling, you see two dots connected by a dashed line. At 8,000 samples per second, you see every harmonic, every transient, every fault signature. Same event. Two views.</p></div>
+  </div>
+  <div class="cmp">
+    <div class="cmp-s"><div class="cmp-l">1-minute polling (legacy)</div><canvas id="res-lo" width="600" height="250" style="width:100%;height:250px" aria-label="Two data points connected by dashed line" role="img"></canvas></div>
+    <div class="cmp-s"><div class="cmp-l">8,000 samples/sec (Verdigris)</div><canvas id="res-hi" width="600" height="250" style="width:100%;height:250px" aria-label="Dense waveform with visible fault" role="img"></canvas></div>
+  </div>
+  <div class="ctr"><div class="fc">Same 10 seconds of electrical data. The fault at 0.6 seconds is invisible at low resolution.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 3. THE FOUR ELEMENTS                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">The visual vocabulary</div>
+    <h2>Four patterns only we can produce</h2>
+    <div class="pw"><p>Each derived from real electrical engineering. Each visually distinctive. Each impossible to replicate without 8 kHz data. The principle: if you know, you know.</p></div>
+    <div class="fp">
+      <div class="fp-cell"><canvas id="e-liss" width="220" height="220" style="width:100%;max-width:220px;height:220px" aria-label="Phase portrait" role="img"></canvas><div style="font-family:var(--fm);font-size:.625rem;color:var(--t);margin-top:.75rem">Phase Portrait</div><div style="font-family:var(--fm);font-size:.5rem;color:var(--n5);margin-top:.25rem">V-I relationship as fingerprint</div></div>
+      <div class="fp-cell"><canvas id="e-harm" width="220" height="220" style="width:100%;max-width:220px;height:220px" aria-label="Harmonic spectrum" role="img"></canvas><div style="font-family:var(--fm);font-size:.625rem;color:var(--t);margin-top:.75rem">Harmonic Spectrum</div><div style="font-family:var(--fm);font-size:.5rem;color:var(--n5);margin-top:.25rem">Frequency-domain fingerprint</div></div>
+      <div class="fp-cell"><canvas id="e-wave" width="220" height="220" style="width:100%;max-width:220px;height:220px" aria-label="Waveform trace" role="img"></canvas><div style="font-family:var(--fm);font-size:.625rem;color:var(--t);margin-top:.75rem">Waveform Trace</div><div style="font-family:var(--fm);font-size:.5rem;color:var(--n5);margin-top:.25rem">Time-domain with harmonics</div></div>
+      <div class="fp-cell"><canvas id="e-spec" width="220" height="220" style="width:100%;max-width:220px;height:220px" aria-label="Spectrogram" role="img"></canvas><div style="font-family:var(--fm);font-size:.625rem;color:var(--t);margin-top:.75rem">Spectrogram</div><div style="font-family:var(--fm);font-size:.5rem;color:var(--n5);margin-top:.25rem">Frequency x time heatmap</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 4. LOAD FINGERPRINTS                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">Every load has a fingerprint</div>
+    <h2>The Lissajous figures</h2>
+    <div class="pw"><p>Plot voltage against current. A resistive load draws a line. A motor draws an ellipse. A GPU rack under training load produces a dense, textured shape. Each is unique. Each is identifiable.</p></div>
+    <div class="vg">
+      <div class="vg-cell"><canvas id="l-res" width="220" height="220" style="width:220px;height:220px" aria-label="Resistive load" role="img"></canvas><div class="vg-lbl">Resistive</div></div>
+      <div class="vg-cell"><canvas id="l-mot" width="220" height="220" style="width:220px;height:220px" aria-label="Motor load" role="img"></canvas><div class="vg-lbl">Motor</div></div>
+      <div class="vg-cell"><canvas id="l-led" width="220" height="220" style="width:220px;height:220px" aria-label="LED driver" role="img"></canvas><div class="vg-lbl">LED Driver</div></div>
+      <div class="vg-cell"><canvas id="l-vfd" width="220" height="220" style="width:220px;height:220px" aria-label="VFD motor" role="img"></canvas><div class="vg-lbl">VFD + Motor</div></div>
+      <div class="vg-cell"><canvas id="l-gpu" width="220" height="220" style="width:220px;height:220px" aria-label="GPU training" role="img"></canvas><div class="vg-lbl">GPU Training</div></div>
+      <div class="vg-cell"><canvas id="l-flt" width="220" height="220" style="width:220px;height:220px" aria-label="Thermal fault" role="img"></canvas><div class="vg-lbl">Thermal Fault</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 5. AI DATA CENTER SIGNATURES                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">AI data center specific</div>
+    <h2>Signatures only GPU-dense facilities produce</h2>
+    <div class="pw"><p>A training job launches: hundreds of GPUs activate in under 100ms. Checkpoint saves create periodic spikes. Thermal throttling creates a sawtooth. These patterns exist nowhere else.</p></div>
+  </div>
+  <div class="vb"><canvas id="train" width="1400" height="280" style="width:100%;height:280px" aria-label="Training pulse waveform" role="img"></canvas><div class="vi"><span>Training pulse: idle > ramp > training > checkpoint > resume</span><span>256x H100</span></div></div>
+  <div style="height:2rem"></div>
+  <div class="vb"><canvas id="throttle" width="1400" height="280" style="width:100%;height:280px" aria-label="Thermal throttle oscillation" role="img"></canvas><div class="vi"><span>Thermal throttle: power ramps, hits limit, drops, recovers</span><span>Teal: power / Amber: temp</span></div></div>
+  <div style="height:2rem"></div>
+  <div class="vb"><canvas id="density" width="1400" height="280" style="width:100%;height:280px" aria-label="Rack power density comparison" role="img"></canvas><div class="vi"><span>Power density: traditional IT (5-10kW) vs GPU racks (120-140kW)</span><span>The scale difference IS the story</span></div></div>
+  <div style="height:2rem"></div>
+  <div class="vb"><canvas id="checkpoint" width="1400" height="280" style="width:100%;height:280px" aria-label="Checkpoint rhythm" role="img"></canvas><div class="vi"><span>Checkpoint rhythm: steady load with periodic save spikes</span><span>Repeating cadence</span></div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 6. DATA AS MATERIAL                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">Texture exploration</div>
+    <h2>Data as Material</h2>
+    <div class="pw"><p>How waveform data can exist as subtle texture in the UI. Each swatch shows the same pattern at different opacities to find the threshold between "invisible" and "decorative noise."</p></div>
+
+    <div class="ol" style="margin-top:3rem">Sampling Density</div>
+    <div class="pw"><p style="font-size:.875rem">8,000 dots in a field, one per sample. At distance it reads as a teal wash. Up close, the discrete samples become visible.</p></div>
+    <div class="sg">
+      <div class="sw"><canvas id="sd4" aria-label="4% opacity sampling density" role="img"></canvas><div class="sw-info"><div class="sw-name">4% opacity</div><div class="sw-desc">Barely there. Reads as a very faint tint.</div></div></div>
+      <div class="sw"><canvas id="sd8" aria-label="8% opacity sampling density" role="img"></canvas><div class="sw-info"><div class="sw-name">8% opacity</div><div class="sw-desc">Subtle texture. You sense something is there.</div></div></div>
+      <div class="sw"><canvas id="sd15" aria-label="15% opacity sampling density" role="img"></canvas><div class="sw-info"><div class="sw-name">15% opacity</div><div class="sw-desc">Clearly visible as a dot field.</div></div></div>
+      <div class="sw"><canvas id="sd1" aria-label="1 dot comparison" role="img"></canvas><div class="sw-info"><div class="sw-name">1 dot (1Hz comparison)</div><div class="sw-desc">Same area, one data point. The emptiness is the argument.</div></div></div>
+    </div>
+
+    <div class="ol" style="margin-top:3rem">Harmonic Grid</div>
+    <div class="pw"><p style="font-size:.875rem">Vertical lines at harmonic intervals (60Hz, 120Hz, 180Hz...) creating a rhythm derived from the power frequency.</p></div>
+    <div class="sg">
+      <div class="sw"><canvas id="hg3" aria-label="3% harmonic grid dark" role="img"></canvas><div class="sw-info"><div class="sw-name">3% on dark</div><div class="sw-desc">Almost invisible. Felt more than seen.</div></div></div>
+      <div class="sw"><canvas id="hg6" aria-label="6% harmonic grid dark" role="img"></canvas><div class="sw-info"><div class="sw-name">6% on dark</div><div class="sw-desc">Visible as faint vertical lines. Precision instrument feel.</div></div></div>
+    </div>
+
+    <div class="ol" style="margin-top:3rem">Waveform Trace as Border</div>
+    <div class="pw"><p style="font-size:.875rem">A single static waveform rendered as a 1px line. Testing as a horizontal divider replacement.</p></div>
+    <div class="sg">
+      <div class="sw"><canvas id="wt12" aria-label="12% opacity waveform trace" role="img"></canvas><div class="sw-info"><div class="sw-name">12% opacity, low amplitude</div><div class="sw-desc">Whisper. Barely departs from a straight line.</div></div></div>
+      <div class="sw"><canvas id="wt35" aria-label="35% opacity waveform trace" role="img"></canvas><div class="sw-info"><div class="sw-name">35% opacity, high amplitude</div><div class="sw-desc">Feature element. This is a visualization, not a texture.</div></div></div>
+    </div>
+
+    <div class="ol" style="margin-top:3rem">Capacity Fill</div>
+    <div class="pw"><p style="font-size:.875rem">Utilization as the card's own substance. The card fills from the bottom proportional to load.</p></div>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin:2rem 0" id="cap-cards"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 7. EXPERIMENTS IN TYPOGRAPHY                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec-tall">
+  <div class="ctr">
+    <div class="ol">Text as material</div>
+    <h2>Experiments in typography</h2>
+    <div class="pw"><p>Using Pretext for per-character Canvas rendering. Three named effects, each derived from what the product actually does. Click each to replay.</p></div>
+  </div>
+
+  <!-- Measurement Bar Reveal -->
+  <div style="padding:5rem 0;text-align:center;cursor:pointer" id="mbr-section">
+    <div class="ol" style="text-align:center;margin-bottom:2rem">Effect 1 / Measurement Bar Reveal</div>
+    <div style="position:relative;height:5.5rem;max-width:56rem;margin:0 auto;padding:0 2.5rem">
+      <canvas id="mbr" style="width:100%;height:100%" aria-label="Every building has a voice - measurement bar reveal effect" role="img"></canvas>
+    </div>
+    <p style="font-size:1.125rem;color:var(--n4);max-width:38rem;margin:1.5rem auto 0;font-weight:300"><span style="font-family:var(--fm);color:var(--t)">8,000</span> times per second, the electrical system speaks. Most people hear noise. We hear language.</p>
+    <div class="fc" style="text-align:center;margin:2rem auto 0">Characters materialize from 1px measurement bars. 800ms, staggered 35ms/char.</div>
+  </div>
+
+  <!-- Harmonic Typography -->
+  <div style="padding:5rem 0;text-align:center;border-top:1px solid var(--n7)">
+    <div class="ol" style="text-align:center;margin-bottom:2rem">Effect 2 / Harmonic Typography</div>
+    <div style="position:relative;height:clamp(6rem,18vw,14rem);max-width:56rem;margin:0 auto">
+      <canvas id="ht" style="width:100%;height:100%" aria-label="8,000 with three-phase waveforms inside digits" role="img"></canvas>
+    </div>
+    <p style="font-family:var(--fm);font-size:.75rem;color:var(--n5);margin:1rem auto">samples/sec x 42 circuits x 86,400 sec/day = 29,030,400,000 data points</p>
+    <p style="font-size:1.25rem;color:var(--n4);font-weight:300;margin:0 auto">That's not a spec. It's a superpower.</p>
+    <div class="fc" style="text-align:center;margin:2rem auto 0">Digits are clipping masks revealing live three-phase waveforms. Teal = Phase A, Purple = Phase B, Yellow = Phase C.</div>
+  </div>
+
+  <!-- Waveform-to-Text Reveal -->
+  <div style="padding:5rem 0;text-align:center;border-top:1px solid var(--n7);cursor:pointer" id="wtr-section">
+    <div class="ol" style="text-align:center;margin-bottom:2rem">Effect 3 / Waveform-to-Text Reveal</div>
+    <div style="position:relative;height:4.5rem;max-width:56rem;margin:0 auto;padding:0 2.5rem">
+      <canvas id="wtr" style="width:100%;height:100%" aria-label="Waveform resolving into text" role="img"></canvas>
+    </div>
+    <p style="font-size:1.125rem;color:var(--n4);max-width:42rem;margin:1.5rem auto 0;font-weight:300">A chiller starting. A server rack at 80% load. A failing bearing. Each leaves a distinct pattern in the power signal.</p>
+
+    <!-- Lissajous tracing figures -->
+    <div style="display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin:3rem auto 0">
+      <div style="text-align:center"><canvas id="lt1" width="160" height="160" style="width:160px;height:160px" aria-label="HVAC chiller Lissajous" role="img"></canvas><div style="font-family:var(--fm);font-size:.625rem;color:var(--t);margin-top:.5rem">HVAC CHILLER</div><div style="font-family:var(--fm);font-size:.5625rem;color:var(--n5)">142 kW | PF 0.87</div></div>
+      <div style="text-align:center"><canvas id="lt2" width="160" height="160" style="width:160px;height:160px" aria-label="GPU server rack Lissajous" role="img"></canvas><div style="font-family:var(--fm);font-size:.625rem;color:var(--t);margin-top:.5rem">GPU SERVER RACK</div><div style="font-family:var(--fm);font-size:.5625rem;color:var(--n5)">38 kW | PF 0.99</div></div>
+      <div style="text-align:center"><canvas id="lt3" width="160" height="160" style="width:160px;height:160px" aria-label="Bearing fault Lissajous" role="img"></canvas><div style="font-family:var(--fm);font-size:.625rem;color:var(--pr);margin-top:.5rem">BEARING FAULT</div><div style="font-family:var(--fm);font-size:.5625rem;color:var(--n5)">12 kW | PF 0.72 | ALERT</div></div>
+    </div>
+    <div class="fc" style="text-align:center;margin:2rem auto 0">Text starts as waveform trace and resolves over 1200ms with palette sweep. Lissajous figures trace themselves.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 8. MOVING ILLUSTRATIONS                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">Product illustration</div>
+    <h2>Circuit Topology Map</h2>
+    <div class="pw"><p>A building's electrical distribution rendered as a living network. The main panel branches into sub-panels, sub-panels branch into circuits. Particles flow along paths proportional to current draw. One branch shows a fault.</p></div>
+  </div>
+  <div class="vb"><canvas id="topo" width="1400" height="500" style="width:100%;height:500px" aria-label="Circuit topology with animated particles" role="img"></canvas><div class="vi"><span>Main panel > 4 sub-panels > 16 circuits</span><span>Live particle flow</span></div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 9. HARMONIC FINGERPRINTS                                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">Frequency domain</div>
+    <h2>Harmonic fingerprints</h2>
+    <div class="pw"><p>64 bars from the 60Hz fundamental through the 32nd harmonic. The decay pattern reveals the load type.</p></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:3rem 0">
+      <div class="vc"><canvas id="hf1" width="400" height="180" style="width:100%;height:180px" aria-label="Clean power spectrum" role="img"></canvas><div class="vi"><span>Clean power</span><span>THD: 3%</span></div></div>
+      <div class="vc"><canvas id="hf2" width="400" height="180" style="width:100%;height:180px" aria-label="Motor load spectrum" role="img"></canvas><div class="vi"><span>Motor load</span><span>THD: 12%</span></div></div>
+      <div class="vc"><canvas id="hf3" width="400" height="180" style="width:100%;height:180px" aria-label="GPU rack spectrum" role="img"></canvas><div class="vi"><span>GPU rack</span><span>THD: 28%</span></div></div>
+      <div class="vc"><canvas id="hf4" width="400" height="180" style="width:100%;height:180px" aria-label="Fault condition spectrum" role="img"></canvas><div class="vi"><span>Fault condition</span><span>THD: 72%</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 10. THE COMPOSITE                                          -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec-short">
+  <div class="ctr">
+    <div class="ol">Layering the elements</div>
+    <h2>Spectrogram + Lissajous + crosshairs</h2>
+    <div class="pw"><p>The spectrogram shows change over time. The Lissajous shows a load at one moment. Layered with oscilloscope crosshairs, they create a composite that reads as "real measurement" to engineers and "beautiful data" to everyone else.</p></div>
+  </div>
+  <div class="vb"><canvas id="comp" width="1400" height="500" style="width:100%;height:min(500px,50vh)" aria-label="Full composite: spectrogram, crosshairs, persistence Lissajous" role="img"></canvas></div>
+  <div class="ctr"><div class="fc">GPU Lissajous in persistence mode (12 traces) on spectrogram bed with oscilloscope crosshairs.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 11. APPLIED: RECORDER TILE                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="ctr">
+    <div class="ol">Applied to a real surface</div>
+    <h2>Meeting recorder tile</h2>
+    <div class="pw"><p>A meeting bot sits in every call. Its video tile is advertising space. We iterated through value-leading, social proof, curiosity, and data-forward directions. What survived: the data itself as the visual.</p></div>
+    <div class="tr">
+      <div class="tf"><canvas id="t-mono" width="320" height="180" style="width:320px;height:180px" aria-label="Monolith tile" role="img"></canvas><div class="tf-l">Monolith</div></div>
+      <div class="tf"><canvas id="t-inst" width="320" height="180" style="width:320px;height:180px" aria-label="Instrument tile" role="img"></canvas><div class="tf-l">Instrument</div></div>
+      <div class="tf"><canvas id="t-liss" width="320" height="180" style="width:320px;height:180px" aria-label="Lissajous tile" role="img"></canvas><div class="tf-l">GPU Lissajous</div></div>
+      <div class="tf"><canvas id="t-final" width="320" height="180" style="width:320px;height:180px" aria-label="Final composite tile" role="img"></canvas><div class="tf-l">Final: composite</div></div>
+    </div>
+    <div class="fc">Evolution from logo-only to the full composite display with spectrogram, crosshairs, and persistence Lissajous.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 12. THE DESIGN MODEL                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sec-tall">
+  <div class="ctr">
+    <div class="ol">The design model</div>
+    <h2>Quiet Reader +<br>Precision Instrument</h2>
+    <div class="pw">
+      <p>We studied ten contemporary design models. The ones that persist are rooted in functional traditions: book design (500 years), instrumentation (150 years), mathematical grids (80 years). The ones that date are rooted in aesthetic trends.</p>
+      <p>The answer for Verdigris: a narrow reading column (500-560px) of precise technical writing, with full-bleed data visualizations breaking the column as standalone moments. Typography whispers. The data visualizations carry the domain credibility. The Lissajous, the spectrogram, and the harmonic spectrum are treated like Craig Mod treats photography -- they expand beyond the text column, stand alone, and say "look how beautiful this data is."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- CLOSING                                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div style="padding:12rem 0 8rem;background:radial-gradient(ellipse 80% 50% at 50% 100%,oklch(0.11 0.004 286) 0%,var(--n9) 100%)">
+  <div class="ctr">
+    <div class="ol" style="margin-bottom:1.5rem">What's next</div>
+    <h2 style="max-width:16ch">The data is the brand.</h2>
+    <div class="pw">
+      <p style="color:var(--n4)">The visual signature grew because it encountered surfaces it could not serve. It will grow again. That is the best evidence that the approach works.</p>
+    </div>
+  </div>
+</div>
+
+<div style="padding:1.5rem 2.5rem;border-top:1px solid oklch(1 0 0/.06);display:flex;justify-content:space-between">
+  <span style="font-family:var(--fm);font-size:.6875rem;color:var(--n5)">Verdigris Design System</span>
+  <span style="font-family:var(--fm);font-size:.6875rem;color:var(--n5)">April 2026</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ALL CANVAS RENDERING                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script src="viz.js"></script>
+</body>
+</html>

@@ -124,6 +124,21 @@
       "section-close-fg": {
         "$value": "{color.neutral.50}",
         "$type": "color"
+      },
+      "wave-color-low": {
+        "$value": "hsl(187, 92%, 69%)",
+        "$type": "color",
+        "$description": "Same as light mode. Waves always render on dark hook backgrounds."
+      },
+      "wave-color-high": {
+        "$value": "hsl(156, 72%, 67%)",
+        "$type": "color",
+        "$description": "Same as light mode. Waves always render on dark hook backgrounds."
+      },
+      "wave-opacity": {
+        "$value": "0.6",
+        "$type": "number",
+        "$description": "Same as light mode. Waves always render on dark hook backgrounds."
       }
     }
   }

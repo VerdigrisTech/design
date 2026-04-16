@@ -124,6 +124,21 @@
         "$value": "{color.neutral.50}",
         "$type": "color",
         "$description": "Close section foreground text."
+      },
+      "wave-color-low": {
+        "$value": "hsl(187, 92%, 69%)",
+        "$type": "color",
+        "$description": "Waveform animation low-elevation color. Bright cyan from mix-step-1 region, lightened for visibility on dark hook backgrounds."
+      },
+      "wave-color-high": {
+        "$value": "hsl(156, 72%, 67%)",
+        "$type": "color",
+        "$description": "Waveform animation high-elevation color. Bright emerald from cyber-yellow-step-3 region. Multi-hue shift creates visual life as waves undulate."
+      },
+      "wave-opacity": {
+        "$value": "0.6",
+        "$type": "number",
+        "$description": "Waveform animation base opacity. Set for visibility against section-hook-bg (L=4-8%)."
       }
     }
   }
