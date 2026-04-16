@@ -19,7 +19,7 @@ Status reflects documentation completeness, not design approval. `Partial` means
 ## How to Contribute a Category Guide
 
 1. Pick a folder above (or create a new one if the medium isn't listed)
-2. Add a `guidelines.md` using the [guide template](_guide-template.md)
+2. Add a `guidelines.md` using the [guide template on GitHub](https://github.com/VerdigrisTech/design/blob/main/categories/_guide-template.md)
 3. Add reference images in an `assets/` subfolder (see format guide below)
 4. Include at least 2 good and 2 bad examples with explanations
 5. Reference tokens from `tokens/` by name — don't hardcode color/size values
