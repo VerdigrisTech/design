@@ -74,14 +74,23 @@ test.describe('design system surfaces', () => {
     expect(errors, `console errors: ${errors.join('; ')}`).toEqual([]);
   });
 
-  test('explorations index renders', async ({ page }) => {
+  test('explorations index renders when present', async ({ page }) => {
+    // explorations/ directory ships in a separate PR. This test is intentionally
+    // tolerant: if the index exists, verify it renders; if not, skip. Browser-
+    // specific behaviors on missing resources differ (Chrome/Safari return 404,
+    // Firefox throws NS_ERROR_NET_EMPTY_RESPONSE), so catch navigation errors.
     const errors = watchConsoleErrors(page);
-    const response = await page.goto('/explorations/');
-    // Acceptable either way: explicit index or 404 until directory listing is added
-    if (response && response.ok()) {
-      await expect(page.locator('h1, h2').first()).toBeVisible();
-      expect(errors, `console errors: ${errors.join('; ')}`).toEqual([]);
+    let response: Awaited<ReturnType<typeof page.goto>> = null;
+    try {
+      response = await page.goto('/explorations/');
+    } catch {
+      test.skip(true, 'explorations/ not present on this branch');
     }
+    if (!response || !response.ok()) {
+      test.skip(true, 'explorations/ does not serve an index on this branch');
+    }
+    await expect(page.locator('h1, h2').first()).toBeVisible();
+    expect(errors, `console errors: ${errors.join('; ')}`).toEqual([]);
   });
 });
 
