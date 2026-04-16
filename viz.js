@@ -159,7 +159,33 @@ c=ic(document.getElementById('dir-video'),120,80);c.fillStyle=N9;c.fillRect(0,0,
 // Training pulse
 c=ic(document.getElementById('dir-pulse'),120,80);c.fillStyle=N9;c.fillRect(0,0,120,80);c.strokeStyle='rgba(15,200,195,.4)';c.lineWidth=1.5;c.beginPath();c.moveTo(10,55);c.lineTo(30,55);c.lineTo(32,20);c.lineTo(80,20);c.lineTo(82,55);c.lineTo(110,55);c.stroke()})();
 
-// ── CLOSING LISSAJOUS BOOKEND ──
-(function(){const el=document.getElementById('closing-liss');if(!el)return;dLiss('closing-liss',400,.35,[{fx:3,fy:3,ax:.15,ay:.12,px:.3,py:.7},{fx:5,fy:5,ax:.1,ay:.08,px:.9,py:1.3},{fx:7,fy:7,ax:.06,ay:.05,px:1.5,py:.4},{fx:11,fy:11,ax:.04,ay:.03,px:2.1,py:1.8}],T)})();
+// ── ANIMATED CLOSING: LISSAJOUS TRACES → LOGO EMERGES ──
+(function(){const el=document.getElementById('closing-anim');if(!el)return;
+const sz=500,d=Math.min(devicePixelRatio||1,2);el.width=sz*d;el.height=sz*d;const c=el.getContext('2d');c.scale(d,d);
+const cx=sz/2,cy=sz/2,r=sz*.34;
+const harms=[{fx:3,fy:3,ax:.15,ay:.12,px:.3,py:.7},{fx:5,fy:5,ax:.1,ay:.08,px:.9,py:1.3},{fx:7,fy:7,ax:.06,ay:.05,px:1.5,py:.4},{fx:11,fy:11,ax:.04,ay:.03,px:2.1,py:1.8}];
+const pts=[];for(let i=0;i<=2000;i++){const t=(i/2000)*Math.PI*2;let x=Math.sin(t),y=Math.sin(t+.35);for(const h of harms){x+=h.ax*Math.sin(h.fx*t+h.px);y+=h.ay*Math.sin(h.fy*t+h.py)}const m=1+harms.reduce((s,h)=>s+Math.max(Math.abs(h.ax),Math.abs(h.ay)),0);pts.push({x:cx+x/m*r,y:cy+y/m*r})}
+let st=null;const TRACE=2500,HOLD=800,FADE=1200,TOT=TRACE+HOLD+FADE;
+function draw(ts){if(!st)st=ts;const el2=ts-st;
+c.fillStyle=N9;c.fillRect(0,0,sz,sz);
+// Phase 1: trace Lissajous
+const traceT=Math.min(el2/TRACE,1),pc=Math.floor(eoc(traceT)*2000);
+const lissOp=el2>TRACE+HOLD?Math.max(0,1-(el2-TRACE-HOLD)/FADE):1;
+const logoOp=el2>TRACE?Math.min((el2-TRACE)/(HOLD+FADE),1):0;
+// Draw crosshairs
+c.strokeStyle='rgba(39,39,42,.3)';c.lineWidth=.5;c.beginPath();c.moveTo(cx,20);c.lineTo(cx,sz-20);c.stroke();c.beginPath();c.moveTo(20,cy);c.lineTo(sz-20,cy);c.stroke();
+// Lissajous trace
+if(pc>1&&lissOp>0){c.globalAlpha=lissOp;c.strokeStyle=T;c.globalAlpha=lissOp*.12;c.lineWidth=1;c.beginPath();for(let i=0;i<pc;i++)i===0?c.moveTo(pts[i].x,pts[i].y):c.lineTo(pts[i].x,pts[i].y);c.stroke();c.globalAlpha=lissOp;const rs=Math.max(0,pc-400);c.lineWidth=2.5;c.shadowColor=T;c.shadowBlur=12;c.beginPath();for(let i=rs;i<pc;i++)i===rs?c.moveTo(pts[i].x,pts[i].y):c.lineTo(pts[i].x,pts[i].y);c.stroke();c.shadowBlur=0;
+if(traceT<1){c.fillStyle=T;c.shadowColor=T;c.shadowBlur=16;c.beginPath();c.arc(pts[pc-1].x,pts[pc-1].y,4,0,Math.PI*2);c.fill();c.shadowBlur=0}
+c.globalAlpha=1}
+// Logo emerges
+if(logoOp>0){c.globalAlpha=eoc(logoOp)*.6;const lS=2.2;dLogo(c,(sz-140*lS)/2,(sz-36*lS)/2,lS,T);c.globalAlpha=1}
+if(el2<TOT)requestAnimationFrame(draw);else{
+c.fillStyle=N9;c.fillRect(0,0,sz,sz);c.strokeStyle='rgba(39,39,42,.3)';c.lineWidth=.5;c.beginPath();c.moveTo(cx,20);c.lineTo(cx,sz-20);c.stroke();c.beginPath();c.moveTo(20,cy);c.lineTo(sz-20,cy);c.stroke();
+c.strokeStyle=T;c.lineWidth=2;c.shadowColor=T;c.shadowBlur=10;c.globalAlpha=.15;c.beginPath();pts.forEach((p,i)=>i===0?c.moveTo(p.x,p.y):c.lineTo(p.x,p.y));c.stroke();c.shadowBlur=0;c.globalAlpha=1;
+const lS=2.2;c.globalAlpha=.6;dLogo(c,(sz-140*lS)/2,(sz-36*lS)/2,lS,T);c.globalAlpha=1}}
+if(prefersRM){st=TOT;draw(TOT)}else{
+const obs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){st=null;requestAnimationFrame(draw)}})},{threshold:.3});obs.observe(el);
+const replay=document.getElementById('closing-replay');if(replay)replay.addEventListener('click',()=>{st=null;requestAnimationFrame(draw)})}})();
 
 });
