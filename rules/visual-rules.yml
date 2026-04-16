@@ -2,16 +2,22 @@
 # Machine-enforceable rules for evaluator pipelines.
 # Consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
 #
-# Version: 2.2.0
-# Last updated: 2026-04-13
+# Version: 2.3.0
+# Last updated: 2026-04-16
 #
-# Schema: visual-rules/2.1.0
+# Schema: visual-rules/2.2.0
 # Every enforceable rule entry MUST have:
 #   id:          unique dot-path identifier (e.g., color.contrast.normal-text)
 #   severity:    "error" | "warning"
 #   type:        "value" | "pattern" | "constraint" | "reference"
 #   description: human-readable explanation
 #   test:        machine-testable field -- one of:
+# Optional maturity field on any rule (see CLAUDE.md "Graduation"):
+#   maturity:    "experimental" (warning-only, collecting signal for graduation)
+#                | "convention" (warning, deviation requires justification)
+#                | "rule" (default, blocks merge)
+#                | "invariant" (axiomatic, rare, blocks merge)
+#   If omitted, treated as "rule" for backward compatibility.
 #     regex:     regex pattern to match/flag in source
 #     min/max:   numeric bounds
 #     value:     exact required value
@@ -26,6 +32,157 @@
 #     input_scope: (optional, peer of llm_eval inside test block) array of context labels
 #                  for multi-page evaluation. Tells the evaluator what pages to provide.
 #                  e.g. ["all_pages_with_turn_moments"] or ["upstream_page", "current_page"]
+
+# =============================================================================
+# BRAND REJECTIONS -- universal off-brand rules
+# =============================================================================
+# Hard rules that any repository implementing Verdigris identity must respect.
+# Applies across surfaces (website, app, email, ad, dashboard, firmware).
+# These generalize observations made during the visual signature exploration
+# into rules that stand on their own without requiring portfolio context.
+# =============================================================================
+
+brand_rejections:
+  id: "brand-rejections"
+  type: "reference"
+  description: "Universal off-brand constraints. Violation of any rule here indicates the surface does not represent Verdigris correctly."
+
+  visual_identity:
+    rules:
+      - id: "brand.visual.no-generic-imagery"
+        description: "Stock photography, generic library illustrations, and uncustomized off-the-shelf icon sets must not appear on Verdigris surfaces. Imagery must be specific to Verdigris (buildings, data centers, equipment, data visualizations, custom illustration). If the image could appear on any B2B site, it does not belong here."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does this surface use stock photography, generic library illustrations, or uncustomized icon sets (Feather, Heroicons, Font Awesome, etc. used without customization)? Answer YES if any generic imagery is present, NO if all imagery is Verdigris-specific or customized."
+
+      - id: "brand.visual.no-decorative-waveforms"
+        description: "Any wave, oscillation, spectrum, or signal visualization must derive from real or realistic electrical data. Generic sine waves, random noise, and procedurally-generated 'data-looking' patterns are off-brand because they undermine the core brand claim that Verdigris works from real measurement."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does any waveform, oscillation, or signal visualization on this surface lack real harmonic structure (e.g., a pure sine wave with no harmonics, or random procedural noise with no physical grounding)? Answer YES if decorative-only waveforms are present, NO if all waveforms reflect real electrical behavior with harmonic structure."
+
+      - id: "brand.visual.no-data-adjacent-particles"
+        description: "Particle systems, floating dot fields, and animated flecks must represent something (current flow, sampling density, detection events, circuit paths). If removing the particles would not lose information, they are decorative and must not be used."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Are there particle effects, floating dots, or animated flecks on this surface that do not represent a specific data concept (current flow, sampling, events, paths)? Answer YES if decorative particles are present, NO if all particle effects are data-grounded."
+
+      - id: "brand.visual.no-technical-dishonesty"
+        description: "Visualizations must represent real physics correctly. Axes must mean something. Units must be preserved. No 'prettier if we rotate it' violations (e.g., three-phase V-I does not produce rotated copies of the same figure). Technical dishonesty is disqualifying for a brand built on measurement."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does any visualization on this surface contain physically incorrect elements (wrong axes, missing units, impossible relationships, decorative rotations of inherently non-rotatable data)? Answer YES if any technical dishonesty is present, NO if all visualizations are physically correct."
+
+  voice_and_content:
+    rules:
+      - id: "brand.voice.no-condescending-rhetoric"
+        description: "We do not ask our customers what their buildings are 'hiding,' what they 'don't know,' or similar mystification framings. Facility managers know their buildings. Verdigris informs, it does not interrogate or condescend."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does any copy on this surface use condescending or mystifying framing toward the reader (rhetorical questions implying the reader is uninformed, 'what your X is hiding' style hooks, presumptions of reader ignorance)? Answer YES if condescending rhetoric is present, NO if the copy treats the reader as an expert peer."
+
+      - id: "brand.voice.no-sales-aesthetics-on-technical-surfaces"
+        description: "Technical surfaces (product pages, docs, diagnostic views, engineering pages) must not carry marketing aesthetics: rotating stats, testimonial carousels, 'trusted by' logo walls, large dollar-figure callouts, CTA bars. These belong exclusively on dedicated marketing pages."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does this technical surface (product page, docs, diagnostic view) contain marketing elements (rotating stats, testimonial carousels, trusted-by logo walls, large dollar callouts, prominent CTAs)? Answer YES if marketing aesthetics appear on a technical surface, NO if the technical surface stays focused on the technical content."
+
+      - id: "brand.voice.no-chatbot-personality"
+        description: "AI surfaces in Verdigris are competence-driven, not character-driven. No cute names, no emoji, no 'Hi there!' warmth, no conversational filler. Exact values, citations, no hedging. Verdigris AI is an expert tool, not a chatbot."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does any AI interface on this surface adopt chatbot personality traits (given name, emoji, conversational greetings, hedging language, anthropomorphic warmth)? Answer YES if chatbot personality is present, NO if the AI interface is competence-driven (exact values, citations, no hedging)."
+
+      - id: "brand.voice.no-generic-b2b-tropes"
+        description: "Off-brand imagery clichés: handshakes, lightbulbs, puzzle pieces, gears, abstract flowing geometry, hands-on-laptops stock shots, chess pieces, connection metaphor imagery, growth-arrow illustrations. Every other vendor uses these. Verdigris does not."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does this surface contain generic B2B imagery (handshakes, lightbulbs, gears, puzzle pieces, abstract swooshes, hands on laptops, chess pieces, generic connection graphics, growth arrows)? Answer YES if any generic B2B trope is present, NO if all imagery is Verdigris-specific."
+
+  composition:
+    rules:
+      - id: "brand.composition.no-color-without-justification"
+        description: "Every accent color must earn its place through content semantics (palette region maps to what the section is about). Decorative color has no place. If a designer cannot explain why THIS accent belongs in THIS section, it must be removed."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does any accent color on this surface appear without a justifiable content-semantic reason (i.e., the color is decorative rather than tied to content meaning)? Answer YES if unjustified accent color appears, NO if every accent has a content-semantic rationale."
+
+      - id: "brand.composition.no-emotional-color-claims"
+        description: "Color in the Verdigris system maps to content category (detection, energy, efficiency, etc.), not emotion. Never assign feelings to hex codes in docs or rationale. 'Teal means trust' is off-brand reasoning."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does any documentation, copy, or rationale on this surface claim that colors carry emotional meaning (e.g., 'teal means trust,' 'purple conveys sophistication')? Answer YES if emotional color claims appear, NO if color is tied exclusively to content category."
+
+      - id: "brand.composition.no-rainbow-sections"
+        description: "Brand color must dominate. Maximum 2 accent palette regions beyond teal per page. 70% teal dominance minimum. When every section uses a different palette region, the surface reads as a children's site, not a precision instrument."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does this page use more than 2 non-teal palette regions, or does teal dominance fall below 70%? Answer YES if the page rainbows across palette regions, NO if teal dominates with at most 2 earned accents."
+
+      - id: "brand.composition.no-dark-light-strobe"
+        description: "Within a content flow, commit to a lightness direction. Alternating dark and light sections every screen creates eye strain and breaks reading rhythm. At most one earned dark-accent moment per light flow (hero and footer do not count)."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does this page alternate between dark and light sections multiple times in the content flow (excluding hero and footer)? Answer YES if multiple lightness inversions occur, NO if the content flow stays committed to one lightness direction with at most one earned accent moment."
+
+      - id: "brand.composition.no-color-only-information"
+        description: "Color must never be the sole indicator of a state. Every error, warning, status, or emphasis conveyed by color must also have a non-color cue: icon, text label, underline, pattern, or position. This is accessibility floor AND brand consistency."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Is color the sole means of conveying any state or information on this surface (status indicators using only color, error states using only red text, links distinguished only by color)? Answer YES if any state is color-only, NO if every color-encoded state also has a non-color cue."
+
+  data_and_claims:
+    rules:
+      - id: "brand.data.no-fake-dashboards"
+        description: "Marketing screenshots and product illustrations must show real data or data clearly labeled as example. Procedurally-generated 'looks like analytics' screenshots misrepresent the product and undermine credibility."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does this surface contain dashboard screenshots or product visualizations showing fabricated data presented as real, without an 'example data' label or equivalent marker? Answer YES if fake data is presented as real, NO if all data is real or clearly labeled as example."
+
+      - id: "brand.data.no-fabricated-ranges"
+        description: "When copy states a specification ('8 kHz', '29 billion data points per day', '1,200 buildings'), any accompanying visualization must represent that specification accurately. No artists' impressions of 8 kHz that behave like 60 Hz. If the number is 8 kHz, the viz shows 8 kHz."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does any visualization on this surface contradict a stated specification in accompanying copy (e.g., copy says '8 kHz' but the viz shows low-resolution behavior)? Answer YES if a viz contradicts its stated spec, NO if all visualizations match their stated specifications."
+
+      - id: "brand.data.no-uncited-comparisons"
+        description: "Competitive benchmarks, performance claims versus other systems, and 'X% better than industry average' statements require a cited source or an internal reference. Uncited comparisons are off-brand and may carry legal risk."
+        severity: "error"
+        type: "constraint"
+        maturity: "rule"
+        test:
+          llm_eval: "Does this surface contain any competitive comparison, benchmark claim, or 'X% better than Y' statement that lacks a source citation or internal reference? Answer YES if uncited comparative claims are present, NO if every comparison has a cited source."
+
 
 # =============================================================================
 # COLOR
@@ -1830,20 +1987,10 @@ composition:
         description: "Time-domain 60Hz signal with harmonics. Supporting element, not primary."
         use: ["section separators", "ambient background", "resolution comparisons"]
 
-    rules:
-      - id: "composition.visual-signature.no-generic-waves"
-        description: "Waveform visualizations must have real harmonic structure (3rd, 5th, 7th harmonics of 60Hz fundamental). Generic sine waves with no harmonic content could belong to any company."
-        severity: "warning"
-        type: "constraint"
-        test:
-          llm_eval: "Does this waveform visualization show only a smooth sine wave with no harmonic content or distortion? Answer YES if it is a generic sine, NO if it has visible harmonic structure."
-
-      - id: "composition.visual-signature.no-decorative-particles"
-        description: "Particle systems and dot fields must derive from electrical data concepts (circuit topology, sampling density). Generic floating particles are not brand elements."
-        severity: "warning"
-        type: "constraint"
-        test:
-          llm_eval: "Does this particle/dot visualization represent a specific electrical concept (circuit paths, sampling points, load distribution), or is it a generic decorative particle effect? Answer YES if generic, NO if electrically grounded."
+    # NOTE: Rules about generic waveforms and decorative particles have been
+    # promoted to brand-level rules (see top-level `brand_rejections:` section).
+    # They apply to ALL surfaces, not just visual-signature moments.
+    rules: []
 
   # ---------------------------------------------------------------------------
   # CANVAS TEXT -- rules for rendering text to Canvas instead of DOM

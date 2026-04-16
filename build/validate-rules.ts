@@ -219,6 +219,36 @@ function checkSidebarCoverage() {
 }
 
 // ---------------------------------------------------------------------------
+// Maturity field validation (optional field, values constrained)
+// ---------------------------------------------------------------------------
+const MATURITY_VALUES = new Set(["experimental", "convention", "rule", "invariant"]);
+
+function checkMaturityField() {
+  const content = readFileSync(RULES_FILE, "utf-8");
+  const lines = content.split("\n");
+  const counts: Record<string, number> = { experimental: 0, convention: 0, rule: 0, invariant: 0 };
+  let invalid = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const match = lines[i].trim().match(/^maturity:\s*"?([a-z]+)"?/);
+    if (!match) continue;
+    const value = match[1];
+    if (!MATURITY_VALUES.has(value)) {
+      error(`Line ${i + 1}: invalid maturity "${value}" (expected experimental | convention | rule | invariant)`);
+      invalid++;
+    } else {
+      counts[value]++;
+    }
+  }
+
+  if (invalid === 0) {
+    const parts = Object.entries(counts).filter(([, n]) => n > 0).map(([k, n]) => `${n} ${k}`);
+    const summary = parts.length ? ` (${parts.join(", ")})` : "";
+    console.log(`  OK maturity field values${summary}`);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 function main() {
@@ -229,6 +259,7 @@ function main() {
   checkConstraintTests();
   checkLlmEvalConvention();
   checkFloorsAndCeilings();
+  checkMaturityField();
   checkSidebarCoverage();
 
   console.log(
