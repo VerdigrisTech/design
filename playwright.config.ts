@@ -24,7 +24,11 @@ export default defineConfig({
   },
 
   webServer: {
-    command: 'python3 -m http.server 4000 --directory _site',
+    // http-server -e html adds automatic .html extension fallback so
+    // extensionless URLs like /foundations/composition resolve to the
+    // built _site/foundations/composition.html, matching how GitHub
+    // Pages serves the deployed site.
+    command: 'npx http-server _site -p 4000 -e html -s',
     url: 'http://localhost:4000',
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
