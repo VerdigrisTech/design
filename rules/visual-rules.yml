@@ -1674,6 +1674,75 @@ accessibility:
 
 
 # =============================================================================
+# DEVICE ACCESSIBILITY -- Verdigris runs on many devices, not just Chrome desktop
+# =============================================================================
+# Verdigris surfaces run on firmware displays, mobile (iOS Safari, Android
+# Chrome), web (Chrome, Firefox, Safari, Edge), and embedded dashboards.
+# A design that only works on Chrome desktop is a design that excludes
+# customers. This section codifies the cross-browser and device testing
+# floor for every shipped surface.
+# =============================================================================
+
+device_accessibility:
+  browser_baseline:
+    web: ["chrome_latest", "firefox_latest", "safari_latest", "edge_latest"]
+    mobile: ["ios_safari_latest", "android_chrome_latest"]
+    firmware: ["embedded_webkit"]
+  min_target_size_touch: "44px"
+  min_target_size_pointer: "24px"
+  rules:
+    - id: "device.canvas-cross-browser-parity"
+      description: "Canvas rendering must be visually equivalent across Chrome, Firefox, Safari. Bezier math, compositing, text measurement, and DPR scaling all differ subtly between engines -- never rely on implementation-specific behavior."
+      type: "constraint"
+      severity: "error"
+      test:
+        llm_eval: "Does this canvas code depend on browser-specific rendering behavior (e.g., computing paths manually that differ from drawn paths, assuming Chrome compositing ordering, hardcoded DPR assumptions)? Answer YES if the code will render differently on Firefox or Safari, NO if the math and drawing ops are browser-agnostic and produce visually identical output."
+
+    - id: "device.math-matches-drawing"
+      description: "When computing a path for animation or hit-testing that must align with a drawn path, use identical math. If the drawn path is a cubic bezier, the computed path must use cubic bezier math (4 control points). Quadratic and cubic bezier with the same endpoints produce different curves."
+      type: "constraint"
+      severity: "error"
+      test:
+        llm_eval: "Are there any cases where code computes a point on a curve (e.g., for particle animation or hit testing) using math that does not match the actual drawn curve type (quadratic vs cubic vs arc)? Answer YES if computed and drawn paths diverge, NO if they use identical curve math."
+
+    - id: "device.test-on-multiple-browsers"
+      description: "Every canvas visualization and complex interactive surface must be tested on Chrome, Firefox, and Safari before shipping. Cross-browser testing is not optional -- it catches canvas rendering differences, font-metric drift, CSS subpixel rounding, and color profile mismatches."
+      type: "process"
+      severity: "error"
+
+    - id: "device.test-on-mobile"
+      description: "Every customer-facing surface must be tested on at least one iOS Safari and one Android Chrome device. Touch targets (44px min), viewport behavior, scroll anchoring, pointer events, and performance under constrained memory all behave differently than desktop."
+      type: "process"
+      severity: "error"
+
+    - id: "device.no-chrome-only-apis"
+      description: "Avoid browser-specific APIs without fallbacks: OffscreenCanvas (limited Safari support pre-16.4), BroadcastChannel (limited Safari support), CSS :has() (check baseline), container queries (check baseline). When used, provide feature detection and graceful degradation."
+      type: "constraint"
+      severity: "warning"
+      test:
+        llm_eval: "Does this code use any browser-specific APIs (OffscreenCanvas, BroadcastChannel, ResizeObserver without fallback, newer CSS features) without feature detection or graceful degradation? Answer YES if browser-specific APIs are used without fallbacks, NO if feature detection is present or all APIs have universal baseline support."
+
+    - id: "device.dpr-handling"
+      description: "Canvas must handle devicePixelRatio correctly and consistently. Multiply canvas.width/height by dpr (capped at 2 for perf), then scale the rendering context. Never hardcode DPR or assume a specific value."
+      type: "constraint"
+      severity: "error"
+      test:
+        llm_eval: "Does every canvas setup properly account for devicePixelRatio by scaling canvas buffer and context correctly? Answer YES if any canvas ignores DPR or hardcodes a specific ratio, NO if all canvases handle DPR correctly with an appropriate cap."
+
+    - id: "device.reduced-motion-honored"
+      description: "Every animation must check prefers-reduced-motion: reduce and skip to final state, not start continuous loops, and preserve readability without motion."
+      type: "constraint"
+      severity: "error"
+      test:
+        llm_eval: "Does every animated element in this code honor prefers-reduced-motion: reduce by skipping animations to a final static state? Answer YES if any animation ignores the preference, NO if all animations check the preference and degrade gracefully."
+
+    - id: "device.firmware-display-constraints"
+      description: "Firmware displays (Verdigris sensor nodes, embedded panels) have constrained color, contrast, and refresh characteristics. Designs intended for firmware must be tested on the target display hardware, not assumed from desktop rendering."
+      type: "process"
+      severity: "warning"
+
+
+# =============================================================================
 # VIDEO -- Remotion and any Verdigris-published motion media
 # =============================================================================
 # Covers rules that apply to every Verdigris video: accessibility invariants,
