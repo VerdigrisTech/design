@@ -6,3 +6,13 @@ build/dist/
 *.png
 # Browser automation artifacts
 .playwright-mcp/
+# Playwright test artifacts
+playwright-report/
+test-results/
+# Jekyll build output
+_site/
+.jekyll-cache/
+# Bundler
+Gemfile.lock
+.bundle/
+vendor/bundle/

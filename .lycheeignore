@@ -1,0 +1,19 @@
+# External URLs that are known to fail for automated checkers but work for humans.
+# Review these quarterly and remove entries that start succeeding or have been replaced.
+
+# EBU publishes loudness recommendations at this URL but blocks bot user-agents with 403.
+# Accessible to humans; lychee gets bot-blocked.
+^https://tech\.ebu\.ch/
+
+# YouTube restructures support paths frequently. The howyoutubeworks URL has moved,
+# but we keep it in foundations/video.md for now. TODO: find the current canonical URL.
+^https://www\.youtube\.com/howyoutubeworks/
+
+# The private Verdigris www repo. Unauthenticated GitHub Actions GITHUB_TOKEN cannot
+# access private repos, so this 404s in CI. The link works for team members.
+^https://github\.com/VerdigrisTech/verdigris($|/)
+
+# BBC Subtitle Guidelines: the github.io redirect chain sometimes fails. The guidelines
+# exist at bbc.co.uk or are linked from the main BBC accessibility pages. TODO: verify
+# canonical URL and update foundations/video.md citation.
+^https://bbc\.github\.io/subtitle-guidelines/

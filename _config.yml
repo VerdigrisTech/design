@@ -26,6 +26,11 @@ exclude:
   - categories/_guide-template.md
   - examples/_template.md
   - evolution.html
+  - tests/
+  - playwright.config.ts
+  - playwright-report/
+  - test-results/
+  - vendor/
 
 # Default front matter
 defaults:

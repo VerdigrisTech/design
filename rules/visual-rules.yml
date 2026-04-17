@@ -1743,6 +1743,58 @@ device_accessibility:
 
 
 # =============================================================================
+# VIDEO -- Remotion and any Verdigris-published motion media
+# =============================================================================
+# Covers rules that apply to every Verdigris video: accessibility invariants,
+# title-safe constraints for critical content, and a pointer at the foundation
+# doc for workflow and technical specs. Verdigris-specific conventions (scene
+# rhythm, opening/closing identity, voice register) are NOT codified here.
+# They are open questions documented in foundations/video.md and will graduate
+# from experimental to rule only after 2-3 real productions provide evidence.
+#
+# See: foundations/video.md for the full framework.
+# =============================================================================
+
+video:
+  id: "video"
+  type: "reference"
+  description: "Rules for Verdigris video across any surface (Remotion-produced or otherwise). Only accessibility invariants and title-safe constraints are codified; production workflow and Verdigris-specific conventions are documented in foundations/video.md as open questions."
+
+  rules:
+    - id: "video.captions-required"
+      description: "Every published Verdigris video must ship with an SRT caption track. Audio-only content is not accessible and platform algorithms increasingly deprioritize uncaptioned video."
+      severity: "error"
+      type: "constraint"
+      maturity: "invariant"
+      test:
+        llm_eval: "Does this published video have an SRT caption track (uploaded alongside the video file or baked into the platform delivery)? Answer YES if the video is missing captions, NO if captions are present."
+
+    - id: "video.reduced-motion-alternative"
+      description: "Every video must have an accessible alternative for users with prefers-reduced-motion: a static key frame paired with the transcript, an audio-only version, or a low-motion edit. Simply omitting motion is not sufficient if the video carries information through motion."
+      severity: "error"
+      type: "constraint"
+      maturity: "rule"
+      test:
+        llm_eval: "Does this video offer a reduced-motion alternative (static key frame with transcript, audio-only version, or a low-motion edit) for users who prefer reduced motion? Answer YES if no alternative exists, NO if an accessible alternative is provided."
+
+    - id: "video.text-contrast-wcag-aa"
+      description: "On-screen text in video must meet WCAG AA contrast against its backing region: 4.5:1 for body text, 3:1 for large text. Video backgrounds are often complex (motion, data, imagery), so plates, drop shadows, or dark/light backing layers are frequently required to achieve this."
+      severity: "error"
+      type: "constraint"
+      maturity: "rule"
+      test:
+        llm_eval: "Does any on-screen text in this video fail WCAG AA contrast (4.5:1 for body, 3:1 for large text) against the pixels directly behind it? Answer YES if any text fails contrast, NO if all text meets the minimum."
+
+    - id: "video.critical-content-title-safe"
+      description: "Critical text and data (headlines, captions, data labels, logos) must stay within the title-safe area: 10% inset from all edges. This is a broadcast-era convention that still applies because social platforms overlay UI chrome (captions, reactions, progress indicators) on the edges of video."
+      severity: "error"
+      type: "constraint"
+      maturity: "rule"
+      test:
+        llm_eval: "Does any critical on-screen content (headline text, captions, data labels, logos) fall outside the title-safe area (within 10% of any edge)? Answer YES if critical content extends into the edge zone, NO if all critical content stays within the 10% inset."
+
+
+# =============================================================================
 # COMPOSITION -- purpose x surface matrix
 # =============================================================================
 # Composition rules govern how color, typography, and spacing interact.
