@@ -135,9 +135,26 @@ fix(rules): correct heading weight constraint from 600 to 700
 ### Visual Rules (`rules/`)
 - YAML format, machine-parseable for evaluator pipeline consumption
 - Schema (v2.1.0): every rule must have `id`, `severity`, `type`, `description`
+- Optional `maturity` field: `experimental` (warning, collecting signal), `convention` (warning, deviation requires justification), `rule` (default, blocks merge), `invariant` (axiomatic, cannot override)
 - `type: "reference"` entries omit severity (informational, not enforced)
 - Every guidance rule needs both a floor AND a ceiling — AI agents optimize toward maximums without upper bounds
 - Cross-file consistency: if a value appears in rules, foundations, and specimens, all three must match
+
+### Explorations (`explorations/`)
+- Prototypes, portfolios, working-through-something essays. Not authoritative.
+- Nothing here is a rule. Other repos should not treat exploration content as canonical.
+- Ideas start here. Graduation happens when evidence accumulates (see below).
+
+## Graduation
+
+The directory structure IS the maturity model. Promoting an artifact = moving it between directories and updating metadata.
+
+- **Exploration → Pattern**: move from `explorations/` to `categories/` once used on 2+ real surfaces with positive review
+- **Pattern → Convention**: promote to `foundations/` when rationale is stable and one adversarial review has passed
+- **Convention → Rule**: add to `rules/visual-rules.yml` with `maturity: experimental`. Graduate to `maturity: rule` after 30 days with no surfaced violations or stakeholder objections
+- **Demotion**: anything can move back down if evidence shifts. This is not failure; it is honest response to learning
+
+Guiding principle: if an artifact has no identified ideal brand-aligned use, do NOT build a system around it. Keep it as an exploration until a real use emerges. Bias toward applying existing work to real surfaces over building elaborate exploration scaffolding.
 
 ## Content Guidelines
 
