@@ -125,6 +125,36 @@
         "$type": "color",
         "$description": "Close section foreground text."
       },
+      "hero-authoritative-bg": {
+        "$value": "{color.neutral.950}",
+        "$type": "color",
+        "$description": "Authoritative hero posture background. Product evaluation pages (platform, hardware, solutions, homepage). Signals product authority."
+      },
+      "hero-authoritative-fg": {
+        "$value": "{color.neutral.50}",
+        "$type": "color",
+        "$description": "Authoritative hero foreground text."
+      },
+      "hero-belonging-bg": {
+        "$value": "{color.brand.verdigris}",
+        "$type": "color",
+        "$description": "Belonging hero posture background. Identity pages (about, mission, investors) where teal reads as warmth, not accent. Capped at 2 pages per site by hero-posture-match rule."
+      },
+      "hero-belonging-fg": {
+        "$value": "{color.neutral.50}",
+        "$type": "color",
+        "$description": "Belonging hero foreground text."
+      },
+      "hero-approachable-bg": {
+        "$value": "{color.neutral.50}",
+        "$type": "color",
+        "$description": "Approachable hero posture background. Awareness-stage and non-product surfaces (industry landings, careers, partners). Near-white; one step off page background for subtle hero definition."
+      },
+      "hero-approachable-fg": {
+        "$value": "{color.neutral.950}",
+        "$type": "color",
+        "$description": "Approachable hero foreground text."
+      },
       "wave-color-low": {
         "$value": "hsl(187, 92%, 69%)",
         "$type": "color",

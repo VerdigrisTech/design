@@ -194,16 +194,34 @@ Page-level composition governs sections within a page. Site-level composition go
 
 ### Page Hierarchy
 
-Not all pages have equal visual weight. The homepage is the loudest; secondary pages progressively quiet down.
+Not all pages have equal visual weight. Tier controls two things: hero scale (how loud) and color budget (how many accent moments a page can earn). A third axis, hero posture, is separate and is covered in Hero Posture below.
 
-| Page tier | Hero treatment | Turn allowed | Color budget | Example |
-|-----------|---------------|-------------|-------------|---------|
-| **Primary** (1 page) | Full expression: dark bg, gradient strip, H1, 8rem | Yes | Trust + 1 accent | Homepage |
-| **Secondary** | Compact hero: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding | Only if 6+ sections | Trust only | Product, Platform |
-| **Tertiary** | No hero. Section opens directly with H1 at standard weight. | No | Trust only | Docs, blog posts, legal |
-| **Convert** | Minimal: single heading + CTA, neutral or dark bg, no narrative arc | No | 1 accent (CTA) | Pricing, demo request, signup |
+| Page tier | Hero scale | Default posture | Turn allowed | Color budget | Example |
+|-----------|-----------|----------------|-------------|-------------|---------|
+| **Primary** (1 page) | Full (8rem padding, gradient strip, H1 at 4rem, 50rem max-height) | authoritative | Yes | Trust + 1 accent | Homepage |
+| **Secondary** | Standard (5rem padding, H1 at 3rem) | authoritative | Only if 6+ sections | Trust only | Product, Platform, Hardware, Solutions |
+| **Tertiary** | None. Section opens directly with H1. | | No | Trust only | Docs, blog, legal |
+| **Convert** | Minimal (single heading + CTA) | authoritative | No | 1 accent (CTA) | Pricing, demo request, signup |
 
-The homepage owns the full-expression hero with gradient strip. If secondary pages also use full-expression heroes, the homepage loses its primacy and the site feels like a collection of landing pages rather than a coherent product.
+The homepage owns the full-scale hero with gradient strip. If secondary pages also use full-scale heroes, the homepage loses its primacy and the site feels like a collection of landing pages rather than a coherent product. Default posture is the tier's baseline, not a requirement. Individual pages override posture when the visitor's posture differs from the tier default (see Hero Posture).
+
+### Hero Posture
+
+Posture controls how the hero reads, not how loud it is. The three postures map to three visitor jobs. Pick posture based on why the visitor is on the page, not what tier the page sits in.
+
+| Posture | Background | Foreground | Stat cards | Signals | When to use |
+|---------|-----------|------------|------------|---------|-------------|
+| **authoritative** | `color.hero.authoritative.bg` (neutral.950) | `color.hero.authoritative.fg` (neutral.50) | frosted glass on dark | product authority; "pay attention" | Product evaluation pages. Visitor is in consideration stage: platform, hardware, solutions, homepage. |
+| **belonging** | `color.hero.belonging.bg` (brand.verdigris) | `color.hero.belonging.fg` (neutral.50) | frosted glass on teal | identity; "who we are" | Identity pages where teal is warmth, not accent: About, mission, investors. Capped at 2 pages per site. |
+| **approachable** | `color.hero.approachable.bg` (neutral.50) | `color.hero.approachable.fg` (neutral.950) | card bg with 1px border (neutral.200) | warmth; "here is how we help your world" | Awareness-stage surfaces (industry landings from search), recruiting, and partner pages. |
+
+**Authoritative** is the workhorse and the default for product-evaluation pages. The dark background creates visual weight and signals serious infrastructure. A data center VP clicking through /platform expects this.
+
+**Belonging** says "this is who we are," not "this is what we sell." Reserved for identity pages. More than two belonging heroes across a site dilutes the About page's singular role and turns brand teal into wallpaper.
+
+**Approachable** is the variant for pages where authority would feel off-key. An industry page is about the visitor's problem, not the product. A careers page should feel open and inviting, not like a product pitch. A partners page is relationship-oriented. Light posture fits these visitor postures; dark posture fights them.
+
+Posture is independent of scale. A secondary-scale hero can be authoritative (product page) or approachable (industry page). Don't read the table left-to-right: tier picks scale, posture picks treatment, and the two decisions are made separately.
 
 ### Cross-Page Turn Scarcity
 
@@ -217,13 +235,13 @@ When multiple pages do use accent moments (homepage + a deep product page), they
 
 ### Purpose De-Escalation
 
-Visitors typically move from high-energy pages (persuade) toward low-energy pages (convert, inform). The visual intensity should de-escalate to match.
+Visitors typically move from high-energy pages (persuade) toward low-energy pages (convert, inform). The visual intensity should de-escalate to match. Intensity is the combination of scale (full > standard > minimal > none) and posture (authoritative > belonging > approachable); reducing either axis de-escalates.
 
 | Transition | Intensity shift | Why |
 |-----------|----------------|-----|
-| Persuade → Persuade | Reduce: secondary hero, no turn unless 6+ sections | Avoids pitch fatigue |
+| Persuade → Persuade | Reduce: standard scale or approachable posture; no turn unless 6+ sections | Avoids pitch fatigue |
 | Persuade → Inform | Reduce: no hero, metronomic rhythm | Visitor wants answers, not spectacle |
-| Persuade → Convert | Reduce sharply: minimal hero, single CTA, no turn | Focus earns trust at decision point |
+| Persuade → Convert | Reduce sharply: minimal scale, single CTA, no turn | Focus earns trust at decision point |
 | Inform → Convert | Maintain: both are low-energy | Natural transition |
 | Any → Narrate | Reset: narrate has its own register (honesty) | Editorial stands alone |
 
