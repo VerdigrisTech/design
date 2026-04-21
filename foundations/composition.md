@@ -211,9 +211,9 @@ Posture controls how the hero reads, not how loud it is. The three postures map 
 
 | Posture | Background | Foreground | Stat cards | Signals | When to use |
 |---------|-----------|------------|------------|---------|-------------|
-| **authoritative** | `color.hero.authoritative.bg` (neutral.950) | `color.hero.authoritative.fg` (neutral.50) | frosted glass on dark | product authority; "pay attention" | Product evaluation pages. Visitor is in consideration stage: platform, hardware, solutions, homepage. |
-| **belonging** | `color.hero.belonging.bg` (brand.verdigris) | `color.hero.belonging.fg` (neutral.50) | frosted glass on teal | identity; "who we are" | Identity pages where teal is warmth, not accent: About, mission, investors. Capped at 2 pages per site. |
-| **approachable** | `color.hero.approachable.bg` (neutral.50) | `color.hero.approachable.fg` (neutral.950) | card bg with 1px border (neutral.200) | warmth; "here is how we help your world" | Awareness-stage surfaces (industry landings from search), recruiting, and partner pages. |
+| **authoritative** | `color.semantic.hero-authoritative-bg` (neutral.950) | `color.semantic.hero-authoritative-fg` (neutral.50) | frosted glass on dark | product authority; "pay attention" | Product evaluation pages. Visitor is in consideration stage: platform, hardware, solutions, homepage. |
+| **belonging** | `color.semantic.hero-belonging-bg` (brand.verdigris) | `color.semantic.hero-belonging-fg` (neutral.50) | frosted glass on teal | identity; "who we are" | Identity pages where teal is warmth, not accent: About, mission, investors. Capped at 2 pages per site. |
+| **approachable** | `color.semantic.hero-approachable-bg` (neutral.50) | `color.semantic.hero-approachable-fg` (neutral.950) | card bg with 1px border (neutral.200) | warmth; "here is how we help your world" | Awareness-stage surfaces (industry landings from search), recruiting, and partner pages. |
 
 **Authoritative** is the workhorse and the default for product-evaluation pages. The dark background creates visual weight and signals serious infrastructure. A data center VP clicking through /platform expects this.
 

@@ -2025,6 +2025,7 @@ composition:
           example: "Product, Platform, Hardware, Solutions"
         tertiary:
           hero_scale: "none"              # section opens directly with H1 at standard weight
+          default_posture: null           # no hero means no posture; explicit null keeps schema shape consistent with other tiers
           turn_allowed: false
           color_budget: "trust only"
           example: "Docs, blog posts, legal"
@@ -2079,16 +2080,24 @@ composition:
         test:
           llm_eval: "Given this page's purpose and audience, does the hero posture fail to match visitor posture? Authoritative should be used for product/platform/hardware/solutions pages where visitors are evaluating capability. Belonging should be used for identity pages (about, mission, investors, annual report) where the site speaks as itself. Approachable should be used for awareness-stage surfaces (industry landings from search), recruiting pages, and partner pages where authority would feel off-key. Answer YES if the posture is mismatched, NO if it matches."
           input_scope: ["current_page"]
-          posture_bounds:
-            authoritative:
-              min: 1              # site must anchor on product authority somewhere
-              max: null           # no ceiling; product surfaces legitimately multiply
-            belonging:
-              min: 0
-              max: 2              # About + one identity companion (mission or investors) is fine; 3+ dilutes About's singular role
-            approachable:
-              min: 0
-              max: null           # awareness surfaces multiply freely
+
+      - id: "composition.site-level.authoritative-posture-floor"
+        description: "The site must anchor on authoritative (product authority) posture somewhere. Without at least one authoritative hero, the site fails to signal product evaluation anywhere. The homepage is the expected anchor; platform, hardware, and solutions pages typically reinforce it."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          min_authoritative_heroes_per_site: 1   # at least one authoritative anchor
+          # no ceiling -- product surfaces legitimately multiply (typical site has 5-14)
+
+      - id: "composition.site-level.belonging-posture-cap"
+        description: "Belonging (brand teal) hero posture is reserved for identity pages. More than two belonging heroes across a site dilutes About's singular role and turns brand teal into wallpaper. One belonging hero (About) is typical; two is allowed if a second identity page exists (mission, investors, annual report)."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          min_belonging_heroes_per_site: 0
+          max_belonging_heroes_per_site: 2   # About + optional identity companion
 
       - id: "composition.site-level.turn-scarcity"
         description: "At most one turn moment (earned accent) per 3-page navigation depth. The homepage gets priority. At least one turn must exist across the persuade pages (the homepage). If every page has a turn, the accent becomes wallpaper. If no page has a turn, the brand palette is underused."
