@@ -38,28 +38,29 @@ jobs:
 
       - name: Determine version bump
         id: bump
+        env:
+          LABELS_JSON: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          PR_COMMITS: ${{ github.event.pull_request.commits }}
         run: |
           # Check PR labels first (highest priority)
-          LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
-          if echo "$LABELS" | grep -q '"major"'; then
+          if echo "$LABELS_JSON" | grep -q '"major"'; then
             echo "type=major" >> "$GITHUB_OUTPUT"
             echo "Bump: major (from PR label)"
             exit 0
           fi
-          if echo "$LABELS" | grep -q '"minor"'; then
+          if echo "$LABELS_JSON" | grep -q '"minor"'; then
             echo "type=minor" >> "$GITHUB_OUTPUT"
             echo "Bump: minor (from PR label)"
             exit 0
           fi
-          if echo "$LABELS" | grep -q '"patch"'; then
+          if echo "$LABELS_JSON" | grep -q '"patch"'; then
             echo "type=patch" >> "$GITHUB_OUTPUT"
             echo "Bump: patch (from PR label)"
             exit 0
           fi
 
-          # Auto-detect from PR's merge commit
-          # The merge commit message contains the PR commits
-          PR_COMMITS="${{ github.event.pull_request.commits }}"
+          # Auto-detect from PR's merge commit.
+          # The merge commit message contains the PR commits.
           SCAN_DEPTH=$((PR_COMMITS + 1))
 
           # Major: BREAKING CHANGE in PR commit bodies
@@ -80,37 +81,99 @@ jobs:
           echo "type=patch" >> "$GITHUB_OUTPUT"
           echo "Bump: patch (default)"
 
-      - name: Bump version
+      - name: Calculate new version
         id: version
+        env:
+          BUMP: ${{ steps.bump.outputs.type }}
+          GITHUB_REPO: ${{ github.repository }}
         run: |
-          BUMP=${{ steps.bump.outputs.type }}
-          npm version "$BUMP" --no-git-tag-version
-          NEW_VERSION=$(node -p "require('./package.json').version")
+          # Base version from latest semver tag on origin.
+          # We prefer tags over package.json because the workflow does not commit
+          # the bumped package.json back to main (avoiding protected-branch writes),
+          # so package.json stays at whatever was last manually committed and can
+          # drift behind the true published version. Tags are authoritative.
+          LATEST_TAG=$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -1)
+          if [ -z "$LATEST_TAG" ]; then
+            BASE_VERSION=$(node -p "require('./package.json').version")
+            echo "No semver tags found; using package.json as base: $BASE_VERSION"
+          else
+            BASE_VERSION="${LATEST_TAG#v}"
+            echo "Latest semver tag: $LATEST_TAG (base: $BASE_VERSION)"
+          fi
+
+          # Compute next version using the requested bump type.
+          # Pure-Node, no external deps. BASE_VERSION and BUMP come from env
+          # (not inlined into JS source) to keep the shell quoting safe.
+          NEW_VERSION=$(BASE_VERSION="$BASE_VERSION" node -e '
+            const parts = process.env.BASE_VERSION.split(".").map(Number);
+            if (parts.length !== 3 || parts.some(n => Number.isNaN(n))) {
+              console.error("Invalid base version: " + process.env.BASE_VERSION);
+              process.exit(1);
+            }
+            const bump = process.env.BUMP;
+            if (bump === "major") { parts[0]++; parts[1] = 0; parts[2] = 0; }
+            else if (bump === "minor") { parts[1]++; parts[2] = 0; }
+            else if (bump === "patch") { parts[2]++; }
+            else { console.error("Unknown bump: " + bump); process.exit(1); }
+            console.log(parts.join("."));
+          ')
+
+          echo "Calculated new version: v$NEW_VERSION ($BUMP bump from $BASE_VERSION)"
           echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
-          echo "Bumped to v$NEW_VERSION ($BUMP)"
+
+          # Tag-conflict detection. If the computed tag already exists we must
+          # decide whether this is an idempotent re-run (same commit) or a real
+          # collision that needs human resolution.
+          if git rev-parse "v$NEW_VERSION" >/dev/null 2>&1; then
+            EXISTING_COMMIT=$(git rev-list -n 1 "v$NEW_VERSION")
+            HEAD_COMMIT=$(git rev-list -n 1 HEAD)
+            if [ "$EXISTING_COMMIT" = "$HEAD_COMMIT" ]; then
+              echo "::notice::Tag v$NEW_VERSION already exists and points to HEAD. Treating as idempotent re-run."
+              echo "tag_exists=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "::error::Tag v$NEW_VERSION already exists on a different commit ($EXISTING_COMMIT vs HEAD $HEAD_COMMIT)."
+              echo "::error::This usually means a prior release attempt left a stale tag, or the calculated version collides with an existing release."
+              echo "::error::Manual resolution required. If the existing v$NEW_VERSION release is stale, an authorized user must run:"
+              echo "::error::  gh release delete v$NEW_VERSION --yes --repo $GITHUB_REPO"
+              echo "::error::  git push origin :refs/tags/v$NEW_VERSION"
+              echo "::error::  # and unpublish the package version if it exists on GitHub Packages"
+              echo "::error::Then re-run this workflow."
+              exit 1
+            fi
+          fi
+
+          # Apply the bump to package.json ephemerally so npm pack/publish see it.
+          npm version "$NEW_VERSION" --no-git-tag-version --allow-same-version
 
       - name: Build outputs
         run: npm run build
 
       - name: Tag and release
+        if: steps.version.outputs.tag_exists != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NEW_VERSION: ${{ steps.version.outputs.new_version }}
         run: |
-          # Tag the merge commit directly (no push to protected branch needed)
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag "v${NEW_VERSION}"
           git push origin "v${NEW_VERSION}"
 
-          # Create release with auto-generated notes
           gh release create "v${NEW_VERSION}" \
             --title "v${NEW_VERSION}" \
             --generate-notes
 
       - name: Publish to GitHub Packages
-        run: |
-          # Build with the bumped version (in-memory, not committed)
-          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEW_VERSION: ${{ steps.version.outputs.new_version }}
+        run: |
+          # Idempotency: if this version is already on the registry, skip.
+          # GitHub Packages npm publish is append-only and will error on a
+          # duplicate version; we treat "already there" as success so re-runs
+          # do not fail the workflow.
+          if npm view "@verdigristech/design-tokens@${NEW_VERSION}" version --registry=https://npm.pkg.github.com >/dev/null 2>&1; then
+            echo "::notice::@verdigristech/design-tokens@${NEW_VERSION} is already on GitHub Packages. Skipping publish."
+            exit 0
+          fi
+          npm publish
