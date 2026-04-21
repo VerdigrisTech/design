@@ -67,8 +67,8 @@
   --color-semantic-hero-authoritative-fg: hsl(0, 0%, 98%);
   --color-semantic-hero-belonging-bg: hsl(178, 97%, 40%);
   --color-semantic-hero-belonging-fg: hsl(0, 0%, 98%);
-  --color-semantic-hero-approachable-bg: hsl(0, 0%, 98%);
-  --color-semantic-hero-approachable-fg: hsl(240, 10%, 4%);
+  --color-semantic-hero-restrained-bg: hsl(0, 0%, 98%);
+  --color-semantic-hero-restrained-fg: hsl(240, 10%, 4%);
 }
 
 .dark {

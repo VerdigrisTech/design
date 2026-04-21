@@ -2,10 +2,10 @@
 # Machine-enforceable rules for evaluator pipelines.
 # Consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
 #
-# Version: 3.0.0
+# Version: 4.0.0
 # Last updated: 2026-04-21
 #
-# Schema: visual-rules/3.0.0
+# Schema: visual-rules/4.0.0
 # Every enforceable rule entry MUST have:
 #   id:          unique dot-path identifier (e.g., color.contrast.normal-text)
 #   severity:    "error" | "warning"
@@ -2007,7 +2007,7 @@ composition:
     page_hierarchy:
       id: "composition.site-level.page-hierarchy"
       type: "reference"
-      description: "Not all pages have equal visual weight. Tier controls scale (how loud) and color budget. Posture (how the hero reads -- authoritative, belonging, approachable) is a separate axis driven by visitor posture; see hero_posture."
+      description: "Not all pages have equal visual weight. Tier controls scale (how loud) and color budget. Posture (how the hero reads -- authoritative, belonging, restrained) is a separate axis driven by page role; see hero_posture."
       tiers:
         primary:
           hero_scale: "full"              # 8rem padding, gradient strip, 50rem max-height, H1 at 4rem
@@ -2055,12 +2055,12 @@ composition:
           signals: "identity; 'who we are'"
           use_when: "Identity pages where teal reads as warmth, not accent. The about page, mission, investors, annual report. Not product pages."
           examples: ["/about"]
-        approachable:
-          background: "{color.semantic.hero-approachable-bg}"    # neutral.50
-          foreground: "{color.semantic.hero-approachable-fg}"    # neutral.950
+        restrained:
+          background: "{color.semantic.hero-restrained-bg}"      # neutral.50
+          foreground: "{color.semantic.hero-restrained-fg}"      # neutral.950
           stat_cards: "card bg with 1px border (neutral.200)"
-          signals: "warmth; 'here is how we help your world'"
-          use_when: "Awareness-stage surfaces (industry landings), recruiting pages, and relationship-oriented pages (partners). Visitor is not evaluating product and benefits from openness over authority."
+          signals: "technical, understated; lower-intensity brand expression"
+          use_when: "Awareness-stage surfaces (industry landings), recruiting pages, and relationship-oriented pages (partners). Lower visual weight than authoritative without softening into warmth. Keeps brand pillars (Precision, Refined) intact at reduced intensity."
           examples: ["/industries/*", "/company/careers", "/partners/*"]
 
     rules:
@@ -2073,12 +2073,12 @@ composition:
           max_full_scale_heroes: 1   # only homepage gets one
 
       - id: "composition.site-level.hero-posture-match"
-        description: "Hero posture must match visitor posture for the page, not the tier default. Authoritative for product evaluation (platform, hardware, solutions). Belonging for identity pages (about, mission, investors). Approachable for awareness-stage and non-product surfaces (industry landings, careers, partners). Mismatch creates dissonance between content intent and visual signal."
+        description: "Hero posture must match page role. Authoritative for product evaluation (platform, hardware, solutions). Belonging for identity pages (about, mission, investors). Restrained for awareness-stage and non-product surfaces (industry landings, careers, partners). Mismatch creates dissonance between content intent and visual signal. Postures are pillar-aligned expressions at varying intensities; they do not introduce warmth or soften brand voice."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"   # added 2026-04-21; graduate to rule after 30 days with no surfaced violations
         test:
-          llm_eval: "Given this page's purpose and audience, does the hero posture fail to match visitor posture? Authoritative should be used for product/platform/hardware/solutions pages where visitors are evaluating capability. Belonging should be used for identity pages (about, mission, investors, annual report) where the site speaks as itself. Approachable should be used for awareness-stage surfaces (industry landings from search), recruiting pages, and partner pages where authority would feel off-key. Answer YES if the posture is mismatched, NO if it matches."
+          llm_eval: "Given this page's role, does the hero posture fail to match? Authoritative should be used for product/platform/hardware/solutions pages where visitors are evaluating capability. Belonging should be used for identity pages (about, mission, investors, annual report) where the site speaks as itself. Restrained should be used for awareness-stage surfaces (industry landings from search), recruiting pages, and partner pages where full authoritative weight would over-sell. Answer YES if the posture is mismatched, NO if it matches."
           input_scope: ["current_page"]
 
       - id: "composition.site-level.authoritative-posture-floor"
@@ -2118,7 +2118,7 @@ composition:
           input_scope: ["all_pages_with_turn_moments"]
 
       - id: "composition.site-level.purpose-de-escalation"
-        description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch. Intensity is the combination of scale (full > standard > minimal > none) and posture (authoritative > belonging > approachable). Transitions: persuade-to-persuade reduces (standard scale, no turn unless 6+ sections); persuade-to-inform reduces (no hero, metronomic rhythm); persuade-to-convert reduces sharply (minimal scale, single CTA, no turn); inform-to-convert maintains (both low-energy); any-to-narrate resets (own register)."
+        description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch. Intensity is the combination of scale (full > standard > minimal > none) and posture (authoritative > belonging > restrained). Transitions: persuade-to-persuade reduces (standard scale, no turn unless 6+ sections); persuade-to-inform reduces (no hero, metronomic rhythm); persuade-to-convert reduces sharply (minimal scale, single CTA, no turn); inform-to-convert maintains (both low-energy); any-to-narrate resets (own register)."
         severity: "warning"
         type: "constraint"
         test:
