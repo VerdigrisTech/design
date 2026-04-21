@@ -2,10 +2,10 @@
 # Machine-enforceable rules for evaluator pipelines.
 # Consumed by www evaluator via @verdigristech/design-tokens/rules/visual-rules.yml
 #
-# Version: 2.3.0
-# Last updated: 2026-04-16
+# Version: 3.0.0
+# Last updated: 2026-04-21
 #
-# Schema: visual-rules/2.2.0
+# Schema: visual-rules/3.0.0
 # Every enforceable rule entry MUST have:
 #   id:          unique dot-path identifier (e.g., color.contrast.normal-text)
 #   severity:    "error" | "warning"
@@ -2007,39 +2007,97 @@ composition:
     page_hierarchy:
       id: "composition.site-level.page-hierarchy"
       type: "reference"
-      description: "Not all pages have equal visual weight. The homepage is the loudest; secondary pages progressively quiet down."
+      description: "Not all pages have equal visual weight. Tier controls scale (how loud) and color budget. Posture (how the hero reads -- authoritative, belonging, approachable) is a separate axis driven by visitor posture; see hero_posture."
       tiers:
         primary:
-          hero: "Full expression: dark bg, gradient strip, H1, 8rem padding"
+          hero_scale: "full"              # 8rem padding, gradient strip, 50rem max-height, H1 at 4rem
+          default_posture: "authoritative"
           turn_allowed: true
           color_budget: "trust + 1 earned accent"
           example: "Homepage"
           max_pages: 1
         secondary:
-          hero: "Compact: neutral.100 or neutral.200 bg, H1 at 3rem, 5rem padding"
+          hero_scale: "standard"          # 5rem padding, H1 at 3rem, no gradient strip
+          default_posture: "authoritative"  # product/platform/hardware stay dark; posture override available for awareness surfaces
           turn_allowed: false
           turn_condition: "page_section_count >= 6"  # enforced in turn-scarcity rule; default false, overridden when condition met
           color_budget: "trust only (teal + neutrals)"
-          example: "Product, Platform"
+          example: "Product, Platform, Hardware, Solutions"
         tertiary:
-          hero: "No hero. Section opens directly with H1."
+          hero_scale: "none"              # section opens directly with H1 at standard weight
+          default_posture: null           # no hero means no posture; explicit null keeps schema shape consistent with other tiers
           turn_allowed: false
           color_budget: "trust only"
           example: "Docs, blog posts, legal"
         convert:
-          hero: "Minimal: single heading + CTA, neutral or dark bg, no narrative arc"
+          hero_scale: "minimal"           # single heading + CTA, no narrative arc
+          default_posture: "authoritative"
           turn_allowed: false
           color_budget: "1 accent (CTA only)"
           example: "Pricing, demo request, signup"
 
+    hero_posture:
+      id: "composition.site-level.hero-posture"
+      type: "reference"
+      description: "Posture controls the hero's visual treatment. Orthogonal to scale. Posture is driven by visitor posture (why they are on this page), not by the page's tier. A secondary-tier page can have any posture; tier only sets the scale default."
+      postures:
+        authoritative:
+          background: "{color.semantic.hero-authoritative-bg}"   # neutral.950 in light mode
+          foreground: "{color.semantic.hero-authoritative-fg}"   # neutral.50
+          stat_cards: "frosted glass on dark"
+          signals: "product authority; 'pay attention'"
+          use_when: "Visitor is evaluating a product or capability (consideration-stage)."
+          examples: ["/", "/platform", "/hardware", "/solutions/*"]
+        belonging:
+          background: "{color.semantic.hero-belonging-bg}"       # brand.verdigris
+          foreground: "{color.semantic.hero-belonging-fg}"       # neutral.50
+          stat_cards: "frosted glass on teal"
+          signals: "identity; 'who we are'"
+          use_when: "Identity pages where teal reads as warmth, not accent. The about page, mission, investors, annual report. Not product pages."
+          examples: ["/about"]
+        approachable:
+          background: "{color.semantic.hero-approachable-bg}"    # neutral.50
+          foreground: "{color.semantic.hero-approachable-fg}"    # neutral.950
+          stat_cards: "card bg with 1px border (neutral.200)"
+          signals: "warmth; 'here is how we help your world'"
+          use_when: "Awareness-stage surfaces (industry landings), recruiting pages, and relationship-oriented pages (partners). Visitor is not evaluating product and benefits from openness over authority."
+          examples: ["/industries/*", "/company/careers", "/partners/*"]
+
     rules:
       - id: "composition.site-level.hero-hierarchy"
-        description: "Only the primary page (homepage) uses the full-expression dark hero with gradient strip. Secondary pages use compact or light heroes. Two full-expression heroes in a visitor session feels like two homepages. The site must have exactly one full-expression hero (the homepage)."
+        description: "Only the primary page (homepage) uses the full-scale hero with gradient strip. Secondary and convert pages use standard or minimal scales. Two full-scale heroes in a visitor session feels like two homepages. The site must have exactly one full-scale hero (the homepage)."
         severity: "warning"
         type: "constraint"
         test:
-          min_full_expression_heroes: 1   # homepage must have one
-          max_full_expression_heroes: 1   # only homepage gets one
+          min_full_scale_heroes: 1   # homepage must have one
+          max_full_scale_heroes: 1   # only homepage gets one
+
+      - id: "composition.site-level.hero-posture-match"
+        description: "Hero posture must match visitor posture for the page, not the tier default. Authoritative for product evaluation (platform, hardware, solutions). Belonging for identity pages (about, mission, investors). Approachable for awareness-stage and non-product surfaces (industry landings, careers, partners). Mismatch creates dissonance between content intent and visual signal."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"   # added 2026-04-21; graduate to rule after 30 days with no surfaced violations
+        test:
+          llm_eval: "Given this page's purpose and audience, does the hero posture fail to match visitor posture? Authoritative should be used for product/platform/hardware/solutions pages where visitors are evaluating capability. Belonging should be used for identity pages (about, mission, investors, annual report) where the site speaks as itself. Approachable should be used for awareness-stage surfaces (industry landings from search), recruiting pages, and partner pages where authority would feel off-key. Answer YES if the posture is mismatched, NO if it matches."
+          input_scope: ["current_page"]
+
+      - id: "composition.site-level.authoritative-posture-floor"
+        description: "The site must anchor on authoritative (product authority) posture somewhere. Without at least one authoritative hero, the site fails to signal product evaluation anywhere. The homepage is the expected anchor; platform, hardware, and solutions pages typically reinforce it."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          min_authoritative_heroes_per_site: 1   # at least one authoritative anchor
+          # no ceiling -- product surfaces legitimately multiply (typical site has 5-14)
+
+      - id: "composition.site-level.belonging-posture-cap"
+        description: "Belonging (brand teal) hero posture is reserved for identity pages. More than two belonging heroes across a site dilutes About's singular role and turns brand teal into wallpaper. One belonging hero (About) is typical; two is allowed if a second identity page exists (mission, investors, annual report)."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          min_belonging_heroes_per_site: 0
+          max_belonging_heroes_per_site: 2   # About + optional identity companion
 
       - id: "composition.site-level.turn-scarcity"
         description: "At most one turn moment (earned accent) per 3-page navigation depth. The homepage gets priority. At least one turn must exist across the persuade pages (the homepage). If every page has a turn, the accent becomes wallpaper. If no page has a turn, the brand palette is underused."
@@ -2060,11 +2118,11 @@ composition:
           input_scope: ["all_pages_with_turn_moments"]
 
       - id: "composition.site-level.purpose-de-escalation"
-        description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch. Transitions: persuade-to-persuade reduces (secondary hero, no turn unless 6+ sections); persuade-to-inform reduces (no hero, metronomic rhythm); persuade-to-convert reduces sharply (minimal hero, single CTA, no turn); inform-to-convert maintains (both low-energy); any-to-narrate resets (own register)."
+        description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch. Intensity is the combination of scale (full > standard > minimal > none) and posture (authoritative > belonging > approachable). Transitions: persuade-to-persuade reduces (standard scale, no turn unless 6+ sections); persuade-to-inform reduces (no hero, metronomic rhythm); persuade-to-convert reduces sharply (minimal scale, single CTA, no turn); inform-to-convert maintains (both low-energy); any-to-narrate resets (own register)."
         severity: "warning"
         type: "constraint"
         test:
-          llm_eval: "Given the upstream page (the page that links to this one) and this page, compare their visual intensity (hero weight, accent usage, section count, color budget). Does this page maintain or increase intensity when it should de-escalate? Answer YES if intensity fails to de-escalate, NO if it de-escalates or maintains appropriately."
+          llm_eval: "Given the upstream page (the page that links to this one) and this page, compare their visual intensity as scale-times-posture (hero scale, hero posture, accent usage, section count, color budget). Does this page maintain or increase intensity when it should de-escalate? Answer YES if intensity fails to de-escalate, NO if it de-escalates or maintains appropriately."
           input_scope: ["upstream_page", "current_page"]
 
       - id: "composition.site-level.navigation-continuity"

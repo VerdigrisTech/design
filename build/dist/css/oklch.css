@@ -63,6 +63,12 @@
   --color-semantic-section-close-fg: oklch(0.985 0 0);
   --color-semantic-wave-color-low: hsl(187, 92%, 69%);
   --color-semantic-wave-color-high: hsl(156, 72%, 67%);
+  --color-semantic-hero-authoritative-bg: oklch(0.141 0.005 285.823);
+  --color-semantic-hero-authoritative-fg: oklch(0.985 0 0);
+  --color-semantic-hero-belonging-bg: oklch(0.75 0.1286 191.57);
+  --color-semantic-hero-belonging-fg: oklch(0.985 0 0);
+  --color-semantic-hero-approachable-bg: oklch(0.985 0 0);
+  --color-semantic-hero-approachable-fg: oklch(0.141 0.005 285.823);
 }
 
 .dark {

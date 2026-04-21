@@ -63,6 +63,12 @@
   --color-semantic-section-close-fg: hsl(0, 0%, 98%);
   --color-semantic-wave-color-low: hsl(187, 92%, 69%);
   --color-semantic-wave-color-high: hsl(156, 72%, 67%);
+  --color-semantic-hero-authoritative-bg: hsl(240, 10%, 4%);
+  --color-semantic-hero-authoritative-fg: hsl(0, 0%, 98%);
+  --color-semantic-hero-belonging-bg: hsl(178, 97%, 40%);
+  --color-semantic-hero-belonging-fg: hsl(0, 0%, 98%);
+  --color-semantic-hero-approachable-bg: hsl(0, 0%, 98%);
+  --color-semantic-hero-approachable-fg: hsl(240, 10%, 4%);
 }
 
 .dark {

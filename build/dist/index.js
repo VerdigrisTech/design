@@ -55,5 +55,11 @@ export const hexColors = {
   "color.semantic.section-context-bg": "#f4f4f5",
   "color.semantic.section-evidence-bg": "#ffffff",
   "color.semantic.section-close-bg": "#09090b",
-  "color.semantic.section-close-fg": "#fafafa"
+  "color.semantic.section-close-fg": "#fafafa",
+  "color.semantic.hero-authoritative-bg": "#09090b",
+  "color.semantic.hero-authoritative-fg": "#fafafa",
+  "color.semantic.hero-belonging-bg": "#03c7c2",
+  "color.semantic.hero-belonging-fg": "#fafafa",
+  "color.semantic.hero-approachable-bg": "#fafafa",
+  "color.semantic.hero-approachable-fg": "#09090b"
 };

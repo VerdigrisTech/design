@@ -211,38 +211,83 @@ These patterns cover the Persuade purpose type. Inform and Convert pages use dif
 
 The first section on a persuade page. Serves the **hook** narrative role: capture attention, state the value proposition.
 
-### Specifications
+A hero combines two independent axes. **Scale** (full / standard / minimal) is set by page tier. **Posture** (authoritative / belonging / approachable) is set by visitor posture. See `foundations/composition.md` Page Hierarchy and Hero Posture for routing.
 
-| Property | Value | Rule reference |
-|----------|-------|----------------|
-| Background | `color.neutral.950` (dark) | `composition.persuade-web-page.hook` |
-| Min height | `min(100svh, 50rem)` with 22rem floor | `spacing.hero_height.base` |
-| Viewport unit | `svh` (small viewport height), `vh` fallback | `spacing.hero_height.preferred_unit` |
-| Max height | 50rem (800px) cap on tall screens | `spacing.hero_height.base` |
-| Section padding | 8rem minimum | `composition.persuade-web-page.coupling.dark-padding` |
-| Body line-height | 1.65-1.75 | `composition.persuade-web-page.coupling.tinted-line-height` |
-| Max line length | 65ch | `composition.persuade-web-page.coupling.tinted-line-length` |
-| Body letter-spacing | +0.01em | `composition.persuade-web-page.coupling.dark-letter-spacing` |
+### Scale
 
-### Element Stack
+| Scale | Section padding | Min height | H1 size | Gradient strip | Used on |
+|-------|----------------|-----------|---------|----------------|---------|
+| Full | 8rem | `min(100svh, 50rem)` with 22rem floor | 4rem | Yes | Homepage only |
+| Standard | 5rem | auto | 3rem | No | Product, Platform, Hardware, Solutions, About, Industries, Careers, Partners |
+| Minimal | 4rem | auto | 2.5rem | No | Pricing, signup, demo |
 
-Top to bottom: section label (mono, uppercase, teal) > H1 (display font, 4rem) > subhead (body, 1.125rem) > CTA group (primary filled + ghost-on-dark secondary) > gradient strip (4px).
+Body specs apply to all scales: line-height 1.65-1.75, max line length 65ch, body letter-spacing +0.01em.
 
-### Do's
+### Posture: Authoritative (dark)
 
-1. **Do:** Let the hero breathe. Whitespace is the primary signal of quality on persuade pages. When in doubt between adding content and adding space, add space.
+Default for product evaluation pages. The dark ground creates visual weight that signals "this is serious infrastructure." Used on homepage, platform, hardware, and solutions pages.
 
-2. **Do:** Use the gradient strip at the bottom of the hero as a visual transition to the next section. It anchors the brand palette without adding visual noise.
+| Property | Value |
+|----------|-------|
+| Background | `color.semantic.hero-authoritative-bg` (neutral.950) |
+| Text | `color.semantic.hero-authoritative-fg` (neutral.50) |
+| Section label | mono, uppercase, teal |
+| Stat cards | Frosted glass on dark (`bg-white/5` + backdrop-blur) |
+| Primary CTA | Filled teal |
+| Secondary CTA | Ghost-on-dark (transparent, white/60 border) |
 
-3. **Do:** Pair a primary filled CTA with a ghost-on-dark secondary CTA. The filled button draws the eye; the ghost provides an alternative without competing.
+**Do:**
+1. Let the hero breathe. Whitespace is the primary signal of quality on persuade pages.
+2. Use the gradient strip (at full scale) as a visual transition to the next section.
+3. Pair a primary filled CTA with a ghost-on-dark secondary CTA.
 
-### Don'ts
+**Don't:**
+1. Fill the hero with secondary information (partner logos, taglines, social proof).
+2. Use more than one H1 on the page.
+3. Add more than two CTAs.
 
-1. **Don't:** Fill the hero with secondary information (partner logos, taglines, social proof). The hero is a single clear idea with room to breathe. Trust bars and stats belong in later sections.
+### Posture: Belonging (teal)
 
-2. **Don't:** Use more than one H1 on the page. The hero owns the H1. Every other section uses H2 or lower.
+For identity pages where brand teal reads as warmth, not accent. Used on About and at most one companion identity page (mission, investors, annual report). Capped at 2 pages per site by `composition.site-level.hero-posture-match`.
 
-3. **Don't:** Add more than two CTAs in the hero. Three or more buttons create decision paralysis and dilute the primary action.
+| Property | Value |
+|----------|-------|
+| Background | `color.semantic.hero-belonging-bg` (brand.verdigris) |
+| Text | `color.semantic.hero-belonging-fg` (neutral.50) |
+| Section label | mono, uppercase, neutral.50 at 70% opacity |
+| Stat cards | Frosted glass on teal (`bg-white/10` + backdrop-blur) |
+| Primary CTA | White filled with teal text |
+| Secondary CTA | Ghost-on-teal (transparent, white/60 border) |
+
+**Do:**
+1. Use only on identity pages. Copy speaks as the company ("who we are"), not about the product.
+2. Keep imagery human (team photos, hands-on, physical goods) rather than abstract.
+
+**Don't:**
+1. Use on product, platform, hardware, or industry pages. Teal is your trust color; spending it on every page strips its meaning.
+2. Mix accent colors inside the hero. Teal is already the ground; adding midnight-purple or cyber-yellow on top creates visual noise.
+
+### Posture: Approachable (light)
+
+For awareness-stage and non-product surfaces: industry landings (search arrivals), recruiting pages, and partner pages. The visitor is not evaluating product; warmth fits the interaction better than authority.
+
+| Property | Value |
+|----------|-------|
+| Background | `color.semantic.hero-approachable-bg` (neutral.50) |
+| Text | `color.semantic.hero-approachable-fg` (neutral.950) |
+| Section label | mono, uppercase, teal |
+| Stat cards | `color.semantic.card` bg with 1px `color.semantic.border` (neutral.200) |
+| Primary CTA | Filled teal |
+| Secondary CTA | Ghost-on-light (transparent, neutral.300 border) |
+
+**Do:**
+1. Lead with imagery that speaks to the visitor's world (data center, warehouse, campus), not the product.
+2. Keep CTAs anchored to the visitor's job ("See how we help data centers", "View open roles") rather than the product pitch ("Request a demo").
+
+**Don't:**
+1. Use on product, platform, hardware, or solutions pages. Light heroes on evaluation pages feel like white-label starter templates.
+2. Skip the imagery. Light heroes with no visual weight read as blank space, not as "approachable."
+3. Default to this posture to look modern. Authoritative is not dated; it is the right signal for product evaluation.
 
 ---
 
