@@ -213,15 +213,17 @@ Posture controls how the hero reads, not how loud it is. The three postures map 
 |---------|-----------|------------|------------|---------|-------------|
 | **authoritative** | `color.semantic.hero-authoritative-bg` (neutral.950) | `color.semantic.hero-authoritative-fg` (neutral.50) | frosted glass on dark | product authority; "pay attention" | Product evaluation pages. Visitor is in consideration stage: platform, hardware, solutions, homepage. |
 | **belonging** | `color.semantic.hero-belonging-bg` (brand.verdigris) | `color.semantic.hero-belonging-fg` (neutral.50) | frosted glass on teal | identity; "who we are" | Identity pages where teal is warmth, not accent: About, mission, investors. Capped at 2 pages per site. |
-| **approachable** | `color.semantic.hero-approachable-bg` (neutral.50) | `color.semantic.hero-approachable-fg` (neutral.950) | card bg with 1px border (neutral.200) | warmth; "here is how we help your world" | Awareness-stage surfaces (industry landings from search), recruiting, and partner pages. |
+| **restrained** | `color.semantic.hero-restrained-bg` (neutral.50) | `color.semantic.hero-restrained-fg` (neutral.950) | card bg with 1px border (neutral.200) | technical, understated; lower-intensity brand expression | Awareness-stage surfaces (industry landings from search), recruiting, and partner pages. |
 
-**Authoritative** is the workhorse and the default for product-evaluation pages. The dark background creates visual weight and signals serious infrastructure. A data center VP clicking through /platform expects this.
+All three postures are expressions of the same brand pillars (Precision, Masterful, Refined, Pioneering) at different intensities. Posture picks weight, not warmth. Verdigris does not soften its voice across surfaces; it just dials intensity.
 
-**Belonging** says "this is who we are," not "this is what we sell." Reserved for identity pages. More than two belonging heroes across a site dilutes the About page's singular role and turns brand teal into wallpaper.
+**Authoritative** is the full-weight expression and the default for product-evaluation pages. The dark background creates visual weight and signals serious infrastructure. A data center VP clicking through /platform expects this.
 
-**Approachable** is the variant for pages where authority would feel off-key. An industry page is about the visitor's problem, not the product. A careers page should feel open and inviting, not like a product pitch. A partners page is relationship-oriented. Light posture fits these visitor postures; dark posture fights them.
+**Belonging** is the brand pillar Refined expressed at identity level. Says "this is who we are," not "this is what we sell." Reserved for identity pages. More than two belonging heroes across a site dilutes the About page's singular role and turns brand teal into wallpaper.
 
-Posture is independent of scale. A secondary-scale hero can be authoritative (product page) or approachable (industry page). Don't read the table left-to-right: tier picks scale, posture picks treatment, and the two decisions are made separately.
+**Restrained** is the low-intensity expression for pages where full authoritative weight would over-sell. An industry landing arriving from search, a careers page, a partner page. Light background, dark text, teal still used as precise accent, typography still understated. Not warmth, not photography-forward, not "here is how we help your world." Restrained means less weight, same pillars.
+
+Posture is independent of scale. A secondary-scale hero can be authoritative (product page) or restrained (industry page). Don't read the table left-to-right: tier picks scale, posture picks intensity, and the two decisions are made separately.
 
 ### Cross-Page Turn Scarcity
 
@@ -235,11 +237,11 @@ When multiple pages do use accent moments (homepage + a deep product page), they
 
 ### Purpose De-Escalation
 
-Visitors typically move from high-energy pages (persuade) toward low-energy pages (convert, inform). The visual intensity should de-escalate to match. Intensity is the combination of scale (full > standard > minimal > none) and posture (authoritative > belonging > approachable); reducing either axis de-escalates.
+Visitors typically move from high-energy pages (persuade) toward low-energy pages (convert, inform). The visual intensity should de-escalate to match. Intensity is the combination of scale (full > standard > minimal > none) and posture (authoritative > belonging > restrained); reducing either axis de-escalates.
 
 | Transition | Intensity shift | Why |
 |-----------|----------------|-----|
-| Persuade → Persuade | Reduce: standard scale or approachable posture; no turn unless 6+ sections | Avoids pitch fatigue |
+| Persuade → Persuade | Reduce: standard scale or restrained posture; no turn unless 6+ sections | Avoids pitch fatigue |
 | Persuade → Inform | Reduce: no hero, metronomic rhythm | Visitor wants answers, not spectacle |
 | Persuade → Convert | Reduce sharply: minimal scale, single CTA, no turn | Focus earns trust at decision point |
 | Inform → Convert | Maintain: both are low-energy | Natural transition |

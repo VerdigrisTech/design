@@ -211,7 +211,7 @@ These patterns cover the Persuade purpose type. Inform and Convert pages use dif
 
 The first section on a persuade page. Serves the **hook** narrative role: capture attention, state the value proposition.
 
-A hero combines two independent axes. **Scale** (full / standard / minimal) is set by page tier. **Posture** (authoritative / belonging / approachable) is set by visitor posture. See `foundations/composition.md` Page Hierarchy and Hero Posture for routing.
+A hero combines two independent axes. **Scale** (full / standard / minimal) is set by page tier. **Posture** (authoritative / belonging / restrained) is set by page role. See `foundations/composition.md` Page Hierarchy and Hero Posture for routing.
 
 ### Scale
 
@@ -267,27 +267,28 @@ For identity pages where brand teal reads as warmth, not accent. Used on About a
 1. Use on product, platform, hardware, or industry pages. Teal is your trust color; spending it on every page strips its meaning.
 2. Mix accent colors inside the hero. Teal is already the ground; adding midnight-purple or cyber-yellow on top creates visual noise.
 
-### Posture: Approachable (light)
+### Posture: Restrained (light)
 
-For awareness-stage and non-product surfaces: industry landings (search arrivals), recruiting pages, and partner pages. The visitor is not evaluating product; warmth fits the interaction better than authority.
+For awareness-stage and non-product surfaces: industry landings (search arrivals), recruiting pages, and partner pages. Full authoritative weight would over-sell on these surfaces. Restrained means lower intensity, not softer voice.
 
 | Property | Value |
 |----------|-------|
-| Background | `color.semantic.hero-approachable-bg` (neutral.50) |
-| Text | `color.semantic.hero-approachable-fg` (neutral.950) |
+| Background | `color.semantic.hero-restrained-bg` (neutral.50) |
+| Text | `color.semantic.hero-restrained-fg` (neutral.950) |
 | Section label | mono, uppercase, teal |
 | Stat cards | `color.semantic.card` bg with 1px `color.semantic.border` (neutral.200) |
 | Primary CTA | Filled teal |
 | Secondary CTA | Ghost-on-light (transparent, neutral.300 border) |
 
 **Do:**
-1. Lead with imagery that speaks to the visitor's world (data center, warehouse, campus), not the product.
-2. Keep CTAs anchored to the visitor's job ("See how we help data centers", "View open roles") rather than the product pitch ("Request a demo").
+1. Keep typography and copy understated. Short, technical, confident. No hedging qualifiers, no warmth-photography framing, no "here is how we help your world."
+2. Use teal as a precise accent (eyebrow label, primary CTA). Do not tint the hero region with teal washes.
+3. Keep CTAs anchored to the visitor's job ("See how we help data centers", "View open roles") without softening the brand voice.
 
 **Don't:**
 1. Use on product, platform, hardware, or solutions pages. Light heroes on evaluation pages feel like white-label starter templates.
-2. Skip the imagery. Light heroes with no visual weight read as blank space, not as "approachable."
-3. Default to this posture to look modern. Authoritative is not dated; it is the right signal for product evaluation.
+2. Lead with lifestyle imagery (smiling teams, office tours) to signal "approachability." That is softness, not restraint. Technical imagery (data center floor, hardware on a rack) is on-brand; stock-photo warmth is not.
+3. Default to this posture to look modern. Authoritative is the right signal for product evaluation; restrained is the right signal for pre-product visitors, and nothing else.
 
 ---
 

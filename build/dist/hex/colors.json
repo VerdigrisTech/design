@@ -59,6 +59,6 @@
   "color.semantic.hero-authoritative-fg": "#fafafa",
   "color.semantic.hero-belonging-bg": "#03c7c2",
   "color.semantic.hero-belonging-fg": "#fafafa",
-  "color.semantic.hero-approachable-bg": "#fafafa",
-  "color.semantic.hero-approachable-fg": "#09090b"
+  "color.semantic.hero-restrained-bg": "#fafafa",
+  "color.semantic.hero-restrained-fg": "#09090b"
 }

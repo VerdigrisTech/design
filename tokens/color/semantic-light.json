@@ -145,15 +145,15 @@
         "$type": "color",
         "$description": "Belonging hero foreground text."
       },
-      "hero-approachable-bg": {
+      "hero-restrained-bg": {
         "$value": "{color.neutral.50}",
         "$type": "color",
-        "$description": "Approachable hero posture background. Awareness-stage and non-product surfaces (industry landings, careers, partners). Near-white; one step off page background for subtle hero definition."
+        "$description": "Restrained hero posture background. Lower-intensity expression of brand for awareness-stage and non-product surfaces (industry landings, careers, partners). Near-white; one step off page background for subtle hero definition. Aligned with Refined pillar (understated, technical) rather than warmth."
       },
-      "hero-approachable-fg": {
+      "hero-restrained-fg": {
         "$value": "{color.neutral.950}",
         "$type": "color",
-        "$description": "Approachable hero foreground text."
+        "$description": "Restrained hero foreground text."
       },
       "wave-color-low": {
         "$value": "hsl(187, 92%, 69%)",
