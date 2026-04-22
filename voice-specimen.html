@@ -269,6 +269,15 @@ title: Voice Specimen
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background: var(--card);
+      cursor: pointer;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .team-card:hover {
+      border-color: var(--brand-verdigris);
+    }
+    .team-card.highlighted {
+      border-color: var(--brand-verdigris);
+      box-shadow: 0 0 0 2px var(--brand-verdigris);
     }
     .team-header {
       display: flex;
@@ -360,6 +369,86 @@ title: Voice Specimen
       color: var(--card-fg);
       font-weight: 500;
     }
+    .team-expand-hint {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--muted-fg);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.75rem;
+      text-align: center;
+      transition: opacity 200ms;
+    }
+    .team-card.expanded .team-expand-hint { opacity: 0; }
+
+    /* Expanded team card details */
+    .team-expanded-details {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .team-card.expanded .team-expanded-details { display: block; }
+    .team-expanded-details .detail-heading {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted-fg);
+      margin-bottom: 0.5rem;
+      margin-top: 1rem;
+    }
+    .team-expanded-details .detail-heading:first-child { margin-top: 0; }
+    .team-expanded-details .detail-text {
+      font-size: 0.8125rem;
+      color: var(--card-fg);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    .team-expanded-details .register-item {
+      font-size: 0.8125rem;
+      color: var(--muted-fg);
+      line-height: 1.5;
+      margin-bottom: 0.375rem;
+      padding-left: 0.75rem;
+      border-left: 2px solid var(--border);
+    }
+    .team-expanded-details .register-item strong {
+      color: var(--card-fg);
+      font-weight: 500;
+    }
+    .team-expanded-details .extra-sample {
+      font-size: 0.8125rem;
+      font-style: italic;
+      color: var(--card-fg);
+      line-height: 1.5;
+      padding: 0.75rem;
+      background: var(--muted);
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+    }
+    .team-expanded-details .sample-label {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--muted-fg);
+      margin-bottom: 0.25rem;
+    }
+    .team-expanded-details .fingerprint-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+      margin-top: 0.375rem;
+    }
+    .team-expanded-details .fingerprint-tag {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      padding: 0.1875rem 0.5rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      color: var(--muted-fg);
+    }
 
     /* ── Recipe Cards ─────────────────────────────────────────────── */
     .recipes-grid {
@@ -372,6 +461,13 @@ title: Voice Specimen
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background: var(--card);
+      cursor: pointer;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .recipe-card:hover { border-color: var(--brand-verdigris); }
+    .recipe-card.active {
+      border-color: var(--brand-verdigris);
+      box-shadow: 0 0 0 2px var(--brand-verdigris);
     }
     .recipe-name {
       font-family: var(--font-mono);
@@ -450,23 +546,66 @@ title: Voice Specimen
       background: var(--muted);
       border-radius: var(--radius);
     }
+    .recipe-voices {
+      font-size: 0.75rem;
+      color: var(--muted-fg);
+      line-height: 1.5;
+      margin-top: 0.75rem;
+    }
+    .recipe-voices strong { color: var(--card-fg); font-weight: 500; }
+    .recipe-click-hint {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      color: var(--muted-fg);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.5rem;
+      opacity: 0.7;
+    }
 
     /* ── Comparison ────────────────────────────────────────────────── */
+    .comparison-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .comp-tab {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      color: var(--muted-fg);
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+    .comp-tab:hover { border-color: var(--brand-verdigris); color: var(--fg); }
+    .comp-tab.active {
+      background: var(--brand-verdigris);
+      border-color: var(--brand-verdigris);
+      color: var(--neutral-950);
+    }
     .comparison-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1.25rem;
     }
     @media (max-width: 900px) {
-      .comparison-grid {
-        grid-template-columns: 1fr;
-      }
+      .comparison-grid { grid-template-columns: 1fr; }
     }
     .comp-card {
       padding: 1.5rem;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background: var(--card);
+      transition: opacity 200ms ease, border-color 200ms ease;
+    }
+    .comp-card.dimmed { opacity: 0.25; }
+    .comp-card.selected {
+      border-color: var(--brand-verdigris);
+      opacity: 1;
     }
     .comp-author {
       font-size: 0.9375rem;
@@ -493,9 +632,7 @@ title: Voice Specimen
       gap: 1.25rem;
     }
     @media (max-width: 768px) {
-      .feelings-grid {
-        grid-template-columns: 1fr;
-      }
+      .feelings-grid { grid-template-columns: 1fr; }
     }
     .feeling-card {
       padding: 1.5rem;
@@ -528,6 +665,167 @@ title: Voice Specimen
       font-size: 0.6875rem;
       color: var(--muted-fg);
       line-height: 1.5;
+    }
+
+    /* ── Writing-a-Piece workflow ──────────────────────────────────── */
+    .workflow-container {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2rem;
+      min-height: 20rem;
+    }
+    @media (max-width: 768px) {
+      .workflow-container { grid-template-columns: 1fr; }
+    }
+    .workflow-picker {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+    .workflow-picker-btn {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-align: left;
+      padding: 0.625rem 0.875rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      color: var(--muted-fg);
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+    .workflow-picker-btn:hover {
+      border-color: var(--brand-verdigris);
+      color: var(--fg);
+    }
+    .workflow-picker-btn.active {
+      background: var(--brand-verdigris);
+      border-color: var(--brand-verdigris);
+      color: var(--neutral-950);
+    }
+    .workflow-result {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+    .workflow-result-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted-fg);
+      font-size: 0.875rem;
+    }
+
+    /* ── Mixer ────────────────────────────────────────────────────── */
+    .mixer-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 768px) {
+      .mixer-container { grid-template-columns: 1fr; }
+    }
+    .mixer-sliders {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .mixer-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .mixer-label {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--muted-fg);
+      width: 7rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .mixer-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--muted);
+      outline: none;
+    }
+    .mixer-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid var(--bg);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .mixer-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid var(--bg);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .mixer-value {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--muted-fg);
+      width: 2rem;
+      text-align: left;
+    }
+    .mixer-output {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+    .mixer-match-label {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted-fg);
+      margin-bottom: 0.375rem;
+    }
+    .mixer-match-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .mixer-match-desc {
+      font-size: 0.8125rem;
+      color: var(--muted-fg);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .mixer-match-voices {
+      font-size: 0.8125rem;
+      color: var(--card-fg);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+    .mixer-match-feelings {
+      display: flex;
+      gap: 0.375rem;
+      flex-wrap: wrap;
+    }
+    .mixer-feeling-tag {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.1875rem 0.5rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      color: var(--muted-fg);
     }
 
     /* ── Footer ───────────────────────────────────────────────────── */
@@ -574,6 +872,33 @@ title: Voice Specimen
       <p class="section-label">Voice Specimen</p>
       <h2 class="hero-title">Seven Ingredients. One Voice.</h2>
       <p class="hero-sub">The Verdigris voice system is an EQ board, not a preset. Every piece of content mixes the same seven ingredients at different levels. This page renders the full system: ingredients, team profiles, recipes, and emotional outcomes.</p>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- Section 0: Writing a Piece? (practical workflow)                  -->
+    <!-- ================================================================ -->
+    <section class="section" id="writing-a-piece">
+      <p class="section-label">Start Here</p>
+      <h2 class="section-title">Writing a Piece?</h2>
+      <p class="section-desc">Pick the content type. See the recipe, the voices, the target feelings, and a sample. This is the bridge between the specimen (reference) and your editorial workflow (action).</p>
+
+      <div class="workflow-container">
+        <div class="workflow-picker" id="workflowPicker">
+          <button class="workflow-picker-btn" data-recipe="technical_blog">Technical Blog</button>
+          <button class="workflow-picker-btn" data-recipe="case_study">Case Study</button>
+          <button class="workflow-picker-btn" data-recipe="homepage">Homepage</button>
+          <button class="workflow-picker-btn" data-recipe="about_page">About Page</button>
+          <button class="workflow-picker-btn" data-recipe="product_page">Product Page</button>
+          <button class="workflow-picker-btn" data-recipe="careers_page">Careers Page</button>
+          <button class="workflow-picker-btn" data-recipe="partner_materials">Partner Materials</button>
+          <button class="workflow-picker-btn" data-recipe="linkedin_post">LinkedIn Post</button>
+          <button class="workflow-picker-btn" data-recipe="investor_update">Investor Update</button>
+          <button class="workflow-picker-btn" data-recipe="recruiting_outreach">Recruiting Outreach</button>
+        </div>
+        <div class="workflow-result workflow-result-empty" id="workflowResult">
+          Pick a content type to see the recipe, voices, and sample.
+        </div>
+      </div>
     </section>
 
     <!-- ================================================================ -->
@@ -721,15 +1046,15 @@ title: Voice Specimen
     <!-- ================================================================ -->
     <!-- Section 2: Team Voice Gallery                                    -->
     <!-- ================================================================ -->
-    <section class="section">
+    <section class="section" id="team-gallery-section">
       <p class="section-label">Voice Sources</p>
       <h2 class="section-title">Team Voice Gallery</h2>
-      <p class="section-desc">Every ingredient has a human source. These are the people whose natural writing voices define the Verdigris sound. Profiles are living documents, updated as we learn how the team writes.</p>
+      <p class="section-desc">Every ingredient has a human source. These are the people whose natural writing voices define the Verdigris sound. Click any card to expand the full profile: all registers, all samples, verbal fingerprints.</p>
 
-      <div class="team-gallery">
+      <div class="team-gallery" id="teamGallery">
 
         <!-- Mark Chung -->
-        <div class="team-card">
+        <div class="team-card" data-person="mark" onclick="toggleTeamCard(this)">
           <div class="team-header">
             <div class="team-avatar">MC</div>
             <div>
@@ -758,10 +1083,17 @@ title: Voice Specimen
           </div>
           <div class="team-sample">"That thesis turned out to be only half right. We had the physics. We had the hardware. What we didn't have was the market timing. The world wasn't ready for what we built -- until it was."</div>
           <div class="team-registers"><strong>Registers:</strong> Investor update (thesis arc), press (origin story), all-hands (emotional directness, "Onward" energy)</div>
+          <div class="team-expand-hint">Click to expand</div>
+          <div class="team-expanded-details">
+            <div class="detail-heading">Best for</div>
+            <div class="detail-text">About page (primary), investor updates (primary), homepage (primary for strategic narrative)</div>
+            <div class="detail-heading">Unique contribution</div>
+            <div class="detail-text">Mark is the only voice that can arc from "$600 utility bill" to "the most consequential problem in AI infrastructure" and make both feel like the same sentence. His emotional directness creates trust. When he says "that thesis turned out to be only half right," investors lean in rather than pull away.</div>
+          </div>
         </div>
 
         <!-- Jon Chu -->
-        <div class="team-card">
+        <div class="team-card" data-person="jon" onclick="toggleTeamCard(this)">
           <div class="team-header">
             <div class="team-avatar">JC</div>
             <div>
@@ -790,42 +1122,81 @@ title: Voice Specimen
           </div>
           <div class="team-sample">"A single rack of high-density GPU compute draws over 120 kW of pulsating, non-linear load. The harmonics and transients those systems produce live where older instruments were never designed to look."</div>
           <div class="team-registers"><strong>Registers:</strong> Technical blog (show the physics), white paper (authoritative depth), recruiting outreach (genuine curiosity about the candidate's work)</div>
+          <div class="team-expand-hint">Click to expand</div>
+          <div class="team-expanded-details">
+            <div class="detail-heading">Best for</div>
+            <div class="detail-text">Technical blog (primary), product pages (primary for precision), white papers (primary)</div>
+            <div class="detail-heading">Unique contribution</div>
+            <div class="detail-text">Jon is the signal-to-noise separator. When he says "continuous waveforms at 8 kHz," readers trust it because every other word in the same paragraph is equally specific. His warmth is genuine curiosity, not performed friendliness.</div>
+          </div>
         </div>
 
         <!-- Thomas Chung -->
-        <div class="team-card">
+        <div class="team-card" data-person="thomas" onclick="toggleTeamCard(this)">
           <div class="team-header">
             <div class="team-avatar">TC</div>
             <div>
               <div class="team-name">Thomas Chung</div>
-              <div class="team-role">Co-Founder &amp; COO</div>
+              <div class="team-role">Cofounder, builder</div>
             </div>
           </div>
-          <div class="team-summary">The operator's operator. Thomas brings operator empathy from direct facility experience. He highlights team contributions, cares about operational details, and brings warmth through action -- making sure things work, making sure people are credited. His voice is quieter than Mark's or Jon's but carries weight in product and partner contexts.</div>
+          <div class="team-summary">Thomas builds systems and cares for people through those systems. His writing moves between builder-brain and leader-brain without friction. In one message he's debugging why Anthropic credits expired and took down every automated agent. In the next he's writing a transparent payroll delay apology to the whole company. He doesn't perform leadership; he demonstrates it through operational follow-through and radical transparency.</div>
           <div class="team-bars">
             <div class="team-bar-row">
-              <div class="team-bar-label">Empathy</div>
-              <div class="team-bar-track"><div class="team-bar-fill" style="width:85%; background:var(--ing-empathy)"></div></div>
+              <div class="team-bar-label">Honesty</div>
+              <div class="team-bar-track"><div class="team-bar-fill" style="width:100%; background:var(--ing-honesty)"></div></div>
             </div>
             <div class="team-bar-row">
               <div class="team-bar-label">Connection</div>
-              <div class="team-bar-track"><div class="team-bar-fill" style="width:70%; background:var(--ing-connection)"></div></div>
+              <div class="team-bar-track"><div class="team-bar-fill" style="width:90%; background:var(--ing-connection)"></div></div>
             </div>
             <div class="team-bar-row">
-              <div class="team-bar-label">Warmth</div>
-              <div class="team-bar-track"><div class="team-bar-fill" style="width:65%; background:var(--ing-warmth)"></div></div>
+              <div class="team-bar-label">Gravity</div>
+              <div class="team-bar-track"><div class="team-bar-fill" style="width:80%; background:var(--ing-gravity)"></div></div>
             </div>
             <div class="team-bar-row">
-              <div class="team-bar-label">Precision</div>
-              <div class="team-bar-track"><div class="team-bar-fill" style="width:55%; background:var(--ing-precision)"></div></div>
+              <div class="team-bar-label">Narrative</div>
+              <div class="team-bar-track"><div class="team-bar-fill" style="width:80%; background:var(--ing-narrative)"></div></div>
             </div>
           </div>
-          <div class="team-sample">"We are building toward that future, one circuit at a time."</div>
-          <div class="team-registers"><strong>Registers:</strong> Product context (operational care), partner meetings (trust through follow-through), recruiting (founder voice, highlights team contributions)</div>
+          <div class="team-sample">"sure but that's not the level of insight that's going to accelerate us, IMO. real world outcomes will come when we have more outcomes to share. at this point further clarity of expression is a function of visual storytelling"</div>
+          <div class="team-registers"><strong>Registers:</strong> Thinking-out-loud (lowercase, fast), team updates (structured, formatted), company comms (radically honest), product direction (framework-creating), builder (hands-on debugging)</div>
+          <div class="team-expand-hint">Click to expand</div>
+          <div class="team-expanded-details">
+            <div class="detail-heading">Five registers</div>
+            <div class="register-item"><strong>Thinking-out-loud:</strong> lowercase, fast, incomplete sentences. "i forget -- is that on railway?" "sorry, last week was a blur." Questions more than statements.</div>
+            <div class="register-item"><strong>Team updates:</strong> Structured, formatted, emoji section headers. Tables, bullet points, cc tags. But never corporate -- always direct and transparent about what went wrong.</div>
+            <div class="register-item"><strong>Company comms:</strong> Radically honest. Shares fundraising numbers, payroll issues, OKRs openly. Uses "I want to sincerely apologize" not "we regret to inform."</div>
+            <div class="register-item"><strong>Product direction:</strong> Thesis-driven. "Voices are INGREDIENTS, not modes." "Organize by PURPOSE and FEELING." Creates frameworks, not instructions.</div>
+            <div class="register-item"><strong>Builder:</strong> Debugging and shipping. "i'm about to make a big PR." "can we check in on where the image gen is?" Hands-on, not delegating.</div>
+            <div class="detail-heading">Additional samples</div>
+            <div class="sample-label">Leadership register</div>
+            <div class="extra-sample">"I want to sincerely apologize for the payroll delay this week. While processing payroll on Monday, we encountered insufficient funds in our account, which required immediate attention and resolution. The situation has been fully resolved and all payments have been processed."</div>
+            <div class="sample-label">Systems-thinking register</div>
+            <div class="extra-sample">"Meridian -- operational intelligence for Verdigris. The problem: We use Claude Code, Cowork, and ChatGPT every day. They make individuals more productive. But they also accelerate siloed context. Each person has their own sessions, their own understanding of what's happening. The tools don't help you see across silos. The company has no shared memory."</div>
+            <div class="sample-label">Builder register</div>
+            <div class="extra-sample">"The Monday pre-read did not land. Anthropic credits ran out last Thursday, which took down staff-prep and every Claude-using agent. Sunday's ids-prep ran but the Notion query silently errored, so the 'all clear' post was wrong. Fixed the silent failure today. Migrating agents to OpenAI API key today."</div>
+            <div class="detail-heading">Verbal fingerprints</div>
+            <div class="fingerprint-list">
+              <span class="fingerprint-tag">cc @name @name</span>
+              <span class="fingerprint-tag">sorry, last week was a blur</span>
+              <span class="fingerprint-tag">i forget -- is that on...</span>
+              <span class="fingerprint-tag">quick detour ask</span>
+              <span class="fingerprint-tag">can we check in on...</span>
+              <span class="fingerprint-tag">i want to sincerely apologize</span>
+              <span class="fingerprint-tag">IMO</span>
+              <span class="fingerprint-tag">that's not me</span>
+              <span class="fingerprint-tag">people should walk away feeling good</span>
+            </div>
+            <div class="detail-heading">Unique contribution</div>
+            <div class="detail-text">Thomas is the only voice that naturally connects three levels simultaneously: the craft decision (what the code should do), the human outcome (how the team member feels), and the organizational system (how the company learns). He is the TASTE layer -- "that's not me" and "that's not the level of insight that's going to accelerate us" are editorial judgments that shape everything downstream. When he says "people should walk away feeling good," that redefines what the voice system optimizes for.</div>
+            <div class="detail-heading">Best for</div>
+            <div class="detail-text">About page (primary -- transparent, personal, connecting craft to mission), careers page (primary -- radical transparency IS the pitch), investor updates (primary -- self-honesty and systems-thinking), LinkedIn posts (primary -- thinking-out-loud register is anti-performance), technical blog (supporting -- builder energy adds authenticity)</div>
+          </div>
         </div>
 
         <!-- Josh Avalos -->
-        <div class="team-card">
+        <div class="team-card" data-person="josh" onclick="toggleTeamCard(this)">
           <div class="team-header">
             <div class="team-avatar">JA</div>
             <div>
@@ -854,10 +1225,17 @@ title: Voice Specimen
           </div>
           <div class="team-sample">"It's alive! I just need to fix the playbook integration and I think do a little more configuration BUT THEN IT'S OFF TO THE RACESSSSSSSS"</div>
           <div class="team-registers"><strong>Registers:</strong> Slack (builder energy, unforced excitement), escalation (precise urgency, device IDs), social (authenticity -- "I think it's neat")</div>
+          <div class="team-expand-hint">Click to expand</div>
+          <div class="team-expanded-details">
+            <div class="detail-heading">Best for</div>
+            <div class="detail-text">Careers page (primary -- builder energy makes people want to join), LinkedIn posts (primary -- informal authenticity), technical blog (supporting -- field troubleshooting, honest dead ends)</div>
+            <div class="detail-heading">Unique contribution</div>
+            <div class="detail-text">Josh is authentic excitement without performance. His celebrations of others' work ("AMAZING work here!") are genuine. He brings the energy of someone who builds things with their hands and can't contain it when something works.</div>
+          </div>
         </div>
 
         <!-- Jimit Shah -->
-        <div class="team-card">
+        <div class="team-card" data-person="jimit" onclick="toggleTeamCard(this)">
           <div class="team-header">
             <div class="team-avatar">JS</div>
             <div>
@@ -886,10 +1264,17 @@ title: Voice Specimen
           </div>
           <div class="team-sample">"GTM needs a drumbeat, not reactions. Marketing, events, and content had no forward plan. We build first, then figure out distribution after the fact."</div>
           <div class="team-registers"><strong>Slack:</strong> strategic connector, shares industry intel. <strong>Blog:</strong> direct advisor, opens with questions, uses "you." <strong>Evidence:</strong> forensic curator, terse, factual.</div>
+          <div class="team-expand-hint">Click to expand</div>
+          <div class="team-expanded-details">
+            <div class="detail-heading">Best for</div>
+            <div class="detail-text">Partner materials (primary -- outside-in positioning), investor updates (supporting -- market fluency, structured evidence), case studies (accent -- market trend connection)</div>
+            <div class="detail-heading">Unique contribution</div>
+            <div class="detail-text">Jimit translates between inside-out (what we build) and outside-in (what the market needs). He can write the blog post explaining the problem, the evidence atom proving the claim, and the GTM strategy connecting them.</div>
+          </div>
         </div>
 
         <!-- Seren Coskun -->
-        <div class="team-card">
+        <div class="team-card" data-person="seren" onclick="toggleTeamCard(this)">
           <div class="team-header">
             <div class="team-avatar">SC</div>
             <div>
@@ -918,10 +1303,17 @@ title: Voice Specimen
           </div>
           <div class="team-sample">"He presents himself well, communicates clearly, and is an articulate speaker. Although my first impressions are positive, I think we should aim for a candidate who is stronger with data center domain expertise."</div>
           <div class="team-registers"><strong>Registers:</strong> Assessment (structured, diplomatic, criteria-explicit), customer-facing (empathetic precision), cross-org (clear across US, Turkish, Japanese contexts)</div>
+          <div class="team-expand-hint">Click to expand</div>
+          <div class="team-expanded-details">
+            <div class="detail-heading">Best for</div>
+            <div class="detail-text">Case studies (primary -- customer perspective, diplomatic precision), partner materials (supporting -- respectful cross-org communication), about page (supporting -- humanizes individuals)</div>
+            <div class="detail-heading">Unique contribution</div>
+            <div class="detail-text">Seren's voice is the bridge between empathy and precision. Her structured assessments carry warmth without performing it. She names what's working before what needs work, which models a company culture of appreciative honesty.</div>
+          </div>
         </div>
 
         <!-- Mike Mahedy -->
-        <div class="team-card">
+        <div class="team-card" data-person="mike" onclick="toggleTeamCard(this)">
           <div class="team-header">
             <div class="team-avatar">MM</div>
             <div>
@@ -950,6 +1342,13 @@ title: Voice Specimen
           </div>
           <div class="team-sample">"Not sure how to model the strategic partnerships, honestly. For AWS, I used estimated northwest facility MW only and not total AWS footprint. Can you sanity check and comment on what I've added?"</div>
           <div class="team-registers"><strong>Slack:</strong> brief, questioning, warm -- asks for sanity checks. <strong>Longform:</strong> authoritative, evidence-dense, quantitative. <strong>Field:</strong> conference observations, product comparisons, pipeline modeling.</div>
+          <div class="team-expand-hint">Click to expand</div>
+          <div class="team-expanded-details">
+            <div class="detail-heading">Best for</div>
+            <div class="detail-text">Case studies (supporting -- field context, competitor comparison), product pages (accent -- pricing/manufacturing fluency), partner materials (accent -- industry insider credibility)</div>
+            <div class="detail-heading">Unique contribution</div>
+            <div class="detail-text">Mike bridges the gap between Slack brevity and long-form authority. His questioning register ("Not sure how to model this, honestly") models intellectual humility. His long-form register demonstrates earned authority through evidence density. Both feel grounded in physical reality.</div>
+          </div>
         </div>
 
       </div>
@@ -958,15 +1357,15 @@ title: Voice Specimen
     <!-- ================================================================ -->
     <!-- Section 3: Recipe Cards                                          -->
     <!-- ================================================================ -->
-    <section class="section">
+    <section class="section" id="recipes-section">
       <p class="section-label">Content Recipes</p>
       <h2 class="section-title">How to Mix the Ingredients</h2>
-      <p class="section-desc">Each recipe is a starting mix. Adjust based on the specific piece. Percentages are rough guides for emphasis, not exact measurements. The "reaches" field matters: content often flows to multiple audiences.</p>
+      <p class="section-desc">Each recipe is a starting mix. Adjust based on the specific piece. Click a recipe card to highlight the team members whose voices are used. The "reaches" field matters: content often flows to multiple audiences.</p>
 
-      <div class="recipes-grid">
+      <div class="recipes-grid" id="recipesGrid">
 
         <!-- Technical Blog -->
-        <div class="recipe-card">
+        <div class="recipe-card" data-voices="jon,josh" onclick="toggleRecipeHighlight(this)">
           <div class="recipe-name">Technical Blog</div>
           <div class="recipe-audience">For: engineer or operator who wants to learn</div>
           <div class="recipe-bar">
@@ -989,11 +1388,13 @@ title: Voice Specimen
             <span class="recipe-feeling-tag">warmth</span>
           </div>
           <div class="recipe-meta"><strong style="color:var(--card-fg)">Reaches:</strong> HN, LinkedIn, engineering teams evaluating Verdigris</div>
+          <div class="recipe-voices"><strong>Primary voice:</strong> Jon. <strong>Supporting:</strong> Josh (field troubleshooting, honest dead ends).</div>
           <div class="recipe-sample">"We expected the harmonic content to follow the textbook profile for switch-mode power supplies. It didn't. The third-harmonic magnitude was 40% higher than any published reference suggested. Here's what we found when we looked closer."</div>
+          <div class="recipe-click-hint">Click to highlight voice sources</div>
         </div>
 
         <!-- Case Study -->
-        <div class="recipe-card">
+        <div class="recipe-card" data-voices="seren,mike,jimit" onclick="toggleRecipeHighlight(this)">
           <div class="recipe-name">Case Study</div>
           <div class="recipe-audience">For: operator whose situation is similar to the customer's</div>
           <div class="recipe-bar">
@@ -1016,11 +1417,13 @@ title: Voice Specimen
             <span class="recipe-feeling-tag">curiosity</span>
           </div>
           <div class="recipe-meta"><strong style="color:var(--card-fg)">Reaches:</strong> their VP (ROI), procurement (risk), board (evidence)</div>
+          <div class="recipe-voices"><strong>Primary voice:</strong> Seren. <strong>Supporting:</strong> Mike (field context), Jimit (market trend).</div>
           <div class="recipe-sample">"Their operations team was losing 12 hours per week chasing phantom alarms from legacy BMS sensors. Within three months of deployment, Verdigris data reduced false-positive alerts by 74% -- and identified two real faults the old system had been masking."</div>
+          <div class="recipe-click-hint">Click to highlight voice sources</div>
         </div>
 
         <!-- Homepage -->
-        <div class="recipe-card">
+        <div class="recipe-card" data-voices="mark,jon,jimit" onclick="toggleRecipeHighlight(this)">
           <div class="recipe-name">Homepage</div>
           <div class="recipe-audience">For: first-time visitor (operator or executive)</div>
           <div class="recipe-bar">
@@ -1043,11 +1446,13 @@ title: Voice Specimen
             <span class="recipe-feeling-tag">respect</span>
           </div>
           <div class="recipe-meta"><strong style="color:var(--card-fg)">Reaches:</strong> their team, their boss, investors doing diligence</div>
+          <div class="recipe-voices"><strong>Primary voices:</strong> Mark (narrative), Jon (precision). <strong>Supporting:</strong> Jimit (positioning context).</div>
           <div class="recipe-sample">"The AI buildout runs on power infrastructure that was not designed for it. Verdigris captures continuous electrical waveforms at 8 kHz and detects the instability that legacy monitoring cannot see. Twenty people. Fifteen years of deployment data. Every circuit, every cycle."</div>
+          <div class="recipe-click-hint">Click to highlight voice sources</div>
         </div>
 
         <!-- About Page -->
-        <div class="recipe-card">
+        <div class="recipe-card" data-voices="mark,seren,thomas" onclick="toggleRecipeHighlight(this)">
           <div class="recipe-name">About Page</div>
           <div class="recipe-audience">For: someone deciding if they trust Verdigris</div>
           <div class="recipe-bar">
@@ -1070,11 +1475,13 @@ title: Voice Specimen
             <span class="recipe-feeling-tag">belonging</span>
           </div>
           <div class="recipe-meta"><strong style="color:var(--card-fg)">Reaches:</strong> candidates, partners, press, investors</div>
+          <div class="recipe-voices"><strong>Primary voices:</strong> Mark, Thomas. <strong>Supporting:</strong> Seren (people-first voice).</div>
           <div class="recipe-sample">"It started with a $600 utility bill and a question Mark couldn't stop asking. Fifteen years later, Jon, Mark, and Thomas are still answering it -- with twenty people, real hardware in real facilities, and a thesis that keeps getting tested and refined."</div>
+          <div class="recipe-click-hint">Click to highlight voice sources</div>
         </div>
 
         <!-- Product Page -->
-        <div class="recipe-card">
+        <div class="recipe-card" data-voices="jon,thomas,josh,mike" onclick="toggleRecipeHighlight(this)">
           <div class="recipe-name">Product Page</div>
           <div class="recipe-audience">For: operator evaluating whether Verdigris solves their problem</div>
           <div class="recipe-bar">
@@ -1097,11 +1504,13 @@ title: Voice Specimen
             <span class="recipe-feeling-tag">confidence</span>
           </div>
           <div class="recipe-meta"><strong style="color:var(--card-fg)">Reaches:</strong> their boss (needs ROI), their team (needs to believe it works)</div>
+          <div class="recipe-voices"><strong>Primary voices:</strong> Jon (precision), Thomas (empathy). <strong>Accent:</strong> Josh (product-in-action), Mike (pricing/manufacturing).</div>
           <div class="recipe-sample">"Your monitoring system polls every second. GPU workloads ramp in eight milliseconds. That gap is where failures form, capacity gets stranded, and operators get surprised. Verdigris closes it with continuous 8 kHz waveform capture -- no polling, no blind spots."</div>
+          <div class="recipe-click-hint">Click to highlight voice sources</div>
         </div>
 
         <!-- Partner Materials -->
-        <div class="recipe-card">
+        <div class="recipe-card" data-voices="jimit,seren,mike" onclick="toggleRecipeHighlight(this)">
           <div class="recipe-name">Partner Materials</div>
           <div class="recipe-audience">For: partner's team evaluating the integration</div>
           <div class="recipe-bar">
@@ -1124,11 +1533,13 @@ title: Voice Specimen
             <span class="recipe-feeling-tag">warmth</span>
           </div>
           <div class="recipe-meta"><strong style="color:var(--card-fg)">Reaches:</strong> their customers, their sales team</div>
+          <div class="recipe-voices"><strong>Primary voice:</strong> Jimit. <strong>Supporting:</strong> Seren, Mike (industry insider).</div>
           <div class="recipe-sample">"When operators need circuit-level visibility in their existing monitoring stack, Verdigris data appears alongside the metrics they already watch. No rip-and-replace. The integration surfaces what their current sensors can't measure -- sub-cycle transients, harmonic distortion, real-time load signatures."</div>
+          <div class="recipe-click-hint">Click to highlight voice sources</div>
         </div>
 
         <!-- LinkedIn Post -->
-        <div class="recipe-card">
+        <div class="recipe-card" data-voices="josh,thomas" onclick="toggleRecipeHighlight(this)">
           <div class="recipe-name">LinkedIn Post</div>
           <div class="recipe-audience">For: industry peers, potential hires, customers</div>
           <div class="recipe-bar">
@@ -1151,7 +1562,9 @@ title: Voice Specimen
             <span class="recipe-feeling-tag">belonging</span>
           </div>
           <div class="recipe-meta"><strong style="color:var(--card-fg)">Reaches:</strong> their network, their team, recruiters</div>
+          <div class="recipe-voices"><strong>Primary voice:</strong> Josh (builder energy). <strong>Also:</strong> Any team member posting as themselves -- the key is specificity.</div>
           <div class="recipe-sample">"Spent last week at a 40 MW facility in Virginia. The ops team showed me a breaker panel from 2019 that was running GPU racks it was never designed for. Their monitoring said everything was fine. Our sensors disagreed. That's the gap we're closing."</div>
+          <div class="recipe-click-hint">Click to highlight voice sources</div>
         </div>
 
       </div>
@@ -1163,12 +1576,19 @@ title: Voice Specimen
     <section class="section">
       <p class="section-label">Same Story, Four Voices</p>
       <h2 class="section-title">Side-by-Side Comparison</h2>
-      <p class="section-desc">One topic -- "UPS rectifier degradation detected at T-Mobile" -- written in four different voice mixes. Same facts, different ingredients, different feelings produced.</p>
+      <p class="section-desc">One topic -- "UPS rectifier degradation detected at T-Mobile" -- written in four different voice mixes. Same facts, different ingredients, different feelings produced. Click a name to focus on one voice, or "All" to see them together.</p>
 
-      <div class="comparison-grid">
+      <div class="comparison-tabs" id="compTabs">
+        <button class="comp-tab active" data-comp="all" onclick="filterComparison('all')">All</button>
+        <button class="comp-tab" data-comp="mike" onclick="filterComparison('mike')">Mike</button>
+        <button class="comp-tab" data-comp="jon" onclick="filterComparison('jon')">Jon</button>
+        <button class="comp-tab" data-comp="mark" onclick="filterComparison('mark')">Mark</button>
+        <button class="comp-tab" data-comp="jimit" onclick="filterComparison('jimit')">Jimit</button>
+      </div>
 
-        <!-- Mike's voice -->
-        <div class="comp-card">
+      <div class="comparison-grid" id="compGrid">
+
+        <div class="comp-card" data-comp-person="mike">
           <div class="comp-author">Mike Mahedy</div>
           <div class="comp-ingredient" style="color: var(--ing-precision)">Field Report Register</div>
           <div class="comp-text">
@@ -1176,8 +1596,7 @@ title: Voice Specimen
           </div>
         </div>
 
-        <!-- Jon's voice -->
-        <div class="comp-card">
+        <div class="comp-card" data-comp-person="jon">
           <div class="comp-author">Jon Chu</div>
           <div class="comp-ingredient" style="color: var(--ing-precision)">Technical Precision Register</div>
           <div class="comp-text">
@@ -1185,8 +1604,7 @@ title: Voice Specimen
           </div>
         </div>
 
-        <!-- Mark's voice -->
-        <div class="comp-card">
+        <div class="comp-card" data-comp-person="mark">
           <div class="comp-author">Mark Chung</div>
           <div class="comp-ingredient" style="color: var(--ing-narrative)">Strategic Narrative Register</div>
           <div class="comp-text">
@@ -1194,12 +1612,11 @@ title: Voice Specimen
           </div>
         </div>
 
-        <!-- Jimit's voice -->
-        <div class="comp-card">
+        <div class="comp-card" data-comp-person="jimit">
           <div class="comp-author">Jimit Shah</div>
           <div class="comp-ingredient" style="color: var(--ing-narrative)">Market Advisor Register</div>
           <div class="comp-text">
-            This is the pattern that separates monitoring from intelligence. Schneider's and Eaton's UPS platforms report status -- green, yellow, red. They told T-Mobile everything was green. Verdigris told them a rectifier was 21 days from failure. That's the difference between a dashboard and a decision layer. The industry is moving from polling to continuous capture, but nobody in the L2 monitoring layer has the physics engine to interpret what continuous data actually means. That's the wedge.
+            This is the pattern that separates monitoring from intelligence. Schneider's and Eaton's UPS platforms report status -- green, yellow, red. They told T-Mobile everything was green. Verdigris told them a rectifier was 21 days from failure. That's the difference between a dashboard and a decision layer. The industry is moving from polling to continuous capture, but nobody in the monitoring layer has the physics engine to interpret what continuous data actually means. That's the wedge.
           </div>
         </div>
 
@@ -1207,7 +1624,66 @@ title: Voice Specimen
     </section>
 
     <!-- ================================================================ -->
-    <!-- Section 5: Feelings Compass                                      -->
+    <!-- Section 5: Try Mixing                                            -->
+    <!-- ================================================================ -->
+    <section class="section">
+      <p class="section-label">Experiment</p>
+      <h2 class="section-title">Try Mixing</h2>
+      <p class="section-desc">Drag the sliders to set your ingredient levels. The system will show which recipe and team voices best match your mix.</p>
+
+      <div class="mixer-container">
+        <div class="mixer-sliders" id="mixerSliders">
+          <div class="mixer-row">
+            <div class="mixer-label" style="color:var(--ing-precision)">Precision</div>
+            <input type="range" class="mixer-slider" data-ingredient="precision" min="0" max="100" value="30" oninput="updateMixer()" style="accent-color:var(--ing-precision)">
+            <div class="mixer-value" id="val-precision">30</div>
+          </div>
+          <div class="mixer-row">
+            <div class="mixer-label" style="color:var(--ing-narrative)">Narrative</div>
+            <input type="range" class="mixer-slider" data-ingredient="narrative" min="0" max="100" value="20" oninput="updateMixer()" style="accent-color:var(--ing-narrative)">
+            <div class="mixer-value" id="val-narrative">20</div>
+          </div>
+          <div class="mixer-row">
+            <div class="mixer-label" style="color:var(--ing-empathy)">Empathy</div>
+            <input type="range" class="mixer-slider" data-ingredient="empathy" min="0" max="100" value="20" oninput="updateMixer()" style="accent-color:var(--ing-empathy)">
+            <div class="mixer-value" id="val-empathy">20</div>
+          </div>
+          <div class="mixer-row">
+            <div class="mixer-label" style="color:var(--ing-honesty)">Honesty</div>
+            <input type="range" class="mixer-slider" data-ingredient="honesty" min="0" max="100" value="15" oninput="updateMixer()" style="accent-color:var(--ing-honesty)">
+            <div class="mixer-value" id="val-honesty">15</div>
+          </div>
+          <div class="mixer-row">
+            <div class="mixer-label" style="color:var(--ing-gravity)">Gravity</div>
+            <input type="range" class="mixer-slider" data-ingredient="gravity" min="0" max="100" value="10" oninput="updateMixer()" style="accent-color:var(--ing-gravity)">
+            <div class="mixer-value" id="val-gravity">10</div>
+          </div>
+          <div class="mixer-row">
+            <div class="mixer-label" style="color:var(--ing-warmth)">Warmth</div>
+            <input type="range" class="mixer-slider" data-ingredient="warmth" min="0" max="100" value="10" oninput="updateMixer()" style="accent-color:var(--ing-warmth)">
+            <div class="mixer-value" id="val-warmth">10</div>
+          </div>
+          <div class="mixer-row">
+            <div class="mixer-label" style="color:var(--ing-connection)">Connection</div>
+            <input type="range" class="mixer-slider" data-ingredient="connection" min="0" max="100" value="10" oninput="updateMixer()" style="accent-color:var(--ing-connection)">
+            <div class="mixer-value" id="val-connection">10</div>
+          </div>
+        </div>
+        <div class="mixer-output" id="mixerOutput">
+          <div class="mixer-match-label">Closest recipe</div>
+          <div class="mixer-match-name" id="mixerMatchName">Technical Blog</div>
+          <div class="mixer-match-desc" id="mixerMatchDesc">For: engineer or operator who wants to learn</div>
+          <div class="mixer-match-voices" id="mixerMatchVoices"></div>
+          <div class="mixer-match-label" style="margin-top:1rem">Target feelings</div>
+          <div class="mixer-match-feelings" id="mixerMatchFeelings"></div>
+          <div class="mixer-match-label" style="margin-top:1rem">Best team voices for this mix</div>
+          <div class="mixer-match-desc" id="mixerMatchTeam"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- Section 6: Feelings Compass                                      -->
     <!-- ================================================================ -->
     <section class="section">
       <p class="section-label">Emotional Outcomes</p>
@@ -1215,55 +1691,42 @@ title: Voice Specimen
       <p class="section-desc">These are real feelings, not cognitive assessments. "They should understand our value prop" is not a feeling. Every piece of Verdigris content should produce at least one of these. The best content produces 2-3 simultaneously.</p>
 
       <div class="feelings-grid">
-
-        <!-- Relief -->
         <div class="feeling-card">
           <div class="feeling-name" style="color: var(--ing-empathy)">Relief</div>
           <div class="feeling-desc">"Finally, someone who gets it." The reader has been dealing with a problem nobody else seems to understand the way they experience it. Verdigris content should make them exhale.</div>
           <div class="feeling-producers"><strong>Produced by:</strong> operator empathy (naming their problems accurately), technical precision (showing we measure what others can't), personal connection (we've been in their world for 15 years)</div>
           <div class="feeling-when">Aim for: product pages, case studies, partner materials -- anywhere the reader has a problem they need solved</div>
         </div>
-
-        <!-- Curiosity -->
         <div class="feeling-card">
           <div class="feeling-name" style="color: var(--ing-precision)">Curiosity</div>
           <div class="feeling-desc">"I want to know more about how this works." Not marketing-driven "learn more" but genuine intellectual pull. The reader encounters something they haven't thought about before.</div>
           <div class="feeling-producers"><strong>Produced by:</strong> technical precision (a specific number that surprises), strategic narrative (a framing that recontextualizes), self-honesty (an admission that makes them lean in)</div>
           <div class="feeling-when">Aim for: technical blogs, homepage, LinkedIn -- anywhere you want the reader to go deeper</div>
         </div>
-
-        <!-- Confidence -->
         <div class="feeling-card">
           <div class="feeling-name" style="color: var(--ing-narrative)">Confidence</div>
           <div class="feeling-desc">"These people know what they're doing." Not confidence in the product -- confidence in the PEOPLE. The reader trusts the team because the writing demonstrates depth, honesty, and earned authority.</div>
           <div class="feeling-producers"><strong>Produced by:</strong> technical precision (depth signals competence), self-honesty (admitting errors signals integrity), personal connection (real people with real histories)</div>
           <div class="feeling-when">Aim for: homepage, investor updates, partner materials -- anywhere trust is the conversion</div>
         </div>
-
-        <!-- Warmth -->
         <div class="feeling-card">
           <div class="feeling-name" style="color: var(--ing-warmth)">Warmth</div>
           <div class="feeling-desc">"I like these people." Not "I respect their product" but genuine human warmth. The feeling that turns evaluators into advocates within their organization.</div>
           <div class="feeling-producers"><strong>Produced by:</strong> warmth and humor (human moments, specific celebrations), personal connection (named people, real stories), operator empathy (understanding creates closeness)</div>
           <div class="feeling-when">Aim for: about page, case studies, LinkedIn, career pages -- anywhere you want the reader to become an advocate</div>
         </div>
-
-        <!-- Belonging -->
         <div class="feeling-card">
           <div class="feeling-name" style="color: var(--ing-gravity)">Belonging</div>
           <div class="feeling-desc">"I want to be part of this." The reader sees themselves in the mission, the team, or the problem being solved. The feeling that converts candidates, closes partnerships, turns customers into references.</div>
           <div class="feeling-producers"><strong>Produced by:</strong> mission gravity (the problem is worth their career), warmth and humor (they'd enjoy working here), self-honesty (the company is real, not performing)</div>
           <div class="feeling-when">Aim for: careers pages, about page, recruiting outreach -- anywhere you want the reader to join</div>
         </div>
-
-        <!-- Respect -->
         <div class="feeling-card">
           <div class="feeling-name" style="color: var(--ing-honesty)">Respect</div>
           <div class="feeling-desc">"These people take the work seriously." Different from confidence (which is about competence). Respect is about craft, standards, and caring about getting it right -- even in how they write.</div>
           <div class="feeling-producers"><strong>Produced by:</strong> technical precision (specificity signals care), self-honesty (accountability signals standards), mission gravity (taking the problem seriously)</div>
           <div class="feeling-when">Aim for: technical blogs, investor updates, product pages -- anywhere the reader evaluates quality</div>
         </div>
-
       </div>
     </section>
 
@@ -1278,6 +1741,7 @@ title: Voice Specimen
   </div>
 
   <script>
+    /* ── Dark mode toggle ──────────────────────────────────────────── */
     (function() {
       var btn = document.getElementById('modeBtn');
       if (document.documentElement.classList.contains('dark')) {
@@ -1286,12 +1750,428 @@ title: Voice Specimen
     })();
 
     function toggleMode() {
-      const html = document.documentElement;
-      const btn = document.getElementById('modeBtn');
-      const isDark = html.classList.toggle('dark');
+      var html = document.documentElement;
+      var btn = document.getElementById('modeBtn');
+      var isDark = html.classList.toggle('dark');
       btn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
+
+    /* ── Team card expand/collapse ──────────────────────────────────── */
+    function toggleTeamCard(card) {
+      card.classList.toggle('expanded');
+    }
+
+    /* ── Recipe card → highlight team members ──────────────────────── */
+    var activeRecipe = null;
+
+    function toggleRecipeHighlight(card) {
+      var allRecipes = document.querySelectorAll('.recipe-card');
+      var allTeam = document.querySelectorAll('.team-card');
+
+      if (activeRecipe === card) {
+        activeRecipe = null;
+        allRecipes.forEach(function(r) { r.classList.remove('active'); });
+        allTeam.forEach(function(t) { t.classList.remove('highlighted'); });
+        return;
+      }
+
+      activeRecipe = card;
+      allRecipes.forEach(function(r) { r.classList.remove('active'); });
+      card.classList.add('active');
+
+      var voices = (card.getAttribute('data-voices') || '').split(',');
+      allTeam.forEach(function(t) {
+        var person = t.getAttribute('data-person');
+        if (voices.indexOf(person) !== -1) {
+          t.classList.add('highlighted');
+        } else {
+          t.classList.remove('highlighted');
+        }
+      });
+
+      var gallery = document.getElementById('team-gallery-section');
+      if (gallery) {
+        gallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    /* ── Comparison tabs ───────────────────────────────────────────── */
+    function filterComparison(person) {
+      var tabs = document.querySelectorAll('.comp-tab');
+      var cards = document.querySelectorAll('.comp-card');
+
+      tabs.forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-comp') === person);
+      });
+
+      if (person === 'all') {
+        cards.forEach(function(c) {
+          c.classList.remove('dimmed');
+          c.classList.remove('selected');
+        });
+      } else {
+        cards.forEach(function(c) {
+          var p = c.getAttribute('data-comp-person');
+          if (p === person) {
+            c.classList.add('selected');
+            c.classList.remove('dimmed');
+          } else {
+            c.classList.add('dimmed');
+            c.classList.remove('selected');
+          }
+        });
+      }
+    }
+
+    /* ── Writing a Piece workflow ──────────────────────────────────── */
+    var RECIPES = {
+      technical_blog: {
+        name: 'Technical Blog',
+        audience: 'Engineer or operator who wants to learn',
+        reaches: 'HN, LinkedIn, engineering teams evaluating Verdigris',
+        feelings: ['curiosity', 'respect', 'warmth'],
+        mix: { precision: 45, warmth: 15, honesty: 15, empathy: 15, connection: 10 },
+        voices: 'Primary: Jon (technical depth). Supporting: Josh (field troubleshooting, honest dead ends).',
+        notes: 'Named authorship always. "By Jon Chu" not "The Verdigris Team." End with what you don\'t know yet. Humor comes from specificity, not from trying to be funny.',
+        sample: 'We expected the harmonic content to follow the textbook profile for switch-mode power supplies. It didn\'t. The third-harmonic magnitude was 40% higher than any published reference suggested. Here\'s what we found when we looked closer.'
+      },
+      case_study: {
+        name: 'Case Study',
+        audience: 'Operator whose situation is similar to the customer\'s',
+        reaches: 'Their VP (ROI), procurement (risk), board (evidence)',
+        feelings: ['relief', 'confidence', 'curiosity'],
+        mix: { empathy: 30, precision: 25, connection: 20, honesty: 15, narrative: 10 },
+        voices: 'Primary: Seren (customer perspective, diplomatic precision). Supporting: Mike (field context), Jimit (market trend).',
+        notes: 'The customer\'s voice is the primary voice. Let the operator say "Verdigris showed us X" rather than Verdigris saying "we delivered X." Specific numbers always.',
+        sample: 'Their operations team was losing 12 hours per week chasing phantom alarms from legacy BMS sensors. Within three months of deployment, Verdigris data reduced false-positive alerts by 74% -- and identified two real faults the old system had been masking.'
+      },
+      homepage: {
+        name: 'Homepage',
+        audience: 'First-time visitor (operator or executive)',
+        reaches: 'Their team, their boss, investors doing diligence',
+        feelings: ['curiosity', 'confidence', 'respect'],
+        mix: { narrative: 35, precision: 25, gravity: 20, honesty: 10, warmth: 10 },
+        voices: 'Primary: Mark (strategic narrative), Jon (technical precision). Supporting: Jimit (positioning context).',
+        notes: 'The homepage has ~8 seconds to answer "what do you do and why should I care?" Lead with the problem, prove depth with one specific number, close with mission pull.',
+        sample: 'The AI buildout runs on power infrastructure that was not designed for it. Verdigris captures continuous electrical waveforms at 8 kHz and detects the instability that legacy monitoring cannot see. Twenty people. Fifteen years of deployment data. Every circuit, every cycle.'
+      },
+      about_page: {
+        name: 'About Page',
+        audience: 'Someone deciding if they trust Verdigris',
+        reaches: 'Candidates, partners, press, investors',
+        feelings: ['confidence', 'warmth', 'belonging'],
+        mix: { connection: 30, narrative: 25, honesty: 20, gravity: 15, precision: 10 },
+        voices: 'Primary: Mark (storytelling, personal connection), Thomas (radical transparency). Supporting: Seren (people-first voice).',
+        notes: 'This is where Mark\'s storytelling and Thomas\'s radical honesty dominate. The about page is a trust-building tool. Self-honesty is load-bearing here.',
+        sample: 'It started with a $600 utility bill and a question Mark couldn\'t stop asking. Fifteen years later, Jon, Mark, and Thomas are still answering it -- with twenty people, real hardware in real facilities, and a thesis that keeps getting tested and refined.'
+      },
+      product_page: {
+        name: 'Product Page',
+        audience: 'Operator evaluating whether Verdigris solves their problem',
+        reaches: 'Their boss (needs ROI), their team (needs to believe it works)',
+        feelings: ['relief', 'curiosity', 'confidence'],
+        mix: { empathy: 35, precision: 30, honesty: 15, narrative: 10, warmth: 10 },
+        voices: 'Primary: Jon (precision), Thomas (operator empathy). Accent: Josh (product-in-action), Mike (pricing/manufacturing).',
+        notes: 'Lead with the operator\'s problem, not our product. Let the product reveal itself as the answer, not the headline.',
+        sample: 'Your monitoring system polls every second. GPU workloads ramp in eight milliseconds. That gap is where failures form, capacity gets stranded, and operators get surprised. Verdigris closes it with continuous 8 kHz waveform capture -- no polling, no blind spots.'
+      },
+      careers_page: {
+        name: 'Careers Page',
+        audience: 'Potential hire evaluating Verdigris',
+        reaches: 'Their partner, their friends, their current colleagues',
+        feelings: ['belonging', 'curiosity', 'warmth'],
+        mix: { gravity: 30, warmth: 25, connection: 20, honesty: 15, precision: 10 },
+        voices: 'Primary: Josh (builder energy, makes people want to join). Supporting: Mark (mission gravity), Thomas (radical transparency IS the pitch).',
+        notes: 'Candidates share JDs with their partner and friends. The page needs to work for non-technical readers too.',
+        sample: 'If you are at a bigger company wondering whether you will ever get to build something from a position of real ownership, this is that role.'
+      },
+      partner_materials: {
+        name: 'Partner Materials',
+        audience: 'Partner\'s team evaluating the integration',
+        reaches: 'Their customers, their sales team',
+        feelings: ['confidence', 'relief', 'warmth'],
+        mix: { precision: 30, empathy: 25, warmth: 15, honesty: 15, narrative: 15 },
+        voices: 'Primary: Jimit (outside-in positioning). Supporting: Seren (cross-org), Mike (industry insider).',
+        notes: 'Avoid "strategic partnership" language. Say what you\'re actually doing together.',
+        sample: 'When operators need circuit-level visibility in their existing monitoring stack, Verdigris data appears alongside the metrics they already watch. No rip-and-replace.'
+      },
+      linkedin_post: {
+        name: 'LinkedIn Post',
+        audience: 'Industry peers, potential hires, customers',
+        reaches: 'Their network, their team, recruiters',
+        feelings: ['warmth', 'curiosity', 'belonging'],
+        mix: { warmth: 30, connection: 25, precision: 20, gravity: 15, honesty: 10 },
+        voices: 'Primary: Josh (builder energy), Thomas (thinking-out-loud register is anti-performance). Also: Any team member posting as themselves -- the key is specificity.',
+        notes: 'Named authorship. LinkedIn rewards personal voice. Share one specific thing, not a product announcement.',
+        sample: 'Spent last week at a 40 MW facility in Virginia. The ops team showed me a breaker panel from 2019 that was running GPU racks it was never designed for. Their monitoring said everything was fine. Our sensors disagreed.'
+      },
+      investor_update: {
+        name: 'Investor Update',
+        audience: 'Board and investors',
+        reaches: 'Their LPs, other portfolio companies (word of mouth)',
+        feelings: ['confidence', 'respect', 'curiosity'],
+        mix: { narrative: 35, honesty: 25, precision: 20, gravity: 15, connection: 5 },
+        voices: 'Primary: Mark (strategic narrative, self-honesty), Thomas (systems-thinking, radical transparency). Supporting: Jimit (market fluency, structured evidence).',
+        notes: 'Investors want clarity of thought and intellectual honesty more than good news. "We missed X because Y" is stronger than only reporting wins.',
+        sample: 'We have raised serious capital, refocused the company around the most consequential problem in AI infrastructure, and come out the other side with real customers, real revenue, and hardware that has been running for more than a decade.'
+      },
+      recruiting_outreach: {
+        name: 'Recruiting Outreach',
+        audience: 'Specific person being reached out to',
+        reaches: 'Just them (unless they forward it)',
+        feelings: ['curiosity', 'warmth', 'belonging'],
+        mix: { connection: 35, warmth: 20, precision: 20, gravity: 15, honesty: 10 },
+        voices: 'Primary: Jon or Thomas (founder voice). Supporting: Seren (honest mutual-fit evaluation).',
+        notes: 'Use individual founder voice, not brand voice. Reference specific things about the person\'s work. Always leave the referral door open.',
+        sample: 'I came across your work on [specific thing]. We\'re a 20-person team building electrical intelligence for AI data centers -- 8 kHz continuous waveform capture, deployed in colocation facilities for over a decade. Would love to talk about what you\'re working on.'
+      }
+    };
+
+    var INGREDIENT_KEYS = ['precision', 'narrative', 'empathy', 'honesty', 'gravity', 'warmth', 'connection'];
+    var INGREDIENT_COLORS = {
+      precision: 'var(--ing-precision)',
+      narrative: 'var(--ing-narrative)',
+      empathy: 'var(--ing-empathy)',
+      honesty: 'var(--ing-honesty)',
+      gravity: 'var(--ing-gravity)',
+      warmth: 'var(--ing-warmth)',
+      connection: 'var(--ing-connection)'
+    };
+
+    function renderWorkflowResult(key) {
+      var r = RECIPES[key];
+      if (!r) return;
+
+      var resultEl = document.getElementById('workflowResult');
+      resultEl.classList.remove('workflow-result-empty');
+
+      // Build using DOM methods to avoid innerHTML
+      resultEl.textContent = '';
+
+      var recipeName = document.createElement('div');
+      recipeName.className = 'recipe-name';
+      recipeName.textContent = r.name;
+      resultEl.appendChild(recipeName);
+
+      var forLine = document.createElement('div');
+      forLine.style.cssText = 'font-size:0.8125rem;margin-bottom:0.25rem';
+      var forStrong = document.createElement('strong');
+      forStrong.style.color = 'var(--card-fg)';
+      forStrong.textContent = 'For: ';
+      forLine.appendChild(forStrong);
+      forLine.appendChild(document.createTextNode(r.audience));
+      resultEl.appendChild(forLine);
+
+      var reachLine = document.createElement('div');
+      reachLine.style.cssText = 'font-size:0.8125rem;color:var(--muted-fg);margin-bottom:0.75rem';
+      var reachStrong = document.createElement('strong');
+      reachStrong.style.color = 'var(--card-fg)';
+      reachStrong.textContent = 'Reaches: ';
+      reachLine.appendChild(reachStrong);
+      reachLine.appendChild(document.createTextNode(r.reaches));
+      resultEl.appendChild(reachLine);
+
+      // Mix heading
+      var mixHead = document.createElement('div');
+      mixHead.className = 'section-label';
+      mixHead.style.marginTop = '1.25rem';
+      mixHead.textContent = 'Ingredient mix';
+      resultEl.appendChild(mixHead);
+
+      // Mix bar
+      var bar = document.createElement('div');
+      bar.className = 'recipe-bar';
+      bar.style.marginTop = '0.375rem';
+      bar.style.marginBottom = '0.5rem';
+      INGREDIENT_KEYS.forEach(function(ing) {
+        var val = r.mix[ing] || 0;
+        if (val > 0) {
+          var seg = document.createElement('div');
+          seg.className = 'recipe-bar-seg';
+          seg.style.width = val + '%';
+          seg.style.background = INGREDIENT_COLORS[ing];
+          bar.appendChild(seg);
+        }
+      });
+      resultEl.appendChild(bar);
+
+      // Legend
+      var legendWrap = document.createElement('div');
+      legendWrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem';
+      INGREDIENT_KEYS.forEach(function(ing) {
+        var val = r.mix[ing] || 0;
+        if (val > 0) {
+          var item = document.createElement('div');
+          item.className = 'recipe-legend-item';
+          var dot = document.createElement('div');
+          dot.className = 'recipe-legend-dot';
+          dot.style.background = INGREDIENT_COLORS[ing];
+          item.appendChild(dot);
+          item.appendChild(document.createTextNode(ing.charAt(0).toUpperCase() + ing.slice(1) + ' ' + val + '%'));
+          legendWrap.appendChild(item);
+        }
+      });
+      resultEl.appendChild(legendWrap);
+
+      // Voices
+      var voicesHead = document.createElement('div');
+      voicesHead.className = 'section-label';
+      voicesHead.style.marginTop = '1.25rem';
+      voicesHead.textContent = 'Voices to channel';
+      resultEl.appendChild(voicesHead);
+      var voicesText = document.createElement('div');
+      voicesText.style.cssText = 'font-size:0.8125rem;color:var(--card-fg);line-height:1.6;margin-bottom:0.75rem';
+      voicesText.textContent = r.voices;
+      resultEl.appendChild(voicesText);
+
+      // Feelings
+      var feelHead = document.createElement('div');
+      feelHead.className = 'section-label';
+      feelHead.style.marginTop = '1.25rem';
+      feelHead.textContent = 'Target feelings';
+      resultEl.appendChild(feelHead);
+      var feelWrap = document.createElement('div');
+      feelWrap.style.cssText = 'display:flex;gap:0.375rem;flex-wrap:wrap;margin-bottom:0.75rem';
+      r.feelings.forEach(function(f) {
+        var tag = document.createElement('span');
+        tag.className = 'recipe-feeling-tag';
+        tag.textContent = f;
+        feelWrap.appendChild(tag);
+      });
+      resultEl.appendChild(feelWrap);
+
+      // Notes
+      var notesHead = document.createElement('div');
+      notesHead.className = 'section-label';
+      notesHead.style.marginTop = '1.25rem';
+      notesHead.textContent = 'Writing guidance';
+      resultEl.appendChild(notesHead);
+      var notesText = document.createElement('div');
+      notesText.style.cssText = 'font-size:0.8125rem;color:var(--muted-fg);line-height:1.6;margin-bottom:0.75rem';
+      notesText.textContent = r.notes;
+      resultEl.appendChild(notesText);
+
+      // Sample
+      var sampleHead = document.createElement('div');
+      sampleHead.className = 'section-label';
+      sampleHead.style.marginTop = '1.25rem';
+      sampleHead.textContent = 'Sample';
+      resultEl.appendChild(sampleHead);
+      var sampleBox = document.createElement('div');
+      sampleBox.className = 'recipe-sample';
+      sampleBox.style.marginTop = '0.375rem';
+      sampleBox.textContent = r.sample;
+      resultEl.appendChild(sampleBox);
+    }
+
+    // Wire up workflow picker buttons
+    document.querySelectorAll('.workflow-picker-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.workflow-picker-btn').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        renderWorkflowResult(btn.getAttribute('data-recipe'));
+      });
+    });
+
+    /* ── Mixer ─────────────────────────────────────────────────────── */
+    var CANONICAL_RECIPES = {
+      technical_blog: { precision: 45, warmth: 15, honesty: 15, empathy: 15, connection: 10, narrative: 0, gravity: 0 },
+      case_study: { empathy: 30, precision: 25, connection: 20, honesty: 15, narrative: 10, warmth: 0, gravity: 0 },
+      homepage: { narrative: 35, precision: 25, gravity: 20, honesty: 10, warmth: 10, empathy: 0, connection: 0 },
+      about_page: { connection: 30, narrative: 25, honesty: 20, gravity: 15, precision: 10, empathy: 0, warmth: 0 },
+      product_page: { empathy: 35, precision: 30, honesty: 15, narrative: 10, warmth: 10, gravity: 0, connection: 0 },
+      careers_page: { gravity: 30, warmth: 25, connection: 20, honesty: 15, precision: 10, empathy: 0, narrative: 0 },
+      partner_materials: { precision: 30, empathy: 25, warmth: 15, honesty: 15, narrative: 15, gravity: 0, connection: 0 },
+      linkedin_post: { warmth: 30, connection: 25, precision: 20, gravity: 15, honesty: 10, empathy: 0, narrative: 0 },
+      investor_update: { narrative: 35, honesty: 25, precision: 20, gravity: 15, connection: 5, empathy: 0, warmth: 0 },
+      recruiting_outreach: { connection: 35, warmth: 20, precision: 20, gravity: 15, honesty: 10, empathy: 0, narrative: 0 }
+    };
+
+    var TEAM_STRENGTHS = {
+      mark: { narrative: 95, gravity: 85, honesty: 80, connection: 75, precision: 30, empathy: 40, warmth: 50 },
+      jon: { precision: 95, honesty: 70, empathy: 65, warmth: 50, narrative: 40, gravity: 30, connection: 30 },
+      thomas: { honesty: 100, connection: 90, gravity: 80, narrative: 80, warmth: 70, precision: 70, empathy: 60 },
+      josh: { warmth: 90, empathy: 80, precision: 70, honesty: 60, connection: 50, narrative: 30, gravity: 30 },
+      jimit: { narrative: 90, honesty: 80, warmth: 70, connection: 70, precision: 50, empathy: 40, gravity: 40 },
+      seren: { empathy: 80, connection: 80, honesty: 70, warmth: 60, precision: 50, narrative: 40, gravity: 30 },
+      mike: { precision: 90, empathy: 80, honesty: 70, narrative: 70, warmth: 40, connection: 40, gravity: 30 }
+    };
+
+    var TEAM_NAMES = {
+      mark: 'Mark', jon: 'Jon', thomas: 'Thomas',
+      josh: 'Josh', jimit: 'Jimit', seren: 'Seren', mike: 'Mike'
+    };
+
+    function cosineSimilarity(a, b) {
+      var dot = 0, magA = 0, magB = 0;
+      for (var i = 0; i < a.length; i++) {
+        dot += a[i] * b[i];
+        magA += a[i] * a[i];
+        magB += b[i] * b[i];
+      }
+      magA = Math.sqrt(magA);
+      magB = Math.sqrt(magB);
+      if (magA === 0 || magB === 0) return 0;
+      return dot / (magA * magB);
+    }
+
+    function updateMixer() {
+      var userMix = {};
+      INGREDIENT_KEYS.forEach(function(k) {
+        var slider = document.querySelector('.mixer-slider[data-ingredient="' + k + '"]');
+        userMix[k] = parseInt(slider.value, 10);
+        document.getElementById('val-' + k).textContent = userMix[k];
+      });
+
+      var userVec = INGREDIENT_KEYS.map(function(k) { return userMix[k]; });
+
+      var bestRecipe = null;
+      var bestScore = -1;
+      Object.keys(CANONICAL_RECIPES).forEach(function(key) {
+        var recipe = CANONICAL_RECIPES[key];
+        var recipeVec = INGREDIENT_KEYS.map(function(k) { return recipe[k] || 0; });
+        var score = cosineSimilarity(userVec, recipeVec);
+        if (score > bestScore) {
+          bestScore = score;
+          bestRecipe = key;
+        }
+      });
+
+      var teamScores = [];
+      Object.keys(TEAM_STRENGTHS).forEach(function(person) {
+        var strengths = TEAM_STRENGTHS[person];
+        var score = 0;
+        INGREDIENT_KEYS.forEach(function(k) {
+          score += (userMix[k] || 0) * (strengths[k] || 0);
+        });
+        teamScores.push({ person: person, score: score });
+      });
+      teamScores.sort(function(a, b) { return b.score - a.score; });
+      var topTeam = teamScores.slice(0, 3).map(function(t) { return TEAM_NAMES[t.person]; });
+
+      var r = RECIPES[bestRecipe];
+      document.getElementById('mixerMatchName').textContent = r ? r.name : '';
+      document.getElementById('mixerMatchDesc').textContent = r ? 'For: ' + r.audience : '';
+      document.getElementById('mixerMatchVoices').textContent = r ? r.voices : '';
+      document.getElementById('mixerMatchTeam').textContent = topTeam.join(', ');
+
+      var feelEl = document.getElementById('mixerMatchFeelings');
+      feelEl.textContent = '';
+      if (r) {
+        r.feelings.forEach(function(f) {
+          var tag = document.createElement('span');
+          tag.className = 'mixer-feeling-tag';
+          tag.textContent = f;
+          feelEl.appendChild(tag);
+        });
+      }
+    }
+
+    // Initialize mixer
+    updateMixer();
   </script>
 </body>
 </html>
