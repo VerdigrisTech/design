@@ -322,7 +322,7 @@ voice.brand.primary:
 
 ### Demographic Attributes
 
-Gender, age, and accent carry cultural weight. These attributes require stakeholder input and cannot be decided by design-system logic alone. Options analysis and recommendation tracked in Linear (Z2O-1044).
+Gender, age, and accent carry cultural weight. These attributes require stakeholder input and cannot be decided by design-system logic alone.
 
 ### Constraints
 

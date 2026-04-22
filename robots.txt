@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Internal reference pages — not for indexing
+Disallow: /voice-specimen
