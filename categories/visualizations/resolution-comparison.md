@@ -49,7 +49,7 @@ ResolutionComparison currently ships with its own internal chrome (dark rounded 
 - `viz.text.label` — panel headings (RAW ELECTRICAL SIGNAL, HEALTH ANALYSIS)
 - `viz.text.meta` — status text, labels, health ratio annotation
 - `durations.revealLong` + `easings.revealCubic` — viewport-entry 8k → 1 → 8k scrub
-- Slider styling from [`categories/web-components/slider.md`](../web-components/slider.md)
+- Slider styling from [`categories/web-components/brand-slider.md`](../web-components/brand-slider.md)
 
 ## Accessibility
 

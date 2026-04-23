@@ -63,4 +63,4 @@ All Canvas visualizations consume tokens from the `color.viz.*` group (defined i
 
 - [`foundations/composition.md`](../../foundations/composition.md) — the Canonical Brand Visualizations taxonomy and "what is NOT a brand visualization" rules
 - [`interactive-viz.md`](./interactive-viz.md) — framing and placement rules
-- [`categories/web-components/slider.md`](../web-components/slider.md) — the brand range-input used by Resolution Comparison
+- [`categories/web-components/brand-slider.md`](../web-components/brand-slider.md) — the brand range-input used by Resolution Comparison
