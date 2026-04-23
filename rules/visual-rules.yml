@@ -1965,6 +1965,51 @@ video:
 # Build incrementally -- only filled cells are enforced.
 # =============================================================================
 
+# =============================================================================
+# VISUALIZATIONS -- Canvas brand viz placement + MDX patterns
+# =============================================================================
+# Rules about how Canvas visualizations (Lissajous, waveform, harmonic spectrum,
+# resolution comparison, etc.) should be placed on pages and consumed from MDX.
+#
+# These are experimental per the maturity schema -- informational warnings while
+# v3.2.0 rolls out to the first real surfaces. Graduate to "rule" after 30 days
+# with no false positives.
+#
+# Companion docs: categories/visualizations/interactive-viz.md (framing spec)
+# =============================================================================
+
+visualizations:
+  id: "visualizations"
+  type: "reference"
+  description: "Canvas brand visualization placement rules. See categories/visualizations/ for the full pattern catalog."
+
+  placement:
+    rules:
+      - id: "viz.interactive-framing.required"
+        description: "Canvas visualizations placed on pages must be wrapped in a framing container with documented chrome (border, radius, padding, caption). Raw dark Canvas elements dropped onto a white page read as foreign objects, not designed elements. Consumers should use the CanvasFrame component in www (or equivalent) rather than inline <figure style={...}>. See categories/visualizations/interactive-viz.md for the full spec."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does this page place any Canvas-rendered visualization (Lissajous, waveform, harmonic spectrum, resolution comparison, training pulse, circuit topology, measurement bar reveal) without visible chrome around it -- e.g., dropped onto the page with no border, no padding, no heading, no caption? Answer YES if a Canvas viz appears without the documented framing chrome, NO if every Canvas viz is properly framed."
+
+      - id: "viz.max-per-section"
+        description: "No more than 2 interactive Canvas visualizations per section. Interactive Canvas elements compete for attention -- stacking more than two in a single section exceeds the attention budget documented in the composition foundation and makes it hard for the reader to understand what each is arguing. Grouped non-interactive specimens (e.g., 3 Lissajous figures comparing load types) count as one element if they appear in a single container. See foundations/composition.md attention budget rules."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does any section on this page contain 3 or more interactive Canvas visualizations (elements with user-driven controls like sliders, drag interactions, hover-driven reveals)? Grouped non-interactive specimens in a single container count as one. Answer YES if any section exceeds 2 interactive Canvas elements, NO if every section stays within budget."
+
+      - id: "mdx.inline-figure-hardcoded-style"
+        description: "MDX content files should not use inline <figure style={{...}}> with hardcoded hex colors to wrap Canvas visualizations. Inline hardcoded styles bypass the design system tokens, produce drift across pages, and undo the harness that design-tokens v3.2.0 provides. Use the CanvasFrame component (or equivalent in the consumer codebase) that reads from var(--viz-*) tokens."
+        severity: "warning"
+        type: "pattern"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does any MDX file on this surface contain <figure style={{...}}> blocks with hardcoded hex color values (e.g., style={{background: '#f5f5f5'}}) wrapping Canvas visualizations? Answer YES if inline-styled <figure> with hardcoded colors is present around Canvas elements, NO if all Canvas elements are wrapped via the CanvasFrame component or equivalent token-reading container."
+
+
 composition:
   # ---------------------------------------------------------------------------
   # Matrix structure (cells marked BUILD NOW are defined below)
