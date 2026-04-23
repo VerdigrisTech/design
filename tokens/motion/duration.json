@@ -25,6 +25,16 @@
       "$value": "800ms",
       "$type": "duration",
       "$description": "Spinner animation (Patina spin-around)"
+    },
+    "reveal": {
+      "$value": "2000ms",
+      "$type": "duration",
+      "$description": "Canvas viewport-entry reveal. Used by Lissajous phase-portrait one-shot trace draw on first visibility. Long enough that the trace reads as drawn, not teleported."
+    },
+    "reveal-long": {
+      "$value": "3500ms",
+      "$type": "duration",
+      "$description": "Full narrative scrub animation. Used by ResolutionComparison to sweep sampling rate 8kHz → 1Hz → 8kHz so the viewer understands the full gradient before interacting."
     }
   }
 }

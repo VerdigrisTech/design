@@ -28,6 +28,15 @@ export const hexColors = {
   "color.neutral.black": "#000000",
   "color.status.destructive-light": "#e7000b",
   "color.status.destructive-dark": "#ff6467",
+  "color.status.warning-dark": "#f9b818",
+  "color.viz.trace.primary": "#0fc8c3",
+  "color.viz.trace.fault": "#ff6467",
+  "color.viz.trace.warning": "#f9b818",
+  "color.viz.bg.canvas.dark": "#09090b",
+  "color.viz.bg.canvas.light": "#fafafa",
+  "color.viz.grid": "#27272a",
+  "color.viz.text.label": "#71717b",
+  "color.viz.text.meta": "#9f9fa9",
   "color.legacy.www-primary-light": "#00725e",
   "color.legacy.www-brand-teal": "#03c7c2",
   "color.legacy.www-ring": "#118659",
@@ -62,4 +71,44 @@ export const hexColors = {
   "color.semantic.hero-belonging-fg": "#fafafa",
   "color.semantic.hero-restrained-bg": "#fafafa",
   "color.semantic.hero-restrained-fg": "#09090b"
+};
+
+export const viz = {
+  "trace": {
+    "primary": "#0fc8c3",
+    "fault": "#ff6467",
+    "warning": "#f9b818"
+  },
+  "bg": {
+    "canvas": {
+      "dark": "#09090b",
+      "light": "#fafafa"
+    }
+  },
+  "grid": "#27272a",
+  "guideline": {
+    "dark": "rgba(255, 255, 255, 0.03)",
+    "light": "rgba(0, 0, 0, 0.04)"
+  },
+  "text": {
+    "label": "#71717b",
+    "meta": "#9f9fa9"
+  }
+};
+
+export const durations = {
+  "fast": 150,
+  "normal": 200,
+  "moderate": 300,
+  "slow": 500,
+  "spin": 800,
+  "reveal": 2000,
+  "revealLong": 3500
+};
+
+export const easings = {
+  linear: (t) => t,
+  default: (t) => 0.5 - Math.cos(Math.PI * t) / 2,
+  out: (t) => 1 - Math.pow(1 - t, 2),
+  revealCubic: (t) => 1 - Math.pow(1 - t, 3),
 };

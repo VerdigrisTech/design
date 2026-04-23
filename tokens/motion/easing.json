@@ -15,6 +15,11 @@
       "$value": "linear",
       "$type": "cubicBezier",
       "$description": "Continuous rotation. Used by Patina spin-around."
+    },
+    "reveal-cubic": {
+      "$value": "cubic-bezier(0.33, 1, 0.68, 1)",
+      "$type": "cubicBezier",
+      "$description": "Cubic ease-out, 1 - (1 - t)^3. Used for Canvas viewport-entry reveals (Lissajous trace, ResolutionComparison scrub). Hits 87% of the travel in the first half — the reveal reads as decisive, not sluggish."
     }
   }
 }

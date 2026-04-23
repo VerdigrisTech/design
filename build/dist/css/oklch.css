@@ -30,6 +30,17 @@
   --color-neutral-black: oklch(0 0 0);
   --color-status-destructive-light: oklch(0.577 0.245 27.325);
   --color-status-destructive-dark: oklch(0.704 0.191 22.216);
+  --color-status-warning-dark: oklch(0.82 0.165 82);
+  --color-viz-trace-primary: oklch(0.75 0.1286 191.57);
+  --color-viz-trace-fault: oklch(0.704 0.191 22.216);
+  --color-viz-trace-warning: oklch(0.82 0.165 82);
+  --color-viz-bg-canvas-dark: oklch(0.141 0.005 285.823);
+  --color-viz-bg-canvas-light: oklch(0.985 0 0);
+  --color-viz-grid: oklch(0.274 0.006 286.033);
+  --color-viz-guideline-dark: rgba(255, 255, 255, 0.03);
+  --color-viz-guideline-light: rgba(0, 0, 0, 0.04);
+  --color-viz-text-label: oklch(0.552 0.016 285.938);
+  --color-viz-text-meta: oklch(0.705 0.015 286.067);
   --color-legacy-www-primary-light: oklch(0.48 0.12 178);
   --color-legacy-www-brand-teal: oklch(0.75 0.1286 191.57);
   --color-legacy-www-ring: oklch(0.55 0.12 160);

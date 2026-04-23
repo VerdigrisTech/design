@@ -144,6 +144,11 @@
         "$value": "oklch(0.704 0.191 22.216)",
         "$type": "color",
         "$description": "Destructive/error in dark mode — slightly softer"
+      },
+      "warning-dark": {
+        "$value": "oklch(0.82 0.165 82)",
+        "$type": "color",
+        "$description": "Warning/elevated on dark surfaces. Used for diagnostic arrows and below-threshold indicators on Canvas visualizations. Approximately hsl(45 95% 55%)."
       }
     }
   }
