@@ -7,6 +7,7 @@ This folder contains **medium-specific visual guidelines**. Each subfolder cover
 | Folder | What Goes Here | Status |
 |--------|---------------|--------|
 | `web-components/` | Button, card, form, nav, data display patterns from Patina | <span class="status-pill status-pill-complete">Complete</span> |
+| `visualizations/` | Canvas brand viz — phase portrait, waveform, harmonic spectrum, resolution comparison — and the interactive framing pattern that wraps them | <span class="status-pill status-pill-partial">Partial</span> |
 | `photography/` | Photo style, mood boards, composition rules, crop guidance | <span class="status-pill status-pill-partial">Partial</span> |
 | `illustration/` | Icon style, line weight, diagram conventions, color usage | <span class="status-pill status-pill-partial">Partial</span> |
 | `3d-and-spline/` | WebGL waveform spec, Three.js patterns, perf budgets | <span class="status-pill status-pill-partial">Partial</span> |

@@ -1,0 +1,67 @@
+{
+  "$description": "Canvas data-visualization tokens. Semantic names for trace colors, backgrounds, grid, guidelines, and text used inside Canvas-rendered visualizations (Lissajous, waveform, harmonic spectrum, resolution comparison, etc). All references resolve to base palette tokens so Canvas consumers stay in sync with CSS/Tailwind consumers. Rationale: shipped Canvas components on feat/visual-signature-components each re-invented their own COLORS object with slight drift (#0fc8c3 vs #0d9e99); graduating these into tokens removes the drift and lets every consumer — www React, Remotion, Hyperframes agents — read from one source.",
+  "color": {
+    "viz": {
+      "trace": {
+        "primary": {
+          "$value": "{color.brand.verdigris}",
+          "$type": "color",
+          "$description": "Default Canvas trace color. Healthy signal, normal signature, primary waveform."
+        },
+        "fault": {
+          "$value": "{color.status.destructive-dark}",
+          "$type": "color",
+          "$description": "Fault / critical / alert state. Bearing fault Lissajous, fault-severity bars, critical degradation arrows."
+        },
+        "warning": {
+          "$value": "{color.status.warning-dark}",
+          "$type": "color",
+          "$description": "Elevated / early-warning state. H5 downward arrow, below-alarm-threshold indicators."
+        }
+      },
+      "bg": {
+        "canvas": {
+          "dark": {
+            "$value": "{color.neutral.950}",
+            "$type": "color",
+            "$description": "Canvas background on dark surfaces. Oscilloscope aesthetic."
+          },
+          "light": {
+            "$value": "{color.neutral.50}",
+            "$type": "color",
+            "$description": "Canvas background on light surfaces. Technical-illustration aesthetic."
+          }
+        }
+      },
+      "grid": {
+        "$value": "{color.neutral.800}",
+        "$type": "color",
+        "$description": "Center crosshair, minor gridlines, bar outlines on dark Canvas surfaces."
+      },
+      "guideline": {
+        "dark": {
+          "$value": "rgba(255, 255, 255, 0.03)",
+          "$type": "color",
+          "$description": "Near-invisible reference geometry (unit circles, outer bounds) on dark Canvas surfaces. Explicit rgba — this is the one place alpha-on-white is allowed, for sub-pixel Canvas guidelines."
+        },
+        "light": {
+          "$value": "rgba(0, 0, 0, 0.04)",
+          "$type": "color",
+          "$description": "Near-invisible reference geometry on light Canvas surfaces."
+        }
+      },
+      "text": {
+        "label": {
+          "$value": "{color.neutral.500}",
+          "$type": "color",
+          "$description": "Primary axis labels, panel headings inside Canvas (RAW ELECTRICAL SIGNAL, HEALTH ANALYSIS). JetBrains Mono, 8px."
+        },
+        "meta": {
+          "$value": "{color.neutral.400}",
+          "$type": "color",
+          "$description": "Secondary metadata inside Canvas (power, PF, status text). JetBrains Mono, 7–9px."
+        }
+      }
+    }
+  }
+}

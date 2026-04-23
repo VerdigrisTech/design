@@ -32,6 +32,7 @@ export default {
             "neutral-black": "oklch(0 0 0)",
             "status-destructive-light": "oklch(0.577 0.245 27.325)",
             "status-destructive-dark": "oklch(0.704 0.191 22.216)",
+            "status-warning-dark": "oklch(0.82 0.165 82)",
             "background": "var(--color-semantic-background)",
             "foreground": "var(--color-semantic-foreground)",
             "card": "var(--color-semantic-card)",

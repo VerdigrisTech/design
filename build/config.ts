@@ -166,6 +166,9 @@ function oklchToHsl(value: string): string | null {
  */
 const HEX_OVERRIDES: Record<string, string> = {
   "color.brand.verdigris": "#0fc8c3",
+  // viz.trace.primary references color.brand.verdigris; override propagation does
+  // not follow references through the resolver, so the canonical hex is pinned here.
+  "color.viz.trace.primary": "#0fc8c3",
 };
 
 // --- Output generators ---
@@ -402,20 +405,98 @@ function main() {
   writeFileSync(join(DIST, "tailwind/preset.js"), tailwind);
   console.log(`  tailwind/preset.js (+ semantic color vars)`);
 
+  // --- Ergonomic JS exports for Canvas / Remotion / Hyperframes consumers ---
+  //
+  // hexColors is a flat dotted-key dictionary (existing v2 API, unchanged).
+  // viz, durations, easings are new nested/ergonomic exports added in v3.2.0.
+  // All three are intended to be imported by name:
+  //   import { hexColors, viz, durations, easings } from '@verdigristech/design-tokens'
+
+  // Nested viz object: hex for oklch-derived tokens, rgba() strings for guideline tokens.
+  // Canvas fillStyle/strokeStyle accept both hex and rgba, so consumers can use either directly.
+  const viz = {
+    trace: {
+      primary: hexJson["color.viz.trace.primary"] || hexJson["color.brand.verdigris"],
+      fault: hexJson["color.viz.trace.fault"] || hexJson["color.status.destructive-dark"],
+      warning: hexJson["color.viz.trace.warning"] || hexJson["color.status.warning-dark"],
+    },
+    bg: {
+      canvas: {
+        dark: hexJson["color.viz.bg.canvas.dark"] || hexJson["color.neutral.950"],
+        light: hexJson["color.viz.bg.canvas.light"] || hexJson["color.neutral.50"],
+      },
+    },
+    grid: hexJson["color.viz.grid"] || hexJson["color.neutral.800"],
+    guideline: {
+      // Guideline tokens use rgba() for sub-pixel Canvas guides. Pulled from token $value directly
+      // because oklchToHex can't represent alpha. Mirrors tokens/color/data-viz.json.
+      dark: "rgba(255, 255, 255, 0.03)",
+      light: "rgba(0, 0, 0, 0.04)",
+    },
+    text: {
+      label: hexJson["color.viz.text.label"] || hexJson["color.neutral.500"],
+      meta: hexJson["color.viz.text.meta"] || hexJson["color.neutral.400"],
+    },
+  };
+
+  // Durations as numeric ms. Sourced from tokens/motion/duration.json at runtime.
+  // Consumers pass these to setTimeout / requestAnimationFrame math directly.
+  // Hyphenated token names become camelCase (duration.reveal-long → durations.revealLong).
+  const durations: Record<string, number> = {};
+  const toCamelCase = (s: string) =>
+    s.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+  for (const [path, token] of allTokens) {
+    if (!path.startsWith("duration.")) continue;
+    const val = String(token.$value);
+    const ms = parseInt(val.replace("ms", ""), 10);
+    if (!Number.isNaN(ms)) {
+      durations[toCamelCase(path.replace("duration.", ""))] = ms;
+    }
+  }
+
+  // Easing functions for Canvas animation. Keys mirror tokens/motion/easing.json
+  // but the value is the JS implementation (CSS cubic-bezier strings aren't directly
+  // usable in Canvas animation loops).
+  const easingsSrc = `export const easings = {
+  linear: (t) => t,
+  default: (t) => 0.5 - Math.cos(Math.PI * t) / 2,
+  out: (t) => 1 - Math.pow(1 - t, 2),
+  revealCubic: (t) => 1 - Math.pow(1 - t, 3),
+};`;
+
   // Index file — values inlined so the module works in any environment
   // (Node, Vite, Webpack, Remotion). No runtime filesystem dependency.
   const indexJs = `// Auto-generated — do not edit
 export const hexColors = ${JSON.stringify(hexJson, null, 2)};
+
+export const viz = ${JSON.stringify(viz, null, 2)};
+
+export const durations = ${JSON.stringify(durations, null, 2)};
+
+${easingsSrc}
 `;
   writeFileSync(join(DIST, "index.js"), indexJs);
 
   // TypeScript declarations
   const dts = `// Auto-generated — do not edit
 export declare const hexColors: Record<string, string>;
+
+export declare const viz: {
+  trace: { primary: string; fault: string; warning: string };
+  bg: { canvas: { dark: string; light: string } };
+  grid: string;
+  guideline: { dark: string; light: string };
+  text: { label: string; meta: string };
+};
+
+export declare const durations: Record<string, number>;
+
+export declare const easings: Record<string, (t: number) => number>;
 `;
   writeFileSync(join(DIST, "index.d.ts"), dts);
 
   console.log(`\nDone. ${allTokens.size} total tokens processed.`);
+  console.log(`  index.js exports: hexColors, viz, durations (${Object.keys(durations).length}), easings`);
 }
 
 main();

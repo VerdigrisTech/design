@@ -30,6 +30,17 @@
   --color-neutral-black: hsl(0, 0%, 0%);
   --color-status-destructive-light: hsl(357, 100%, 45%);
   --color-status-destructive-dark: hsl(359, 100%, 70%);
+  --color-status-warning-dark: hsl(43, 95%, 54%);
+  --color-viz-trace-primary: hsl(178, 97%, 40%);
+  --color-viz-trace-fault: hsl(359, 100%, 70%);
+  --color-viz-trace-warning: hsl(43, 95%, 54%);
+  --color-viz-bg-canvas-dark: hsl(240, 10%, 4%);
+  --color-viz-bg-canvas-light: hsl(0, 0%, 98%);
+  --color-viz-grid: hsl(240, 4%, 16%);
+  --color-viz-guideline-dark: rgba(255, 255, 255, 0.03);
+  --color-viz-guideline-light: rgba(0, 0, 0, 0.04);
+  --color-viz-text-label: hsl(240, 4%, 46%);
+  --color-viz-text-meta: hsl(240, 5%, 64%);
   --color-legacy-www-primary-light: hsl(169, 100%, 22%);
   --color-legacy-www-brand-teal: hsl(178, 97%, 40%);
   --color-legacy-www-ring: hsl(157, 77%, 30%);
