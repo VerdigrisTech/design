@@ -182,6 +182,42 @@ Correct approaches:
 
 See individual specimen docs in this folder for per-viz specifications.
 
+## One argument per chapter
+
+Every canonical brand visualization carries a **specific argument**. The argument, not the shape, is what belongs to each page.
+
+| Visualization | Argument |
+|---------------|----------|
+| **Phase Portrait (Lissajous)** | "Every load has a unique electrical fingerprint." General; reusable where fingerprinting is the point. |
+| **Resolution Comparison** | "1 Hz misses what 8 kHz reveals — diagnostic analysis requires the resolution to exist." Specific; reserved for Intelligence/analysis pages. |
+| **Waveform Trace** | "The meter captures real harmonic structure at high sampling density." Specific; reserved for Hardware / measurement pages. |
+| **Harmonic Spectrum** | "The frequency-domain reveals what the time-domain hides." Specific; reserved for diagnostic / analysis pages. |
+| **Circuit Topology Map** | "Monitoring spans the full power chain hierarchy, with fault propagation visible at every node." Specific; reserved for Infrastructure / system pages. |
+| **Training Pulse Animation** | "AI workloads have unpredictable power demands that standard metering can't track." Specific; reserved for AI-factory / GPU pages. |
+| **Measurement Bar Reveal** | "The measurement IS the meaning." Brand signature; reserved for demonstrate-arc moments. |
+
+**Rule:** when placing a visualization on a page, the visualization's argument and the page's argument must match. Reusing a visualization on a second page is only legitimate if its argument genuinely applies to both — not because the visual looks cool in that slot.
+
+### Why this matters
+
+The site is a narrative. Each chapter (page) makes a specific argument. If two chapters use the same visualization to carry the same claim, the reader moving from one to the other reads the same paragraph twice — the second chapter feels like filler, the first chapter feels less earned.
+
+Concrete example from a real adversarial review (2026-04-24): we placed `ResolutionComparison` on both `/platform/signals` and `/hardware/ev2`. Both pages had the "1 Hz vs 8 kHz" framing, but:
+- **Signals** needed the diagnostic payoff (health ratio revealing aging). That's ResolutionComparison's argument.
+- **EV2** needed the sampling-density story (the hardware captures real structure). That's `WaveformTrace`'s argument.
+
+Borrowing ResolutionComparison for EV2 stole Signals' punchline to make a hardware point that didn't actually need it. Fix: WaveformTrace on EV2, ResolutionComparison stays exclusive to Signals. The two pages now each own their distinct argument, and a reader moving from EV2 → Signals experiences earned escalation ("we showed you what we capture; now let's show you what we can find").
+
+### General-argument visualizations can appear on multiple pages
+
+`LissajousFigure` is general — "every load has a unique fingerprint" applies anywhere that fingerprinting is relevant. Appearing on Signals + on the homepage + in a blog post about load classification is fine.
+
+Specific-argument visualizations (ResolutionComparison, WaveformTrace, CircuitTopologyMap, TrainingPulseAnimation) are single-page until explicit design review concludes otherwise.
+
+### Enforcement
+
+See `rules/visual-rules.yml` → `viz.one-argument-per-chapter` for the machine-enforceable rule. An evaluator pass compares each viz's canonical argument (from the table above) against the surrounding page copy's argument; duplicates on different pages with the same argument fail the rule.
+
 ## Anti-patterns
 
 1. **Dark Canvas on white page with no frame** — reads as a foreign object, not a designed element
@@ -189,3 +225,4 @@ See individual specimen docs in this folder for per-viz specifications.
 3. **Different border-radius per visualization** — breaks the "same kind of element" signal
 4. **Missing or generic captions** ("Figure 1", "chart showing data") — the caption carries the argument; if you don't know what to write, the visualization shouldn't ship yet
 5. **Interaction without affordance** — a slider that's not obviously a slider is a broken design, not a minimalist one
+6. **Same viz argument reused across chapters** — see "One argument per chapter" above. If you catch yourself placing the same interactive twice to make the same point, one of the two placements is wrong.

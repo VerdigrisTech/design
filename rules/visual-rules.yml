@@ -2033,6 +2033,15 @@ visualizations:
         test:
           llm_eval: "Does any Canvas visualization on this surface use a width that isn't one of the three canonical patterns (inline = matches prose measure, breakout = ~896px centered on viewport, fullbleed = 100vw via FullBleedSection)? Answer YES if any viz uses an ad-hoc width (e.g., 740px, 960px, 820px) that isn't one of the three patterns, NO if every viz declares and respects one of the three."
 
+      - id: "viz.one-argument-per-chapter"
+        description: "Each canonical brand visualization carries a specific argument (ResolutionComparison = diagnostic revelation; WaveformTrace = sampling density; CircuitTopologyMap = system hierarchy; TrainingPulseAnimation = GPU load dynamics; MeasurementBarReveal = measurement-is-meaning; HarmonicSpectrum = frequency-domain diagnostic). When a specific-argument viz appears on a page, its argument must match the page's argument. The same specific-argument viz must NOT appear on two different pages making the same claim -- that's telling the same paragraph twice in different chapters and dilutes both. General-argument viz (LissajousFigure = 'every load has a fingerprint') can legitimately appear on multiple pages as long as the fingerprint framing is preserved. See categories/visualizations/interactive-viz.md § One argument per chapter for the canonical argument table and the rationale."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          input_scope: ["all_pages_with_canvas_viz"]
+          llm_eval: "For the provided set of pages, does the same specific-argument Canvas visualization (ResolutionComparison, WaveformTrace, CircuitTopologyMap, TrainingPulseAnimation, MeasurementBarReveal, or HarmonicSpectrum) appear on two or more pages making the SAME underlying claim? Check by comparing the viz's canonical argument (from categories/visualizations/interactive-viz.md § One argument per chapter) against the surrounding prose on each page where it appears. LissajousFigure is GENERAL and can appear on multiple pages where fingerprint framing applies -- do not flag it. Answer YES if any specific-argument viz is duplicated across chapters with the same argument, NO if every specific-argument viz is unique to one page OR each placement makes a distinctly different argument that legitimately applies on both pages."
+
 
 composition:
   # ---------------------------------------------------------------------------
