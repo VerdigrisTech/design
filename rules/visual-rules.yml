@@ -2210,6 +2210,23 @@ composition:
         type: "reference"
         description: "Time-domain 60Hz signal with harmonics. Supporting element, not primary."
         use: ["section separators", "ambient background", "resolution comparisons"]
+      validated_operating_envelope:
+        id: "composition.visual-signature.validated-operating-envelope"
+        type: "reference"
+        maturity: "experimental"
+        description: "Three-band capacity chart (nameplate / conservative-derated / measured-safe envelope) across multiple circuits. Argues that validated operating limits recover the 20-40% of capacity that conservative derating strands. Specific to AI factory framing -- not a general-purpose viz."
+        argument: "Validated operating limits recover stranded capacity"
+        page_canonical_home: "/industries/ai-factory (Persuade x Web Page, Evidence section)"
+        reuse_policy: "specific" # general | specific | exclusive
+        reuse_notes: "Locked to /industries/ai-factory. Capacity-recovery framing is unique to AI workloads; reusing elsewhere imports the wrong frame."
+        bands:
+          nameplate: "neutral gray (top); breaker rating ceiling"
+          conservative_derated: "amber (60-80% of nameplate); what operators actually run"
+          measured_safe: "color.brand.verdigris (just below nameplate); Verdigris-validated envelope"
+        layout: "12 circuits as side-by-side bars so recovered capacity reads as a fleet-wide pattern"
+        code_reference: "verdigris/www/client/src/components/visualizations/ValidatedOperatingEnvelope.tsx"
+        graduation_target: "rule (after 30 days on /industries/ai-factory with no surfaced violations or stakeholder objections)"
+        use: ["AI Factory page evidence section"]
 
     # NOTE: Rules about generic waveforms and decorative particles have been
     # promoted to brand-level rules (see top-level `brand_rejections:` section).

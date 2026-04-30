@@ -27,7 +27,65 @@ title: Visual Signature
       <div class="v-card-desc">Same electrical event at 1/min vs 8kHz. The fault is invisible at low resolution. The product story in one image.</div>
       <div style="margin-top: 0.75rem; font-family: var(--font-mono); font-size: 0.625rem; color: var(--muted-fg);">Use: evidence sections, product demos, slide decks</div>
     </div>
+    <div class="v-card">
+      <div class="v-card-title">Validated Operating Envelope</div>
+      <div class="v-card-desc">Three-band capacity chart. Gray nameplate, amber conservative-derated, teal validated-safe. Recovers the 20-40% of capacity that derating strands.</div>
+      <div style="margin-top: 0.75rem; font-family: var(--font-mono); font-size: 0.625rem; color: var(--muted-fg);">Use: AI Factory page evidence section. Specific to /industries/ai-factory.</div>
+    </div>
   </div>
+</div>
+
+<p class="v-label">Canonical Viz Catalog</p>
+<div class="v-demo">
+  <p style="font-size: 0.8125rem; color: var(--muted-fg); margin-bottom: 1rem;">Each canonical viz makes one argument and has a page-canonical home. Reuse policy is GENERAL (works on multiple page types), SPECIFIC (locked to one page; argument is page-specific), or EXCLUSIVE (a single page owns it and other surfaces must not borrow). Maturity follows the design-system graduation model.</p>
+  <table style="width:100%; border-collapse: collapse; font-size: 0.8125rem;">
+    <thead>
+      <tr style="border-bottom: 1px solid var(--border); text-align: left;">
+        <th style="padding: 0.5rem 0.75rem;">Viz</th>
+        <th style="padding: 0.5rem 0.75rem;">Argument it makes</th>
+        <th style="padding: 0.5rem 0.75rem;">Canonical home</th>
+        <th style="padding: 0.5rem 0.75rem;">Reuse policy</th>
+        <th style="padding: 0.5rem 0.75rem;">Maturity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 0.5rem 0.75rem;">Phase Portrait (Lissajous)</td>
+        <td style="padding: 0.5rem 0.75rem;">"Every load has a fingerprint."</td>
+        <td style="padding: 0.5rem 0.75rem;">Brand mark; multiple pages</td>
+        <td style="padding: 0.5rem 0.75rem;">General</td>
+        <td style="padding: 0.5rem 0.75rem;">Rule</td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 0.5rem 0.75rem;">Harmonic Spectrum</td>
+        <td style="padding: 0.5rem 0.75rem;">"Loads have measurable harmonic content."</td>
+        <td style="padding: 0.5rem 0.75rem;">Section dividers; technology pages</td>
+        <td style="padding: 0.5rem 0.75rem;">General</td>
+        <td style="padding: 0.5rem 0.75rem;">Rule</td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 0.5rem 0.75rem;">Waveform Trace</td>
+        <td style="padding: 0.5rem 0.75rem;">"Real 60Hz behavior, not generic decoration."</td>
+        <td style="padding: 0.5rem 0.75rem;">/hardware/ev2 (canonical)</td>
+        <td style="padding: 0.5rem 0.75rem;">Specific</td>
+        <td style="padding: 0.5rem 0.75rem;">Rule</td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 0.5rem 0.75rem;">Resolution Comparison</td>
+        <td style="padding: 0.5rem 0.75rem;">"8kHz sees what 1/min cannot."</td>
+        <td style="padding: 0.5rem 0.75rem;">/platform/signals (canonical)</td>
+        <td style="padding: 0.5rem 0.75rem;">Specific</td>
+        <td style="padding: 0.5rem 0.75rem;">Rule</td>
+      </tr>
+      <tr>
+        <td style="padding: 0.5rem 0.75rem;">Validated Operating Envelope</td>
+        <td style="padding: 0.5rem 0.75rem;">"Validated operating limits recover stranded capacity."</td>
+        <td style="padding: 0.5rem 0.75rem;">/industries/ai-factory (Persuade x Web Page, Evidence section)</td>
+        <td style="padding: 0.5rem 0.75rem;">Specific to /industries/ai-factory; not reusable elsewhere</td>
+        <td style="padding: 0.5rem 0.75rem;">Experimental (graduates to Rule after 30 days)</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <p class="v-label">Named Text Effects</p>
@@ -168,6 +226,43 @@ Section heading starts as a continuous oscilloscope trace, resolves into readabl
 - The trace must be a continuous sinusoidal with harmonics, not per-character noise
 - Use on: H2 at the Turn section only
 - Text must be fully legible within 800ms
+
+## Validated Operating Envelope
+
+A circuit-by-circuit capacity chart with three stacked bands that argue: validated operating limits recover the 20-40% of capacity that conservative derating strands.
+
+### Visual treatment
+
+- **Gray band (top):** Nameplate / breaker rating. The published ceiling.
+- **Amber band (middle):** Conservative-derated (60-80% of nameplate). What operators actually run because they cannot trust the ceiling.
+- **Teal band (just below nameplate):** Measured-safe envelope. Verdigris-validated using 8kHz electrical data.
+
+The chart shows 12 circuits side-by-side as bars so the recovered capacity (the gap between amber and teal) is read as a fleet-wide pattern, not a single anecdote.
+
+### The argument it makes
+
+"Validated operating limits recover the 20-40% of capacity that conservative derating strands." This is the argument the AI Factory page makes; the viz is the evidence form of that argument. If you remove the viz, the page loses its proof.
+
+### Page-canonical home
+
+`/industries/ai-factory` (Persuade x Web Page, Evidence section). Executive audience. The viz must appear in the Evidence section because the recovered-capacity claim is what the rest of the page hinges on.
+
+### Reuse policy: SPECIFIC
+
+This viz is locked to /industries/ai-factory. The capacity-recovery framing is unique to AI workloads where stranded headroom is a CapEx problem; reusing the viz on other pages would dilute its argument or import the wrong frame onto a different audience.
+
+Compare:
+- WaveformTrace is locked to /hardware/ev2 (proves real 60Hz harmonic structure)
+- ResolutionComparison is locked to /platform/signals (proves 8kHz vs 1/min)
+- Phase Portrait is general (works as brand mark across surfaces)
+
+### Code reference
+
+Implementation: `verdigris/www/client/src/components/visualizations/ValidatedOperatingEnvelope.tsx`
+
+### Maturity
+
+Experimental. Graduates to Rule after 30 days on /industries/ai-factory with no surfaced violations or stakeholder objections (per the graduation model in `CLAUDE.md`).
 
 ## Ambient Waveform Layer
 
