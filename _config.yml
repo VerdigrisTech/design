@@ -9,9 +9,15 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
-# Exclude build artifacts and dev files from the Jekyll site
+# Exclude build artifacts and dev files from the Jekyll site.
+# build/print/ ships publicly (reference print stylesheet for whitepaper covers);
+# build/dist/ and build/*.ts are generated outputs and dev tooling.
 exclude:
-  - build/
+  - build/dist/
+  - build/config.ts
+  - build/validate.ts
+  - build/validate-rules.ts
+  - build/lint-external.ts
   - node_modules/
   - package.json
   - package-lock.json
