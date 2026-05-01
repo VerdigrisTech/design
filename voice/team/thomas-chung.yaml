@@ -1,0 +1,153 @@
+# Voice Profile: Thomas Chung
+# Sources: 135 Slack messages across 11 channels, conversation transcripts
+#          (Apr 14-22 2026), sprint plans, company updates, operational comms
+# Profiled: 2026-04-22
+# Data gaps: Email drafts, investor pitch recordings, 1:1 meeting transcripts
+
+name: Thomas Chung
+slack_id: U02TBQDUR
+role: Cofounder, builder, operational leader
+voice_summary: |
+  Thomas builds systems and cares for people through those systems. His
+  writing moves between builder-brain and leader-brain without friction.
+  In one message he's debugging why Anthropic credits expired and took
+  down every automated agent. In the next he's writing a transparent
+  payroll delay apology to the whole company. He doesn't perform
+  leadership; he demonstrates it through operational follow-through
+  and radical transparency.
+
+  His signature quality is connecting craft decisions to human outcomes.
+  "That's not the level of insight that's going to accelerate us" is
+  him pushing past surface improvements. "What does the reader need to
+  FEEL?" is him designing a voice system around emotional truth, not
+  brand guidelines. "People should walk away feeling good" is the
+  directive that changes everything about how content gets written.
+
+  He writes fast, lowercase, incomplete sentences when thinking out
+  loud. He writes structured, formatted, detailed updates when
+  communicating to the team. Both feel like the same person.
+
+strongest_ingredients:
+  - self_honesty: 10
+    evidence_ops: "I want to sincerely apologize for the payroll delay this week. While processing payroll on Monday, we encountered insufficient funds in our account."
+    evidence_product: "sure but that's not the level of insight that's going to accelerate us, IMO. real world outcomes will come when we have more outcomes to share."
+    evidence_voice: "that's not me. i think you need to look at my transcripts or slack writing to see who i truly am"
+  - personal_connection: 9
+    evidence: "Hey team — quick ask for input on the company meeting. We're trying to do two things better: 1) Get a real read on how we're tracking against goals 2) Make the company meeting more us"
+    evidence_names: "cc @Jimit @Josh — the UPS blog post has been updated and is ready for your review"
+  - mission_gravity: 8
+    evidence: "Carbon-free AI, stranded capacity recovery, and the long-term reliability of the compute layer the world is betting on"
+    evidence_vision: "The tools don't help you see across silos. The company has no shared memory."
+  - strategic_narrative: 8
+    evidence: "Pillar redefinition: Signals / Observability / Orchestration → Observability → Intelligence → Orchestration (sequential: Ingest→Analyze→Act)"
+    evidence_systems: "Meridian — operational intelligence for Verdigris. The problem: We use Claude Code, Cowork, and ChatGPT every day. They make individuals more productive. But they also accelerate siloed context."
+  - warmth_and_humor: 7
+    evidence_humor: "funny story: i had a get rich quick idea to advertise and drop-ship ding removal kits to hyper-targeted local areas following these kinds of hail notifications."
+    evidence_warmth: "Please respond or emoji to confirm your setup? I want to make sure everyone feels comfortable."
+  - technical_precision: 7
+    evidence: "Typography (brand_rules.yml was WRONG): H1 size: www=4rem, brand_rules=3.5rem → canonical: 4rem"
+    evidence_debug: "The Monday pre-read did not land. Anthropic credits ran out last Thursday, which took down staff-prep and every Claude-using agent. Sunday's ids-prep ran but the Notion query silently errored."
+  - operator_empathy: 6
+    evidence: "i forget — is that on railway? i can do it too if you remind me"
+    note: "Thomas's empathy shows as operational care, not field experience. He empathizes with his team, not with data center operators."
+
+unique_contribution: |
+  Systems-thinking leadership expressed through transparency. Thomas is
+  the only voice that naturally connects three levels simultaneously:
+  the craft decision (what the code should do), the human outcome (how
+  the team member feels), and the organizational system (how the company
+  learns). Nobody else at Verdigris writes a payroll apology and a
+  sprint plan and a voice system manifesto with the same authenticity.
+
+  His other unique quality: he's the TASTE layer. "That's not me" and
+  "that's not the level of insight that's going to accelerate us" are
+  editorial judgments that shape everything downstream. When he says
+  "people should walk away feeling good," that redefines what the voice
+  system optimizes for.
+
+registers:
+  thinking_out_loud: "lowercase, fast, incomplete sentences. 'i forget — is that on railway?' 'sorry, last week was a blur.' Questions more than statements."
+  team_updates: "Structured, formatted, emoji section headers. Tables, bullet points, cc tags. But never corporate — always direct and transparent about what went wrong."
+  company_comms: "Radically honest. Shares fundraising numbers, payroll issues, OKRs openly. Uses 'I want to sincerely apologize' not 'we regret to inform.'"
+  product_direction: "Thesis-driven. 'Voices are INGREDIENTS, not modes.' 'Organize by PURPOSE and FEELING.' Creates frameworks, not instructions."
+  builder: "Debugging and shipping. 'i'm about to make a big PR.' 'can we check in on where the image gen is?' Hands-on, not delegating."
+
+best_for:
+  - recipe: about_page
+    role: primary
+    why: |
+      The about page is Thomas's natural register: transparent, personal,
+      connecting craft to mission. The silicon-to-silicon arc was his
+      editorial direction.
+    target_feeling: warmth
+  - recipe: careers_page
+    role: primary
+    why: |
+      His radical transparency and operational care IS the pitch to
+      candidates. "If you are at a bigger company wondering whether you
+      will ever get to build something from a position of real ownership,
+      this is that role."
+    target_feeling: belonging
+  - recipe: investor_update
+    role: primary
+    why: |
+      His self-honesty and systems-thinking are exactly what investors
+      want. He shares real numbers, real challenges, real progress.
+    target_feeling: confidence
+  - recipe: technical_blog
+    role: supporting
+    why: |
+      His builder energy and debugging instincts add authenticity to
+      technical content. "The Notion query silently errored" is how
+      an engineer actually describes a production incident.
+    target_feeling: respect
+  - recipe: linkedin_post
+    role: primary
+    why: |
+      His thinking-out-loud register is perfect for LinkedIn: genuine,
+      specific, personal. "At the encouragement of others I'm sharing
+      my hackathon project today" — this is anti-performance.
+    target_feeling: warmth
+
+verbal_fingerprints:
+  - "cc @name @name"
+  - "sorry, last week was a blur"
+  - "i forget — is that on..."
+  - "quick detour ask"
+  - "can we check in on..."
+  - "i want to sincerely apologize"
+  - "at the encouragement of others"
+  - "IMO"
+  - "that's not the level of insight that's going to accelerate us"
+  - "people should walk away feeling good"
+  - lowercase when thinking, structured when communicating
+
+voice_sample: |
+  sure but that's not the level of insight that's going to accelerate
+  us, IMO. I think you've already shared a lot of that feedback before.
+
+  real world outcomes will come when we have more outcomes to share.
+  at this point further clarity of expression is a function of visual
+  storytelling
+
+voice_sample_leadership: |
+  I want to sincerely apologize for the payroll delay this week. While
+  processing payroll on Monday, we encountered insufficient funds in
+  our account, which required immediate attention and resolution. The
+  situation has been fully resolved and all payments have been processed.
+
+voice_sample_systems: |
+  Meridian — operational intelligence for Verdigris.
+
+  The problem: We use Claude Code, Cowork, and ChatGPT every day. They
+  make individuals more productive. But they also accelerate siloed
+  context. Each person has their own sessions, their own understanding
+  of what's happening. The tools don't help you see across silos. The
+  company has no shared memory.
+
+voice_sample_builder: |
+  The Monday pre-read did not land. Anthropic credits ran out last
+  Thursday, which took down staff-prep and every Claude-using agent.
+  Sunday's ids-prep ran but the Notion query silently errored, so the
+  "all clear" post was wrong. Fixed the silent failure today. Migrating
+  agents to OpenAI API key today.

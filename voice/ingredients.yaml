@@ -1,0 +1,166 @@
+# Voice Ingredients — the building blocks of Verdigris writing
+#
+# Each ingredient is a quality of writing that can be dialed up or down.
+# Content mixes multiple ingredients. No content uses just one.
+#
+# Think of these like EQ bands, not presets. You adjust the levels
+# per piece based on audience + desired feeling.
+
+ingredients:
+
+  technical_precision:
+    what_it_is: |
+      Specificity with units, numbers, and named systems. Physics over
+      adjectives. Describes what things DO, not what they ARE.
+    sounds_like:
+      - "continuous waveforms at 8 kHz"
+      - "A single rack of high-density GPU compute draws over 120 kW of pulsating, non-linear load"
+      - "Execution time per building is ~1.5 seconds"
+      - "Design margins have compressed from 30% to 10-15%"
+    does_not_sound_like:
+      - "advanced monitoring capabilities"
+      - "cutting-edge technology"
+      - "industry-leading precision"
+    dial_up_for: operators, engineers, technical evaluators
+    dial_down_for: executives skimming for strategic value, casual readers
+    source_founders: Jon primarily
+    source_team: Josh (field device troubleshooting), Mike (competitor product analysis, manufacturing economics)
+
+  strategic_narrative:
+    what_it_is: |
+      Why this matters beyond the technical. Where the industry is going
+      and where Verdigris fits. Tells the story of why, not just what.
+      Uses thesis-complication-resolution structure.
+    sounds_like:
+      - "The entire AI buildout is being erected on a grid that was not designed for it"
+      - "That thesis turned out to be only half right"
+      - "Energy and compute are no longer separate system problems. They are the same problem, expressed in the same signal."
+    does_not_sound_like:
+      - "We are disrupting the energy monitoring space"
+      - "Positioned to capitalize on the growing AI infrastructure market"
+      - "Our innovative platform leverages..."
+    dial_up_for: executives, investors, strategic partners, press
+    dial_down_for: practitioners who want specs not stories
+    source_founders: Mark primarily
+    source_team: Jimit (outside-in market framing, industry article synthesis)
+
+  operator_empathy:
+    what_it_is: |
+      Writing that signals "we've been in your control room." Uses
+      operator language, acknowledges their real constraints, and
+      describes problems the way they experience them, not the way
+      a product marketer frames them.
+    sounds_like:
+      - "the stuff that surprises operators during high-density buildouts"
+      - "the monitoring systems built for the last generation of infrastructure poll at one-second intervals. GPU workloads ramp in eight milliseconds."
+      - "where capacity is stranded, where failure is forming"
+    does_not_sound_like:
+      - "optimize your facility operations"
+      - "gain unprecedented visibility"
+      - "empower your team with actionable insights"
+    dial_up_for: data center ops teams, facilities engineers, site reliability
+    dial_down_for: investors, candidates (who haven't lived these problems yet)
+    source_founders: Jon + Thomas (both have spent time in facilities)
+    source_team: Josh (live customer escalations, device-level field work), Seren (customer experience perspective), Mike (operator buying process)
+
+  self_honesty:
+    what_it_is: |
+      Admitting what we got wrong, where we are, and what we don't know
+      yet. Stage transparency. Anti-hype. This is the ingredient that
+      makes everything else credible. Without it, technical precision
+      sounds like marketing and strategic narrative sounds like a pitch.
+    sounds_like:
+      - "That thesis turned out to be only half right"
+      - "Twenty people. Lean by design."
+      - "They are not broken. They are mismatched."
+      - "I include myself in that"
+    does_not_sound_like:
+      - "we are the market leader"
+      - "a fast-growing team of talented individuals"
+      - hiding the company size or stage
+    dial_up_for: everything. this should always be present at some level.
+    dial_down_for: never fully off. even data sheets benefit from honest caveats.
+    source_founders: Mark (publicly self-critical), Jon (technically honest)
+    source_team: 'Jimit ("We build first, then figure out distribution after the fact"), Seren ("they''re taking longer than I anticipated"), Mike ("Not sure how to model this, honestly")'
+
+  mission_gravity:
+    what_it_is: |
+      The weight of what we're working on. Not bragging about impact
+      but letting the problem speak for itself. The grid, the AI
+      buildout, the scale. This inspires without performing inspiration.
+    sounds_like:
+      - "sustain and enrich human life through responsive energy intelligence"
+      - "the most consequential problem in AI infrastructure"
+      - "We are building toward that future, one circuit at a time."
+      - "Carbon-free AI, stranded capacity recovery, and the long-term reliability of the compute layer the world is betting on"
+    does_not_sound_like:
+      - "we're changing the world"
+      - "revolutionizing the industry"
+      - "on a mission to transform..."
+    dial_up_for: careers pages, about page, fundraising, press
+    dial_down_for: technical docs, data sheets, support materials
+    source_founders: Mark primarily (the "Onward" energy)
+    source_team: Jimit (connects daily work to market significance)
+
+  warmth_and_humor:
+    what_it_is: |
+      Making people feel good. Levity in technical content. Human moments
+      in corporate communications. Celebrating people. Humor that comes
+      from specificity, not from trying to be funny.
+
+      This is the hardest ingredient to use well. Forced humor is worse
+      than no humor. Verdigris humor comes from honesty and specificity,
+      not from memes or self-deprecation.
+    sounds_like:
+      - "We've been hammering on this thing since 2017 (Fly.io, but this energy)"
+      - Celebrating a teammate's specific contribution publicly
+      - "A human aside in a technical blog post: this is the part where we realized we'd been measuring the wrong thing for three weeks"
+      - "The $600 utility bill story (specific, human, a little absurd)"
+    does_not_sound_like:
+      - forced jokes in product copy
+      - "exciting to announce!!!"
+      - emoji-heavy social posts
+      - "hedgehog-mascot-level whimsy (PostHog can do this, we can't -- our customers wear hard hats)"
+    dial_up_for: blog posts, social media, team comms, career pages
+    dial_down_for: investor decks, data sheets, compliance docs
+    source_founders: all three bring warmth differently — Mark through emotional directness, Jon through genuine curiosity, Thomas through operational care
+    source_team: 'Josh (builder energy, unforced celebration of team wins), Seren (understated dry humor, "I will just quietly leave this here")'
+    note: |
+      The Verdigris version of humor is: "something a smart person says
+      that makes you smile because it's true." Not: "something a brand
+      says to seem relatable."
+
+  personal_connection:
+    what_it_is: |
+      Named people with real context. Not "our team" but "Mark, Jon, and
+      Thomas." Not "our advisors" but "Zico Kolter reconnected with the
+      team, now on the OpenAI board." Real people make brands real.
+    sounds_like:
+      - "a $600 utility bill arrived at Mark's house"
+      - "Chiqun Zhang, Verdigris's former head of data science, was working on GPUs at Microsoft"
+      - "They know our capabilities because they've watched us build"
+    does_not_sound_like:
+      - "our world-class team"
+      - "industry-leading advisors"
+      - stock-photo-level anonymity
+    dial_up_for: about page, case studies, blog posts, recruiting
+    dial_down_for: product pages (the product should speak), data sheets
+    source_founders: Mark (tells stories about people), Thomas (highlights team contributions)
+    source_team: Seren (structured people assessment with empathy), Jimit (names specific people and connects their contributions)
+
+# ── Data gaps ──────────────────────────────────────────────────────
+#
+# Two team members could not be profiled due to insufficient Slack data
+# in channels accessible to the bot:
+#
+#   Prashanth (Shetty) — U072APQ694Y — Engineering
+#     Only 11 public-channel messages found. To profile, pull from:
+#     private engineering channels, GitHub PR review comments,
+#     Linear issue comments, or meeting transcripts (Granola).
+#
+#   Zeeshan Mohammed — U05M6KLP4BC — Principal Problem Solver
+#     Only 2 public-channel messages found. To profile, pull from:
+#     private channels, Linear/Notion activity, huddle recordings,
+#     or pair-programming sessions.
+#
+# See canonical/voice/team/ for profiled team members.

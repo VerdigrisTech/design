@@ -12,6 +12,12 @@ When generating UI components, pages, or visual assets for Verdigris:
 4. **Check `rules/visual-rules.yml`** for machine-enforceable constraints
 5. **Review `examples/`** for annotated good/bad references
 
+When **writing** Verdigris content (any prose — vision docs, marketing copy, blog posts, internal comms, READMEs):
+
+6. **Read `voice/USE.md` first.** It teaches you to identify subject + form + audience + target feelings before you write. Skipping this is the most common reason voice goes wrong.
+7. **Then `voice/recipes.yaml`** for the mix matching your content type (e.g. `investor_update`, `homepage`, `careers_page`).
+8. **Then `voice/team/*.yaml`** for the individual voice profile if a specific founder or teammate's register applies.
+
 ## Quick Reference: Brand Colors
 
 | Name | OKLch | Hex | Usage |

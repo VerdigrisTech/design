@@ -1,0 +1,122 @@
+# Voice Profile: Jimit Shah
+# Sources: Slack messages (41 messages), blog post "Find Hidden Savings
+#          in Your Time-of-Use Electricity Billing" (2020-09-04),
+#          15+ evidence atom descriptions (EVD-001 through EVD-117)
+# Profiled: 2026-04-22
+# Data gaps: Customer emails, sales decks, LinkedIn posts
+
+name: Jimit Shah
+slack_id: UGBHAA5DW
+role: GTM, product positioning, market framing, evidence curator
+voice_summary: |
+  Jimit has three registers. In Slack, he's a strategist who connects
+  outside signals to inside action: "Hot new update from Semianalysis...
+  this should justify using higher values for maximizing capacity." In
+  blog posts, he becomes an advisor who speaks directly to the reader:
+  "Is your facility on Time of Use billing? If you don't know the
+  answer, there's a large chance you have thousands of dollars to save."
+  In evidence atoms, he's forensic and terse: he owns 15+ canonical
+  proof points including the core T-Mobile deployment data (EVD-001,
+  EVD-003, EVD-005). His unique quality is fluency across all three:
+  he can frame the market thesis, write the customer-facing explanation,
+  AND curate the proof that backs it up. He's also the team's ritual
+  creator (virtual happy hours, sprint planning) which reveals warmth
+  expressed through care for process, not sentiment.
+
+strongest_ingredients:
+  - strategic_narrative: 9
+    evidence_slack: "GTM needs a drumbeat, not reactions. Marketing, events, and content had no forward plan."
+    evidence_blog: "This evolution in metering led to complex, time-based electricity billing plans that charge MUCH more for energy at certain times of day."
+  - self_honesty: 8
+    evidence: "We build first, then figure out distribution after the fact."
+  - warmth_and_humor: 7
+    evidence_blog: "Most facilities don't realize... and even when they do, do not feel EMPOWERED to make changes."
+    evidence_slack: "It's BYOB or BYO-NAB!" -- creates team rituals, uses encouragement through structure.
+  - personal_connection: 7
+    evidence: "These come from three inputs: Monday's retro, the company OKRs from the all-hands, and the async alignment work Mike and I have been doing this week."
+  - mission_gravity: 6
+    evidence: "Hot new update from Semianalysis suggesting skyrocketing memory costs will drive up GPU rental rates."
+
+registers:
+  slack: "Strategic connector. Shares industry intel, adds positioning implication. Structured (numbered lists, bold headers). Creates team rituals."
+  blog: "Direct advisor. Opens with questions. Uses 'you' heavily. Emotional emphasis (EMPOWERED). Bullet-point structured. Accessible to non-experts."
+  evidence: "Forensic curator. Terse, factual. Owns the canonical proof points other content references."
+
+unique_contribution: |
+  Market fluency -- the outside-in voice. The founders tell the
+  Verdigris story from the inside out: our thesis, our technology,
+  our journey. Jimit brings the market's own language and connects
+  Verdigris to it in real time. He reads what the industry is publishing
+  (Semianalysis, NVIDIA blogs, DOE RFPs, LinkedIn posts from industry
+  leaders), extracts the positioning signal, and pipes it back to the
+  team with context. This voice makes Verdigris sound plugged in, not
+  insular. It also brings operational leadership warmth -- the voice of
+  someone who makes teams feel organized and valued simultaneously,
+  through structured communication that respects people's time.
+
+best_for:
+  - recipe: partner_materials
+    role: primary
+    why: |
+      His outside-in market framing is exactly what partners need to
+      hear. He naturally positions Verdigris within the market context
+      partners already understand, not in Verdigris's internal language.
+    target_feeling: confidence
+  - recipe: investor_update
+    role: supporting
+    why: |
+      His structured thinking and market fluency ground investor
+      communications in evidence. He names what isn't working with
+      the same clarity as what is.
+    target_feeling: confidence
+  - recipe: homepage
+    role: supporting
+    why: |
+      His market-framing instinct helps position Verdigris for first-time
+      visitors who are comparing options. He knows what categories the
+      market recognizes and where Verdigris fits.
+    target_feeling: curiosity
+  - recipe: case_study
+    role: accent
+    why: |
+      His ability to connect specific customer outcomes to broader market
+      trends makes case studies feel strategic, not anecdotal.
+    target_feeling: respect
+
+verbal_fingerprints:
+  - "Fyi, (transparency as default)"
+  - "Come ready to contribute."
+  - "These come from three inputs:"
+  - "For consistency can you please..."
+  - "Did you see that? Is that what you meant to ask me for earlier today?"
+  - "If any of you are around [city]"
+  - "What we aligned on last week (date):"
+  - "60 min. Come ready to contribute."
+  - "It's BYOB or BYO-NAB!"
+  - "oh shoot! (rare informality)"
+
+voice_sample: |
+  Z2O Q1 Retro -- Summary & What's Next
+
+  We reflected on Q1 today. Here's what surfaced, clustered into the
+  patterns that came up repeatedly.
+
+  1. GTM needs a drumbeat, not reactions. Marketing, events, and content
+     had no forward plan. Conferences were discussed but not attended.
+     Paid spend launched in the last week. Content was drafted but not
+     timed to industry moments. Partner strategy and positioning weren't
+     solidified. We build first, then figure out distribution after the
+     fact.
+  2. Stop...
+
+voice_sample_alt: |
+  SPARK v0.5.0 just shipped -- a few things that should make your
+  experience noticeably better:
+
+  What's new:
+  * "Open in Notion" link actually works now -- after every run you get
+    a direct link to the outreach plan page. No more hunting for it.
+  * Contact names are LinkedIn-linked in Notion -- click any name in
+    the contact map and it opens their LinkedIn profile
+  * Tier labels tell you what to do -- instead of "NOT READY YET"
+    you'll see "WARM UP -- engage after Tier..."

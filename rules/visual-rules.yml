@@ -518,7 +518,7 @@ color:
         landing_page: 1       # Focused landing pages: trust only (+ neutrals)
         ad_banner: 1          # Ads: brand teal only (+ neutrals)
         email: 1              # Emails: trust only (+ neutrals)
-        white_paper: 2        # Documents: trust + 1 accent for data sections
+        white_paper: 2        # Documents: trust + 1 accent for data sections. See composition.persuade-whitepaper-cover for genre-specific cover rules.
         physical_goods: 1     # Hardware/packaging: brand teal only
         data_visualization: 6 # Charts: full palette allowed (this is what the gradient was designed for)
         slide_deck: 2         # Presentations: trust + 1 accent per slide
@@ -2929,6 +2929,157 @@ composition:
         test:
           llm_eval: "Does any chart on this slide use more than 3 distinct colors, or does any data visualization occupy more than 60% of the slide content zone? Answer YES if either limit is exceeded, NO if charts use 3 or fewer colors and fit within 60%."
     spacing: "8% safe margin inset from slide edges for 16:9. Content zone centered. Vertical centering default."
+
+  # ---------------------------------------------------------------------------
+  # PERSUADE x WHITEPAPER COVER -- briefings and editorial PDFs
+  # ---------------------------------------------------------------------------
+  persuade_whitepaper_cover:
+    id: "composition.persuade-whitepaper-cover"
+    type: "reference"
+    maturity: "experimental"
+    description: "Cover page for whitepapers, briefings, and policy papers sent to national-lab, regulator, and policy audiences. The cover is a quiet typographic surface, not page 1 of an article. Body copy starts on page 2. Three modes apply: lab_tradition, policy_brief, ceo_brief. Pick one before applying mode-specific rules. See categories/whitepapers/cover.md."
+    modes:
+      lab_tradition:
+        description: "Co-authored institutional research output. Plain white cover, multi-author, methodology chapter, full bibliography, third-person voice, 25-80pp."
+        exemplars:
+          - "LBNL ETA reports (eta-publications.lbl.gov)"
+          - "NREL technical reports (docs.nrel.gov)"
+          - "Brattle Group expert reports"
+      policy_brief:
+        description: "Named institution with policy standing addresses policymakers. Branded cover, 1-3 named authors with city, methodology sidebar, numbered Recommendations to <institution>, 8-25pp."
+        exemplars:
+          - "CSIS Energy Security briefs"
+          - "Brookings Policy Brief series"
+          - "Bipartisan Policy Center briefings"
+          - "EFI Hydrogen Action Plan"
+      ceo_brief:
+        description: "Operator with field data writes directly to a research or policy audience. Single named author, first-person voice, declarative recommendations, 4-12pp. The byline IS the warrant."
+        exemplars:
+          - "Anthropic, Core Views on AI Safety"
+          - "Stripe annual letters"
+          - "Bezos shareholder letters"
+          - "a16z Big Ideas / manifestos"
+    universal_reference_set:
+      - "LBNL ETA Data Center Energy Usage Report 2024 (lab_tradition, 79pp)"
+      - "CSIS Energy Infrastructure & DIB 2026 (policy_brief, 14pp)"
+      - "Anthropic, Core Views on AI Safety (ceo_brief)"
+    rules:
+      - id: "composition.persuade-whitepaper-cover.no-body-copy"
+        description: "The cover MUST NOT contain body paragraphs from the document. Body copy belongs on page 2."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does the cover page (page 1) contain body paragraphs that are part of the document's argument (not byline, deck, or eyebrow)? Answer YES if body copy appears on the cover, NO if the cover only carries identity, eyebrow, headline, deck, byline, and date."
+      - id: "composition.persuade-whitepaper-cover.no-section-headers"
+        description: "The cover MUST NOT contain section headers (e.g., 'THE PROBLEM', '01 Introduction'). A cover has a title; sections start on page 2."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does the cover page contain any section headers, section eyebrows like 'THE PROBLEM' or numbered section titles? Answer YES if section headers appear on the cover, NO if the cover has only one title (the headline)."
+      - id: "composition.persuade-whitepaper-cover.deck-to-byline-gap"
+        description: "Vertical gap between the deck (subhead) and the byline. Floor 1.4in keeps the cover from reading as a page-1 article. Ceiling 2.6in keeps it from reading as wrong-page-size."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          min_in: 1.4
+          max_in: 2.6
+          note: "Default 1.6in. The single load-bearing measurement on the cover."
+      - id: "composition.persuade-whitepaper-cover.divider-count"
+        description: "At most one horizontal divider on the cover, sitting between the quiet field and the byline. Multiple dividers fragment the surface."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test: { max: 1 }
+      - id: "composition.persuade-whitepaper-cover.deck-word-count"
+        description: "Deck (subhead) maximum word count. Longer decks crowd the cover and fail the cover register."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test: { max: 24 }
+      - id: "composition.persuade-whitepaper-cover.headline-font"
+        description: "Cover headline uses Lato 700 (display font per fontFamily.display). Serif headlines violate the system's Inter+Lato lock at foundations/typography.md:128-159."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Is the cover headline set in Lato (or its fallback stack), not a serif face like Charter, Georgia, or Source Serif? Answer YES if a serif is used, NO if Lato is used."
+      - id: "composition.persuade-whitepaper-cover.dark-surface-headline-weight"
+        description: "On dark covers (background L < 0.3), drop headline weight one tier (Lato 700 max, not 800/900). Heavy weights bloom on dark."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Is the cover background dark (lightness below 30%) AND the headline weight 800 or heavier? Answer YES if a heavy weight is used on dark, NO if the cover is light or the headline weight is 700 or lighter."
+      - id: "composition.persuade-whitepaper-cover.dark-surface-color"
+        description: "Dark cover background MUST be color.neutral.950 (oklch 0.141 0.005 285.823, hex #09090b per build/dist/hex/colors.json). Invented navy hex values are a brand violation."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Is the dark cover background color color.neutral.950 (its canonical hex is #09090b), as opposed to an invented hand-picked navy like #0b1530 or #0c0c10? Answer YES if a non-token color is used, NO if neutral.950 (#09090b) is used."
+      - id: "composition.persuade-whitepaper-cover.deck-contrast-tier"
+        description: "Deck (subhead) on dark covers must use contrast tier 2 (~70-78% L), not pure white. Two near-white texts compete."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "On a dark cover, is the deck rendered in pure white (#fff or rgba 1.0)? Answer YES if pure white, NO if a tier-2 muted white (~rgba 0.70-0.78) is used."
+      - id: "composition.persuade-whitepaper-cover.prepared-for-line"
+        description: "Policy-brief mode: include a 'Prepared for: <institution + group>' line below the byline. CEO-brief and lab-tradition modes: optional (the eyebrow already names the audience; in CEO mode the line reads as consultancy theater)."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        applies_to_modes: ["policy_brief"]
+        test:
+          llm_eval: "Is the cover in policy_brief mode (named institution addresses policymakers) AND missing a 'Prepared for: ...' line below the byline? Answer YES if policy_brief mode without the line, NO if either a different mode or the line is present."
+      - id: "composition.persuade-whitepaper-cover.coi-disclosure"
+        description: "When the author benefits commercially from the recommendations being adopted, the cover MUST carry a one-sentence Disclosure block. Pattern: 'Disclosure. The author is [role] of [vendor], which develops [products discussed]. Views are the author's.' Drop boilerplate like 'has not been peer-reviewed'; it advertises insecurity. Required across all three modes when the commercial-interest condition holds."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        applies_to_modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          llm_eval: "Does the author benefit commercially from the briefing's recommendations being adopted (their employer sells products that would be mandated/funded), AND the cover lacks a one-sentence Disclosure block? Answer YES if commercial-interest exists without disclosure, NO if either no commercial interest OR a disclosure is present."
+      - id: "composition.persuade-whitepaper-cover.recommendations-labeling"
+        description: "Section label for numbered policy asks differs by mode. lab_tradition: 'Implications' or 'Open Questions for <audience>' (lab convention rarely tells DOE what to do). policy_brief: 'Recommendations to <institution>' (think-tank convention). ceo_brief: 'Bottom line' or 'What to do' (CEO directness). Mismatching label to mode reads as borrowing authority from a genre the document does not occupy."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does the recommendations-section label match the document's mode? Lab_tradition expects 'Implications' or 'Open Questions'; policy_brief expects 'Recommendations to <institution>'; ceo_brief expects 'Bottom line' or 'What to do'. Answer YES if there is a mode-label mismatch (e.g., a CEO brief labels its asks 'Recommendations to LBNL'), NO if the label matches the mode."
+      - id: "composition.persuade-whitepaper-cover.methods-callout"
+        description: "Any quantitative claim resting on proprietary field data MUST be footnoted to a Methods callout. Required content: site count n, geography, instrumentation, observation window, 95% CI, anonymization, data-availability statement."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does the briefing cite a numerical claim attributed to vendor field measurements (not a public source) AND fail to provide a Methods callout with site count, instrumentation, observation window, and CI? Answer YES if a vendor-data claim lacks a methods callout, NO if either no vendor-data claim exists or a methods callout is present."
+      - id: "composition.persuade-whitepaper-cover.citation-format"
+        description: "Citations MUST follow ANSI/NISO baseline: author, 'quoted title,' series ID or arXiv ID, (year), URL. Bare domains alone are insufficient. arXiv preprints require year. Government/lab reports require report numbers."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does the sources list contain entries that are missing year, missing quoted titles, or have only bare domains as URLs? Answer YES if any citation lacks year, quoted title, or has only a bare domain, NO if all citations carry author + quoted title + year + full URL."
+    spacing:
+      page_size: "8.5in x 11in (Letter) or 210mm x 297mm (A4)"
+      frame: "0.85in top, sides, bottom (default). Floor/ceiling not yet codified; add to tokens/spacing/print.json if a real surface needs to deviate."
+      eyebrow_to_headline: "32-48px (default 36px)"
+      headline_to_deck: "18-28px (default 22px)"
+      deck_to_byline: "1.4in floor, 2.6in ceiling (default 1.6in) -- the load-bearing measurement"
+      byline_to_edge: "0.6-1.0in (default 0.75in)"
+    typography:
+      eyebrow: "Lato 9pt 700, tracking 0.18em, uppercase, teal-soft on dark"
+      headline: "Lato 700, 38pt, line-height 1.10, max 6.4in width, max 3 lines"
+      deck: "Inter 13pt 400, line-height 1.45, max 4.75in width, max 24 words"
+      byline_name: "Inter 11pt 600"
+      byline_affil: "Inter 9.5pt 400, contrast tier 3"
+      date: "Inter 9.5pt 400, contrast tier 2-3"
+    surface: "Dark default. neutral.950 background. Light cover variant deferred until a real surface needs it."
+    weasyprint_notes: "Use named @page (not :first), Flex column (not Grid), padding-top (not margin-top) for vertical rhythm. See build/print/cover.css and categories/whitepapers/cover.md for working stylesheet and known WeasyPrint issue references."
 
   # ---------------------------------------------------------------------------
   # IDENTIFY x AD BANNER -- brand recognition ads

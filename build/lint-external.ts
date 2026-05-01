@@ -72,6 +72,8 @@ const ALLOWLIST: Record<string, string[]> = {
   "evolution.html": ["Team member name (Daniela)", "Team member name (Josh)", "Team member name (Jimit)"],
   // voice-specimen.html intentionally names team members as voice sources
   "voice-specimen.html": ["Team member name (Josh)", "Team member name (Jimit)"],
+  // voice/README.md documents the voice foundation's team profile sources
+  "voice/README.md": ["Team member name (Josh)", "Team member name (Jimit)"],
 };
 
 // --- Scanner ---

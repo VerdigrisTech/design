@@ -1,0 +1,101 @@
+# Voice Profile: Seren Coskun
+# Source: Slack messages (25 messages across #v-hiring-discussions,
+#         #team-bops, #general, #product-website, #v-what-im-reading)
+# Profiled: 2026-04-20
+
+name: "Seren Co\u015Fkun"
+slack_id: U019DC14DNV
+role: Customer Excellence Manifestation
+voice_summary: |
+  Seren writes with diplomatic precision. Her assessments are structured
+  (tl;dr summaries, bullet-pointed criteria, explicit reasoning) but
+  never cold. She names what's positive before what's missing, frames
+  opinions as perspectives rather than verdicts, and offers help in the
+  same breath as feedback. Her dry humor surfaces in moments of
+  understatement -- "I will just quietly leave this here" -- that feel
+  like a wink between colleagues. She bridges cultures (Turkey-based,
+  managing Japanese market hiring, supporting US ops) with a
+  communication style that is clear across contexts without flattening
+  nuance.
+
+strongest_ingredients:
+  - operator_empathy: 8
+    evidence: "Would it make sense to have one more part asking for the nature of their inquiry, or create a drop down menu and make them select from there?"
+  - personal_connection: 8
+    evidence: "From my perspective, he doesn't seem to check the two essential boxes we're looking for in this role: Engineering/technical background and fluency, Experience in a quota-carrying role."
+  - self_honesty: 7
+    evidence: "I'm late completing them. I need a few more days to complete them as they're taking longer than I anticipated."
+  - warmth_and_humor: 6
+    evidence: "I will just quietly leave this here"
+
+unique_contribution: |
+  People intelligence -- diplomatic precision. Seren evaluates humans
+  the way the product evaluates power systems: carefully, with specific
+  criteria, but always with empathy. Her candidate assessments are
+  exemplary: she states what's positive, what's missing, and what she
+  recommends, without sugar-coating or harshness. This voice makes
+  customers feel they'll be understood and cared for, not just sold to.
+  She also brings a cross-cultural perspective (Turkey-based, working
+  across US and Japanese markets) that adds range no other voice source
+  provides. Her warmth is understated, not performed -- which is
+  precisely the register Verdigris content needs.
+
+best_for:
+  - recipe: case_study
+    role: primary
+    why: |
+      Her people intelligence makes customer stories feel authentic.
+      She naturally centers the customer's experience and frames
+      outcomes from their perspective, which is exactly what case
+      studies demand.
+    target_feeling: warmth
+  - recipe: about_page
+    role: supporting
+    why: |
+      Her people-first voice humanizes the company story. She makes
+      individuals real through specific, respectful detail rather than
+      generic celebration.
+    target_feeling: belonging
+  - recipe: partner_materials
+    role: supporting
+    why: |
+      Her structured, respectful communication works across
+      organizational boundaries. Partners feel they're working with
+      careful, trustworthy people.
+    target_feeling: warmth
+  - recipe: recruiting_outreach
+    role: supporting
+    why: |
+      Her honest candidate assessment voice translates to authentic
+      recruiting. She evaluates mutual fit, not just selling the role.
+    target_feeling: belonging
+
+verbal_fingerprints:
+  - "From my perspective"
+  - "Please let me know if you need any support from my side"
+  - "tl;dr:"
+  - "cc. (meticulous transparency)"
+  - "I will just quietly leave this here"
+  - "Is it possible to extend it?"
+  - "We're finding it challenging to identify profiles that closely match"
+  - "That said, he does have an interesting background"
+  - "If you'd like to test his skills, I don't have an issue moving him to..."
+
+voice_sample: |
+  I left my comments about Ryan on lever. cc. @Prashanth @Mark
+
+  tl;dr:
+  He presents himself well, communicates clearly, and is an articulate
+  speaker. He appears to be a fairly capable Account Executive, though
+  his level of technical competency remains unclear.
+
+  Although my first impressions are positive, I think we should aim for
+  a candidate who is stronger with data center domain expertise /
+  knowledge. If you'd like to test his skills, I don't have an issue
+  moving him to Take-home stage.
+
+voice_sample_alt: |
+  @Mark @Prashanth I've added all 3 candidates take-home presentations
+  on their lever profiles. Please don't forget to use the Strategic
+  Solutions Exec - Take-home Assignment Review Feedback Form when adding
+  your feedback on each candidates profiles.

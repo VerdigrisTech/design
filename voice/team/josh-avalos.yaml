@@ -1,0 +1,97 @@
+# Voice Profile: Josh Avalos
+# Source: Slack messages (76 messages across #team-z2o, #product-website,
+#         #team-edge, #general, #v-what-im-reading, #v-hiring-discussions)
+# Profiled: 2026-04-20
+
+name: Josh Avalos
+slack_id: U067NGNFB2Q
+role: Full-Stack Device Whisperer (business development + engineering)
+voice_summary: |
+  Josh writes like someone who builds things with their hands and can't
+  help being excited when they work. His messages move fast -- status
+  updates arrive with raw log output and exclamation points in the same
+  breath. He mixes terminal-level technical detail (device IDs, error
+  codes, journalctl output) with unforced enthusiasm that makes people
+  want to join in. His humor comes from personality, not performance:
+  he numbers lists in Spanish, extends letters for emphasis, and
+  celebrates team wins louder than his own. When something breaks,
+  he escalates with precision and urgency. When something ships,
+  the whole channel knows.
+
+strongest_ingredients:
+  - warmth_and_humor: 9
+    evidence: "Nothing new, just happy to see where we're at! :100: Best Practices :100: SEO"
+  - operator_empathy: 8
+    evidence: "P0, justification: customer has demo tomorrow"
+  - technical_precision: 7
+    evidence: "Drone Ack timeout / MQTT failure count = 1 ... had to remove ~80 files until it got to the right one"
+  - self_honesty: 6
+    evidence: "agents/prompts can and will change, this is just setting up the system"
+
+unique_contribution: |
+  Builder energy -- the maker's voice. The founders describe what
+  Verdigris does and why it matters. Josh shows what it feels like
+  to build it right now. His voice is the sound of someone debugging
+  at 2am who still thinks the work is worth it. This is the ingredient
+  that makes readers feel the product is being actively built by people
+  who care, not just designed by people who think. No other voice
+  source in the system carries this specific energy: the thrill of
+  shipping, the pride in craft, the willingness to show the messy
+  middle.
+
+best_for:
+  - recipe: linkedin_post
+    role: primary
+    why: |
+      His natural, informal, builder energy is exactly what LinkedIn
+      rewards. He shares things because "I think it's neat" -- that
+      authenticity cuts through corporate noise.
+    target_feeling: warmth
+  - recipe: careers_page
+    role: primary
+    why: |
+      His enthusiasm makes people want to work here. When he celebrates
+      a team win or shares a Friday sneak peek, candidates feel
+      belonging before they've even applied.
+    target_feeling: belonging
+  - recipe: technical_blog
+    role: supporting
+    why: |
+      His field troubleshooting stories ("spent the last 6 hours trying
+      different things") are perfect raw material for honest technical
+      writing that shows the work, including the dead ends.
+    target_feeling: curiosity
+  - recipe: product_page
+    role: accent
+    why: |
+      His operator escalation voice shows the product in the real world:
+      customer demos, firewall issues, device connectivity. This grounds
+      product pages in operational reality.
+    target_feeling: relief
+
+verbal_fingerprints:
+  - "It's alive!"
+  - "TIL"
+  - "IT'S OFF TO THE RACESSSSSSSS"
+  - "I think it's neat"
+  - ":bangbang: *Official Escalation*"
+  - "break it if you want"
+  - "uno, dos, tres, cuatro"
+  - "I forgot to share this yesterday, but..."
+  - "I believe (before feedback or observations)"
+  - "cc @... (radical transparency pattern)"
+
+voice_sample: |
+  :bangbang: *Official Escalation* Bentaus installed device BBE20002165
+  was moved to ethernet and rssh has been steadily resetting every
+  ~2 minutes.
+
+  I've spent the last 6 hours trying different things to check if maybe
+  it's a duplicate IP issue, random network blips, if it's a system
+  service that's killing/resetting something, monitoring after each
+  small change, dealing with journal being full and not logging and
+  solving that issue, and I can't find the problem.
+
+voice_sample_alt: |
+  It's alive! I just need to fix the playbook integration and I think
+  do a little more configuration BUT THEN IT'S OFF TO THE RACESSSSSSSS
