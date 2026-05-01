@@ -51,6 +51,7 @@ With 60%+ of traffic arriving from LLMs with intent already shaped, each page mu
 | Persuade x Ad banner | **Defined** | Z-pattern, max 4 elements, 30% whitespace |
 | Persuade x Email | **Defined** | Single column 600px, system fonts, 1 CTA per section |
 | Persuade x Slide deck | **Defined** | 10-15 slides, 24pt floor, dark bookends, single turn |
+| Persuade x Whitepaper cover | **Experimental** | Three modes (lab_tradition, policy_brief, ceo_brief). Cover-only page 1, deck-to-byline 1.4-2.6in, mode determines author convention + CTA labeling + disclosure pattern. See `categories/whitepapers/cover.md` |
 | Inform x Web page | **Defined** | Metronomic rhythm, 3rem padding, 65ch line length |
 | Inform x Slide deck | **Defined** | One idea per slide, 60% whitespace, teal in diagrams |
 | Analyze x Dashboard | **Defined** | 12-col grid, full palette, 13-14px body, tabular-nums |

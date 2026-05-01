@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Higher-Frequency Grid Telemetry &amp; the AI-Factory Era</title>
+<!--
+  Canonical Verdigris whitepaper cover stylesheet.
+  In production, link via the published @verdigristech/design-tokens package:
+    <link rel="stylesheet" href="node_modules/@verdigristech/design-tokens/build/print/cover.css">
+  This example uses a relative path for the in-repo demo.
+
+  Content here is Mark Chung's original briefing text (extracted verbatim
+  from /tmp/wp-review/text.txt). Only the rendering layer (cover-only page 1,
+  layout, typography polish: curly quotes, footnote spacing, non-breaking
+  hyphens) is design-system work. No content additions.
+-->
+<link rel="stylesheet" href="../../../build/print/cover.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE 1 - COVER (cover only; design-system fix to original cramping)
+     ============================================================ -->
+<section class="vd-cover">
+
+  <header class="vd-cover-top">
+    <img src="logo.svg" alt="Verdigris" class="vd-logo">
+  </header>
+
+  <div class="vd-cover-center">
+    <div class="vd-cover-eyebrow">
+      <span class="vd-dot"></span>BRIEFING<span class="vd-sep"></span>LBNL GRID INTEGRATION GROUP / DOE
+    </div>
+    <h1 class="vd-cover-headline">
+      Higher-Frequency Grid Telemetry &amp;<br>
+      the <span class="vd-accent">AI-Factory Era</span>
+    </h1>
+    <p class="vd-cover-deck">
+      National security, stranded capacity, and where it matters in
+      an AI-factory dominant grid.
+    </p>
+  </div>
+
+  <div class="vd-cover-quiet"></div>
+
+  <footer>
+    <div class="vd-cover-byline">
+      <div>
+        <span class="vd-name">Mark Chung</span>
+        <span class="vd-affil">CEO, Verdigris Technologies, Los Altos CA</span>
+      </div>
+      <div class="vd-date">April 2026</div>
+    </div>
+    <div class="vd-cover-disclosure">
+      <strong>Disclosure.</strong> The author is CEO of Verdigris Technologies, which develops the telemetry products discussed. Views are the author&rsquo;s.
+    </div>
+  </footer>
+
+</section>
+
+<!-- ============================================================
+     PAGE 2+ - BODY (Mark's content, eyebrow-only section structure as in original)
+     ============================================================ -->
+<section class="vd-paper">
+
+  <section>
+    <div class="vd-section-eyebrow"><span class="vd-num">01</span>Power is the bottleneck in the AI race</div>
+
+    <p class="vd-body">The PRC has spent fifteen years hardening the grid that compute will run on. The scope of that investment is the proper baseline for any U.S. AI-buildout plan:</p>
+
+    <ul class="vd-bullets">
+      <li><strong>42 ultra-high-voltage AC/DC lines</strong> commissioned since 2009, totaling more than 40,000 km, with combined transfer capacity exceeding 300 GW. The United States has built zero UHV lines in the same period.&nbsp;<sup>3</sup></li>
+      <li><strong>~8,200 mi</strong> of high-voltage transmission built in China during the 2020s, versus <strong>375 mi</strong> in the United States; China is presently building nearly three times more interregional transmission capacity than the rest of the world combined.&nbsp;<sup>4</sup></li>
+      <li><strong>~$80 B/yr</strong> State Grid budget for grid hard infrastructure alone; total PRC energy investment in 2025 crossed $500 B.&nbsp;<sup>5</sup></li>
+      <li>The PRC&rsquo;s &ldquo;east data, west computing&rdquo; policy already routes compute to where clean generation lives, with multi-GW transfer corridors purpose-built to feed it.&nbsp;<sup>6</sup></li>
+      <li>U.S. AI compute has to compete with that grid on a system that takes a five-year median wait to interconnect, 7 years in Northern Virginia.&nbsp;<sup>7</sup></li>
+    </ul>
+
+    <p class="vd-body">That is a hardened, modernized, generation-aware grid. The competitiveness gap in AI is not in chips or models. It is in electrons. And it cannot be closed in time by building new transmission alone, that takes a decade. The only lever that operates on AI-race timescales is extracting more capability from the infrastructure already in place: more headroom, more dispatchable load, more visibility, and bidirectional coordination with compute. High-frequency grid telemetry is the enabling layer for all four.</p>
+  </section>
+
+  <section>
+    <div class="vd-section-eyebrow"><span class="vd-num">02</span>Why higher-frequency telemetry matters</div>
+
+    <p class="vd-body">Sub-cycle (kHz-class) waveform capture surfaces three phenomena that point-in-time RMS metering destroys. (a) <strong>di/dt stacking at rack scale</strong>, thousands of cores synchronize to produce sub-millisecond step transients. (b) <strong>Sub-synchronous oscillations</strong> in the 0.5 to 1.3 Hz band, dominant mode near 1.2 Hz, generated by training-step synchronization across thousands of GPUs and now documented in the wide-area power-system literature.&nbsp;<sup>8</sup> (c) <strong>Harmonic content up to the 50th order</strong> from switched-mode supplies, with IEEE 519 compliance drifting as cluster mix and short-circuit ratio change.&nbsp;<sup>9</sup> Without sub-cycle visibility, operators provision against worst-case envelopes, regulators cannot verify dynamic load models, and planners cannot distinguish a load that destabilizes the grid from one that supports it.</p>
+
+    <p class="vd-body"><strong>Three grid-level benefits.</strong> (1) Dynamic load characterization as a precondition for interconnection, moving from nameplate to measured behavior, the direction FERC and several RTOs are drafting toward.&nbsp;<sup>10</sup> (2) Closed-loop coordination of the manufactured-inertia stack (firmware ramps to capacitor banks to active filters to flywheel UPS to BESS), which today operates open-loop because no layer has a real-time model of the others. (3) Bidirectional telemetry that lets a facility participate as a grid asset rather than purely as a destabilizing load.</p>
+  </section>
+
+  <section>
+    <div class="vd-section-eyebrow"><span class="vd-num">03</span>Closing the loop turns compute into a grid-shaping asset</div>
+
+    <p class="vd-body">With sub-cycle telemetry and bidirectional control, GPU clusters stop being inelastic loads and become elastic, grid-aware resources. Compute can be throttled, redistributed across sites, or briefly shed in milliseconds to absorb grid stress, turning the most volatile load on the grid into a stabilizing one. The cluster&rsquo;s electrical surface becomes topology-aware: it knows where it sits on the grid, what the grid currently needs, and how its scheduling decisions propagate back through the local impedance network.</p>
+
+    <p class="vd-body">This is impossible at SCADA timescales. It requires a new class of AI-ready high-frequency telemetry, millisecond updates, full waveform context, machine-readable schemas, feeding autonomous agents that can act on grid state without a human in the loop. That telemetry layer is what lets the grid + compute system be treated as a single coordinated surface, rather than two systems shouting past each other through 15-minute averages. Static demand-response programs do not reach this. Manual dispatch does not reach it. Only closed-loop, sub-cycle, AI-mediated control does. The administration&rsquo;s policy of co-locating data centers with energy infrastructure on DOE-managed sites is the right substrate;&nbsp;<sup>11</sup> the missing piece is the dynamic intelligence layer that makes co-location actually deliverable in real time.</p>
+  </section>
+
+  <section>
+    <div class="vd-section-eyebrow"><span class="vd-num">04</span>What kind of stranded capacity is being built?</div>
+
+    <p class="vd-body">There are three distinct classes, conflating them hides the real lever.</p>
+
+    <p class="vd-body"><strong>(a) Generation and transmission stranded by phantom demand.</strong> Speculative interconnection requests inflate utility forecasts. PJM capacity billings rose 285% in a single year ($2.69 B to $10.39 B, 2024 to 2025);&nbsp;<sup>12</sup> ERCOT&rsquo;s queue contains roughly 458 GW of pending applications. If a meaningful fraction of speculative load does not materialize on schedule, ratepayers absorb the cost of generation, transmission lines, and gas pipelines built to serve it.&nbsp;<sup>13</sup> This is the form of stranded capacity already visible in capacity-market clearing prices, ratepayer impact analyses, and interconnection-queue audits, and the form that draws the most public attention. It is also the most reversible: better load forecasts, earned by measured behavior rather than declared nameplate, deflate it directly.</p>
+
+    <p class="vd-body"><strong>(b) Stranded capacity inside the facility.</strong> Field measurement at AI campuses shows 12 to 18% average utilization of nameplate, because operators cannot verify true headroom in real time and reserve conservatively against the sawtooth.&nbsp;<sup>14,&thinsp;m</sup> That represents silicon, switchgear, and interconnection capacity paid for and not used. It is invisible to utility planners, utilities see only the conservative envelope the facility presents, and it compounds the external problem in (a), because every facility that over-reserves headroom forces speculative gen/transmission to be built at the system level. Closing this gap is not a hardware problem; it is an instrumentation and trust problem. Sub-cycle telemetry produces verifiable headroom evidence, which lets operators provision tighter and lets utilities forecast smaller.</p>
+
+    <p class="vd-body"><strong>(c) Stranded transient-absorption capacity.</strong> Each open-loop layer of the manufactured-inertia stack, battery, supercapacitor, flywheel UPS, harmonic filter, capacitor bank, firmware ramp, is sized independently against its own worst-case envelope, because no layer has a real-time model of the others. The total reserve in the stack is therefore overbuilt by a factor that today cannot be measured. This is the form of stranded capacity Verdigris&rsquo;s field data uniquely surfaces, and it is the one that high-frequency telemetry collapses most directly: closed-loop coordination across the stack lets each layer trust the others, which in turn collapses the capex carried by the stack as a whole.</p>
+  </section>
+
+  <section>
+    <div class="vd-section-eyebrow"><span class="vd-num">05</span>Where is this deeply impactful in an AI-factory-dominant grid?</div>
+
+    <table class="vd-impact">
+      <tr>
+        <th>National security &amp; AI competitiveness</th>
+        <td>Capital tied up in stranded transmission and overbuilt firming generation is capital not deployed in compute, fabs, software, and grid-edge intelligence. Every year the grid forces U.S. AI compute to be sited where power happens to be available, rather than where strategy dictates, fragments the national AI footprint and concentrates control under fewer hyperscaler decision-makers. Both are direct subtractions from U.S. position in a competition the PRC is winning on the energy axis.&nbsp;<sup>15,&thinsp;16</sup></td>
+      </tr>
+      <tr>
+        <th>Decarbonization lock-in</th>
+        <td>Roughly half of new data-center electricity through 2030 is projected to come from fossil sources because clean baseload cannot scale fast enough. If demand under-materializes, the marginal fossil firming capacity built ahead of it is stranded and emits, the worst of both outcomes.&nbsp;<sup>1,&thinsp;17</sup></td>
+      </tr>
+      <tr>
+        <th>Grid reliability</th>
+        <td>Self-preservation trips of large AI loads have already produced multi-GW concurrent disconnections, most notably the July 10, 2024 Eastern Interconnection event, when a single transmission fault triggered the simultaneous loss of ~1,500 MW of data-center load across 60 sites and 25 substations.&nbsp;<sup>18</sup> PJM is forecast to fall below resource-adequacy standards by 2027 if speculative load is treated as firm.</td>
+      </tr>
+      <tr>
+        <th>Ratepayer cost transfer</th>
+        <td>In PJM, MISO, ERCOT, Dominion territory, and the Atlanta metro, capacity-cost increases flow to residential and small-commercial customers who derive no benefit from AI-factory siting.&nbsp;<sup>12</sup></td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="vd-section-eyebrow"><span class="vd-num">06</span>Bottom line for LBL / DOE / the administration</div>
+
+    <p class="vd-body">The decarbonization, reliability, and national-security bottleneck for the AI buildout is not generation. It is the absence of a high-frequency telemetry layer that makes load behavior legible to the grid and makes the grid legible to compute. Three actions that operate on AI-race timescales:</p>
+
+    <ol class="vd-actions">
+      <li>
+        <div class="vd-action-title">Mandate measured dynamic load models, not declared ones</div>
+        <div class="vd-action-body">as a condition of large-load interconnection. Sub-cycle waveform capture is the technical floor.</div>
+      </li>
+      <li>
+        <div class="vd-action-title">Fund an AI-ready grid-telemetry reference architecture</div>
+        <div class="vd-action-body">(machine-readable schemas, millisecond cadence, autonomous-agent dispatch APIs) at a national lab, so the U.S. sets the standard, not State Grid.</div>
+      </li>
+      <li>
+        <div class="vd-action-title">Treat compute elasticity as grid capacity</div>
+        <div class="vd-action-body">on DOE co-location sites, require closed-loop, topology-aware control between facility power systems and GPU schedulers as a condition of land/grid access. Unlocks GW-scale dispatchable headroom on infrastructure that is already built.</div>
+      </li>
+    </ol>
+
+    <div class="vd-thesis">
+      <div class="vd-label">Thesis</div>
+      <p>Each takes the form of an information mandate, not a capital program. They operate on 12-24 month timescales rather than decade-scale transmission build-outs. They are how the U.S. closes the electron gap with the time it actually has.</p>
+    </div>
+  </section>
+
+  <section class="vd-sources">
+    <h3>Sources</h3>
+    <ol>
+      <li>LBNL, 2024 United States Data Center Energy Usage Report. eta-publications.lbl.gov</li>
+      <li>LBNL, Large Load Literature Review, Nov 2025. eta-publications.lbl.gov</li>
+      <li>Global Energy Monitor, UHV Power Transmission System in China. gem.wiki</li>
+      <li>SAFE, The Role of Transmission in U.S. Strategic Competitiveness with China. secureenergy.org</li>
+      <li>Carbon Credits, China Adds Power 8x More Than the US in 2025. carboncredits.com</li>
+      <li>Brookings, How will the United States and China power the AI race? brookings.edu</li>
+      <li>Fortune, AI experts return from China stunned (Aug 14, 2025). fortune.com</li>
+      <li>Khaledian et al., Wide-Area Power System Oscillations from Large-Scale AI Workloads, arXiv:2508.16457. arxiv.org/abs/2508.16457</li>
+      <li>Li et al., AI Load Dynamics, A Power Electronics Perspective, arXiv:2502.01647. arxiv.org/abs/2502.01647</li>
+      <li>He et al., Electricity Demand and Grid Impacts of AI Data Centers, arXiv:2509.07218. arxiv.org/abs/2509.07218</li>
+      <li>Bipartisan Policy Center, Strategic Federal Actions on AI &amp; Energy Infrastructure. bipartisanpolicy.org</li>
+      <li>Utility Dive, Capacity cost explosion: PJM&rsquo;s $80B bill. utilitydive.com</li>
+      <li>SELC, Experts say utilities&rsquo; projected data-center growth is speculative. selc.org</li>
+      <li>Chung, Decarbonizing the Token, UC Davis IMDS, Apr 16, 2026 (Verdigris field measurements). Companion: From Motors to Microchips, Stanford Smart Grid Seminar, Apr 2, 2026.</li>
+      <li>CSIS, Great Power Competition: Surveying Global Electricity Strategies for AI. csis.org</li>
+      <li>RAND, The U.S. Must Close the Long-Distance Power Transmission Gap with China. rand.org</li>
+      <li>IEEFA, Risk of AI-driven, overbuilt infrastructure is real. ieefa.org</li>
+      <li>NERC, Incident Review, Simultaneous Voltage-Sensitive Load Loss (Eastern Interconnection, July 10, 2024). nerc.com</li>
+    </ol>
+
+    <p class="vd-methods vd-methods-draft">
+      <strong>METHODS PENDING &middot; AUTHOR TO FILL BEFORE DISTRIBUTION</strong><br>
+      <strong>Methods (m).</strong> Verdigris field measurements referenced in &sect;04(b) draw from a panel of <em>n</em>&nbsp;= [SITE COUNT] AI-campus sites
+      across [REGIONS], instrumented with [SAMPLE RATE] waveform capture at the substation feeder level.
+      Observation window: [START] to [END]. Utilization-vs-nameplate range (12&ndash;18%) is the inter-site mean
+      with 95% CI of [LOWER, UPPER]. Site identities anonymized; aggregated dataset available on request under MNDA.
+    </p>
+  </section>
+
+</section>
+
+</body>
+</html>

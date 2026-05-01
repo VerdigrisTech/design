@@ -201,14 +201,26 @@ function checkSidebarCoverage() {
     }
   }
 
-  const wcDir = join(ROOT, "categories", "web-components");
-  if (existsSync(wcDir)) {
-    for (const file of readdirSync(wcDir)) {
-      if (!file.endsWith(".md")) continue;
-      const slug = file.replace(".md", "");
-      if (!sidebar.includes(`/categories/web-components/${slug}`)) {
-        warn(`categories/web-components/${file} is not in the sidebar`);
-        missing++;
+  const categoriesDir = join(ROOT, "categories");
+  if (existsSync(categoriesDir)) {
+    for (const sub of readdirSync(categoriesDir, { withFileTypes: true })) {
+      if (!sub.isDirectory()) continue;
+      if (sub.name.startsWith("_") || sub.name.startsWith(".")) continue;
+      const subPath = join(categoriesDir, sub.name);
+      for (const file of readdirSync(subPath)) {
+        if (!file.endsWith(".md")) continue;
+        if (file.startsWith("_")) continue;          // template files
+        const slug = file.replace(".md", "");
+        // Jekyll convention: index.md resolves to the directory's trailing-slash URL,
+        // so the sidebar typically links it as "/categories/<sub>/" rather than ".../index".
+        const expected =
+          slug === "index"
+            ? `/categories/${sub.name}/`
+            : `/categories/${sub.name}/${slug}`;
+        if (!sidebar.includes(expected)) {
+          warn(`categories/${sub.name}/${file} is not in the sidebar`);
+          missing++;
+        }
       }
     }
   }

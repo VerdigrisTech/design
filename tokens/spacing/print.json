@@ -1,0 +1,104 @@
+{
+  "$description": "Print-only spacing scale for whitepapers, briefings, and other paged PDF formats. Values are in inches because print uses physical units, not the 4px web grid. Every gap has a floor AND a ceiling per the design-system rule that AI agents optimize toward maximums without bounds.",
+  "spacing": {
+    "print": {
+      "page": {
+        "letter": {
+          "$value": "8.5in 11in",
+          "$type": "dimension",
+          "$description": "US Letter page size. Default for Verdigris briefings."
+        },
+        "a4": {
+          "$value": "210mm 297mm",
+          "$type": "dimension",
+          "$description": "A4 page size. Use for international/EU audiences."
+        }
+      },
+      "frame": {
+        "top": {
+          "$value": "0.85in",
+          "$type": "dimension",
+          "$description": "Cover top margin. Generous to give the title block sky."
+        },
+        "side": {
+          "$value": "0.85in",
+          "$type": "dimension",
+          "$description": "Cover left/right margin."
+        },
+        "bottom": {
+          "$value": "0.85in",
+          "$type": "dimension",
+          "$description": "Cover bottom margin. Floats the byline above the page edge."
+        }
+      },
+      "body": {
+        "margin-top": {
+          "$value": "0.85in",
+          "$type": "dimension"
+        },
+        "margin-side": {
+          "$value": "0.85in",
+          "$type": "dimension"
+        },
+        "margin-bottom": {
+          "$value": "1.0in",
+          "$type": "dimension",
+          "$description": "Larger to leave room for running footer."
+        }
+      },
+      "cover": {
+        "eyebrow-to-headline-min": {
+          "$value": "32px",
+          "$type": "dimension"
+        },
+        "eyebrow-to-headline-max": {
+          "$value": "48px",
+          "$type": "dimension",
+          "$description": "Floor 32 / ceiling 48. Default 36."
+        },
+        "headline-to-deck-min": {
+          "$value": "18px",
+          "$type": "dimension"
+        },
+        "headline-to-deck-max": {
+          "$value": "28px",
+          "$type": "dimension",
+          "$description": "Floor 18 / ceiling 28. Default 22."
+        },
+        "deck-to-byline-min": {
+          "$value": "1.4in",
+          "$type": "dimension",
+          "$description": "Non-negotiable floor. Below this, the cover reads as a page-1 article."
+        },
+        "deck-to-byline-max": {
+          "$value": "2.6in",
+          "$type": "dimension",
+          "$description": "Non-negotiable ceiling. Above this, the cover reads as wrong-page-size."
+        },
+        "byline-to-edge-min": {
+          "$value": "0.6in",
+          "$type": "dimension"
+        },
+        "byline-to-edge-max": {
+          "$value": "1.0in",
+          "$type": "dimension"
+        }
+      },
+      "section": {
+        "padding-bottom": {
+          "$value": "14pt",
+          "$type": "dimension",
+          "$description": "Vertical rhythm between body sections inside the paper."
+        },
+        "title-padding-bottom": {
+          "$value": "10pt",
+          "$type": "dimension"
+        },
+        "eyebrow-padding-bottom": {
+          "$value": "6pt",
+          "$type": "dimension"
+        }
+      }
+    }
+  }
+}
