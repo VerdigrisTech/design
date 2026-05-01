@@ -13,6 +13,7 @@ This repo (`VerdigrisTech/design`) is the canonical design system for all Verdig
 - **Patina is the reference implementation** — www converges toward Patina, not the other way around
 - **W3C DTCG format** for all token JSON (`$value`, `$type`, `$description`)
 - Build pipeline: `tokens/*.json` → `build/config.ts` → `build/dist/` (oklch.css, hsl.css, hex/colors.json, tailwind/preset.js)
+- **Voice is a foundation.** Lives in `voice/` (top-level, sibling to `foundations/` and `tokens/`). Before writing or generating any Verdigris content, read `voice/USE.md` first — it teaches you to identify subject + form + audience before picking a recipe. Then `voice/recipes.yaml` to pick the mix, and `voice/team/*.yaml` for individual voice profiles.
 
 ## Development Commands
 

@@ -1,0 +1,214 @@
+# Voice Recipes — how to mix ingredients for specific content types
+#
+# Each recipe is a starting mix. Adjust based on the specific piece.
+# Percentages are rough guides for emphasis, not exact measurements.
+#
+# The "reaches" field matters: content often flows to multiple audiences.
+# A case study sent to an operator gets forwarded to their VP. A blog
+# post shared on LinkedIn reaches engineers AND their managers. The
+# recipe should work for the primary audience AND the secondary one.
+
+recipes:
+
+  # ── Website ────────────────────────────────────────────────────────
+
+  homepage:
+    primary_audience: first-time visitor (operator or executive)
+    reaches: "their team, their boss, investors doing diligence"
+    target_feelings: [curiosity, confidence, respect]
+    mix:
+      strategic_narrative: 35    # why this matters
+      technical_precision: 25   # what we actually do (not vague)
+      mission_gravity: 20       # the weight of the problem
+      self_honesty: 10          # stage transparency
+      warmth_and_humor: 10      # human, not corporate
+    notes: |
+      The homepage has ~8 seconds to answer "what do you do and why
+      should I care?" Lead with the problem (strategic narrative),
+      prove depth with one specific number (technical precision),
+      and close with mission pull. Operators and execs both need to
+      find their thread within those 8 seconds.
+    voice_sources:
+      primary: Mark (strategic narrative), Jon (technical precision)
+      supporting: Jimit (outside-in market framing for positioning context)
+
+  about_page:
+    primary_audience: someone deciding if they trust Verdigris
+    reaches: "candidates, partners, press, investors"
+    target_feelings: [confidence, warmth, belonging]
+    mix:
+      personal_connection: 30   # people have names
+      strategic_narrative: 25   # the story arc
+      self_honesty: 20          # honest about the journey
+      mission_gravity: 15       # why this matters
+      technical_precision: 10   # grounding claims
+    notes: |
+      This is where Mark's storytelling voice dominates. The about page
+      is a trust-building tool — people read it after they're interested,
+      to decide if they believe. Self-honesty is load-bearing here.
+    voice_sources:
+      primary: Mark (storytelling, personal connection)
+      supporting: Seren (people-first voice, humanizes individuals)
+
+  product_page:
+    primary_audience: operator evaluating whether Verdigris solves their problem
+    reaches: "their boss (needs ROI), their team (needs to believe it works)"
+    target_feelings: [relief, curiosity, confidence]
+    mix:
+      operator_empathy: 35      # "we know your problem"
+      technical_precision: 30   # "here's exactly what we do"
+      self_honesty: 15          # honest about what we don't do
+      strategic_narrative: 10   # why this category matters
+      warmth_and_humor: 10      # human touches
+    notes: |
+      The operator needs to feel relief ("finally, someone who gets it").
+      Their boss needs confidence ("these people know what they're doing").
+      Lead with the operator's problem, not Verdigris's product. Let the
+      product reveal itself as the answer, not the headline.
+    voice_sources:
+      primary: Jon (technical precision), Thomas (operator empathy)
+      accent: Josh (real-world product-in-action), Mike (pricing/manufacturing fluency)
+
+  careers_page:
+    primary_audience: potential hire evaluating Verdigris
+    reaches: "their partner, their friends, their current colleagues"
+    target_feelings: [belonging, curiosity, warmth]
+    mix:
+      mission_gravity: 30       # worth leaving their job for
+      warmth_and_humor: 25      # they'd enjoy working here
+      personal_connection: 20   # real people, not stock photos
+      self_honesty: 15          # honest about stage and challenges
+      technical_precision: 10   # the problems are real and hard
+    notes: |
+      Candidates share JDs with their partner and friends. The page
+      needs to work for non-technical readers too ("my partner works
+      on power intelligence for AI data centers" should sound
+      interesting at a dinner party).
+    voice_sources:
+      primary: Josh (builder energy, makes people want to join)
+      supporting: Mark (mission gravity)
+
+  # ── Content ────────────────────────────────────────────────────────
+
+  technical_blog:
+    primary_audience: engineer or operator who wants to learn
+    reaches: "HN, LinkedIn, engineering teams evaluating Verdigris"
+    target_feelings: [curiosity, respect, warmth]
+    mix:
+      technical_precision: 45   # show the work
+      warmth_and_humor: 15      # human asides, honest mistakes
+      self_honesty: 15          # what surprised us, what we don't know
+      operator_empathy: 15      # grounded in real problems
+      personal_connection: 10   # named author, first person
+    notes: |
+      Named authorship always. "By Jon Chu" not "The Verdigris Team."
+      End with what you don't know yet — that's more credible than a
+      tidy conclusion. Humor comes from specificity ("this is the part
+      where we realized we'd been measuring the wrong thing for three
+      weeks"), not from trying to be funny.
+    voice_sources:
+      primary: Jon (technical depth)
+      supporting: Josh (field troubleshooting stories, honest dead ends)
+
+  case_study:
+    primary_audience: operator whose situation is similar to the customer's
+    reaches: "their VP (ROI), procurement (risk), board (evidence)"
+    target_feelings: [relief, confidence, curiosity]
+    mix:
+      operator_empathy: 30      # "this customer had YOUR problem"
+      technical_precision: 25   # specific outcomes with numbers
+      personal_connection: 20   # named customer, named problem
+      self_honesty: 15          # what was hard, what we learned
+      strategic_narrative: 10   # why this matters beyond one site
+    notes: |
+      The customer's voice is the primary voice, not Verdigris's.
+      Let the operator say "Verdigris showed us X" rather than
+      Verdigris saying "we delivered X." Specific numbers always:
+      "reduced unplanned downtime by 37% over 6 months" not
+      "significantly improved reliability."
+    voice_sources:
+      primary: Seren (customer perspective, diplomatic precision)
+      supporting: Mike (field context, competitor comparison)
+      accent: Jimit (market trend connection)
+
+  # ── Communications ─────────────────────────────────────────────────
+
+  investor_update:
+    primary_audience: board and investors
+    reaches: "their LPs, other portfolio companies (word of mouth)"
+    target_feelings: [confidence, respect, curiosity]
+    mix:
+      strategic_narrative: 35   # where we are, where we're going
+      self_honesty: 25          # what's working, what isn't
+      technical_precision: 20   # evidence, not assertions
+      mission_gravity: 15       # why this market matters
+      personal_connection: 5    # team highlights
+    notes: |
+      Mark's voice dominates. Investors want to see clarity of thought
+      and intellectual honesty more than they want to see good news.
+      "We missed X because Y, and here's what we changed" is stronger
+      than only reporting wins.
+    voice_sources:
+      primary: Mark (strategic narrative, self-honesty)
+      supporting: Jimit (market fluency, structured evidence)
+
+  partner_materials:
+    primary_audience: partner's team evaluating the integration
+    reaches: "their customers, their sales team"
+    target_feelings: [confidence, relief, warmth]
+    mix:
+      technical_precision: 30   # what the integration does
+      operator_empathy: 25      # shared customer problem
+      warmth_and_humor: 15      # we're good to work with
+      self_honesty: 15          # honest about what each brings
+      strategic_narrative: 15   # why together > apart
+    notes: |
+      Avoid "strategic partnership" language. Say what you're actually
+      doing together. "When CoreWeave operators need to see what's
+      happening at the circuit level, Verdigris data shows up in their
+      existing monitoring stack" beats "Verdigris and CoreWeave have
+      formed a strategic partnership."
+    voice_sources:
+      primary: Jimit (outside-in market positioning)
+      supporting: Seren (structured, respectful cross-org communication)
+      accent: Mike (industry insider credibility)
+
+  linkedin_post:
+    primary_audience: industry peers, potential hires, customers
+    reaches: "their network, their team, recruiters"
+    target_feelings: [warmth, curiosity, belonging]
+    mix:
+      warmth_and_humor: 30      # human first
+      personal_connection: 25   # real person posting, real story
+      technical_precision: 20   # one specific insight
+      mission_gravity: 15       # why this work matters
+      self_honesty: 10          # honest takes
+    notes: |
+      Named authorship (Jon, Mark, Thomas, or team members — not
+      "Verdigris"). LinkedIn rewards personal voice. The best posts
+      share one specific thing the author learned, not a product
+      announcement. "I spent last week in a data center in Virginia
+      and here's what I saw" > "Exciting to announce our new
+      partnership with..."
+    voice_sources:
+      primary: Josh (builder energy, informal authenticity)
+      also: Any team member posting as themselves — the key is specificity
+
+  recruiting_outreach:
+    primary_audience: specific person being reached out to
+    reaches: "just them (unless they forward it)"
+    target_feelings: [curiosity, warmth, belonging]
+    mix:
+      personal_connection: 35   # why THIS person specifically
+      warmth_and_humor: 20      # human, not recruiter-bot
+      technical_precision: 20   # what Verdigris actually does
+      mission_gravity: 15       # worth their time
+      self_honesty: 10          # honest about stage
+    notes: |
+      Use individual founder voice profiles (Jon or Thomas), not brand
+      voice. Reference specific things about the person's work. Always
+      leave the referral door open. See founder voice profiles for
+      detailed guidance.
+    voice_sources:
+      primary: Jon or Thomas (founder voice)
+      supporting: Seren (honest mutual-fit evaluation)

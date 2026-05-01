@@ -1,0 +1,104 @@
+# Emotional Outcomes — what should readers actually FEEL?
+#
+# These are real feelings, not cognitive assessments. "They should
+# understand our value prop" is not a feeling. "They should feel
+# relief that someone finally gets their problem" is.
+#
+# Every piece of Verdigris content should produce at least one of these.
+# The best content produces 2-3 simultaneously.
+
+feelings:
+
+  relief:
+    description: |
+      "Finally, someone who gets it." The reader has been dealing with
+      a problem that nobody else seems to understand the way they
+      experience it. Verdigris content should make them exhale.
+    produced_by:
+      - operator empathy (naming their specific problems accurately)
+      - technical precision (showing we measure what others can't)
+      - personal connection (we've been in their world for 15 years)
+    example: |
+      When an operator reads "GPU workloads ramp in eight milliseconds.
+      The monitoring systems built for the last generation poll at
+      one-second intervals" and thinks "yes, that's EXACTLY the gap
+      I've been trying to explain to my vendor."
+
+  curiosity:
+    description: |
+      "I want to know more about how this works." Not marketing-driven
+      "learn more" but genuine intellectual pull. The reader encounters
+      something they haven't thought about before and wants to go deeper.
+    produced_by:
+      - technical precision (a specific number or insight that surprises)
+      - strategic narrative (a framing that recontextualizes their problem)
+      - self honesty (an admission that makes them lean in)
+    example: |
+      "A single rack of high-density GPU compute draws over 120 kW of
+      pulsating, non-linear load. The harmonics and transients those
+      systems produce live where older instruments were never designed
+      to look." — the reader thinks "wait, what are those harmonics
+      actually telling us?"
+
+  confidence:
+    description: |
+      "These people know what they're doing." Not confidence in the
+      product (that's a marketing outcome). Confidence in the PEOPLE.
+      The reader trusts the team behind the product because the writing
+      demonstrates depth, honesty, and earned authority.
+    produced_by:
+      - technical precision (depth signals competence)
+      - self honesty (admitting errors signals integrity)
+      - personal connection (real people with real histories)
+    example: |
+      "That thesis turned out to be only half right." — the reader
+      thinks "if they're willing to say that publicly, I trust them
+      when they say the new direction is working."
+
+  warmth:
+    description: |
+      "I like these people." Not "I respect their product" but genuine
+      human warmth. The reader feels they could have a good conversation
+      with the people at Verdigris. This is the feeling that turns
+      evaluators into advocates within their organization.
+    produced_by:
+      - warmth and humor (human moments, specific celebrations)
+      - personal connection (named people, real stories)
+      - operator empathy (understanding creates closeness)
+    example: |
+      Reading that the company started because of a $600 utility bill
+      and the arrival of the founder's children. That's not a corporate
+      origin story. That's a human one.
+
+  belonging:
+    description: |
+      "I want to be part of this." The reader sees themselves in the
+      mission, the team, or the problem being solved. This is the
+      feeling that converts candidates, closes partnerships, and
+      turns customers into references.
+    produced_by:
+      - mission gravity (the problem is worth their career/time)
+      - warmth and humor (they'd enjoy working with these people)
+      - self honesty (the company is real, not performing)
+    example: |
+      From the EM JD: "If you are at a bigger company wondering whether
+      you will ever get to build something from a position of real
+      ownership, this is that role." — the reader thinks "that's me.
+      I've been waiting for exactly this."
+
+  respect:
+    description: |
+      "These people take the work seriously." Different from confidence
+      (which is about competence). Respect is about craft, standards,
+      and caring about getting it right. The reader sees that Verdigris
+      doesn't cut corners, even in how they write.
+    produced_by:
+      - technical precision (specificity signals care)
+      - self honesty (accountability signals standards)
+      - mission gravity (taking the problem seriously)
+    example: |
+      "We have raised serious capital, refocused the company around
+      the most consequential problem in AI infrastructure, and come
+      out the other side with real customers, real revenue, and
+      hardware that has been running in colocation and owned data
+      center facilities for more than a decade." — earned, not claimed.

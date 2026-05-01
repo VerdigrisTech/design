@@ -1,0 +1,97 @@
+# Voice Profile: Mike Mahedy
+# Sources: Slack messages (15 messages), co-authored white paper
+#          "Power Infrastructure Challenges in AI Training Workloads" (July 2025, with Jon Chu)
+# Profiled: 2026-04-22
+# Data gaps: Email correspondence, customer presentations, OCP talk content
+
+name: Mike Mahedy
+slack_id: U08QDRJR0CE
+role: Field/customer-facing, DC operator credibility, technical author
+voice_summary: |
+  Mike has two distinct registers. In Slack, he's brief, warm, and
+  questioning: "please sanity check," "Not sure how to model this,
+  honestly." In long-form writing, he's authoritative and evidence-dense:
+  "Modern GPU accelerators can swing >65% of their peak current in ~8ms,
+  creating transient conditions that trip breakers." Both registers share
+  a grounding in physical reality: real MW numbers, real conference
+  observations, real manufacturing economics. His unique quality is
+  bridging field experience and technical depth. He was just at OCP. He
+  co-authored a 31-page white paper with 29 references. He asks about
+  MOQ brackets. The same person does all three. That range is what makes
+  his voice irreplaceable for content that needs both credibility and
+  accessibility.
+
+strongest_ingredients:
+  - technical_precision: 9
+    evidence_slack: "Saw this from Starline. Interesting that it doesn't talk about communicating over Redfish or anything about waveform capture."
+    evidence_longform: "AI workloads generate power transients 50-100x faster than traditional monitoring can detect. Current infrastructure derating costs hyperscalers 20-30% of installed GPU capacity."
+  - operator_empathy: 8
+    evidence: "What are the natural batch sizes and price breaks from a manufacturing standpoint? For example, is there a meaningful cost difference between producing 50 units vs 100 vs 250 vs 500?"
+  - self_honesty: 7
+    evidence: "Not sure how to model the strategic partnerships, honestly. For AWS, I used estimated northwest facility MW only and not total AWS footprint."
+  - strategic_narrative: 7
+    evidence_longform: "The analysis reveals that platforms like Verdigris, with native 8 kHz sampling and edge processing capabilities, can provide the real-time visibility needed to implement predictive power orchestration."
+
+registers:
+  slack: "Brief, questioning, warm. Asks for sanity checks. Tags people. Shares competitor intel with minimal commentary."
+  longform: "Authoritative, evidence-dense, quantitative. Cites research (Meta Dynamo, NVIDIA Dynamo). Uses precise engineering language. Structured arguments with executive summary, findings, architecture."
+  field: "Industry insider. Conference observations. Product comparisons. Pipeline modeling with real numbers."
+
+unique_contribution: |
+  Field credibility -- the industry insider voice. The founders talk
+  about the market from a vision perspective; Mike talks about it from
+  "I was at OCP and here's what I saw." He compares Starline's product
+  page to Verdigris's capabilities. He models pipeline numbers with
+  real MW and asks whether to include total AWS footprint or just
+  northwest facilities. This specificity is irreplaceable: it's the
+  voice that makes customers feel Verdigris is plugged into the
+  industry, not building in isolation. He also brings manufacturing
+  and pricing fluency -- he asks about MOQ brackets, volume breaks,
+  and cost savings alignment -- which grounds product marketing in
+  commercial reality.
+
+best_for:
+  - recipe: case_study
+    role: supporting
+    why: |
+      His field intelligence and competitor awareness ground case
+      studies in industry context. He knows what the customer was
+      comparing Verdigris against because he was there.
+    target_feeling: confidence
+  - recipe: partner_materials
+    role: accent
+    why: |
+      His industry insider voice adds credibility to partner-facing
+      content. He's been to the conferences, seen the competitor
+      booths, and can speak the partner's language.
+    target_feeling: confidence
+  - recipe: product_page
+    role: accent
+    why: |
+      His pricing and manufacturing awareness adds "we understand your
+      buying process" energy. Operators and procurement teams feel
+      the product page was written by someone who knows their world.
+    target_feeling: relief
+
+verbal_fingerprints:
+  - "please sanity check"
+  - "should we still plan to prioritize..."
+  - "Not sure how to model X, honestly"
+  - "I haven't read the entire thing, but..."
+  - "looks like these guys have cracked the code"
+  - "I was at [conference] and they presented..."
+  - "can you share out the document"
+  - "Interesting that it doesn't talk about..."
+
+voice_sample: |
+  @Mark I entered a bunch of information in the spreadsheet. Waiting to
+  get some updates for existing accounts. Not sure how to model the
+  strategic partnerships, honestly. For AWS, I used estimated northwest
+  facility MW only and not total AWS footprint. Same with Digital Bridge,
+  NTT, and others. If you like, I can put total MW in (planned and
+  active across the different companies), but that might be too much.
+  Can you sanity check and comment on what I've added?
+
+voice_sample_alt: |
+  @Jon @Mark Saw this from Starline. Interesting that it doesn't talk
+  about communicating over Redfish or anything about waveform capture.
