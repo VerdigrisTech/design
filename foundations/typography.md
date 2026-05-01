@@ -183,6 +183,69 @@ Note: www currently uses 991px as its mobile breakpoint. The canonical target is
 
 1.6 is the base default. Use 1.65-1.75 on tinted/dark backgrounds per the coupling rules, and 1.7 for Narrate prose. See `composition.persuade-web-page.coupling.tinted-line-height` and `composition.narrate-web-page.coupling.long-form-line-height`.
 
+## Body Measure (Line Length)
+
+The number of characters per line of body text. This is one of the highest-leverage typography decisions — it controls reading rhythm more than font choice, size, or leading does.
+
+**Canonical measure: 65ch (default) / 75ch (maximum).**
+
+| Surface | Target | Hard maximum |
+|---------|--------|--------------|
+| Platform / product / case-study body | **65-68ch** | 75ch |
+| Narrate / inform (editorial) | **65ch** | 70ch |
+| Tinted or dark surface | **65ch** | 65ch (explicit) |
+| Marketing hero subtext | 50-55ch | 60ch |
+| Dashboard / tabular | 45-55ch | (not enforced — data rules dominate) |
+
+At our type scale (Inter 16px body), 1ch ≈ 8px. So:
+
+| Measure | Roughly |
+|---------|---------|
+| 45ch | 360px |
+| 65ch | **520px** — comfortable reading |
+| 68ch | **544px** — our default |
+| 75ch | 600px — absolute upper bound |
+| 90ch | 720px — **too wide, rejected** |
+
+### Why these numbers
+
+**The Quiet Reader + Precision Instrument model demands reading comfort first.** Marketing pages that feel like product docs (which ours do — technical audience, specification-heavy copy) must honor the typography literature. A 100ch column says "this is brochure copy nobody will read end-to-end." A 65ch column says "I expect you to read this."
+
+Three sources converge on the 65-75 range:
+
+- **Apple Human Interface Guidelines** — "Aim for an average of 50–75 characters per line of body text" for reading comfort in long-form content.
+- **Bringhurst, *Elements of Typographic Style*** — "Anything from 45 to 75 characters is widely regarded as a satisfactory length of line for a single-column page set in a serifed text face in a text size. The 66-character line (counting both letters and spaces) is widely regarded as ideal."
+- **Butterick, *Practical Typography*** — "The optimal line length … is between 45 and 90 characters, with 60–80 characters being preferable."
+
+Every respected editorial reference lands within this range. There is no position that "100+ characters is fine for readable body text."
+
+### Why not wider
+
+The eye saccades (jumps ahead) in chunks of roughly 7-9 characters. Beyond ~75ch, the return sweep to the start of the next line crosses enough horizontal distance that the reader can lose their place. This is measurable: reading speed drops, comprehension drops, re-reads increase. Marketing research shows conversion drops too — people skim rather than read.
+
+Wider lines are appropriate for *scanning* (tables, dashboards, data-dense displays), not for *reading*.
+
+### Evaluator enforcement
+
+`rules/visual-rules.yml` → `typography.line-length.body` enforces 75ch as a hard maximum. A configured `contentMaxWidth` on any content page that resolves to more than 75ch is a **rule violation**, not a warning — meaning evaluator runs should block merges.
+
+Consumers should pin their content column using `ch` units, not `px` or `rem`, so the measure stays tied to font character width regardless of type scale changes. Example:
+
+```css
+.prose-column { max-width: 68ch; margin-inline: auto; }
+```
+
+### When body becomes figure: the break-out patterns
+
+Body text at 65ch is narrow. Data visualizations, tables with more than 4 columns, and hero-scale illustrations often need more horizontal room. Three canonical patterns let content escape the reading column without abandoning it. See [`categories/visualizations/interactive-viz.md`](../categories/visualizations/interactive-viz.md#width-patterns) for full specs.
+
+Short version:
+- **Inline** — matches prose measure. Default for small figures, code blocks, inline formulas.
+- **Breakout** — widens to the content column (up to a section max, typically ~900px), centered on the viewport. Default for Canvas visualizations, charts, wide comparison tables.
+- **Full-bleed** — spans the full viewport width edge-to-edge. Reserved for Demonstrate-arc pages where a visualization IS the hero of a section. Use `<FullBleedSection>`.
+
+Pattern choice is a design decision per surface, not a component-level default. The evaluator does not dictate the choice; it does flag ad-hoc widths that aren't one of these three patterns.
+
 ### Notes
 
 - CTA text-transform (uppercase) is not enforced. Buttons use sentence case.

@@ -35,6 +35,80 @@ The frame's background is ONE of the two Canvas surfaces — never an ad-hoc gra
 
 These are **minimums**, not targets. When space allows, render larger.
 
+## Width patterns
+
+Body text follows the 65-68ch measure (see [`foundations/typography.md` § Body Measure](../../foundations/typography.md#body-measure-line-length)). Visualizations don't have to honor the reading column — in fact, most shouldn't. Canvas data is dense, needs horizontal room to breathe, and gets diminished when clamped to 520-580px.
+
+Three canonical patterns let figures escape the prose column without abandoning its center-line. Each viz declares which pattern it uses; consumers don't invent new widths.
+
+### Pattern 1: Inline
+
+Matches the prose measure exactly. The figure flows with the text.
+
+**When to use:**
+- Small figures or thumbnails that should read as part of the paragraph
+- Inline formulas or equations
+- Code blocks
+- Sparklines smaller than ~240px
+
+**CSS:**
+```css
+.viz-inline { width: 100%; max-width: 100%; }
+/* The viz inherits the prose column's 65-68ch */
+```
+
+### Pattern 2: Breakout
+
+Widens to the content column (~896px, matching `categories/web-components/page-sections.md` standard), centered on the viewport. Common editorial pattern — text narrow, figures wider, explicit visual signal of "this is evidence, not body text."
+
+**When to use:**
+- Canvas visualizations with internal structure (LissajousFigure grid, HarmonicSpectrum bars)
+- Interactive widgets (ResolutionComparison slider)
+- Tables with 4+ columns
+- Comparison diagrams
+- Screenshots and product imagery
+
+**CSS:**
+```css
+.viz-breakout {
+  width: 100%;
+  max-width: min(896px, calc(100vw - 2rem));
+  /* Break out of the narrow parent without destroying the center line */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+```
+
+**This is the default for `<CanvasFrame>`** on platform/case-study pages. Honors the 75ch body rule (text stays narrow) while giving figures the horizontal room Canvas data needs.
+
+### Pattern 3: Full-bleed
+
+Spans the full viewport width edge-to-edge.
+
+**When to use:**
+- Demonstrate-arc pages (Technology, Signals deep-dive sections)
+- Pretext text effects where the heading IS the visualization
+- Dark evidence sections with ambient Canvas layers behind content
+- Hero moments that want to feel cinematic
+
+**CSS:** Use the existing `<FullBleedSection>` component. Don't reinvent.
+
+### Decision framework
+
+Answer three questions, in order:
+
+1. **Is the figure smaller than the prose measure?** → **Inline.** Don't widen something that doesn't need to be wider.
+2. **Does the figure carry narrative weight — is it evidence the reader is expected to stop and examine?** If yes, → **Breakout.** Give it room. If no (it's decoration or reference), → Inline.
+3. **Is this the narrative climax of the section — the moment the page earns its point?** Very rare. → **Full-bleed.** But only if the page's composition arc is on the Demonstrate track. If it's Persuade/Convert/Inform, breakout is the right ceiling.
+
+### Anti-patterns
+
+1. **Ad-hoc widths.** If a viz is 800px wide on one page, 940px on another, 720px on a third, that's drift. Pick one of the three patterns and commit.
+2. **Full-bleed on Persuade/Convert pages.** Full-bleed is tonal — it says "stop and look." Using it on a conversion surface competes with the CTA. Reserve for editorial/demonstrate moments.
+3. **Breakout stacked against breakout.** Two breakout figures in the same section effectively create a wide "block" surrounded by narrow text. Usually reads as one composite figure. If that's intentional, use `<FullBleedSection>` as a single wrapping element. If not, space them out or inline one.
+4. **Breakout without a real viz inside.** If the "figure" is a stock image, a generic graphic, or text-heavy content, it probably belongs in the prose column. Breakout is for dense Canvas data.
+
 ## Interaction affordance
 
 If the visualization accepts user input (slider, drag, hover-driven reveal), there MUST be a visible prompt that the interaction exists. Required:
