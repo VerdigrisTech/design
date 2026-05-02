@@ -212,3 +212,196 @@ recipes:
     voice_sources:
       primary: Jon or Thomas (founder voice)
       supporting: Seren (honest mutual-fit evaluation)
+
+  # ── Sales collateral (decks) ────────────────────────────────────────
+  # Added 2026-05-02 from the Abcam pilot kickoff review (Z2O-1318 through Z2O-1323).
+  # Per-genre voice mixes for the slides cell. See categories/slides/ for full specs.
+
+  pilot_kickoff_deck:
+    primary_audience: customer team executing the pilot (sponsor + working lead + engineers)
+    reaches: "their VP, their leadership chain, their procurement team, future participants in the engagement"
+    target_feelings: [confidence, clarity, mutual ownership]
+    mix:
+      operator_empathy: 30      # the customer team is busy; respect their attention
+      technical_precision: 30   # this deck is the canonical record of what was agreed
+      strategic_narrative: 20   # why this pilot, why now, what comes after
+      self_honesty: 10          # what's experimental, what's mature
+      personal_connection: 10   # named team members, role labels first
+    notes: |
+      Thomas's operational voice carries the structure (timeline, success criteria,
+      decisions). Mark's founder voice carries the framing slides (why this pilot,
+      what comes after). Avoid the pitch-deck trope of "Why Verdigris" — the
+      contract is signed; those slides erode trust at this stage.
+
+      The deck must be re-readable a week later by someone who wasn't in the room.
+      Specific numbers always: "Hardware install 2026-06-15, four sites" not "in
+      mid-June across some sites." See categories/slides/pilot-kickoff.md for the
+      full spec including required slide structure.
+    voice_sources:
+      primary: Thomas (operational, structured)
+      supporting: Mark (founder authority on framing slides)
+      accent: Jon (technical depth on data flow / hardware install slides)
+
+  internal_team_deck:
+    primary_audience: Verdigris team members coordinating an active engagement
+    reaches: "engagement working group, leadership, board prep that hasn't reached the board"
+    target_feelings: [clarity, speed, mutual accountability]
+    mix:
+      technical_precision: 40   # internal coordination requires concrete state
+      self_honesty: 25          # what's slipping, what's blocked, what's working
+      operator_empathy: 15      # the customer's perspective, even in internal docs
+      strategic_narrative: 10   # why this account matters
+      personal_connection: 10   # named owners, named risks
+    notes: |
+      Operational voice. Internal jargon is fine — the audience is Verdigris-only
+      and faster reading beats translation. Week-N notation acceptable when the
+      pilot timeline is the running thread; always pair with absolute dates for
+      decision deadlines. The diction rules for external genres (e.g., "exit
+      criteria" → "expansion criteria") do NOT apply here.
+
+      Customer name in customer's preferred form. Always.
+    voice_sources:
+      primary: Thomas (operational)
+      supporting: any team member owning the engagement
+
+  customer_101_deck:
+    primary_audience: prospect's initial evaluator at the first substantive meeting
+    reaches: "their team, their boss, their procurement team if they advance"
+    target_feelings: [curiosity, confidence, respect]
+    mix:
+      strategic_narrative: 35   # why this matters, why now
+      operator_empathy: 25      # the prospect is busy and skeptical
+      technical_precision: 20   # one specific number, one specific evidence point
+      mission_gravity: 10       # the weight of the problem
+      self_honesty: 10          # what's still developing
+    notes: |
+      Mark's voice carries the wedge slide and the close. Jon's voice carries the
+      "how it works" and "evidence" slides. Operator empathy threads through
+      every slide — this is a busy stranger giving you 25 minutes.
+
+      Pronounce "Verdigris" audibly on the title slide the first time. Capitalize
+      "Signals" as a proper noun when referring to the product. Never use internal
+      product-roadmap jargon ("EVD atom", "L3 evaluator", "site-coherence gate")
+      — translate to customer language.
+
+      First-person inclusive ("we'd want to validate X with you") beats
+      third-person ("customers see Y"). See categories/slides/customer-101.md for
+      the full spec.
+    voice_sources:
+      primary: Mark (founder authority, story-led)
+      supporting: Jon (technical depth on evidence slides)
+      accent: operator empathy as the connective tissue across slides
+
+  partner_enablement_deck:
+    primary_audience: partner's account executive (a salesperson at another company)
+    reaches: "the partner's customers, the partner's sales leadership"
+    target_feelings: [confidence, clarity, joint ownership]
+    mix:
+      technical_precision: 30   # partner AE needs to answer common objections without escalating
+      operator_empathy: 25      # their customer's perspective; their AE's perspective
+      strategic_narrative: 20   # why Verdigris × partner > either alone
+      self_honesty: 15          # what each side actually brings
+      warmth_and_humor: 10      # we are good to work with
+    notes: |
+      Avoids Mark and Thomas as primary voices: a partner AE doesn't need the
+      founder's voice; they need a teammate-equivalent voice they can carry into
+      their own conversations. Jimit's market fluency dominates; Mike's field
+      credibility threads through technical objection-handling.
+
+      Refer to the partner's customers as "your customers" or by named accounts.
+      Generic "partner" reads as boilerplate; name the partner explicitly when
+      known. "Co-sell" preferred over "resell." "Margin" is fine; partner AEs
+      care. "Generally available" is internal product-roadmap language; name
+      the actual product status (in pilot, fleet-deployed, in production at N
+      customers) instead.
+
+      See categories/slides/partner-enablement.md for the full spec.
+    voice_sources:
+      primary: Jimit (outside-in market positioning)
+      supporting: Mike (industry insider credibility, objection handling)
+      accent: Seren (cross-org diplomatic precision on co-sell mechanics)
+
+# ── Audience-fit diction (Z2O-1321) ────────────────────────────────
+# Cross-recipe diction rules. Apply on top of the recipe's voice mix.
+# Lives here (rather than rules/visual-rules.yml) because diction is
+# a voice concern, not a visual one. See categories/slides/pilot-kickoff.md
+# § Audience-fit diction for the full rationale and additional examples.
+
+audience_fit_diction:
+  applies_to:
+    - pilot_kickoff_deck
+    - customer_101_deck
+    - partner_enablement_deck
+    - case_study
+    - investor_update    # external context
+    - partner_materials
+  not_applied_to:
+    - internal_team_deck
+    - any internal-only artifact
+  rules:
+    - id: "voice.audience-fit-diction.exit-criteria"
+      description: |
+        Replace "exit criteria" with "expansion criteria" or "graduation criteria"
+        in customer-facing artifacts. "Exit" implies the customer is leaving
+        Verdigris. The opposite is intended: the criteria mark the path from
+        pilot to expanded engagement. "Expansion criteria" carries the right
+        vector for an executive audience. "Graduation criteria" works when the
+        audience is technically inclined.
+      severity: "warning"
+      maturity: "experimental"
+      linear_issue: "Z2O-1321"
+      anti_examples:
+        - "Define exit criteria for the pilot"
+        - "Once exit criteria are met, we'll review next steps"
+      good_examples:
+        - "Define expansion criteria for the pilot"
+        - "Once graduation criteria are met, we move to fleet deployment"
+    - id: "voice.audience-fit-diction.customer-pronoun"
+      description: |
+        In a deck addressed TO a customer, refer to them by name or "your team",
+        not third-person "customers." "Customer" is third-person — fine for case
+        studies discussing other customers, wrong for an artifact the audience
+        is reading.
+      severity: "warning"
+      maturity: "experimental"
+      anti_examples:
+        - "Customers typically see a 30% reduction in unplanned outages"
+      good_examples:
+        - "Your team should expect to see a 30% reduction in unplanned outages"
+        - "At Abcam's scale, we'd expect to see a 30% reduction in unplanned outages"
+    - id: "voice.audience-fit-diction.pilot-phase"
+      description: |
+        Replace "pilot phase" with "first 90 days" or "this engagement". "Phase"
+        is internal Verdigris jargon for the staged engagement model. Customers
+        don't think in phases.
+      severity: "warning"
+      maturity: "experimental"
+      anti_examples:
+        - "During pilot phase 1, we'll install hardware..."
+      good_examples:
+        - "In the first 90 days, we'll install hardware..."
+        - "For this engagement, the install plan is..."
+    - id: "voice.audience-fit-diction.generally-available"
+      description: |
+        Replace "generally available" / "GA" with concrete product status: "in
+        production", "fleet-deployed", "in production at N customers". GA is
+        internal product-roadmap language. Customers want to know if it works
+        at their scale, not where it sits in the roadmap.
+      severity: "warning"
+      maturity: "experimental"
+      anti_examples:
+        - "Signals goes GA in Q3"
+        - "This feature is currently in beta, GA target Q4"
+      good_examples:
+        - "Signals is fleet-deployed at 800+ rectifiers across 4 customers"
+        - "This feature is in production at one large customer; broader rollout planned for Q4"
+    - id: "voice.audience-fit-diction.internal-jargon-pass"
+      description: |
+        Final read-through before distribution: walk every slide, mark any
+        Verdigris-internal jargon, replace with operator-readable language.
+        Common offenders include EVD atom, L3 evaluator, site-coherence gate,
+        viz placement, brand-positioning evaluator. The voice recipe sets the
+        dial; the diction pass sharpens individual word choices.
+      severity: "warning"
+      maturity: "experimental"
+      applies_during: "production checklist step 6, see workflows/sales-collateral.md"

@@ -1,0 +1,467 @@
+/* ============================================================
+   Verdigris Slide Decks - reference stylesheet
+   16:9 master, 1280x720pt, paged via @page for PDF render
+   (Chrome --print-to-pdf or WeasyPrint).
+
+   Status: experimental. Graduates after 2 customer-facing decks
+   ship using this template with positive review.
+
+   Consumption:
+     <link rel="stylesheet" href="path/to/cover.css">
+     <link rel="stylesheet" href="path/to/slides.css">
+     <body data-genre="pilot-kickoff">
+       <section class="vd-slide vd-slide-title">...</section>
+       <section class="vd-slide vd-slide-body">...</section>
+       ...
+     </body>
+
+   slides.css EXTENDS cover.css; cover.css must load first.
+   All selectors namespaced .vd-slide-* to avoid collision with
+   .vd-cover-*, .vd-paper-*, .vd-thesis-*, etc. from cover.css.
+
+   Tokens mirrored from:
+     - tokens/spacing/slides.json (slide grid, rhythm, table)
+     - tokens/spacing/print.json (page size primitives reused)
+     - tokens/typography/font-family.json (Inter, Lato, JetBrains Mono)
+     - tokens/color/base.json (built hex via build/dist/hex/colors.json)
+   ============================================================ */
+
+:root {
+  /* Slide master (16:9, 1280x720pt) */
+  --vd-slide-width: 1280pt;
+  --vd-slide-height: 720pt;
+
+  /* Frame: floor + ceiling per the project rule */
+  --vd-slide-frame-top-min: 48pt;
+  --vd-slide-frame-top: 56pt;
+  --vd-slide-frame-top-max: 72pt;
+  --vd-slide-frame-side-min: 56pt;
+  --vd-slide-frame-side: 72pt;
+  --vd-slide-frame-side-max: 88pt;
+  --vd-slide-frame-bottom-min: 48pt;
+  --vd-slide-frame-bottom: 56pt;
+  --vd-slide-frame-bottom-max: 64pt;
+
+  /* Footer band */
+  --vd-slide-footer-height: 32pt;
+  --vd-slide-footer-padding-side: 56pt;
+
+  /* Logomark heights */
+  --vd-slide-logomark-footer: 20pt;
+  --vd-slide-logomark-title: 52pt;
+
+  /* Vertical rhythm */
+  --vd-slide-title-to-deck: 22pt;
+  --vd-slide-deck-to-body: 40pt;
+  --vd-slide-body-block-gap: 22pt;
+
+  /* Type scale */
+  --vd-slide-headline: 36pt;
+  --vd-slide-deck: 20pt;
+  --vd-slide-body: 22pt;
+  --vd-slide-body-emphasis: 24pt;
+  --vd-slide-footer-text: 11pt;
+
+  /* Confidentiality colors (footer band tints) */
+  --vd-conf-public: var(--vd-muted);
+  --vd-conf-customer: #c79100;          /* warm yellow, matches .vd-methods-draft */
+  --vd-conf-partner: #6b4ba0;           /* muted purple, distinct from teal/yellow */
+  --vd-conf-internal: #8a3a3a;          /* muted red, signals "do not share" */
+}
+
+/* ---- Named pages per genre ----
+   Each genre uses a named @page so theme + footer can vary.
+   IMPORTANT: WeasyPrint @page :first issue (#2088) — use named pages.
+*/
+@page slide-cover {
+  size: 1280pt 720pt;
+  margin: 0;
+  background: var(--vd-neutral-950);
+}
+@page slide-body-light {
+  size: 1280pt 720pt;
+  margin: 0;
+  background: #ffffff;
+}
+@page slide-body-dark {
+  size: 1280pt 720pt;
+  margin: 0;
+  background: var(--vd-neutral-950);
+}
+
+/* ---- Reset (additive to cover.css) ---- */
+.vd-slide-deck { margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+.vd-slide *, .vd-slide *::before, .vd-slide *::after { box-sizing: border-box; }
+
+/* ============================================================
+   SLIDE BASE
+   Each .vd-slide is one printed page.
+   ============================================================ */
+.vd-slide {
+  position: relative;
+  width: 1280pt;
+  height: 720pt;
+  page-break-after: always;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: var(--vd-slide-frame-top) var(--vd-slide-frame-side) calc(var(--vd-slide-frame-bottom) + var(--vd-slide-footer-height));
+}
+
+/* Light vs dark variants */
+.vd-slide-light { page: slide-body-light; background: #ffffff; color: var(--vd-ink); }
+.vd-slide-dark  { page: slide-body-dark;  background: var(--vd-neutral-950); color: rgba(255, 255, 255, 0.92); }
+
+/* ============================================================
+   TITLE SLIDE (cover-like)
+   ============================================================ */
+.vd-slide-title {
+  page: slide-cover;
+  background: var(--vd-neutral-950);
+  color: #ffffff;
+  justify-content: space-between;
+}
+.vd-slide-title .vd-slide-title-top { display: flex; align-items: center; }
+.vd-slide-title .vd-slide-logomark-large {
+  height: var(--vd-slide-logomark-title);
+  width: auto;
+}
+.vd-slide-title .vd-slide-eyebrow {
+  font-family: 'Lato', sans-serif;
+  font-size: 13pt;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--vd-teal-soft);
+  padding-top: 80pt;
+}
+.vd-slide-title h1 {
+  font-family: 'Lato', sans-serif;
+  font-size: 56pt;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.10;
+  color: rgba(255, 255, 255, 0.96);
+  padding-top: 24pt;
+  max-width: 1000pt;
+  margin: 0;
+}
+.vd-slide-title h1 .vd-accent { color: var(--vd-teal); }
+.vd-slide-title .vd-slide-deck {
+  font-size: 24pt;
+  line-height: 1.4;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 880pt;
+  padding-top: 20pt;
+}
+.vd-slide-title .vd-slide-byline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 14pt;
+  color: rgba(255, 255, 255, 0.78);
+  padding-top: 14pt;
+  border-top: 0.5pt solid var(--vd-rule-strong);
+  margin-top: auto;
+}
+.vd-slide-title .vd-slide-byline .vd-name { font-weight: 600; color: #ffffff; }
+.vd-slide-title .vd-slide-byline .vd-affil {
+  display: block;
+  font-size: 12pt;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
+  padding-top: 4pt;
+}
+.vd-slide-title .vd-slide-byline .vd-date {
+  font-size: 12pt;
+  color: rgba(255, 255, 255, 0.65);
+  text-align: right;
+}
+
+/* ============================================================
+   BODY SLIDE
+   ============================================================ */
+.vd-slide-body {
+  page: slide-body-light;
+  background: #ffffff;
+  color: var(--vd-ink);
+}
+
+.vd-slide-eyebrow {
+  display: flex;
+  align-items: baseline;
+  font-family: 'Lato', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  padding-bottom: 6pt;
+}
+.vd-slide-eyebrow .vd-num {
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 11pt;
+  color: var(--vd-teal);
+  margin-right: 16pt;
+}
+
+h2.vd-slide-headline {
+  font-family: 'Lato', sans-serif;
+  font-size: var(--vd-slide-headline);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.18;
+  color: var(--vd-ink);
+  margin: 0;
+  max-width: 1100pt;
+  padding-bottom: var(--vd-slide-title-to-deck);
+}
+h2.vd-slide-headline .vd-accent { color: var(--vd-teal); }
+
+p.vd-slide-deck-line {
+  font-size: var(--vd-slide-deck);
+  line-height: 1.4;
+  color: var(--vd-muted);
+  margin: 0;
+  max-width: 900pt;
+  padding-bottom: var(--vd-slide-deck-to-body);
+}
+
+.vd-slide-body-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-slide-body-block-gap);
+  font-size: var(--vd-slide-body);
+  line-height: 1.45;
+}
+.vd-slide-body-content p { margin: 0; }
+.vd-slide-body-content strong { font-weight: 600; }
+.vd-slide-body-content .vd-emphasis { font-size: var(--vd-slide-body-emphasis); font-weight: 600; }
+
+/* Bullet lists, slide-tuned */
+.vd-slide-body-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14pt;
+}
+.vd-slide-body-content ul li {
+  position: relative;
+  padding-left: 28pt;
+  font-size: var(--vd-slide-body);
+  line-height: 1.45;
+}
+.vd-slide-body-content ul li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 12pt; height: 2.5pt;
+  background: var(--vd-teal);
+  border-radius: 1pt;
+}
+
+/* Two-column body layout */
+.vd-slide-body-content.vd-cols-2 { flex-direction: row; gap: 48pt; align-items: flex-start; }
+.vd-slide-body-content.vd-cols-2 > * { flex: 1 1 0; }
+
+/* Three-column body layout */
+.vd-slide-body-content.vd-cols-3 { flex-direction: row; gap: 36pt; align-items: flex-start; }
+.vd-slide-body-content.vd-cols-3 > * { flex: 1 1 0; }
+
+/* ============================================================
+   TABLES (slide-tuned, mode: persuade-slide-deck.table-formatting)
+   Z2O-1323 enforcement: max 6 cols, max 8 rows, padding floor/ceiling.
+   ============================================================ */
+table.vd-slide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18pt;
+  line-height: 1.4;
+  margin: 0;
+}
+table.vd-slide-table thead tr {
+  border-bottom: 1pt solid var(--vd-ink);
+}
+table.vd-slide-table thead th {
+  font-family: 'Lato', sans-serif;
+  font-size: 13pt;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  text-align: left;
+  padding: 10pt 16pt 10pt 0;
+}
+table.vd-slide-table tbody td {
+  padding: 12pt 16pt 12pt 0;
+  border-bottom: 0.25pt solid var(--vd-rule-paper);
+  vertical-align: top;
+  color: var(--vd-ink);
+}
+table.vd-slide-table tbody tr:last-child td { border-bottom: none; }
+table.vd-slide-table th:first-child,
+table.vd-slide-table td:first-child {
+  font-weight: 600;
+  width: auto;
+}
+
+/* Callout block (single anchor metric or thesis) */
+.vd-slide-callout {
+  padding: 24pt 0 24pt 28pt;
+  border-left: 4pt solid var(--vd-teal);
+}
+.vd-slide-callout .vd-callout-label {
+  font-family: 'Lato', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vd-teal);
+  padding-bottom: 8pt;
+}
+.vd-slide-callout .vd-callout-body {
+  font-size: 24pt;
+  line-height: 1.35;
+  color: var(--vd-ink);
+}
+.vd-slide-callout .vd-callout-metric {
+  font-family: 'Lato', sans-serif;
+  font-size: 56pt;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.0;
+  color: var(--vd-teal);
+  display: block;
+  padding-bottom: 8pt;
+}
+
+/* ============================================================
+   FOOTER BAND (logomark + page number + confidentiality marking)
+   Required on every slide except the title slide.
+   Z2O-1318 (logomark consistency) + Z2O-1319 (confidentiality) enforced here.
+   ============================================================ */
+.vd-slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--vd-slide-footer-height);
+  padding: 0 var(--vd-slide-footer-padding-side);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--vd-slide-footer-text);
+  color: var(--vd-muted);
+  border-top: 0.4pt solid var(--vd-rule-paper);
+}
+.vd-slide-dark .vd-slide-footer {
+  color: rgba(255, 255, 255, 0.55);
+  border-top-color: var(--vd-rule-strong);
+}
+.vd-slide-footer .vd-slide-logomark-footer {
+  height: var(--vd-slide-logomark-footer);
+  width: auto;
+  display: block;
+}
+.vd-slide-footer .vd-slide-page-num {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--vd-slide-footer-text);
+  letter-spacing: 0.08em;
+}
+.vd-slide-footer .vd-conf-marking {
+  font-family: 'Lato', sans-serif;
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.vd-slide-footer .vd-conf-public { color: var(--vd-conf-public); }
+.vd-slide-footer .vd-conf-customer { color: var(--vd-conf-customer); }
+.vd-slide-footer .vd-conf-partner { color: var(--vd-conf-partner); }
+.vd-slide-footer .vd-conf-internal { color: var(--vd-conf-internal); }
+
+/* ============================================================
+   FIGURES IN SLIDES
+   Reuse cover.css .vd-figure pattern; slides override sizing.
+   Figure + caption + credit always travel together; never split.
+   ============================================================ */
+.vd-slide figure.vd-figure {
+  margin: 0;
+  page-break-inside: avoid;
+}
+.vd-slide figure.vd-figure img,
+.vd-slide figure.vd-figure svg,
+.vd-slide figure.vd-figure canvas {
+  max-height: 480pt;          /* leave room for headline + caption */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.vd-slide figcaption.vd-figure-caption {
+  font-size: 13pt;
+  padding-top: 10pt;
+}
+.vd-slide figcaption.vd-figure-caption .vd-figure-label {
+  font-size: 11pt;
+}
+.vd-slide .vd-figure-credit {
+  font-size: 10pt;
+  padding-top: 4pt;
+}
+
+/* ============================================================
+   PLACEHOLDER TEMPLATES
+   .vd-template from cover.css — Z2O-1320 enforcement:
+   role labels are NOT placeholders; only fields the author must
+   fill in (customer name, date, anchor metric) get .vd-template.
+   ============================================================ */
+/* (Inherits from cover.css; no slide-specific overrides needed.) */
+
+/* ============================================================
+   CLOSE SLIDE (mirror of title; reverses to dark with teal accent)
+   ============================================================ */
+.vd-slide-close {
+  page: slide-cover;
+  background: var(--vd-neutral-950);
+  color: #ffffff;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 88pt;
+}
+.vd-slide-close .vd-slide-eyebrow { color: var(--vd-teal-soft); padding-bottom: 18pt; }
+.vd-slide-close h2 {
+  font-family: 'Lato', sans-serif;
+  font-size: 56pt;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.10;
+  color: rgba(255, 255, 255, 0.96);
+  margin: 0;
+  max-width: 1000pt;
+}
+.vd-slide-close h2 .vd-accent { color: var(--vd-teal); }
+.vd-slide-close .vd-slide-cta {
+  font-size: 22pt;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.78);
+  padding-top: 28pt;
+  max-width: 880pt;
+}
+
+/* ============================================================
+   PROJECTION SAFETY
+   Print-color-adjust ensures backgrounds, alert tints, teal
+   accents survive PDF export and light-mode projector display.
+   ============================================================ */
+.vd-slide,
+.vd-slide-footer,
+.vd-template,
+.vd-slide-callout {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}

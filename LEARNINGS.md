@@ -95,3 +95,27 @@ The full workflow is documented in `workflows/adversarial-review.md`. The short 
 When you add a new structural primitive (a new category folder, a new tokens subdirectory, a new content type), audit every validator and every CI step that walks the structure. Hardcoded paths drift; dynamic walks (`readdirSync` + filter) survive future additions.
 
 This generalizes: any time you add a peer to an existing thing, search for places that enumerate the existing thing and confirm they pick up the peer.
+
+---
+
+## Production process belongs in the design repo when consumers diverge
+
+**Surface that produced this:** Sales collateral system (slides cell + sales-collateral production guide). Mark Chung asked for "a scalable way to produce product demo artifacts" with consumers spanning Verdigris's sales motion, partner channels, customer engagement teams, and internal coordination. The decision: absorb production process (templates, naming convention, distribution rules, versioning protocol) into the design repo as `workflows/sales-collateral.md`, not split it across Notion and the design repo.
+
+The original charter for `VerdigrisTech/design` was rules + tokens + foundations. Process docs were not part of the original mandate. But when consumers diverge — when the same artifact (a deck) gets produced by different humans for different audiences across different engagement contexts — a single source of truth that propagates via the package version is more valuable than two synced sources of truth. Drift between Notion's "how we make decks" and the design repo's "what a correct deck looks like" is the failure mode the consolidation prevents.
+
+When to absorb process:
+
+- Consumers diverge in role, geography, or tooling. (One team in one place that meets weekly does not need codified process; five teams across two continents do.)
+- The process artifact and the rule artifact need to ship together. (Template + naming convention + version label have to update atomically.)
+- A package consumer (skill, evaluator, AI agent) benefits from machine-readable process. (The Cowork skill consuming `@verdigristech/design-tokens` picks up workflow updates automatically; a Notion page does not propagate.)
+
+When NOT to absorb process:
+
+- Process is genuinely human-only (interview rubrics, OKR setting). Keep these in Notion.
+- The audience is exclusively non-technical. (Design repo is markdown-via-Jekyll; Notion's WYSIWYG is friendlier for non-engineers.)
+- Process changes faster than the design repo's release cadence. (Quarterly retros belong in a higher-velocity tool.)
+
+Trade-off explicitly accepted: the design repo's charter expanded. As `workflows/*` grows past five docs, evaluate splitting into a sibling `verdigris-design-ops` repo. Meanwhile, the precedent is that `workflows/` is the seam — process docs live there, sectioned away from `rules/`, `tokens/`, `foundations/`, `categories/`.
+
+Generalizes to: any cross-cell artifact that involves humans producing content. Sales collateral was the first; future candidates include hiring rubric production, board-deck production, partnership-agreement templates.

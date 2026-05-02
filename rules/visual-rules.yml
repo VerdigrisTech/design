@@ -2930,6 +2930,94 @@ composition:
           llm_eval: "Does any chart on this slide use more than 3 distinct colors, or does any data visualization occupy more than 60% of the slide content zone? Answer YES if either limit is exceeded, NO if charts use 3 or fewer colors and fit within 60%."
     spacing: "8% safe margin inset from slide edges for 16:9. Content zone centered. Vertical centering default."
 
+    # ---- Sales collateral genres (added 2026-05-02 from Abcam pilot kickoff review) ----
+    # The arc + coupling rules above apply to investor pitch / general sales decks.
+    # The genres below are sales-collateral-specific (pilot kickoff, customer 101, internal team, partner enablement).
+    # Pick a genre via the mode framework below; mode-specific rules apply on top of (or override) the base rules.
+    # See categories/slides/index.md for the genre selection decision tree.
+    modes:
+      pilot_kickoff:
+        description: "First artifact a customer receives after signing a pilot. Founder + working lead authority; explicit pilot scope, dates, success criteria."
+        length: { min: 12, max: 20 }
+        confidentiality_default: "CUSTOMER-CONFIDENTIAL"
+        date_format: "absolute"
+        logomark_variant: "full_lockup"
+        voice_recipe: "pilot_kickoff_deck"
+        exemplars:
+          - "a16z portfolio kickoff template"
+          - "McKinsey client onboarding deck"
+          - "Stripe enterprise launch packet"
+      internal_team:
+        description: "Verdigris-internal coordination: pre-meeting prep, post-mortems, weekly engagement updates."
+        length: { min: 8, max: 15 }
+        confidentiality_default: "INTERNAL ONLY"
+        date_format: "week_n_acceptable"
+        logomark_variant: "wordmark_only"
+        voice_recipe: "internal_team_deck"
+      customer_101:
+        description: "First substantive meeting with a prospect. Story-led; founder voice carries it."
+        length: { min: 15, max: 25 }
+        confidentiality_default: "PUBLIC"
+        date_format: "absolute"
+        logomark_variant: "full_lockup"
+        voice_recipe: "customer_101_deck"
+        exemplars:
+          - "Anthropic founder presentations"
+          - "Notion / Figma early-stage decks"
+      partner_enablement:
+        description: "Channel partner co-sell collateral. Self-contained training packet for partner AEs."
+        length: { min: 20, max: 30 }
+        confidentiality_default: "PARTNER-CONFIDENTIAL"
+        date_format: "absolute"
+        logomark_variant: "full_lockup"
+        voice_recipe: "partner_enablement_deck"
+        exemplars:
+          - "Stripe Verified Partner enablement"
+          - "AWS reseller training decks"
+    sales_collateral_rules:
+      - id: "composition.persuade-slide-deck.logomark-consistency"
+        description: "Every slide carries the logomark in the footer band, left-aligned, fixed 20pt height. Title slide additionally carries a full lockup top-left at 44-60pt. Variant must match the genre (full_lockup for pilot_kickoff/customer_101/partner_enablement; wordmark_only for internal_team). A logomark that drifts in size, position, or variant signals 'ad-hoc deck, not template-produced.' [Z2O-1318]"
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
+        test:
+          llm_eval: "On this slide deck, does the logomark appear in the footer of every slide at consistent position (left) and consistent size (~20pt)? Does the title slide additionally carry a full lockup top-left? Does the variant (full lockup vs. wordmark-only) match what the declared genre requires? Answer YES if logomark drifts in position, size, or variant across slides; NO if every slide carries the logomark consistently per the genre's spec."
+      - id: "composition.persuade-slide-deck.confidentiality-marking"
+        description: "Every slide carries a confidentiality marking in the footer band (right-aligned). Tier defaults: pilot_kickoff=CUSTOMER-CONFIDENTIAL, internal_team=INTERNAL ONLY, customer_101=PUBLIC, partner_enablement=PARTNER-CONFIDENTIAL. The marking is mandatory; absence is a violation. Tier color signals tier without requiring the reader to parse the text. [Z2O-1319]"
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
+        test:
+          llm_eval: "Does every slide in this deck carry a confidentiality marking (PUBLIC, CUSTOMER-CONFIDENTIAL, PARTNER-CONFIDENTIAL, or INTERNAL ONLY) in the footer? Does the tier match the declared genre's default (or, if intentionally upgraded, is the upgrade documented)? Answer YES if any slide is missing the marking or if tier varies inconsistently within the deck; NO if every slide carries the same correct marking."
+      - id: "composition.persuade-slide-deck.template-roles-not-names"
+        description: "Slide TEMPLATES use role labels (e.g., 'Pilot Sponsor', 'Working Lead'), not specific people. Produced decks fill in names alongside the role label ('Pilot Sponsor: Mark Chung, CEO'). A name baked into a template is no longer a template; it's a one-off artifact masquerading as reusable infrastructure. Pairs with LEARNINGS.md 'rendering layer never invents facts.' [Z2O-1320]"
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
+        test:
+          llm_eval: "Is this artifact a TEMPLATE (intended to be cloned and filled in) or a PRODUCED DECK (a specific deck for a specific engagement)? If a template: does it use role labels exclusively (e.g., 'Pilot Sponsor', 'VP of Operations'), or does it bake in specific individual names? Answer YES if the template contains specific individual names where role labels are appropriate; NO if templates use role labels and produced decks add names alongside roles."
+      - id: "composition.persuade-slide-deck.absolute-dates"
+        description: "External-audience genres (pilot_kickoff, customer_101, partner_enablement) use absolute calendar dates ('2026-06-15' or 'June 15, 2026') for every timeline claim. Week-N notation ('Week 3') is acceptable in internal_team only. Mixed formats in one deck is a smell. [Z2O-1322]"
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["pilot_kickoff", "customer_101", "partner_enablement"]
+        test:
+          llm_eval: "Does this deck use absolute calendar dates (e.g., '2026-06-15', 'June 15 2026') for every timeline claim, or does it use week-N notation ('Week 3', 'Week 4 checkpoint')? Answer YES if any external-audience deck uses week-N notation or mixes formats; NO if every external-audience deck uses absolute dates throughout."
+      - id: "composition.persuade-slide-deck.table-formatting"
+        description: "Tables on a sales-collateral slide max 6 columns, max 8 rows, cell padding floor/ceiling 8-16pt vertical / 12-20pt horizontal. Header row uses Lato 13pt 700 in --vd-muted (uppercase, 0.10em letterspacing) -- same eyebrow tier as section eyebrows in the whitepaper cell. Above 6 cols / 8 rows, split across slides or move to an appendix. Supporting visuals follow .vd-figure pattern with caption + credit line. [Z2O-1323]"
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
+        test:
+          llm_eval: "Do all tables on slides in this deck stay within 6 columns and 8 rows? Do they use the canonical header treatment (Lato 13pt 700 uppercase muted) and consistent cell padding (8-16pt vertical, 12-20pt horizontal)? Answer YES if any table exceeds 6 columns or 8 rows, OR uses inconsistent padding/header treatment across the deck; NO if every table conforms."
+
+    sales_collateral_notes: "These rules apply to the four sales-collateral genres (pilot_kickoff, internal_team, customer_101, partner_enablement). They are mode-conditional; check the rule's modes: list before applying. The diction rule from the same Abcam review (Z2O-1321) lives in voice/recipes.yaml as voice.audience-fit-diction.exit-criteria, not here, because diction is a voice concern not a visual one. See categories/slides/ for full per-genre specs and build/print/slides.css for the reference stylesheet."
+
   # ---------------------------------------------------------------------------
   # PERSUADE x WHITEPAPER COVER -- briefings and editorial PDFs
   # ---------------------------------------------------------------------------

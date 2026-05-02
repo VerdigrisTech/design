@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Verdigris 101 — First Meeting Deck</title>
+  <meta name="description" content="Customer 101 deck example. Demonstrates the customer-101 genre deltas against pilot-kickoff: PUBLIC tier, full lockup, story-led mark+jon voice, 'next meeting' CTA.">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="../../../build/print/cover.css">
+  <link rel="stylesheet" href="../../../build/print/slides.css">
+  <style>body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; }</style>
+</head>
+<body class="vd-slide-deck" data-genre="customer-101" data-confidentiality="PUBLIC">
+
+  <!-- SLIDE 1 — TITLE -->
+  <section class="vd-slide vd-slide-title">
+    <div class="vd-slide-title-top">
+      <img class="vd-slide-logomark-large" src="../../../assets/logos/lockup-white.svg" alt="Verdigris">
+    </div>
+    <div>
+      <p class="vd-slide-eyebrow">First meeting · Data center reliability · 25 minutes</p>
+      <h1>Verdigris is the <span class="vd-accent">power-intelligence layer</span> your data center doesn't have yet.</h1>
+      <p class="vd-slide-deck">An introduction for operators who already trust their BMS and know it isn't enough.</p>
+    </div>
+    <div class="vd-slide-byline">
+      <div>
+        <span class="vd-name">Mark Chung</span>
+        <span class="vd-affil">Verdigris CEO</span>
+      </div>
+      <div class="vd-date">
+        2026-05-10
+        <span class="vd-meta">customer-101 · v3</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — THE WEDGE -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">02</span>The wedge</div>
+    <h2 class="vd-slide-headline">BMS sees that a rectifier <span class="vd-accent">failed</span>. We see it <em>failing</em>.</h2>
+    <p class="vd-slide-deck-line">8 kHz waveform telemetry on every monitored circuit, 24/7, for the life of the asset.</p>
+    <div class="vd-slide-body-content">
+      <p>Most data center reliability tools sample at 1 Hz or below. Faults precipitate in milliseconds. The math doesn't add up; the precursor signal is there, but the resolution to see it isn't.</p>
+      <p>Verdigris meters sample at 8 kHz — fine enough to read harmonic structure, capacitor aging, and circuit-imbalance trends weeks before they become outages. We've validated this across <strong>800+ rectifiers</strong> in production at four named customers.</p>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">02 / 06</span>
+      <span class="vd-conf-marking vd-conf-public">Public</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — EVIDENCE (anchor metric, public case) -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">03</span>Evidence</div>
+    <h2 class="vd-slide-headline">Fortune 50 telecom. <span class="vd-accent">$1.3M to $3M</span> recovered in deferred CapEx.</h2>
+    <p class="vd-slide-deck-line">Three-year fleet projection across 800+ rectifiers. Anonymized; full case study at verdigris.co/resources/case-studies.</p>
+    <div class="vd-slide-body-content">
+      <div class="vd-slide-callout">
+        <div class="vd-callout-label">Outcome</div>
+        <p class="vd-callout-body">Verdigris identified rectifier-aging precursors across the fleet, allowing the customer to defer ~$1.3M-$3M of CapEx-style replacements over a three-year horizon by extending the useful life of equipment whose health was previously assumed-failing rather than measured.</p>
+      </div>
+      <p style="padding-top:24pt;font-style:italic;color:var(--vd-muted);">"Verdigris turned what looked like a refresh budget into a maintenance budget. Our finance team had to rebuild the model." — VP Operations, Fortune 50 Telecom</p>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">03 / 06</span>
+      <span class="vd-conf-marking vd-conf-public">Public</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 — WHERE WE FIT -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">04</span>Where we fit</div>
+    <h2 class="vd-slide-headline">Below the BMS. Above the multimeter.</h2>
+    <p class="vd-slide-deck-line">Verdigris doesn't replace your existing reliability tooling. It adds the layer that's missing.</p>
+    <div class="vd-slide-body-content vd-cols-3">
+      <div>
+        <p style="font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;">BMS</p>
+        <p>Knows the room is too hot. Knows the door is open. Sees electrical faults <em>after</em> they trip a breaker.</p>
+      </div>
+      <div>
+        <p style="font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;">Verdigris</p>
+        <p>Reads waveform structure 24/7. Catches the precursor signal weeks before the breaker trip.</p>
+      </div>
+      <div>
+        <p style="font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;">Field tools</p>
+        <p>Multimeters, IR cameras, thermal probes. Used reactively when something is wrong. Useful, but local in time and space.</p>
+      </div>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">04 / 06</span>
+      <span class="vd-conf-marking vd-conf-public">Public</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 — WHY NOW -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">05</span>Why now</div>
+    <h2 class="vd-slide-headline">AI workloads are breaking the assumptions <span class="vd-accent">power systems were sized against</span>.</h2>
+    <div class="vd-slide-body-content">
+      <ul>
+        <li><strong>Load swings are faster and larger.</strong> A GPU training run can pull 600 kW one second and 120 kW the next; rectifiers sized against steady-state 1990s assumptions degrade in ways their nameplates can't predict.</li>
+        <li><strong>Capacity is the constraint, not capital.</strong> Hyperscaler-class operators routinely strand 20-40% of nameplate capacity to derating margins, because the alternative — operating closer to the limit — requires visibility nobody has.</li>
+        <li><strong>The reliability gap is asymmetric.</strong> A 30-second outage in an AI training cluster costs more than a 30-day window in a data warehouse. The risk profile changed; the tooling didn't.</li>
+      </ul>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">05 / 06</span>
+      <span class="vd-conf-marking vd-conf-public">Public</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 — CLOSE: NEXT MEETING + AGENDA -->
+  <section class="vd-slide vd-slide-close">
+    <p class="vd-slide-eyebrow">Next step</p>
+    <h2>A <span class="vd-accent">90-minute deep dive</span> with your reliability and facilities leads.</h2>
+    <p class="vd-slide-cta">Agenda: walk one of your existing rectifier-failure incidents through what Verdigris would have shown you. We bring the analysis; you bring the post-mortem and one of your engineers. If it lands, we draft a pilot scope on the spot. <strong>Proposed: week of 2026-05-19.</strong></p>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-white.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">06 / 06</span>
+      <span class="vd-conf-marking vd-conf-public">Public</span>
+    </div>
+  </section>
+
+</body>
+</html>
