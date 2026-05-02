@@ -67,9 +67,9 @@ The Z2O-1321 diction rule applies: avoid internal jargon. Customer 101 has addit
 
 The `customer_101_deck` recipe in `voice/recipes.yaml` sets:
 
-- **Seren (primary)** — people intelligence, diplomatic precision, operator empathy. The first-meeting audience needs to feel HEARD before they're pitched at. Seren's voice ("from my perspective", "I will just quietly leave this here") frames Verdigris as a careful collaborator rather than a vendor closing on a stranger.
-- **Mike (supporting)** — field credibility on the evidence slides. Operator-recognizable specifics — OCP-conference observations, real installation patterns, physical equipment reality — earn credibility that founder voice alone cannot.
-- **Mark (accent only)** — founder voice on the close slide and the "why now" / mission-gravity framing. Reserved for the moments where founder authority is decisive; not the dominant register because story-led at 50% overpowers a first-meeting audience that is skeptical and busy.
+- **Seren (primary)** — people intelligence, diplomatic precision, operator empathy ([`voice/team/seren-coskun.yaml`](../../voice/team/seren-coskun.yaml)). The first-meeting audience needs to feel HEARD before they're pitched at. Seren's voice ("from my perspective", "I will just quietly leave this here") frames Verdigris as a careful collaborator rather than a vendor closing on a stranger.
+- **Mike (supporting)** — field credibility on the evidence slides ([`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)). Operator-recognizable specifics — OCP-conference observations, real installation patterns, physical equipment reality — earn credibility that founder voice alone cannot.
+- **Mark (accent only)** — founder voice on the close slide and the "why now" / mission-gravity framing ([`voice/team/mark-chung.yaml`](../../voice/team/mark-chung.yaml)). Reserved for the moments where founder authority is decisive; not the dominant register because story-led at 50% overpowers a first-meeting audience that is skeptical and busy.
 
 A customer 101 deck that reads as 100% engineering-detail loses first-meeting audiences. A deck that reads as 100% founder-narrative loses technical evaluators and can feel like a pitch dressed as humility. The Seren-primary / Mike-supporting / Mark-accent mix splits the difference and lands the deck as "we hear you, we have done this work, here's why now."
 
@@ -79,8 +79,17 @@ This recipe was revised after adversarial review (2026-05-02) — the initial re
 
 The same Abcam review surfaced that the pilot-kickoff template was being used inappropriately for first meetings, where it landed as "they're assuming we've signed." The customer 101 genre exists so the *first meeting* gets a deck calibrated to its purpose — not a recycled pilot kickoff with the customer name swapped.
 
+## What this cell does NOT cover
+
+- **Pilot-scoping decks.** When the prospect has signed a pilot agreement and you're scoping the engagement, use `pilot-kickoff.md`.
+- **Partner channels.** When the audience is a channel partner's account executive (not the end customer), use `partner-enablement.md`.
+- **Internal team coordination.** When the audience is Verdigris-only, use `internal-team.md`.
+- **One-pager leave-behinds.** When the artifact will be scanned cold without a presenter, use `categories/one-pagers/guide.md`.
+
 ## See also
 
+- [`workflows/sales-collateral`](../../workflows/sales-collateral) — production guide spanning all collateral types (decision tree, naming, distribution)
 - [Pilot kickoff (primary spec)](pilot-kickoff)
 - [Slides index](index)
 - [`voice/recipes.yaml`](../../voice/recipes.yaml) — `customer_101_deck` recipe
+- [`voice/team/seren-coskun.yaml`](../../voice/team/seren-coskun.yaml), [`mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml), [`mark-chung.yaml`](../../voice/team/mark-chung.yaml) — voice profile sources

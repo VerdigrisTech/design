@@ -69,9 +69,9 @@ The Z2O-1321 diction rule applies, plus partner-specific adjustments:
 
 The `partner_enablement_deck` recipe in `voice/recipes.yaml` sets:
 
-- **Jimit (primary)** — outside-in market positioning. Partner AEs respond to language that sounds like their own; Jimit's market fluency translates Verdigris into the partner's commercial frame.
-- **Seren (supporting)** — people intelligence and diplomatic precision on co-sell mechanics. A partnership that reads as "you'll sell our product" instead of "we'll sell together" fails before it starts. Seren's voice makes the partner feel like a collaborator, not an extraction target.
-- **Mike (accent)** — industry insider credibility for objection-handling slides. When a partner AE is asked a technical question by their customer, Mike's voice is what they should hear in their head.
+- **Jimit (primary)** — outside-in market positioning ([`voice/team/jimit-shah.yaml`](../../voice/team/jimit-shah.yaml)). Partner AEs respond to language that sounds like their own; Jimit's market fluency translates Verdigris into the partner's commercial frame.
+- **Seren (supporting)** — people intelligence and diplomatic precision on co-sell mechanics ([`voice/team/seren-coskun.yaml`](../../voice/team/seren-coskun.yaml)). A partnership that reads as "you'll sell our product" instead of "we'll sell together" fails before it starts. Seren's voice makes the partner feel like a collaborator, not an extraction target.
+- **Mike (accent)** — industry insider credibility for objection-handling slides ([`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)). When a partner AE is asked a technical question by their customer, Mike's voice is what they should hear in their head.
 
 The recipe mirrors the pattern in `partner_materials` (Jimit primary, Seren supporting, Mike accent) — an earlier draft had Seren demoted to accent, which adversarial review flagged as a divergence from precedent without rationale. The diplomatic precision in Seren's voice is load-bearing for partner relationships, not decorative.
 
@@ -87,8 +87,17 @@ The partner agreement should govern how the partner AE shares the deck with thei
 
 A partner co-sell motion has different rhetorical needs than a direct customer kickoff. The partner-enablement genre captures those differences in a single template; pre-2026, this work was done as bespoke per-partner playbooks. The genre split surfaced during the [adversarial-review workflow](../../workflows/adversarial-review) for the slides cell.
 
+## What this cell does NOT cover
+
+- **End-customer decks.** When the audience is the partner's customer (not the partner themselves), use `customer-101.md`.
+- **Joint customer-facing decks.** When the partner and Verdigris jointly present to a shared customer, use `customer-101.md` plus in-call technical support, not a standalone partner-enablement deck.
+- **Co-marketing campaigns.** When the asset is part of joint partner-marketing (joint webinars, co-branded case studies), defer to a future partner-marketing cell or use the existing `partner_materials` voice recipe.
+- **Internal partnership training.** When Verdigris is training its own team on partnership mechanics, use `internal-team.md`.
+
 ## See also
 
+- [`workflows/sales-collateral`](../../workflows/sales-collateral) — production guide spanning all collateral types
 - [Pilot kickoff (primary spec)](pilot-kickoff)
 - [Slides index](index)
-- [`voice/recipes.yaml`](../../voice/recipes.yaml) — `partner_enablement_deck` recipe
+- [`voice/recipes.yaml`](../../voice/recipes.yaml) — `partner_enablement_deck` recipe (and the existing `partner_materials` recipe for adjacent collateral)
+- [`voice/team/jimit-shah.yaml`](../../voice/team/jimit-shah.yaml), [`seren-coskun.yaml`](../../voice/team/seren-coskun.yaml), [`mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml) — voice profile sources

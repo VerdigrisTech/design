@@ -134,6 +134,65 @@ When to apply this learning:
 
 ---
 
+## Three-loop adversarial review converges; one loop misses
+
+**Surface that produced this:** PR #43, Loops 1-3 of agent-team adversarial review on the four-cell sales-collateral system. Each loop ran 3 parallel agents prosecuting different dimensions; each loop's fixes informed the next.
+
+The pattern: **issues found per loop decay**, not because later loops are weaker, but because earlier loops fix the load-bearing failures and later loops find the load-light ones. Loops are converging when:
+
+- Loop 1 (cell-level): structural bugs (5 broken rules with missing fields, 4 unverifiable exemplar claims, voice profile documentation gap)
+- Loop 2 (cross-cell + inheritance + examples): integrity bugs (inheritance was documentation-only; example HTML violated its own cell on single-anchor-metric; missing cross-references in delta genre files)
+- Loop 3 (external + recipe re-prosecution + enforcement): refinement (recipe percentage re-allocation, structural-vs-llm test conversion, profile YAML best_for documentation)
+
+A single loop would have caught only the most obvious 30-40% of issues. The first agent team focuses on what it can see; subsequent agent teams build on the prior fixes and catch what the first round missed.
+
+When to apply this pattern:
+
+- New cells, new schemas, new tokens — anything where downstream consumers (Cowork skill, evaluator pipeline) will rely on the artifact's correctness for many surfaces.
+- After a non-trivial refactor: the structural changes always reveal cascading inconsistencies the original author can't see.
+- Before a release that establishes precedent (the first whitepaper cell, the first sales-collateral system, the first cross-cell inheritance pattern).
+
+When NOT to apply:
+
+- Bug fixes (one-shot, reversible, narrow scope).
+- Token value tuning (numeric updates, validators catch the rest).
+- Documentation polish (cosmetic; reviewer eyes catch this in PR).
+
+The cost: 9 agent calls (3 loops × 3 agents) + ~2 hours of synthesis. The benefit: a system that converges on correctness rather than ships at "good enough." Cost-benefit favors three loops on cells that establish precedent; favors one loop on incremental work; favors zero loops on bug fixes.
+
+Pair with `workflows/adversarial-review.md` -- the workflow itself. The three-loop pattern is when to invoke that workflow more than once on the same artifact.
+
+---
+
+## Pre-flight structural tests are cheaper than llm_eval
+
+**Surface that produced this:** PR #43, Loop 3 enforcement-viability audit. The new sales-collateral rules shipped with `llm_eval:` test blocks for most rules (logomark consistency, CTA strip presence, numbered-list-count, thesis-block-required, etc.). An LLM eval costs money and time per evaluation; a structural test (CSS selector presence, regex count, JSON field check) costs near-zero.
+
+Many rules are **structural plus semantic**: the structural part can be a cheap pre-flight check, and the semantic part is the llm_eval that fires if the structural test passes. Examples:
+
+- `cta-strip-required`: structural = `.vd-onepager-cta` element exists; semantic = "is the CTA action specific or generic?"
+- `numbered-list-count` (comparative): structural = count `<li>` items in 5-12 range; semantic = optional, only if structural fails
+- `thesis-block-required`: structural = `aside.vd-onepager-thesis` exists; semantic = "does the thesis block carry the argument?"
+- `single-anchor-metric` (case study): structural = exactly one `.vd-cs-anchor .vd-anchor-metric` element; semantic = "is the anchor compatible with surrounding prose?"
+
+The pattern: write the structural test first, fall back to llm_eval only when the rule's semantics genuinely require comprehension. This pattern is now embedded as a `test:` block with both `structural:` and `llm_eval:` sub-fields in the relevant rules.
+
+When to apply:
+
+- Any rule where the failure mode includes a STRUCTURAL signature (missing element, wrong count, wrong file format) before it includes a SEMANTIC signature (wrong content, wrong tone, wrong intent).
+- Rules that fire many times per artifact (one per slide, one per row): structural cost dominates llm_eval cost at scale.
+- Rules that need to fire in CI (where llm_eval cost is borne by the project, not the consumer).
+
+When llm_eval is the right answer:
+
+- Rules about meaning, register, voice, argument quality. ("Does the close slide have the right founder authority weight?")
+- Rules that compare two artifacts (web/PDF parity) — though the comparison itself can be structural plus semantic.
+- Rules where the structural signature is unstable (different consumers render the artifact differently).
+
+The discipline: every llm_eval in a rule should be paired with the question, "could a structural check fire first and the llm_eval only run when the structural check passes?" If the answer is yes, add the structural test.
+
+---
+
 ## Single-genre cells when fragmentation isn't earned
 
 **Surface that produced this:** Case studies cell (PR #43, Phase 4). The whitepaper cell ships three genres, the slides cell ships four genres, the one-pagers cell ships two genres — but the case-studies cell ships one. The decision was not symmetry-driven; it was evidence-driven.

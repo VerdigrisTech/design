@@ -40,13 +40,14 @@ Case studies have six required sections, in this order:
 
 A case study that presents two competing bolded metrics ("$1.3M-$3M recovered AND 21 days advance warning AND 800+ rectifiers monitored") dilutes the proof — the reader scanning the page sees three numbers competing for attention and the win loses its definition. Pick the one number that defines the engagement; let the others support in surrounding prose.
 
-Examples of legitimate single anchors:
-- **`$1.3M-$3M`** — Fortune 50 Telecom CapEx deferral over a 3-year horizon
-- **`19% HVAC energy reduction`** — Fortune 50 Telecom LL97 compliance
-- **`14 days`** of advance warning — Rectifier failure precursor identification
-- **`Zero penalties`** — LL97 compliance outcome
+Examples of legitimate single anchors (illustrative; numbers should be re-verified against the canonical EVD atom set in the consuming repo before any production case study ships):
 
-Per-instance qualifiers ("per facility", "per rack", "per circuit") are silent metric multipliers and require explicit context. See `LEARNINGS.md` for the per-instance qualifier discipline (filed as Z2O-1310).
+- **`$1.3M-$3M`** — Fortune 50 Telecom CapEx deferral over a 3-year horizon (anchored to EVD-005; the dollar range reflects fleet-projection sensitivity, not per-facility — see Z2O-1310)
+- **`19% HVAC energy reduction`** — Fortune 50 Telecom LL97 compliance (verify against the published case study at verdigris.co/resources/case-studies/ before reuse)
+- **`14 days`** of advance warning — Rectifier failure precursor identification (anchored to EVD-104)
+- **`Zero penalties`** — LL97 compliance outcome (claim type: count; pair with the regulatory window in surrounding prose)
+
+Per-instance qualifiers ("per facility", "per rack", "per circuit") are silent metric multipliers and require explicit context. A `$3M per facility` anchor without stating fleet size N silently multiplies the canonical claim by an unknown N. See `LEARNINGS.md` for the per-instance qualifier discipline (Z2O-1310 in the consuming `verdigris` repo).
 
 ## Quote attribution
 

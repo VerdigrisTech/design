@@ -129,12 +129,15 @@ Inherits the `composition.persuade-slide-deck.absolute-dates` rule. One-pagers u
 
 ## Voice recipe
 
-The `one_pager` recipe in `voice/recipes.yaml` sets the dial:
+The `one_pager` recipe in `voice/recipes.yaml` branches by genre:
 
-- Solution overview leans Mike (field credibility) + Jon (technical precision) + technical_precision (35%)
-- Comparative leans Jimit (market fluency) + Mark (strategic narrative) + strategic_narrative (35%)
+**Solution overview** — Mike primary (field credibility on the 3 callouts; operator-recognizable specifics) + Jon supporting (technical precision on capability claims). Mark is absent: founder voice scanned cold reads as a brochure when paired with capability descriptions.
 
-Both genres avoid Mark as primary because a one-pager scanned cold needs operator-recognizable specifics, not founder voice. Mark accents the thesis block in comparative genre when the argument is mission-anchored.
+**Comparative** — **Mark primary** (the thesis block carries the argument; Mark's strategic_narrative 9 + mission_gravity 9 land the founder weight where it's needed) + Jimit supporting (outside-in market positioning across the numbered list items). Mike doesn't appear; the comparative is positioning + argument, not field credibility.
+
+The Mark-primary assignment on comparative was flipped from Jimit-primary on 2026-05-02 after Loop 3 adversarial review showed the thesis block is the load-bearing element of a comparative one-pager — the voice carrying the thesis is the voice carrying the page. Jimit's market fluency works as supporting, layered through the numbered list items.
+
+Diction discipline applies (audience_fit_diction): never use internal jargon; spell out acronyms on first use; specific numbers always; CTA action is concrete.
 
 ## Reference exemplars (Notion Sales Collateral Cheat Sheet)
 

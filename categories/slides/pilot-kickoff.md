@@ -145,7 +145,7 @@ This is the rendering-layer-never-invents-facts principle from `LEARNINGS.md` ap
 
 ## Audience-fit diction (Z2O-1321)
 
-The voice recipe `pilot_kickoff_deck` (in `voice/recipes.yaml`) sets the dial: Mike primary (field credibility, operator empathy from actual customer-site work), Thomas supporting (operational clarity, structured-but-transparent), Jon accent (technical depth on data flow / hardware install slides). The contract is signed; the customer team needs to feel the team they'll work with for 90 days already understands their world — not founder reassurance. Beyond the recipe, four diction adjustments are required for a pilot kickoff:
+The voice recipe `pilot_kickoff_deck` (in `voice/recipes.yaml`) sets the dial: Mike primary (field credibility, operator empathy from actual customer-site work — see [`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)), Thomas supporting (operational clarity, structured-but-transparent — see [`voice/team/thomas-chung.yaml`](../../voice/team/thomas-chung.yaml)), Jon accent (technical depth on data flow / hardware install slides — see [`voice/team/jon-chu.yaml`](../../voice/team/jon-chu.yaml)). The contract is signed; the customer team needs to feel the team they'll work with for 90 days already understands their world — not founder reassurance. Beyond the recipe, four diction adjustments are required for a pilot kickoff:
 
 1. "**Exit criteria**" → "**expansion criteria**" or "**graduation criteria**"
    - "Exit" implies the customer is leaving Verdigris. The opposite is intended: the criteria mark the path from pilot to expanded engagement. "Expansion criteria" carries the right vector. "Graduation criteria" works when the audience is technically inclined.

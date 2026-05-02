@@ -17,7 +17,7 @@ This guide documents only the **deltas** against [pilot-kickoff.md](pilot-kickof
 |---|---|---|
 | Length | 12-20 slides | 8-15 |
 | Voice primary | Mike (field credibility) | **Thomas** (operational, transparent) |
-| Voice supporting | Thomas | **Mike** (technical translation, operator-readable status) |
+| Voice supporting | Thomas | **Mike + Jon** (technical translation + bench-diagnostic credibility) |
 | Voice accent | Jon (data flow / hardware) | **Jimit** (market context when engagement intersects strategy) |
 | CTA pattern | "Pilot scope + decision date for expansion" | "Decision needed by [date]" — a specific Verdigris decision, owner, date |
 | Confidentiality default | CUSTOMER-CONFIDENTIAL | **INTERNAL ONLY** (red marking) |
@@ -70,11 +70,37 @@ What still applies:
 - Absolute dates for any decision the team is committing to
 - Week-N notation only for tracking the engagement timeline, not for decision dates
 
-## Why this genre exists
+## Why this is a genre and not a mode flag on pilot kickoff
+
+A reasonable challenge: if internal team is "deltas-only against pilot kickoff," is it really a genre, or is it a `mode: internal` toggle that could apply to any genre?
+
+Verdict: it's a genre, defensibly, on five structural grounds:
+
+1. **Voice mix changes from three voices to a different three voices**, with Thomas as primary instead of Mike. The voice center of gravity shifts because the audience is internal — operational clarity beats field credibility.
+2. **Logomark variant changes** (full lockup → wordmark only). This signals "internal context, not customer-facing" pre-consciously to readers; a wordmark-only customer deck would feel cheap, a full-lockup internal deck feels misplaced.
+3. **Confidentiality tier marking color changes** to red (INTERNAL ONLY), distinct from the customer/partner/public yellow/purple/grey palette.
+4. **Date format relaxes** to permit week-N notation when the engagement timeline is the running thread (per the absolute-dates rule's mode list excluding internal_team).
+5. **Diction rules NOT applied** — the audience-fit-diction guidance ("exit criteria" → "expansion criteria", etc.) doesn't apply because internal jargon is faster than translation when the audience is Verdigris-only.
+
+If we collapsed internal_team to a `mode: internal` toggle on pilot_kickoff, every rule that distinguishes the genres would need conditional logic on the toggle. That's complexity without simplification. Treating internal_team as a genre keeps each genre's spec self-contained and locally readable.
+
+The genre stays a genre. If a sixth structural delta accumulates against another existing genre and a new "post-mortem" or "retrospective" sub-genre earns its own spec, this defense is what to point at — same five-axis test.
+
+## Origin
 
 Filed implicitly via the same Abcam review (Z2O-1318 through Z2O-1323) — the slide cluster surfaced in customer-facing decks but the rules need to NOT apply to internal decks (e.g., the customer-101 wordmark would be wrong for an internal weekly), so the genre split was necessary to express the deltas. The four-genre framework was synthesized via the [adversarial-review workflow](../../workflows/adversarial-review).
 
+## What this cell does NOT cover
+
+- **Customer-facing decks.** When the audience includes any customer-side participants, use `pilot-kickoff.md`, `customer-101.md`, or `partner-enablement.md`.
+- **Customer-attended retrospectives.** Internal-team decks are Verdigris-only. If the customer attends the retrospective, it's a joint review (use the relevant external genre).
+- **Board materials.** When the board has not seen the engagement before, use a standalone board-prep brief or whitepaper, not an internal weekly deck.
+- **Audit / compliance artifacts.** When the artifact must survive external audit, escalate to a formal compliance brief.
+
 ## See also
 
+- [`workflows/sales-collateral`](../../workflows/sales-collateral) — production guide spanning all collateral types
 - [Pilot kickoff (primary spec)](pilot-kickoff) — full structure, typography, spacing, rationale
 - [Slides index](index) — genre selection
+- [`voice/recipes.yaml`](../../voice/recipes.yaml) — `internal_team_deck` recipe
+- [`voice/team/thomas-chung.yaml`](../../voice/team/thomas-chung.yaml), [`mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml), [`jimit-shah.yaml`](../../voice/team/jimit-shah.yaml) — voice profile sources

@@ -82,6 +82,25 @@ best_for:
       His ability to connect specific customer outcomes to broader market
       trends makes case studies feel strategic, not anecdotal.
     target_feeling: respect
+  - recipe: partner_enablement_deck
+    role: primary
+    why: |
+      Partner enablement is structurally a deeper version of partner_materials:
+      same outside-in positioning, more depth on qualifying questions, technical
+      FAQ, deal-registration mechanics. Jimit's market_fluency translates
+      Verdigris into the partner AE's commercial frame; the partner AE then
+      carries that frame into customer conversations. Promoted from "by analogy
+      to partner_materials" to documented primary 2026-05-02.
+    target_feeling: confidence
+  - recipe: one_pager
+    role: supporting_comparative
+    why: |
+      Comparative one-pagers ('7 ways to evaluate X') need the numbered list
+      to read in market language, not Verdigris-internal frame. Jimit's
+      outside-in voice carries the list items; Mark's strategic_narrative
+      carries the thesis block. Solution overview one-pagers are Mike-led;
+      Jimit doesn't appear there.
+    target_feeling: clarity
 
 verbal_fingerprints:
   - "Fyi, (transparency as default)"

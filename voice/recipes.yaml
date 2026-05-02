@@ -271,9 +271,19 @@ recipes:
     notes: |
       Internal teams are heterogeneous -- engineers need technical precision,
       operators need empathy, GTM needs market context. A single-voice recipe
-      brittles. Thomas leads (operational, structured-but-transparent), Mike
-      supports (translates engineering reality into operator-readable status),
-      Jimit accents (connects the engagement to market signals when relevant).
+      brittles.
+
+      - Thomas leads (operational, structured-but-transparent; self_honesty 10
+        from his profile makes him the right voice for "what's slipping")
+      - Mike supports (translates engineering reality into operator-readable
+        status; field credibility 8 grounds the customer-side perspective even
+        when the audience is internal)
+      - Jon co-supports (technical_precision 9 from his profile is load-bearing
+        for engineering status slides; the bench-diagnostic register 'looks like
+        a firewall issue to me' is what makes internal technical coordination
+        credible). Added 2026-05-02 after Loop 3 adversarial review caught the
+        gap -- internal coordination cannot lead with operations-speak alone.
+      - Jimit accents (connects the engagement to market signals when relevant)
 
       Internal jargon is fine -- the audience is Verdigris-only and faster
       reading beats translation. Week-N notation acceptable when the pilot
@@ -287,6 +297,7 @@ recipes:
     voice_sources:
       primary: Thomas (operational, transparent)
       supporting: Mike (technical translation, operator-readable status)
+      co_supporting: Jon (engineering status, bench-diagnostic credibility)
       accent: Jimit (market context when the engagement intersects strategy)
 
   customer_101_deck:
@@ -320,9 +331,10 @@ recipes:
       third-person ("customers see Y"). See categories/slides/customer-101.md
       for the full spec.
     voice_sources:
-      primary: Seren (people intelligence, operator empathy, diplomatic precision)
-      supporting: Mike (field credibility on evidence slides)
-      accent: Mark (founder voice on close + "why now" / mission-gravity moments only)
+      primary: Seren (operator_empathy 8 + personal_connection 8; carries diction, framing slides, body register; ~45% of the deck)
+      supporting: Mike (field credibility on evidence slides; ~25%)
+      accent: Mark (strategic_narrative 9 + mission_gravity 9 on close slide and "why now" framing; ~25-30%, bounded to specific slides not woven through every one)
+      note_on_mission_gravity: "Seren's profile does NOT have mission_gravity in her strongest_ingredients. The mission_gravity weight in the mix (25%) lands on the Mark-accent slides (close, why-now) -- not on Seren's slides. This explicit slide-level allocation prevents Seren from being asked to carry an ingredient her profile doesn't deliver. Loop 3 adversarial review surfaced this misallocation in the first draft."
 
   one_pager:
     primary_audience: scanner without a presenter -- prospect, partner AE, customer team member
@@ -354,11 +366,11 @@ recipes:
       See categories/one-pagers/guide.md for full spec including the genre
       decision tree.
     voice_sources:
-      primary_solution_overview: Mike (field credibility, operator-recognizable specifics)
+      primary_solution_overview: Mike (field credibility, operator-recognizable specifics on the 3 callouts)
       supporting_solution_overview: Jon (technical precision on capability claims)
-      primary_comparative: Jimit (outside-in market positioning)
-      supporting_comparative: Mark (thesis block, mission-anchored argument)
-      accent_both: Seren (operator-empathy framing on body copy)
+      primary_comparative: Mark (thesis block carries the argument; strategic_narrative 9 + mission_gravity 9 from his profile is load-bearing for the comparative thesis -- this was Jimit primary in the first draft, flipped 2026-05-02 after Loop 3 adversarial review showed the thesis is the load-bearing element of a comparative one-pager and Mark's argumentative voice carries it better than Jimit's positioning voice)
+      supporting_comparative: Jimit (outside-in market positioning across the numbered list items; market_fluency translates Verdigris claims into the prospect's commercial frame)
+      accent_both: Seren (operator-empathy framing on body copy; rare on a one-pager but available for the diction pass)
 
   partner_enablement_deck:
     primary_audience: partner's account executive (a salesperson at another company)
