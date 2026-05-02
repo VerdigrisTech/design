@@ -222,24 +222,31 @@ recipes:
     reaches: "their VP, their leadership chain, their procurement team, future participants in the engagement"
     target_feelings: [confidence, clarity, mutual ownership]
     mix:
-      operator_empathy: 30      # the customer team is busy; respect their attention
+      operator_empathy: 35      # the customer team is busy; respect their attention
       technical_precision: 30   # this deck is the canonical record of what was agreed
-      strategic_narrative: 20   # why this pilot, why now, what comes after
-      self_honesty: 10          # what's experimental, what's mature
+      self_honesty: 15          # what's experimental, what's mature, what's still TBD
       personal_connection: 10   # named team members, role labels first
+      strategic_narrative: 10   # why this pilot fits the bigger picture
     notes: |
-      Thomas's operational voice carries the structure (timeline, success criteria,
-      decisions). Mark's founder voice carries the framing slides (why this pilot,
-      what comes after). Avoid the pitch-deck trope of "Why Verdigris" — the
-      contract is signed; those slides erode trust at this stage.
+      The pilot is signed -- the customer team does NOT need founder voice
+      reassurance. They need to feel the team they'll work with for 90 days
+      already understands their world. Mike's field-credibility voice
+      ("we replaced RPC2 2 of 2 in Aurora", "looks like a bad power supply")
+      makes the install plan, the success criteria, and the team slide read
+      as "we have lived your problems." Thomas's operational voice carries
+      the structure (timeline, decisions, escalation). Jon's bench-engineer
+      voice grounds the data-flow and hardware-install slides.
 
-      The deck must be re-readable a week later by someone who wasn't in the room.
-      Specific numbers always: "Hardware install 2026-06-15, four sites" not "in
-      mid-June across some sites." See categories/slides/pilot-kickoff.md for the
-      full spec including required slide structure.
+      Avoid the pitch-deck trope of "Why Verdigris" -- the contract is signed;
+      those slides erode trust at this stage.
+
+      The deck must be re-readable a week later by someone who wasn't in the
+      room. Specific numbers always: "Hardware install 2026-06-15, four sites"
+      not "in mid-June across some sites." See categories/slides/pilot-kickoff.md
+      for the full spec including required slide structure.
     voice_sources:
-      primary: Thomas (operational, structured)
-      supporting: Mark (founder authority on framing slides)
+      primary: Mike (field credibility, operator empathy from actual customer-site work)
+      supporting: Thomas (operational clarity, structured-not-corporate)
       accent: Jon (technical depth on data flow / hardware install slides)
 
   internal_team_deck:
@@ -247,79 +254,101 @@ recipes:
     reaches: "engagement working group, leadership, board prep that hasn't reached the board"
     target_feelings: [clarity, speed, mutual accountability]
     mix:
-      technical_precision: 40   # internal coordination requires concrete state
+      technical_precision: 35   # internal coordination requires concrete state
       self_honesty: 25          # what's slipping, what's blocked, what's working
       operator_empathy: 15      # the customer's perspective, even in internal docs
-      strategic_narrative: 10   # why this account matters
+      strategic_narrative: 15   # why this account matters
       personal_connection: 10   # named owners, named risks
     notes: |
-      Operational voice. Internal jargon is fine — the audience is Verdigris-only
-      and faster reading beats translation. Week-N notation acceptable when the
-      pilot timeline is the running thread; always pair with absolute dates for
+      Internal teams are heterogeneous -- engineers need technical precision,
+      operators need empathy, GTM needs market context. A single-voice recipe
+      brittles. Thomas leads (operational, structured-but-transparent), Mike
+      supports (translates engineering reality into operator-readable status),
+      Jimit accents (connects the engagement to market signals when relevant).
+
+      Internal jargon is fine -- the audience is Verdigris-only and faster
+      reading beats translation. Week-N notation acceptable when the pilot
+      timeline is the running thread; always pair with absolute dates for
       decision deadlines. The diction rules for external genres (e.g., "exit
       criteria" → "expansion criteria") do NOT apply here.
 
-      Customer name in customer's preferred form. Always.
+      Customer name in customer's preferred form. Always. The customer
+      reading this internal deck second-hand should still feel addressed
+      with care.
     voice_sources:
-      primary: Thomas (operational)
-      supporting: any team member owning the engagement
+      primary: Thomas (operational, transparent)
+      supporting: Mike (technical translation, operator-readable status)
+      accent: Jimit (market context when the engagement intersects strategy)
 
   customer_101_deck:
     primary_audience: prospect's initial evaluator at the first substantive meeting
     reaches: "their team, their boss, their procurement team if they advance"
-    target_feelings: [curiosity, confidence, respect]
+    target_feelings: [curiosity, confidence, warmth]
     mix:
-      strategic_narrative: 35   # why this matters, why now
-      operator_empathy: 25      # the prospect is busy and skeptical
-      technical_precision: 20   # one specific number, one specific evidence point
-      mission_gravity: 10       # the weight of the problem
-      self_honesty: 10          # what's still developing
+      operator_empathy: 30      # the prospect is busy and skeptical; show you understand
+      mission_gravity: 25       # why this matters, why now
+      personal_connection: 15   # named individuals, customer's name throughout
+      technical_precision: 15   # one specific number, one specific evidence point
+      warmth_and_humor: 15      # they should leave wanting another meeting
     notes: |
-      Mark's voice carries the wedge slide and the close. Jon's voice carries the
-      "how it works" and "evidence" slides. Operator empathy threads through
-      every slide — this is a busy stranger giving you 25 minutes.
+      A first-meeting prospect needs to feel HEARD, not pitched at.
+      Seren's diplomatic precision and people intelligence ("from my
+      perspective", "I will just quietly leave this here") makes the
+      prospect feel the team understands customer constraints before the
+      product is positioned. Mike's field credibility supplies the
+      operator-recognizable specifics (OCP-conference observations, real
+      installation patterns). Mark earns the close slide and the "why now"
+      framing -- the founder voice is decisive on mission gravity but
+      should NOT carry every slide; story-led at 50% overpowers a first
+      meeting where the audience is skeptical.
 
-      Pronounce "Verdigris" audibly on the title slide the first time. Capitalize
-      "Signals" as a proper noun when referring to the product. Never use internal
-      product-roadmap jargon ("EVD atom", "L3 evaluator", "site-coherence gate")
-      — translate to customer language.
+      Pronounce "Verdigris" audibly on the title slide the first time.
+      Capitalize "Signals" as a proper noun when referring to the product.
+      Never use internal product-roadmap jargon ("EVD atom", "L3 evaluator",
+      "site-coherence gate") -- translate to customer language.
 
       First-person inclusive ("we'd want to validate X with you") beats
-      third-person ("customers see Y"). See categories/slides/customer-101.md for
-      the full spec.
+      third-person ("customers see Y"). See categories/slides/customer-101.md
+      for the full spec.
     voice_sources:
-      primary: Mark (founder authority, story-led)
-      supporting: Jon (technical depth on evidence slides)
-      accent: operator empathy as the connective tissue across slides
+      primary: Seren (people intelligence, operator empathy, diplomatic precision)
+      supporting: Mike (field credibility on evidence slides)
+      accent: Mark (founder voice on close + "why now" / mission-gravity moments only)
 
   partner_enablement_deck:
     primary_audience: partner's account executive (a salesperson at another company)
     reaches: "the partner's customers, the partner's sales leadership"
     target_feelings: [confidence, clarity, joint ownership]
     mix:
-      technical_precision: 30   # partner AE needs to answer common objections without escalating
+      technical_precision: 25   # partner AE needs to answer common objections without escalating
       operator_empathy: 25      # their customer's perspective; their AE's perspective
-      strategic_narrative: 20   # why Verdigris × partner > either alone
-      self_honesty: 15          # what each side actually brings
+      personal_connection: 20   # mutual respect, not extraction
+      strategic_narrative: 20   # why Verdigris x partner > either alone
       warmth_and_humor: 10      # we are good to work with
     notes: |
-      Avoids Mark and Thomas as primary voices: a partner AE doesn't need the
-      founder's voice; they need a teammate-equivalent voice they can carry into
-      their own conversations. Jimit's market fluency dominates; Mike's field
-      credibility threads through technical objection-handling.
+      Mirrors the partner_materials recipe pattern: Jimit primary (outside-in
+      market positioning), Seren supporting (people-first framing makes the
+      partner feel like a collaborator, not an extraction target), Mike accent
+      (industry insider credibility for objection-handling slides).
 
-      Refer to the partner's customers as "your customers" or by named accounts.
-      Generic "partner" reads as boilerplate; name the partner explicitly when
-      known. "Co-sell" preferred over "resell." "Margin" is fine; partner AEs
-      care. "Generally available" is internal product-roadmap language; name
-      the actual product status (in pilot, fleet-deployed, in production at N
-      customers) instead.
+      The earlier draft of this recipe demoted Seren to accent; the demote was
+      reversed after adversarial review showed her diplomatic precision is
+      load-bearing for partner relationships, not decorative. A partnership
+      that reads as "you'll sell our product" instead of "we'll sell together"
+      fails before it starts.
+
+      Refer to the partner's customers as "your customers" or by named
+      accounts. Generic "partner" reads as boilerplate; name the partner
+      explicitly when known. "Co-sell" preferred over "resell." "Margin" is
+      fine; partner AEs care. "Generally available" is internal product-
+      roadmap language; name the actual product status (in pilot,
+      fleet-deployed, in production at N customers) instead.
 
       See categories/slides/partner-enablement.md for the full spec.
     voice_sources:
       primary: Jimit (outside-in market positioning)
-      supporting: Mike (industry insider credibility, objection handling)
-      accent: Seren (cross-org diplomatic precision on co-sell mechanics)
+      supporting: Seren (people intelligence, diplomatic precision on co-sell mechanics)
+      accent: Mike (industry insider credibility for objection-handling slides)
 
 # ── Audience-fit diction (Z2O-1321) ────────────────────────────────
 # Cross-recipe diction rules. Apply on top of the recipe's voice mix.

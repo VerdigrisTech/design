@@ -21,7 +21,7 @@ The slides cell defines four genres. Pick one before opening a template. They ar
 |---|---|---|---|
 | **Pilot kickoff** | The customer just committed to a pilot; this is the first artifact they receive after signature | Founder + customer team named; explicit pilot scope, dates, success criteria, COI clean | a16z portfolio kickoff template; McKinsey client onboarding deck; Stripe enterprise launch packet |
 | **Internal team** | Verdigris-internal engagement updates, pre-meeting prep, post-mortems | Operational, week-N notation OK, no external decoration | n/a (internal docs from Stripe, Atlassian, etc.) |
-| **Customer 101** | First substantive meeting with a prospect; introduces Verdigris and the product wedge | Mark or Jon as primary voice; story-led; light on operational detail | Anthropic founder presentations; early-stage pitch decks (Notion, Figma) |
+| **Customer 101** | First substantive meeting with a prospect; introduces Verdigris and the product wedge | Seren as primary voice (people intelligence, diplomatic precision); customer-empathy-led with Mark accenting the close | Anthropic founder presentations; early-stage pitch decks (Notion, Figma) |
 | **Partner enablement** | A channel partner needs to co-sell Verdigris; deck arms their AE with the wedge, qualifying questions, and deal-registration mechanics | Jimit + Mike voices; market-fluent; emphasizes joint value | Stripe Verified Partner enablement; AWS reseller training decks |
 
 The four genres differ on six axes. **Pick one and commit.** A pilot kickoff dressed as a customer 101 reads as "they don't know us yet" and erodes the sponsor's confidence. A customer 101 dressed as a pilot kickoff reads as "they're assuming a sale." Match the genre to the engagement state.
@@ -29,7 +29,9 @@ The four genres differ on six axes. **Pick one and commit.** A pilot kickoff dre
 | Axis | Pilot kickoff | Internal team | Customer 101 | Partner enablement |
 |---|---|---|---|---|
 | **Length** | 12-20 slides | 8-15 | 15-25 | 20-30 |
-| **Voice mix** | thomas (40%) + mark (30%) + technical_precision (30%) | thomas (operational, terse) | mark (50%) + jon (30%) + operator_empathy (20%) | jimit (40%) + mike (30%) + market_fluency (30%) |
+| **Voice primary** | Mike (field credibility) | Thomas (operational) | Seren (people intelligence, diplomatic precision) | Jimit (market fluency) |
+| **Voice supporting** | Thomas (operational structure) | Mike (technical translation) | Mike (field credibility on evidence slides) | Seren (people-first framing) |
+| **Voice accent** | Jon (data flow + hardware install) | Jimit (market context) | Mark (close + "why now" only) | Mike (objection handling) |
 | **CTA pattern** | "Pilot scope + decision date for expansion" | "Decision needed by [date]" | "Next meeting + agenda" | "Co-sell motion + deal registration" |
 | **Confidentiality default** | CUSTOMER-CONFIDENTIAL | INTERNAL ONLY | PUBLIC | PARTNER-CONFIDENTIAL |
 | **Date format** | absolute calendar dates | week-N notation OK | absolute | absolute |
@@ -143,7 +145,7 @@ This is the rendering-layer-never-invents-facts principle from `LEARNINGS.md` ap
 
 ## Audience-fit diction (Z2O-1321)
 
-The voice recipe `pilot_kickoff_deck` (in `voice/recipes.yaml`) sets the dial: 40% thomas (operational), 30% mark (founder authority), 30% technical_precision (engineer-readable). Beyond the recipe, four diction adjustments are required for a pilot kickoff:
+The voice recipe `pilot_kickoff_deck` (in `voice/recipes.yaml`) sets the dial: Mike primary (field credibility, operator empathy from actual customer-site work), Thomas supporting (operational clarity, structured-but-transparent), Jon accent (technical depth on data flow / hardware install slides). The contract is signed; the customer team needs to feel the team they'll work with for 90 days already understands their world — not founder reassurance. Beyond the recipe, four diction adjustments are required for a pilot kickoff:
 
 1. "**Exit criteria**" → "**expansion criteria**" or "**graduation criteria**"
    - "Exit" implies the customer is leaving Verdigris. The opposite is intended: the criteria mark the path from pilot to expanded engagement. "Expansion criteria" carries the right vector. "Graduation criteria" works when the audience is technically inclined.

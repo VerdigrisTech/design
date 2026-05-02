@@ -27,6 +27,8 @@ Profiled from Slack messages (April 2026). Each person is an additional source f
 | Seren Coskun | `team/seren-coskun.yaml` | People intelligence, diplomatic precision, cross-cultural range |
 | Mike Mahedy | `team/mike-mahedy.yaml` | Field credibility, industry insider voice, manufacturing fluency |
 | Thomas Chung | `team/thomas-chung.yaml` | Systems-thinking leadership, transparent operational care, taste editorial |
+| Mark Chung | `team/mark-chung.yaml` | Strategic narrative, mission gravity, editorial vision, founder voice |
+| Jon Chu | `team/jon-chu.yaml` | Field-credible engineering depth, scope discipline, bench diagnostic |
 
 ### Not yet profiled (insufficient Slack data)
 

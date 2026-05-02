@@ -9,7 +9,7 @@ status_note: Deltas-only against pilot-kickoff. Graduates with the cell after 2 
 
 This genre introduces Verdigris to a new prospect at the first substantive meeting (post-discovery, pre-contract). Audience is the prospect's initial evaluator: a Director, Senior Manager, or VP whose job is to decide whether Verdigris is worth a deeper look.
 
-The deck's job is to make the wedge legible — what Verdigris does, what evidence supports it, what comes next — without overwhelming a first-meeting audience with operational detail. This is a story-led deck; the founder's voice carries it.
+The deck's job is to make the wedge legible — what Verdigris does, what evidence supports it, what comes next — without overwhelming a first-meeting audience with operational detail. This is a customer-empathy-led deck; Seren's diplomatic precision carries the framing slides, Mike's field credibility carries the evidence slides, and Mark's founder voice is reserved for the close.
 
 This guide documents only the **deltas** against [pilot-kickoff.md](pilot-kickoff). Read that spec first.
 
@@ -18,7 +18,9 @@ This guide documents only the **deltas** against [pilot-kickoff.md](pilot-kickof
 | Axis | Pilot kickoff (parent) | Customer 101 (this genre) |
 |---|---|---|
 | Length | 12-20 slides | 15-25 |
-| Voice mix | thomas (40%) + mark (30%) + technical_precision (30%) | mark (50%) + jon (30%) + operator_empathy (20%) |
+| Voice primary | Mike (field credibility) | **Seren** (people intelligence, diplomatic precision) |
+| Voice supporting | Thomas | **Mike** (field credibility on evidence slides) |
+| Voice accent | Jon | **Mark** (close + "why now" / mission-gravity moments only) |
 | CTA pattern | "Pilot scope + decision date for expansion" | "Next meeting + agenda" — a specific calendar invite, not a decision |
 | Confidentiality default | CUSTOMER-CONFIDENTIAL | **PUBLIC** — these decks are share-friendly |
 | Logomark | full lockup | full lockup (same as parent) |
@@ -65,11 +67,13 @@ The Z2O-1321 diction rule applies: avoid internal jargon. Customer 101 has addit
 
 The `customer_101_deck` recipe in `voice/recipes.yaml` sets:
 
-- **mark (50%)** — founder authority; the wedge slide and the close are unmistakably Mark's voice
-- **jon (30%)** — story-led pacing; the "evidence" slides have a narrative arc, not just bullet points
-- **operator_empathy (20%)** — recognize the prospect is busy and skeptical; respect their attention
+- **Seren (primary)** — people intelligence, diplomatic precision, operator empathy. The first-meeting audience needs to feel HEARD before they're pitched at. Seren's voice ("from my perspective", "I will just quietly leave this here") frames Verdigris as a careful collaborator rather than a vendor closing on a stranger.
+- **Mike (supporting)** — field credibility on the evidence slides. Operator-recognizable specifics — OCP-conference observations, real installation patterns, physical equipment reality — earn credibility that founder voice alone cannot.
+- **Mark (accent only)** — founder voice on the close slide and the "why now" / mission-gravity framing. Reserved for the moments where founder authority is decisive; not the dominant register because story-led at 50% overpowers a first-meeting audience that is skeptical and busy.
 
-A customer 101 deck that reads as 100% engineering-detail (technical_precision dominant) loses first-meeting audiences. A deck that reads as 100% story (no concrete numbers) loses technical evaluators. The 50/30/20 mix splits the difference.
+A customer 101 deck that reads as 100% engineering-detail loses first-meeting audiences. A deck that reads as 100% founder-narrative loses technical evaluators and can feel like a pitch dressed as humility. The Seren-primary / Mike-supporting / Mark-accent mix splits the difference and lands the deck as "we hear you, we have done this work, here's why now."
+
+This recipe was revised after adversarial review (2026-05-02) — the initial recipe had Mark primary at 50%, which over-indexed on founder voice for an audience whose primary need was to feel understood. See `LEARNINGS.md` "Voice recipes need profile YAMLs as evidence."
 
 ## Why this genre exists
 

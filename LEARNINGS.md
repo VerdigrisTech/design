@@ -98,6 +98,42 @@ This generalizes: any time you add a peer to an existing thing, search for place
 
 ---
 
+## Voice recipes need profile YAMLs as evidence
+
+**Surface that produced this:** Voice recipes for sales-collateral decks (PR #43, slides cell). The first draft of four new recipes referenced "Mark" and "Jon" as primary or supporting voices — but `voice/team/` only had profile YAMLs for Jimit, Josh, Mike, Seren, and Thomas. Mark and Jon were assumed-by-name without backing evidence. An adversarial-review agent team caught this immediately: "every assignment involving them is undefendable because their voice strengths are unknown."
+
+The fix was symmetric:
+
+1. Author the missing profile YAMLs from the same source the existing five used (Slack message corpus). For Mark, also draw from his published blog at verdigris.co/blog. Both grounded the inferred voice in observable evidence.
+2. Re-run the recipe-mix decisions against the now-evidenced profiles. Result: Seren moved from accent to primary in customer_101_deck (her operator_empathy 8 + personal_connection 8 + diplomatic precision are exactly what a first-meeting needs). Mike moved from supporting to primary in pilot_kickoff_deck (his field-credible voice from actual customer-site work is what the post-signature audience recognizes). Thomas moved from primary to supporting in pilot_kickoff. The partner_enablement_deck recipe was reverted to match the partner_materials precedent (Jimit primary, Seren supporting, Mike accent) after the reversal-without-rationale was flagged.
+
+Generalizes: any recipe-style configuration that names voices, profiles, or sources by string identifier is silently fabricating unless the identifier is backed by an artifact. The design system's "rendering layer never invents facts" principle applies symmetrically here — referencing "Mark" without a Mark profile YAML is the same shape as a Methods callout with fabricated numbers. Both feel correct because the placeholder LOOKS like content; both fail under adversarial review.
+
+When to apply this learning:
+
+- Adding any new voice recipe that names a team member as primary, supporting, or accent.
+- Adding any reference to `team/<name>.yaml` from any artifact in the design system.
+- Reviewing existing recipes during quarterly sweeps — confirm every named source still has a current profile YAML.
+- Any cell that wires up evaluator pipelines against voice ingredients should fail closed when a referenced profile is missing, not pass with the reference unresolved.
+
+---
+
+## Adversarial review catches the errors the system was built to prevent
+
+**Surface that produced this:** Same PR (#43). The voice recipes I shipped initially demoted Seren from supporting (in the existing partner_materials recipe) to accent (in the new partner_enablement_deck recipe) without rationale. The adversarial-review agent team prosecuted this directly: "This is a direct reversal of partner_materials for no stated reason... the reversal appears to be a recipe-generation artifact, not a deliberate choice."
+
+The error was the exact failure mode the adversarial-review workflow exists to catch: a divergence from precedent without justification, made because writing a new recipe in isolation makes the precedent invisible. The recipe-author (me) didn't notice they were reversing a pattern; the reviewer (the agent team, with the existing recipes in context) did.
+
+This is the second time on the same branch (PR #43 ships the slides cell PLUS this fix) where adversarial review caught an error that the cell's own rules would have caught if applied to the cell itself. The pattern is real: cells that are about preventing X tend to fail at X during their own creation, because the author is focused on the outer artifact rather than the meta-rule.
+
+When to apply this learning:
+
+- Run adversarial review on the cell BEFORE shipping the cell, not after.
+- Treat "I shipped a cell about [precedent / discipline / consistency / mode-conditional rules] and the cell itself didn't follow [that]" as a structural smell — it almost certainly happened, even if the reviewer hasn't found it yet.
+- The agents found the error in <10 minutes. Pre-commit adversarial review is cheaper than post-PR fix.
+
+---
+
 ## Production process belongs in the design repo when consumers diverge
 
 **Surface that produced this:** Sales collateral system (slides cell + sales-collateral production guide). Mark Chung asked for "a scalable way to produce product demo artifacts" with consumers spanning Verdigris's sales motion, partner channels, customer engagement teams, and internal coordination. The decision: absorb production process (templates, naming convention, distribution rules, versioning protocol) into the design repo as `workflows/sales-collateral.md`, not split it across Notion and the design repo.

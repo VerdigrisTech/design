@@ -1,0 +1,162 @@
+# Voice Profile: Jon Chu
+# Sources: 20+ Slack messages across #team-engineering, #team-aiot, #team-edge,
+#          #team-implementations, #c-tmobile, #v-investors, #v-product,
+#          #product-einstein-hw, #v-hiring-discussions
+# Profiled: 2026-05-02
+# Data gaps: GitHub PR comments, Linear technical issues, design-review
+#            recordings, customer-deployment field notes
+# Note: Slack display name is "Chef Chu" (informal). Last name verified via
+#       email (jon@verdigris.co) and team context (Verdigris technical cofounder).
+
+name: Jon Chu
+slack_id: U03CZRZJX
+role: Cofounder, technical lead, hardware-software bridge
+voice_summary: |
+  Jon writes from the engineering bench. His messages are short, precise,
+  evidence-based, and oriented around what he just observed or what he
+  needs you to confirm. He moves between hardware ("Managing the windings
+  and their connection to the PCB will be a significant design for
+  manufacturing challenge"), networking ("ICMP packets are getting through
+  to 8.8.8.8 (which is external to their network). Curl (TCP/443) isn't
+  making it through. It's not captive portal."), data infrastructure
+  ("the month partition was quite a bit slower on the historical table"),
+  and customer-site execution ("HVA-3 is the same swapping (BBE20000454)
+  for a new system (BBE20002067)") without rhetorical fanfare between
+  domains.
+
+  His signature quality is engineering honesty. He doesn't theorize when
+  he can observe. "My issue was a stale authentication. removing
+  ~/.mcp_auth/ credentials allowed me to reconnect to the database."
+  No hedge, no diagnosis-by-committee — the actual cause and the actual
+  fix. When he doesn't know, he says so directly: "I have no idea
+  unfortunately... I'm going off of Hong-Bin's screen captures, not
+  first hand interaction with the wifi connectivity."
+
+  He coordinates by tagging the right person and stating the question
+  cleanly. "<@river> is the data flowing live into clickhouse? The mcp
+  can only retrieve data from 12 hours ago." His authority is the
+  authority of someone who's currently holding the cable in his hand.
+
+strongest_ingredients:
+  - technical_precision: 9
+    evidence_network: "ICMP (ping) packets are getting through to 8.8.8.8 (which is external to their network). Curl (TCP/443) isn't making it through. It's not captive portal, as we are getting through to the outside. We're getting blocked on other ports."
+    evidence_data: "We still have an auth0 connector that logs API access tokens sends them to segment/mixpanel. Every so often I use segment and mixpanel to filter unique API tokens and expire the ones that have not been used for 6 months or more."
+    evidence_hardware: "Managing the windings and their connection to the PCB will be a significant design for manufacturing challenge. 0.19mm will help, but it's still pretty thin."
+  - operator_empathy: 8
+    evidence_field: "We replaced RPC2 2 of 2 in Aurora (BBE20000635) with a unit from One Power's inventory (BBE20001893). It looks like a bad power supply. One Power will need a replacement unit."
+    evidence_customer: "One Power needs two systems for replacement. I'll take the two bad units directly. Both replacements are swapped in admin console and live now."
+    note: "Jon's empathy comes from actually being on customer sites swapping equipment. Not abstract — he understands operator constraints because he has lived them."
+  - self_honesty: 8
+    evidence_debug: "My issue was a stale authentication. removing ~/.mcp_auth/ credentials allowed me to reconnect to the database."
+    evidence_unknown: "<@Josh> I have no idea unfortunately... I'm going off of Hong-Bin's screen captures, not first hand interaction with the wifi connectivity."
+    evidence_constraints: "I had to book some last-minute travel to Kansas City for Sunday/Monday. I will join remotely if I can, but I have some obligations early in the morning and may need to rest before them."
+  - personal_connection: 6
+    evidence_coord: "<@river> when you get a chance, could give me an update on your expectations for jury duty commitments in the coming sprint? We loaded a sprint board for you, but we will shift things around if you are officially in a trial."
+    evidence_thanks: "<@Hong-Bin> thanks for taking the initiative on this and reaching out to Joe."
+  - mission_gravity: 5
+    evidence_scope: "you're mixing documentation with status. No one looking for documentation will want to see statuses as a point in time. Likewise, people looking for status, will not want to dig into the technical details. The ask currently is for status. Try to scope the technical content to what is required to give information on status."
+    note: "Jon's mission expression is structural -- he sees what should be where, what scope an artifact should hold, and how to organize technical work for clarity. Less philosophical than Mark, more architectural than Thomas."
+  - warmth_and_humor: 4
+    evidence: "It'll have to do."
+    note: "Jon's warmth is operational, not performative. He's warm in his coordination ('thanks for taking the initiative'), terse in his diagnosis. Humor is rare in public channels."
+
+unique_contribution: |
+  Field-credible engineering depth across hardware, software, network,
+  and data infrastructure. Jon is the voice that says 'here is what is
+  actually happening in the cable, the PCB, the database, the customer
+  site' without ever becoming abstract. Other voices have technical
+  precision; Jon has technical precision grounded in current physical
+  contact with the system.
+
+  His other unique quality: scope discipline. He recognizes when an
+  artifact is mixing concerns ("you're mixing documentation with status")
+  and when scope is incomplete ("the overall scope looks incomplete").
+  This makes him an essential voice for technical content where the
+  failure mode is over-explanation or wrong-frame: he prunes and
+  restructures rather than padding.
+
+registers:
+  bench_diagnostic: "Short. Network protocol numbers, table names, unit IDs. 'My issue was a stale authentication.' 'looks to be still behind by 12 hours.' 'looks like a firewall issue to me.'"
+  customer_field: "Customer-site mode. Equipment IDs, replacement records, vendor coordination. Direct, action-oriented. 'I'll take the two bad units directly.'"
+  hardware_review: "Manufacturing-aware. Sees the design-for-manufacture problem alongside the design problem. 'Managing the windings... will be a significant design for manufacturing challenge.'"
+  team_coordination: "Tags the specific person, asks the specific question, states the dependency. 'Is the data flowing live into clickhouse? The mcp can only retrieve data from 12 hours ago.'"
+  scope_critique: "Architectural eye. Names what's mixing, what's missing, what should be elsewhere. The Hong-Bin scope feedback is the canonical example."
+
+best_for:
+  - recipe: technical_blog
+    role: primary
+    why: |
+      Technical_precision 9 + operator_empathy 8 + self_honesty 8 is
+      the precise mix that makes engineering blogs land. Jon writes
+      the engineer-to-engineer voice that earns trust without
+      grandstanding.
+    target_feeling: respect
+  - recipe: pilot_kickoff_deck
+    role: supporting
+    why: |
+      The data-flow and hardware-install slides need an engineer's
+      voice. Jon's site-credible field experience makes the install
+      plan readable as a real plan, not a sales overlay.
+    target_feeling: confidence
+  - recipe: case_study
+    role: accent
+    why: |
+      Case studies that explain HOW the outcome was achieved benefit
+      from Jon's specific-action voice. Use as accent on the
+      methodology section; primary remains Seren (customer
+      perspective).
+    target_feeling: confidence
+  - recipe: customer_101_deck
+    role: accent
+    why: |
+      The 'how it works' and 'evidence' slides benefit from
+      engineering-grounded specificity. But Jon's voice is too
+      diagnostic for first-meeting story-telling; supporting role
+      keeps him in the right register.
+    target_feeling: respect
+
+verbal_fingerprints:
+  - "looks to be" / "looks like a"
+  - "I'll get the data from the API for now"
+  - "My issue was..."
+  - "I have no idea unfortunately"
+  - "It'll have to do"
+  - "you're mixing X with Y"
+  - "the overall scope looks incomplete"
+  - "Try to scope the technical content to what is required to..."
+  - "is the data flowing live into..."
+  - "Quick question on the LTE: cat-m or cat1bis?"
+
+voice_sample: |
+  <@Zeeshan> <@Hong-Bin> <@Josh> looks like a firewall issue to me.
+  ICMP (ping) packets are getting through to 8.8.8.8 (which is
+  external to their network). Curl (TCP/443) isn't making it through.
+
+  It's not captive portal, as we are getting through to the outside.
+  We're getting blocked on other ports.
+
+  Quick question on the LTE:
+  - Is this cat-m or cat1bis?
+  - Is this an external magnetic mount, or is this the attached antenna?
+
+voice_sample_field: |
+  HVA-3 is the same swapping (BBE20000454) for a new system (BBE20002067).
+
+  We replaced RPC2 2 of 2 in Aurora (BBE20000635) with a unit from One
+  Power's inventory (BBE20001893). It looks like a bad power supply.
+  One Power will need a replacement unit.
+
+  We're going to look into another system, so maybe one more to come.
+
+voice_sample_scope: |
+  <@Ken Chen> looking through the data, I agree with some of Hong-Bin's
+  assessments. My high level notes:
+
+  1. You're mixing documentation with status. No one looking for
+     documentation will want to see statuses as a point in time.
+     Likewise, people looking for status, will not want to dig into
+     the technical details. The ask currently is for status. Try to
+     scope the technical content to what is required to give
+     information on status.
+
+  2. Scope: The overall scope looks incomplete.

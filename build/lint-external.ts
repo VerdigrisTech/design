@@ -84,6 +84,11 @@ const ALLOWLIST: Record<string, string[]> = {
   "workflows/sales-collateral.md": ["Team member name (Jimit)"],
   // Sidebar lists genre voice mixes inline as nav hints.
   "_layouts/default.html": ["Team member name (Jimit)"],
+  // LEARNINGS.md documents cross-cell principles, including voice-recipe ones that name the team.
+  "LEARNINGS.md": ["Team member name (Jimit)", "Team member name (Josh)"],
+  // New voice profile YAMLs (Mark + Jon) reference team members in voice samples.
+  "voice/team/mark-chung.yaml": ["Team member name (Jimit)"],
+  "voice/team/jon-chu.yaml": ["Team member name (Jimit)", "Team member name (Josh)"],
 };
 
 // --- Scanner ---

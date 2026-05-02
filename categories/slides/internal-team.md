@@ -16,7 +16,9 @@ This guide documents only the **deltas** against [pilot-kickoff.md](pilot-kickof
 | Axis | Pilot kickoff (parent) | Internal team (this genre) |
 |---|---|---|
 | Length | 12-20 slides | 8-15 |
-| Voice mix | thomas (40%) + mark (30%) + technical_precision (30%) | thomas (operational, terse); minimal narrative voice |
+| Voice primary | Mike (field credibility) | **Thomas** (operational, transparent) |
+| Voice supporting | Thomas | **Mike** (technical translation, operator-readable status) |
+| Voice accent | Jon (data flow / hardware) | **Jimit** (market context when engagement intersects strategy) |
 | CTA pattern | "Pilot scope + decision date for expansion" | "Decision needed by [date]" — a specific Verdigris decision, owner, date |
 | Confidentiality default | CUSTOMER-CONFIDENTIAL | **INTERNAL ONLY** (red marking) |
 | Date format | absolute calendar dates | **week-N notation acceptable** when the engagement timeline is the running thread |

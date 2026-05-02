@@ -56,7 +56,9 @@ The four genres differ on six axes. The full matrix lives in [pilot-kickoff.md](
 | Axis | Pilot kickoff | Internal team | Customer 101 | Partner enablement |
 |---|---|---|---|---|
 | Length | 12-20 | 8-15 | 15-25 | 20-30 |
-| Voice mix | thomas + mark + technical_precision | thomas (operational) | mark + jon + operator_empathy | jimit + mike + market_fluency |
+| Voice primary | mike (field credibility) | thomas (operational) | seren (people intelligence) | jimit (market fluency) |
+| Voice supporting | thomas | mike | mike | seren |
+| Voice accent | jon | jimit | mark (close + mission only) | mike |
 | CTA pattern | Pilot scope + decision date | Decision needed by [date] | Next meeting + agenda | Co-sell motion + deal registration |
 | Confidentiality default | CUSTOMER-CONFIDENTIAL | INTERNAL ONLY | PUBLIC | PARTNER-CONFIDENTIAL |
 | Date format | absolute | week-N OK | absolute | absolute |

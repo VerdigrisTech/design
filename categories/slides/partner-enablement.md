@@ -18,7 +18,9 @@ This guide documents only the **deltas** against [pilot-kickoff.md](pilot-kickof
 | Axis | Pilot kickoff (parent) | Partner enablement (this genre) |
 |---|---|---|
 | Length | 12-20 slides | 20-30 |
-| Voice mix | thomas (40%) + mark (30%) + technical_precision (30%) | jimit (40%) + mike (30%) + market_fluency (30%) |
+| Voice primary | Mike (field credibility) | **Jimit** (outside-in market positioning) |
+| Voice supporting | Thomas | **Seren** (people intelligence, diplomatic precision on co-sell mechanics) |
+| Voice accent | Jon | **Mike** (industry insider credibility for objection handling) |
 | CTA pattern | "Pilot scope + decision date for expansion" | "Co-sell motion + deal registration" — explicit mechanics |
 | Confidentiality default | CUSTOMER-CONFIDENTIAL | **PARTNER-CONFIDENTIAL** (purple marking) |
 | Logomark | full lockup | full lockup (same) |
@@ -67,9 +69,11 @@ The Z2O-1321 diction rule applies, plus partner-specific adjustments:
 
 The `partner_enablement_deck` recipe in `voice/recipes.yaml` sets:
 
-- **jimit (40%)** — market fluency; partner AEs respond to language that sounds like their own
-- **mike (30%)** — field credibility; technical objections handled with the operator's voice, not engineering's
-- **market_fluency (30%)** — the layer that translates Verdigris-internal language into market-readable outcomes
+- **Jimit (primary)** — outside-in market positioning. Partner AEs respond to language that sounds like their own; Jimit's market fluency translates Verdigris into the partner's commercial frame.
+- **Seren (supporting)** — people intelligence and diplomatic precision on co-sell mechanics. A partnership that reads as "you'll sell our product" instead of "we'll sell together" fails before it starts. Seren's voice makes the partner feel like a collaborator, not an extraction target.
+- **Mike (accent)** — industry insider credibility for objection-handling slides. When a partner AE is asked a technical question by their customer, Mike's voice is what they should hear in their head.
+
+The recipe mirrors the pattern in `partner_materials` (Jimit primary, Seren supporting, Mike accent) — an earlier draft had Seren demoted to accent, which adversarial review flagged as a divergence from precedent without rationale. The diplomatic precision in Seren's voice is load-bearing for partner relationships, not decorative.
 
 The split intentionally avoids Mark and Thomas as primary voices: a partner AE doesn't need the founder's voice; they need a teammate-equivalent voice they can carry into their own conversations.
 
