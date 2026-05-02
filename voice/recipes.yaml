@@ -126,6 +126,15 @@ recipes:
       Verdigris saying "we delivered X." Specific numbers always:
       "reduced unplanned downtime by 37% over 6 months" not
       "significantly improved reliability."
+
+      Audited 2026-05-02 against the new Mark Chung and Jon Chu profile
+      YAMLs (PR #43): the recipe holds. Neither founder voice belongs as
+      primary in a case study because the customer is the protagonist,
+      not Verdigris. Seren's diplomatic precision translates the
+      customer voice without scrubbing it into marketing speak.
+
+      See categories/case-studies/guide.md for the cell that consumes
+      this recipe (single genre, dual web+PDF render targets).
     voice_sources:
       primary: Seren (customer perspective, diplomatic precision)
       supporting: Mike (field context, competitor comparison)
@@ -315,6 +324,42 @@ recipes:
       supporting: Mike (field credibility on evidence slides)
       accent: Mark (founder voice on close + "why now" / mission-gravity moments only)
 
+  one_pager:
+    primary_audience: scanner without a presenter -- prospect, partner AE, customer team member
+    reaches: "anyone who picks up the page cold; forwarded to their team"
+    target_feelings: [clarity, confidence, curiosity]
+    mix:
+      technical_precision: 35   # the page must be specific; vague one-pagers fail
+      operator_empathy: 25      # the reader is busy; respect their attention
+      strategic_narrative: 20   # one clear argument carries the page
+      personal_connection: 10   # named individuals where genuinely attributed
+      warmth_and_humor: 10      # human, not corporate boilerplate
+    notes: |
+      A one-pager is read cold. There's no presenter to bridge ambiguity, no
+      calendar to anchor follow-up. The voice has to land on first scan.
+
+      Solution overview genre leans Mike (field credibility) + Jon (technical
+      precision); the three callouts are operator-recognizable specifics.
+
+      Comparative genre leans Jimit (market fluency) + Mark accent (the
+      thesis block carries the argument; Mark's voice is decisive on
+      mission-anchored framing). Mark is NOT primary on the body of a
+      one-pager because the founder voice scanned cold reads as a brochure;
+      reserve him for the thesis block when the argument needs founder weight.
+
+      Diction discipline applies (audience_fit_diction): never use internal
+      jargon; spell out acronyms on first use; specific numbers always; CTA
+      action is concrete.
+
+      See categories/one-pagers/guide.md for full spec including the genre
+      decision tree.
+    voice_sources:
+      primary_solution_overview: Mike (field credibility, operator-recognizable specifics)
+      supporting_solution_overview: Jon (technical precision on capability claims)
+      primary_comparative: Jimit (outside-in market positioning)
+      supporting_comparative: Mark (thesis block, mission-anchored argument)
+      accent_both: Seren (operator-empathy framing on body copy)
+
   partner_enablement_deck:
     primary_audience: partner's account executive (a salesperson at another company)
     reaches: "the partner's customers, the partner's sales leadership"
@@ -361,6 +406,7 @@ audience_fit_diction:
     - pilot_kickoff_deck
     - customer_101_deck
     - partner_enablement_deck
+    - one_pager
     - case_study
     - investor_update    # external context
     - partner_materials

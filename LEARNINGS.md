@@ -134,6 +134,45 @@ When to apply this learning:
 
 ---
 
+## Single-genre cells when fragmentation isn't earned
+
+**Surface that produced this:** Case studies cell (PR #43, Phase 4). The whitepaper cell ships three genres, the slides cell ships four genres, the one-pagers cell ships two genres — but the case-studies cell ships one. The decision was not symmetry-driven; it was evidence-driven.
+
+A genre split is earned when the rhetorical structure of two variants is genuinely different — different authority signal, different audience expectation, different required sections. The whitepaper genres differ on six axes; the slide genres differ on six axes; the one-pager genres differ on five. The case study, by contrast, has one rhetorical structure that consistently lands across audiences (operator who lived it, their VP, procurement, board): executive summary -> problem -> approach -> outcome -> quote -> replicate. Splitting into "operational case study" / "strategic case study" / "compliance case study" would underspecify each variant — the same six sections, with cosmetic prose differences, dressed up as separate genres.
+
+When to ship a single-genre cell:
+
+- The rhetorical structure is the same across plausible audience splits.
+- The required sections are the same.
+- The voice mix is the same (or differs by less than 20% across recipes).
+- The render targets are the same (or differ in deterministic, not rhetorical, ways — web vs. PDF mirror is fine).
+
+When to fragment into multiple genres:
+
+- The rhetorical structure genuinely differs (institutional research vs. CEO letter vs. policy brief — three different things).
+- The required sections differ (pilot kickoff has decisions/risks/escalation; customer 101 has the wedge/evidence/why-now — different sections).
+- The voice mix differs sharply (case study is Seren-primary; pilot kickoff is Mike-primary; customer 101 is Seren-primary — but they ship as separate cells / recipes because the ROUND of audience differs even when the voice does not).
+
+Generalizes to: any cell facing the "should I split?" question. The default should be NOT to split until evidence accumulates that one spec underspecifies multiple surfaces. Premature genre proliferation is the failure mode.
+
+---
+
+## Web/PDF parity as a structural rendering-layer rule
+
+**Surface that produced this:** Case studies cell (PR #43, Phase 4). Case studies render to two targets: web canonical (verdigris.co/resources/case-studies/{slug}) and PDF mirror (Drive). Pre-cell, the two targets diverged over time as edits landed in one but not the other — anchor metrics drifted, citations got out of sync, quote attribution was scrubbed differently.
+
+The fix was a rule rather than a process: `composition.persuade-case-study.web-pdf-parity` enforces that both targets carry the same content, citations, anchor metric, and quote attribution. The PDF mirror MAY drop interactive elements (live charts, embedded video) but MUST NOT add or modify content claims relative to the web canonical.
+
+Process-only enforcement (a manual review step in a workflow doc) failed for the same reason most process-only rules fail: when the artifact is being edited under deadline pressure, a single-target edit feels safe and the sibling target's drift is invisible until someone compares them weeks later. A rule with a defined evaluator (LLM-eval comparing the two targets) catches the drift on every artifact change, not on quarterly sweeps.
+
+When to apply this learning:
+
+- Any cell that ships an artifact to multiple render targets (web + PDF, web + email, deck + handout, video + transcript). Codify parity as a rule, not a process step.
+- The rule should specify what's allowed to differ (interactive vs. static, live data vs. snapshot) and what isn't (content claims, citations, attribution).
+- Pair the rule with a CI evaluator pass that flags divergence on every edit. Quarterly comparison is not the same thing.
+
+---
+
 ## Production process belongs in the design repo when consumers diverge
 
 **Surface that produced this:** Sales collateral system (slides cell + sales-collateral production guide). Mark Chung asked for "a scalable way to produce product demo artifacts" with consumers spanning Verdigris's sales motion, partner channels, customer engagement teams, and internal coordination. The decision: absorb production process (templates, naming convention, distribution rules, versioning protocol) into the design repo as `workflows/sales-collateral.md`, not split it across Notion and the design repo.

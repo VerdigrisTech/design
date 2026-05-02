@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>14 days early — How a Fortune 50 telecom got ahead of rectifier failures · Verdigris case study</title>
+  <meta name="description" content="Verdigris case-study example. Demonstrates required structure: header → executive summary → problem → approach → outcome (single anchor metric) → quote (attributed) → replicate CTA.">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400;700&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="../../../build/print/cover.css">
+  <link rel="stylesheet" href="../../../build/print/case-study.css">
+  <style>body { margin: 0; background: #ffffff; }</style>
+</head>
+<body>
+
+  <article class="vd-case-study">
+
+    <!-- HEADER -->
+    <header class="vd-cs-header">
+      <div class="vd-cs-eyebrow">
+        <span class="vd-dot"></span>Case study · Telecommunications · 800+ rectifiers
+      </div>
+      <h1 class="vd-cs-headline">14 days early: how a Fortune 50 telecom got <span class="vd-accent">ahead of rectifier failures</span> across 800 sites.</h1>
+      <p class="vd-cs-deck">A continuous-monitoring pilot caught capacitor-aging precursors weeks before any standard alarm fired — and turned a CapEx refresh budget into a maintenance budget.</p>
+
+      <div class="vd-cs-byline">
+        <div>
+          <span class="vd-byline-label">Customer</span>
+          <span class="vd-byline-value">Fortune 50 Telecom (redacted)</span>
+        </div>
+        <div>
+          <span class="vd-byline-label">Engagement</span>
+          <span class="vd-byline-value">2024 - 2026</span>
+        </div>
+        <div>
+          <span class="vd-byline-label">Scope</span>
+          <span class="vd-byline-value">800+ UPS rectifiers · 4 metro regions</span>
+        </div>
+        <div>
+          <span class="vd-byline-label">Outcome</span>
+          <span class="vd-byline-value">$1.3M-$3M deferred CapEx · 14-day fault precursors</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- EXECUTIVE SUMMARY (teal-rule callout) -->
+    <div class="vd-cs-summary">
+      <div class="vd-summary-label">Executive summary</div>
+      <p>An 800-rectifier UPS fleet across four telco metro regions had been refreshing equipment on a calendar schedule because nameplate-derate margins assumed worst-case aging. Continuous waveform monitoring at <strong>8 kHz</strong> identified electrolytic-capacitor degradation precursors <strong>14 days</strong> before any standard alarm fired, allowing the operations team to schedule planned maintenance windows rather than absorb unplanned outages, and to defer <strong>$1.3M-$3M</strong> of CapEx-style replacements over a three-year horizon by extending the useful life of equipment whose health was previously assumed-failing rather than measured.</p>
+    </div>
+
+    <!-- PROBLEM -->
+    <section class="vd-cs-section">
+      <div class="vd-cs-section-eyebrow"><span class="vd-num">01</span>Problem</div>
+      <h2 class="vd-cs-section-title">Calendar refreshes, not condition refreshes.</h2>
+      <p>A Fortune 50 telecom was refreshing its UPS rectifier fleet on a fixed five-year cadence across four metro regions. The cadence was set conservatively because the only operational signal available was post-failure: rectifiers entered alarm only after a fault had already propagated, sometimes after a service interruption. The team's options were to keep replacing on schedule (and over-replace healthy equipment) or to push past the schedule (and risk the 4% of units that were degrading silently below standard alarm thresholds).</p>
+      <p>The reliability lead's framing: "We're spending CapEx like an insurance policy because we can't see the actuarial table."</p>
+      <p>The team had tried sensor-based monitoring before. Each prior attempt failed at the resolution boundary — sampling at 1 Hz or below averaged away the harmonic structure that carries the precursor signal. The math was unforgiving: a 200 ms inrush event produces 1,600 sample points at 8 kHz and 0.2 sample points at 1 Hz. The diagnostic question wasn't being answered because the diagnostic data didn't exist.</p>
+    </section>
+
+    <!-- APPROACH -->
+    <section class="vd-cs-section">
+      <div class="vd-cs-section-eyebrow"><span class="vd-num">02</span>Approach</div>
+      <h2 class="vd-cs-section-title">8 kHz waveform telemetry on every monitored circuit, continuous.</h2>
+      <p>Verdigris instrumented the 800-rectifier fleet with high-resolution meters streaming continuous 8 kHz waveform data into the Signals platform. Three discipline choices defined the engagement:</p>
+      <ul>
+        <li><strong>No selective monitoring.</strong> Every rectifier, every region, continuously. Sampling subsets defeats precursor detection because the failures don't pre-announce themselves spatially.</li>
+        <li><strong>Harmonic structure as the signal, not power factor as the proxy.</strong> The 7th harmonic specifically tracks electrolytic-capacitor ESR; watching it directly is a cleaner signal than watching aggregated power-quality indices.</li>
+        <li><strong>Operator workflow integration.</strong> Findings landed in the existing reliability ticketing system, not a Verdigris-side dashboard. The operations team didn't need to learn a new tool to act on the new visibility.</li>
+      </ul>
+      <p>The pilot ran for 18 months across all four regions before any outcome metric was finalized. The first nine months built the baseline; the second nine months found the first failures the system caught before standard alarms fired.</p>
+    </section>
+
+    <!-- OUTCOME with single anchor metric -->
+    <section class="vd-cs-section">
+      <div class="vd-cs-section-eyebrow"><span class="vd-num">03</span>Outcome</div>
+      <h2 class="vd-cs-section-title">Capital deferred. Outages avoided. Refresh policy rewritten.</h2>
+
+      <div class="vd-cs-anchor">
+        <div class="vd-anchor-label">Anchor outcome</div>
+        <span class="vd-anchor-metric">$1.3M-$3M</span>
+        <p class="vd-anchor-context">Three-year fleet projection of deferred CapEx-style replacements, achieved by extending the useful life of equipment whose health was previously assumed-failing rather than measured. Range reflects sensitivity to refresh-cadence policy choices the customer's finance team is still tuning.</p>
+      </div>
+
+      <p>The single anchor was the deferral. Surrounding observations supporting the anchor:</p>
+      <ul>
+        <li>4% of monitored rectifiers showed degradation below standard alarm thresholds — invisible to the previous monitoring stack.</li>
+        <li>14-day median advance warning on the precursors that did surface, sufficient for planned-maintenance scheduling instead of unplanned outage absorption.</li>
+        <li>Refresh-cadence policy rewritten from a five-year fixed schedule to a condition-based schedule with a five-year ceiling. The ceiling preserves the conservative posture; the condition trigger captures the savings.</li>
+      </ul>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="vd-cs-section">
+      <div class="vd-cs-section-eyebrow"><span class="vd-num">04</span>Operator voice</div>
+
+      <div class="vd-cs-quote">
+        <blockquote>Verdigris turned what looked like a refresh budget into a maintenance budget. Our finance team had to rebuild the model.</blockquote>
+        <div class="vd-quote-attribution">
+          <span class="vd-attribution-name">VP of Operations</span>
+          <span class="vd-attribution-role">Fortune 50 Telecom (named operator; organization redacted at customer's request)</span>
+        </div>
+      </div>
+
+      <p>The operator's framing matters: the value of the engagement showed up in finance, not in operations. Operations got the visibility and the planned-maintenance scheduling; finance got the deferred CapEx number that defined the win at the quarterly review. A case study that featured only the operations outcome would have understated the cross-functional impact this engagement created.</p>
+    </section>
+
+    <!-- REPLICATE CTA -->
+    <div class="vd-cs-replicate">
+      <div class="vd-replicate-label">Replicate this in your facility</div>
+      <h3>Want to see what <span class="vd-accent">8 kHz waveform monitoring</span> reveals across your existing rectifier fleet?</h3>
+      <p>We start with a no-cost site assessment that walks one of your existing rectifier-failure incidents through what Verdigris would have shown you. We bring the analysis; you bring the post-mortem. If it lands, we draft a pilot scope on the spot.</p>
+      <span class="vd-cta-action">Schedule a 30-minute site-assessment review</span>
+    </div>
+
+  </article>
+
+</body>
+</html>

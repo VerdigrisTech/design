@@ -89,6 +89,9 @@ const ALLOWLIST: Record<string, string[]> = {
   // New voice profile YAMLs (Mark + Jon) reference team members in voice samples.
   "voice/team/mark-chung.yaml": ["Team member name (Jimit)"],
   "voice/team/jon-chu.yaml": ["Team member name (Jimit)", "Team member name (Josh)"],
+  // One-pager + case-study cells reference voice sources by name in their voice-recipe sections.
+  "categories/one-pagers/guide.md": ["Team member name (Jimit)"],
+  "categories/case-studies/guide.md": ["Team member name (Jimit)"],
 };
 
 // --- Scanner ---
