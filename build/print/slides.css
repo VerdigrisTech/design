@@ -403,7 +403,12 @@ table.vd-slide-table td:first-child {
 .vd-slide figure.vd-figure img,
 .vd-slide figure.vd-figure svg,
 .vd-slide figure.vd-figure canvas {
-  max-height: 480pt;          /* leave room for headline + caption */
+  /* Slide is 720px = 540pt tall. Frame top+bottom (112pt) + footer (32pt) =
+     144pt frame overhead. Headline (~36pt) + deck (~20pt) + rhythm gaps
+     (~62pt) + caption (~30pt) ~= 150pt. Figure max ~250pt to avoid clipping
+     when other content is present. Was 480pt (Loop 4); reduced 2026-05-03
+     after gemini-code-assist review on PR #43 caught the overflow risk. */
+  max-height: 280pt;
   width: 100%;
   height: auto;
   object-fit: contain;

@@ -302,8 +302,10 @@ function checkInheritanceIntegrity() {
           );
           unresolved++;
         }
-      } else if (trimmed.length === 0 || /^[a-z_]+:/.test(trimmed)) {
-        // End of the inherits list (blank line or next field)
+      } else if (trimmed.length > 0 && /^[a-z_]+:/.test(trimmed)) {
+        // End of the inherits list: a new field key at the same indent.
+        // Blank lines DO NOT terminate -- YAML allows them between list items
+        // (gemini-code-assist review on PR #43, 2026-05-03).
         inBlock = false;
       }
     }
