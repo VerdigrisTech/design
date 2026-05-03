@@ -150,7 +150,7 @@ The voice recipe `pilot_kickoff_deck` (in `voice/recipes.yaml`) sets the dial: M
 1. "**Exit criteria**" → "**expansion criteria**" or "**graduation criteria**"
    - "Exit" implies the customer is leaving Verdigris. The opposite is intended: the criteria mark the path from pilot to expanded engagement. "Expansion criteria" carries the right vector. "Graduation criteria" works when the audience is technically inclined.
 2. "**Customer**" → use the customer's name when known, "your team" when speaking inclusively
-   - "Customer" is third-person; the deck is addressed *to* them, so first-person ("we", "your team") and named ("Abcam", "Verizon") read better.
+   - "Customer" is third-person; the deck is addressed *to* them, so first-person ("we", "your team") and named ("Acme Life Sciences", "Verizon") read better.
 3. "**Pilot phase**" → "**first 90 days**" or "**this engagement**"
    - "Phase" is internal Verdigris jargon for the staged engagement model. The customer doesn't think in phases.
 4. "**Generally available**" → "**in production**" or "**fleet-deployed**"
@@ -236,11 +236,11 @@ The checklist sits alongside the cell-validator pass; the validator catches stru
 
 ## Why this guide exists
 
-Filed as Linear issues Z2O-1318 through Z2O-1323 on 2026-05-02 from a review of the Abcam pilot kickoff deck:
+Filed as Linear issues Z2O-1318 through Z2O-1323 on 2026-05-02 from a review of the customer pilot kickoff deck:
 
 - **Z2O-1318** Logomark consistency — drifted across slides, undermining the template's authority signal
 - **Z2O-1319** Confidentiality marking — absent on most slides; one declaration on slide 1 is not enough for a deck the customer will share internally
-- **Z2O-1320** Roles vs. names — Abcam-specific names baked into what should have been a reusable template
+- **Z2O-1320** Roles vs. names — customer-specific names baked into what should have been a reusable template
 - **Z2O-1321** Audience-fit diction — "exit criteria" landed wrong with a customer thinking about expansion, not departure
 - **Z2O-1322** Date / week-N — mixed formats in one deck created ambiguity about the actual pilot calendar
 - **Z2O-1323** Table formatting — ad-hoc tables with inconsistent padding, column counts, header treatment

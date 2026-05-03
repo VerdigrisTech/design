@@ -2930,7 +2930,7 @@ composition:
           llm_eval: "Does any chart on this slide use more than 3 distinct colors, or does any data visualization occupy more than 60% of the slide content zone? Answer YES if either limit is exceeded, NO if charts use 3 or fewer colors and fit within 60%."
     spacing: "8% safe margin inset from slide edges for 16:9. Content zone centered. Vertical centering default."
 
-    # ---- Sales collateral genres (added 2026-05-02 from Abcam pilot kickoff review) ----
+    # ---- Sales collateral genres (added 2026-05-02 from customer pilot kickoff review) ----
     # The arc + coupling rules above apply to investor pitch / general sales decks.
     # The genres below are sales-collateral-specific (pilot kickoff, customer 101, internal team, partner enablement).
     # Pick a genre via the mode framework below; mode-specific rules apply on top of (or override) the base rules.
@@ -3048,7 +3048,7 @@ composition:
           - "Timeline table with 12 rows on one slide (split across two slides by phase)"
           - "Cell padding 4pt vertical (below the 8pt floor -- readers can't parse rows)"
 
-    sales_collateral_notes: "These rules apply to the four sales-collateral genres (pilot_kickoff, internal_team, customer_101, partner_enablement). They are mode-conditional; check the rule's modes: list before applying. The diction rule from the same Abcam review (Z2O-1321) lives in voice/recipes.yaml as voice.audience-fit-diction.exit-criteria, not here, because diction is a voice concern not a visual one. See categories/slides/ for full per-genre specs and build/print/slides.css for the reference stylesheet."
+    sales_collateral_notes: "These rules apply to the four sales-collateral genres (pilot_kickoff, internal_team, customer_101, partner_enablement). They are mode-conditional; check the rule's modes: list before applying. The diction rule from the same pilot kickoff review (Z2O-1321) lives in voice/recipes.yaml as voice.audience-fit-diction.exit-criteria, not here, because diction is a voice concern not a visual one. See categories/slides/ for full per-genre specs and build/print/slides.css for the reference stylesheet."
 
   # ---------------------------------------------------------------------------
   # PERSUADE x WHITEPAPER COVER -- briefings and editorial PDFs

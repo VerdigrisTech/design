@@ -54,8 +54,9 @@ strongest_ingredients:
     evidence: "The shape is off. The di/dt step changes don't match what we see in AI factory load profiles, and the model is smoothing over the edges instead of capturing them. It loses the transient behavior that actually matters."
     evidence_product: "the tightening doesn't serve the rhythm and melody, lets keep to my version"
   - warmth_and_humor: 6
-    evidence: "Hey josh I should be close. I have to take my son to volleyball at 11 and he'll be done around 1 PM and then we're gonna try and grab lunch after"
+    evidence: "Acknowledges teammates by name, mixes operational asks with conversational tone, blends personal availability with team scheduling without ceremony."
     evidence_understated: "I took the liberty of changing some keywords for YouTube search"
+    note_on_redaction: "Original evidence quote contained family scheduling detail; redacted 2026-05-03 (Loop 5 PII review) to a behavioral description that captures the same warmth dimension without exposing personal information."
 
 unique_contribution: |
   Editorial vision -- the founder's eye that names what's off and what

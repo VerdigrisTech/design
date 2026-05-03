@@ -88,7 +88,7 @@ The genre stays a genre. If a sixth structural delta accumulates against another
 
 ## Origin
 
-Filed implicitly via the same Abcam review (Z2O-1318 through Z2O-1323) — the slide cluster surfaced in customer-facing decks but the rules need to NOT apply to internal decks (e.g., the customer-101 wordmark would be wrong for an internal weekly), so the genre split was necessary to express the deltas. The four-genre framework was synthesized via the [adversarial-review workflow](../../workflows/adversarial-review).
+Filed implicitly via the same pilot kickoff review (Z2O-1318 through Z2O-1323) — the slide cluster surfaced in customer-facing decks but the rules need to NOT apply to internal decks (e.g., the customer-101 wordmark would be wrong for an internal weekly), so the genre split was necessary to express the deltas. The four-genre framework was synthesized via the [adversarial-review workflow](../../workflows/adversarial-review).
 
 ## What this cell does NOT cover
 

@@ -193,6 +193,86 @@ The discipline: every llm_eval in a rule should be paired with the question, "co
 
 ---
 
+## Public packages need a PII review
+
+**Surface that produced this:** PR #43, Loop 5 threat-modeling agent. The four-loop adversarial review on rules, CSS, and integration found progressively smaller bugs — but missed the fact that `voice/team/*.yaml` profiles, sourced from Slack message corpus, contained:
+
+- A cofounder's child-activity scheduling ("I have to take my son to volleyball at 11")
+- Customer equipment serial numbers (BBE20000454 etc.) tied to specific facility sites ("Aurora") and vendor relationships ("One Power")
+- A specific Fortune 50 customer named explicitly in a voice profile's prose ("the core T-Mobile deployment data")
+- A customer pilot name (Abcam) referenced 12 times across the cell guides + example HTMLs
+
+Loop 4 expanded the npm package to ship `voice/team/*.yaml` files publicly. Loop 5 caught that the published package would now expose all of the above to anyone who installs `@verdigristech/design-tokens`.
+
+The principle: **adding files to a public npm package is a security action, not a documentation action**. Every new path under the `files` array in package.json should pass a PII / customer-confidential / IP review before shipping. Static analysis (the four prior loops) can prosecute correctness, structure, and consistency — but cannot read the content of voice samples and recognize "this is a child's volleyball schedule."
+
+When to apply this learning:
+
+- Any time `package.json` `files` or `exports` is expanded.
+- Any time a directory is moved from internal-only to publicly-shipped.
+- Any voice / quote / message-corpus file that's sourced from internal communication channels (Slack, email, Linear, internal docs). The fact that the message was sent in a private channel is not preserved by copying its text into a public file.
+- Customer-identifying details: names, sites, equipment IDs, vendor relationships, operational procedures. Even seemingly-anonymous strings (BBE serial numbers, three-letter site nicknames) are searchable and can identify customers.
+
+The mitigation pattern adopted in PR #43:
+
+- Voice profiles in `voice/team/*.yaml` stay in the repo (useful for internal consumption) but are EXCLUDED from npm. Specific paths (`voice/recipes.yaml`, `voice/ingredients.yaml`, `voice/feelings.yaml`, `voice/USE.md`, `voice/README.md`) ship publicly. The recipes name voice sources by handle but contain no Slack quotes.
+- Customer names, sites, equipment IDs, vendor names redacted from all profile YAMLs that could leak via tooling that does ship publicly (e.g., `voice/README.md` references the team).
+- Reference example HTMLs renamed customers to fictional placeholders ("Acme Life Sciences" instead of a real customer).
+
+Generalizes to: any future cell whose source corpus includes private messages, customer-specific content, or third-party trademarked references. Run a PII-review pass on the artifact BEFORE adding the directory to the npm package.
+
+---
+
+## Token-CSS divergence is a real failure mode
+
+**Surface that produced this:** Loop 4 fixed a critical bug in `slides.css` (slide dimensions changed from `1280pt × 720pt` to `1280px × 720px`, eliminating a ~33% silent oversize). Loop 5 caught that the corresponding token file `tokens/spacing/slides.json` was not updated — so the design system's source-of-truth (the tokens) said one thing and the implementation (the CSS) said another. Consumers importing the Tailwind preset would get `1280pt`; consumers importing the CSS would get `1280px`. Two different consumers, two different slide sizes.
+
+The principle: **tokens and the CSS that consumes them are a contract that has no enforcement today**. The build pipeline tokenizes JSON into a Tailwind preset, but no validator checks that the CSS variables in stylesheets match the values in tokens. Manual edits to either side can drift.
+
+Mitigations applied in PR #43:
+
+- Token sync: `tokens/spacing/slides.json` updated to match the CSS, with a comment explaining the unit choice (`px` not `pt` for screen-native widescreen).
+- A future improvement: add a `checkTokenCssSync` validator function to `build/validate-rules.ts` that parses CSS files for `--vd-*` custom properties and cross-references against flattened tokens. Out of scope for PR #43 but filed as a follow-up.
+
+When to apply this learning:
+
+- Any change to either a token JSON or a CSS variable: the pair MUST be updated atomically. A pre-commit check would catch the divergence; absent that, the discipline is "edit both or edit neither."
+- New tokens added: confirm they appear in the Tailwind preset after `npm run build`, AND in the consuming CSS as `var(--vd-*)` references.
+- CSS audits that change `--vd-*` values (Loop 4-style): the corresponding token file is part of the audit's blast radius, even if no rule references it.
+
+Generalizes to: any time a value lives in two places (a source-of-truth file + a consuming file generated or maintained alongside). Either codify the contract (validator) or hold the discipline manually (paired edits). Hoping for the best is a third option, and it's how Loop 5 caught the slides.json divergence.
+
+---
+
+## Render-time bugs are invisible to static analysis
+
+**Surface that produced this:** PR #43, Loop 5 render-verification agent. Loops 1-4 prosecuted rules quality, cross-cell consistency, CSS correctness, and consumer integration via static analysis. None of them opened a browser. Loop 5 used Playwright to actually load the 5 example HTMLs and found:
+
+- abcam-kickoff-redux.html (now acme-life-sciences-kickoff): all 8 slides exceed 720px height; slide 6 (timeline table) clips 363px of content (~50% of viewport) because `overflow: hidden` hides the truncation.
+- architectural-advantages-redux.html: CTA bar clipped 90px below the page fold; the call-to-action is invisible in PDF export.
+
+Static analysis cannot detect:
+
+- `overflow: hidden` clipping content silently.
+- Layout overflow at specific viewport sizes.
+- Font-loading race conditions where fallback metrics inflate page counts before Google Fonts arrives.
+- Visual contrast issues (dark text on dark backgrounds at small type sizes).
+- Color-rendering at print vs. screen DPI.
+
+Tools like CSS linters see the rule (`overflow: hidden`); they don't measure scrollHeight against viewport height. Only runtime DOM measurement reveals the bug.
+
+When to apply this learning:
+
+- Any artifact that renders to HTML, PDF, or paged output: include a render-verification step in the QA workflow. Playwright can open the artifact, measure layout, and emit a structured failure report.
+- Examples and reference templates ARE artifacts; render-verify them, not just the production-ready output.
+- The rule "every llm_eval should have a structural test alongside" extends here: every render-time visual rule should have a Playwright-based pre-flight before the LLM eval fires.
+
+The mitigation pattern: as a follow-up, add a `tests/browser/overflow-detection.spec.ts` Playwright test that loads each example HTML, walks every `<section class="vd-slide">`, measures `scrollHeight` against viewport height, and fails if any slide overflows. Filed as a follow-up; not in PR #43 scope.
+
+Generalizes to: any rendered artifact (web, PDF, slide deck, image generation). Static analysis is necessary but not sufficient; render verification catches the bugs that are invisible to source readers.
+
+---
+
 ## Single-genre cells when fragmentation isn't earned
 
 **Surface that produced this:** Case studies cell (PR #43, Phase 4). The whitepaper cell ships three genres, the slides cell ships four genres, the one-pagers cell ships two genres — but the case-studies cell ships one. The decision was not symmetry-driven; it was evidence-driven.

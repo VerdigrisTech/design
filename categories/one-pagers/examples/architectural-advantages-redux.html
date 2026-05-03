@@ -32,20 +32,19 @@
     <div class="vd-onepager-body">
 
       <ol class="vd-onepager-numlist">
-        <li><strong>Choose vendors with open APIs.</strong> Closed integrations create five-year switching costs that exceed the original software bill.</li>
-        <li><strong>Insist on raw waveform telemetry, not derived metrics.</strong> 1 Hz averages discard the precursors that cause the failure you care about.</li>
-        <li><strong>Separate the BMS from the diagnostic layer.</strong> A vendor doing both is optimizing one at the expense of the other.</li>
-        <li><strong>Deploy meters where load actually matters, not where access is convenient.</strong> Critical-circuit telemetry beats fleet-average telemetry on every reliability question.</li>
-        <li><strong>Standardize on cellular-redundant ingest.</strong> Network outages don't pause electrical events; the diagnostic layer must survive your IT incident.</li>
-        <li><strong>Validate your derate margins against measured load, not nameplate.</strong> Conservative derating strands 20-40% of your existing capacity; orchestration recovers it without new capital.</li>
-        <li><strong>Make the diagnostic layer a contract, not a feature.</strong> Reliability obligations need their own SLA, separate from the rest of the stack.</li>
+        <li><strong>Choose vendors with open APIs.</strong> Closed integrations create switching costs that exceed the software bill.</li>
+        <li><strong>Insist on raw waveform telemetry.</strong> 1 Hz averages discard the precursors that cause the failures you care about.</li>
+        <li><strong>Separate BMS from the diagnostic layer.</strong> A vendor doing both optimizes one at the expense of the other.</li>
+        <li><strong>Meter where load matters, not where access is convenient.</strong> Critical-circuit telemetry beats fleet averages.</li>
+        <li><strong>Cellular-redundant ingest.</strong> Network outages don't pause electrical events.</li>
+        <li><strong>Validate derate margins against measured load.</strong> Conservative derating strands 20-40% of existing capacity.</li>
+        <li><strong>Make diagnostics a contract, not a feature.</strong> Reliability obligations need their own SLA.</li>
       </ol>
 
       <aside class="vd-onepager-thesis">
         <div class="vd-thesis-label">The argument</div>
-        <p>The next decade of data-center reliability isn't about adding redundancy. It's about <strong>seeing the precursors</strong> that today's monitoring stack flattens away — and then orchestrating against them.</p>
-        <p>The architectural decisions on the left determine whether your reliability investment compounds (each layer adds visibility) or stalls (each layer locks you further into a vendor's worldview).</p>
-        <p>Verdigris is the layer between BMS and physical asset that captures and acts on the high-resolution signal. We don't replace your stack; we add the layer that turns the rest of it into evidence.</p>
+        <p>The next decade of reliability isn't about adding redundancy. It's about <strong>seeing the precursors</strong> today's monitoring stack flattens away — and orchestrating against them.</p>
+        <p>Verdigris is the layer between BMS and physical asset that captures the high-resolution signal. We don't replace your stack; we turn the rest of it into evidence.</p>
       </aside>
 
     </div>

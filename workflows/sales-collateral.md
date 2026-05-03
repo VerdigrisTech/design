@@ -13,7 +13,7 @@ If you are about to make a deck, a one-pager, a case study, a leave-behind, or a
 
 ## Why this exists
 
-Verdigris produces collateral repeatedly: pilot kickoff decks, customer 101 decks, partner enablement decks, one-pagers, case studies, whitepapers, demo videos. Today most of those are produced bespoke each time. A 2026-04 review of the Abcam pilot kickoff deck found six recurring quality issues (logomark drift, missing confidentiality footer, real names baked into templates, audience-mismatched diction, week-N notation, ad-hoc tables) — none of them deck-specific, all of them production-process gaps. The design-system cells codify the rules; this workflow documents the process so the rules actually land in shipped artifacts.
+Verdigris produces collateral repeatedly: pilot kickoff decks, customer 101 decks, partner enablement decks, one-pagers, case studies, whitepapers, demo videos. Today most of those are produced bespoke each time. A 2026-04 review of the customer pilot kickoff deck found six recurring quality issues (logomark drift, missing confidentiality footer, real names baked into templates, audience-mismatched diction, week-N notation, ad-hoc tables) — none of them deck-specific, all of them production-process gaps. The design-system cells codify the rules; this workflow documents the process so the rules actually land in shipped artifacts.
 
 The disease Mark Chung named in 2026-05-01: *"Too much of this depends on individual follow-up, memory, and ad hoc explanation. We need repeatable collateral that helps customers, partners, and internal teams understand the product without requiring a live walkthrough every time."*
 
@@ -170,7 +170,7 @@ When sharing, prefer the public URL if the tier is PUBLIC. When the tier is CUST
 
 ## Working with cells
 
-When you finalize an artifact, run the cell's validators (`npm run validate:rules` from the design repo) against the artifact's HTML version when possible. The slides, one-pagers, and case-studies cells include specific evaluator passes. CI for the design repo doesn't validate consumer artifacts, but a local `npm run validate:rules` against a draft is cheap and catches the Abcam-class issues before review.
+When you finalize an artifact, run the cell's validators (`npm run validate:rules` from the design repo) against the artifact's HTML version when possible. The slides, one-pagers, and case-studies cells include specific evaluator passes. CI for the design repo doesn't validate consumer artifacts, but a local `npm run validate:rules` against a draft is cheap and catches the pilot-kickoff-class issues before review.
 
 For a non-trivial new artifact (new product launch deck, new partner co-sell motion, new whitepaper that doesn't fit existing genres), follow `workflows/adversarial-review.md`: research exemplars from the broader industry, debate the choices, synthesize the cell update, then ship the artifact. Do not invent new genres on the spot inside a customer-facing artifact.
 

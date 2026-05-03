@@ -1,12 +1,17 @@
 # Voice Profile: Jon Chu
-# Sources: 20+ Slack messages across #team-engineering, #team-aiot, #team-edge,
-#          #team-implementations, #c-tmobile, #v-investors, #v-product,
-#          #product-einstein-hw, #v-hiring-discussions
+# Sources: 20+ Slack messages across engineering, AIOT, edge, implementations,
+#          customer-engagement, investor, product, hardware, and hiring channels.
 # Profiled: 2026-05-02
 # Data gaps: GitHub PR comments, Linear technical issues, design-review
-#            recordings, customer-deployment field notes
+#            recordings, customer-deployment field notes.
 # Note: Slack display name is "Chef Chu" (informal). Last name verified via
 #       email (jon@verdigris.co) and team context (Verdigris technical cofounder).
+# Redaction note (2026-05-03, Loop 5 PII review): customer-identifying details
+#       (equipment serial numbers, site nicknames, vendor names, customer
+#       channel names) genericized below. Original quotes are preserved in
+#       repo-internal documentation; the published profile uses generic
+#       operational descriptors that capture the same voice dimensions
+#       without exposing customer reconnaissance data.
 
 name: Jon Chu
 slack_id: U03CZRZJX
@@ -20,9 +25,9 @@ voice_summary: |
   to 8.8.8.8 (which is external to their network). Curl (TCP/443) isn't
   making it through. It's not captive portal."), data infrastructure
   ("the month partition was quite a bit slower on the historical table"),
-  and customer-site execution ("HVA-3 is the same swapping (BBE20000454)
-  for a new system (BBE20002067)") without rhetorical fanfare between
-  domains.
+  and customer-site execution (replacement-unit swaps, vendor-coordination
+  workflows, equipment-level inventory tracking) without rhetorical fanfare
+  between domains.
 
   His signature quality is engineering honesty. He doesn't theorize when
   he can observe. "My issue was a stale authentication. removing
@@ -43,9 +48,9 @@ strongest_ingredients:
     evidence_data: "We still have an auth0 connector that logs API access tokens sends them to segment/mixpanel. Every so often I use segment and mixpanel to filter unique API tokens and expire the ones that have not been used for 6 months or more."
     evidence_hardware: "Managing the windings and their connection to the PCB will be a significant design for manufacturing challenge. 0.19mm will help, but it's still pretty thin."
   - operator_empathy: 8
-    evidence_field: "We replaced RPC2 2 of 2 in Aurora (BBE20000635) with a unit from One Power's inventory (BBE20001893). It looks like a bad power supply. One Power will need a replacement unit."
-    evidence_customer: "One Power needs two systems for replacement. I'll take the two bad units directly. Both replacements are swapped in admin console and live now."
-    note: "Jon's empathy comes from actually being on customer sites swapping equipment. Not abstract — he understands operator constraints because he has lived them."
+    evidence_field: "Coordinates equipment-replacement procedures at customer sites: identifies failed unit, sources replacement from inventory, executes swap, confirms admin-console state, flags vendor for restock."
+    evidence_customer: "Acts directly when authorized rather than escalating: takes failed units back, swaps inventory, updates state systems live, communicates the resolution to the team."
+    note: "Jon's empathy comes from actually being on customer sites swapping equipment. Not abstract -- he understands operator constraints because he has lived them. Specific equipment identifiers and customer site names redacted from public profile (2026-05-03, Loop 5 PII review); the operational shape is preserved."
   - self_honesty: 8
     evidence_debug: "My issue was a stale authentication. removing ~/.mcp_auth/ credentials allowed me to reconnect to the database."
     evidence_unknown: "<@Josh> I have no idea unfortunately... I'm going off of Hong-Bin's screen captures, not first hand interaction with the wifi connectivity."
@@ -140,13 +145,16 @@ voice_sample: |
   - Is this an external magnetic mount, or is this the attached antenna?
 
 voice_sample_field: |
-  HVA-3 is the same swapping (BBE20000454) for a new system (BBE20002067).
+  Equipment swap pattern (specific identifiers redacted for public profile;
+  voice shape preserved):
 
-  We replaced RPC2 2 of 2 in Aurora (BBE20000635) with a unit from One
-  Power's inventory (BBE20001893). It looks like a bad power supply.
-  One Power will need a replacement unit.
+  Site A: failed-unit ID swapped for replacement-unit ID. Both updates live
+  in admin console.
 
-  We're going to look into another system, so maybe one more to come.
+  Site B: dual-redundant unit replaced from vendor inventory; suspected bad
+  power supply, vendor will need a restock. Taking failed units directly.
+
+  Possible second system to follow.
 
 voice_sample_scope: |
   <@Ken Chen> looking through the data, I agree with some of Hong-Bin's

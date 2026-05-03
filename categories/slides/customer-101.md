@@ -77,7 +77,7 @@ This recipe was revised after adversarial review (2026-05-02) — the initial re
 
 ## Why this genre exists
 
-The same Abcam review surfaced that the pilot-kickoff template was being used inappropriately for first meetings, where it landed as "they're assuming we've signed." The customer 101 genre exists so the *first meeting* gets a deck calibrated to its purpose — not a recycled pilot kickoff with the customer name swapped.
+The same pilot kickoff review surfaced that the pilot-kickoff template was being used inappropriately for first meetings, where it landed as "they're assuming we've signed." The customer 101 genre exists so the *first meeting* gets a deck calibrated to its purpose — not a recycled pilot kickoff with the customer name swapped.
 
 ## What this cell does NOT cover
 

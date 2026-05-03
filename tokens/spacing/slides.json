@@ -1,15 +1,15 @@
 {
-  "$description": "Slide-deck-only spacing scale for sales collateral decks (pilot kickoff, customer 101, internal team, partner enablement). 16:9 master, 1280x720pt. Every gap has a floor AND a ceiling per the project rule that AI agents optimize toward maximums without bounds. Mirrors tokens/spacing/print.json conventions.",
+  "$description": "Slide-deck-only spacing scale for sales collateral decks (pilot kickoff, customer 101, internal team, partner enablement). 16:9 master, 1280x720px = 13.33in x 7.5in (standard widescreen). Every gap has a floor AND a ceiling per the project rule that AI agents optimize toward maximums without bounds. Mirrors tokens/spacing/print.json conventions. NOTE: master width/height are CSS pixels (1px = 1/96in for print), NOT points (1pt = 1/72in). Loop 4 fixed the slides.css from pt to px; Loop 5 synced this token file.",
   "spacing": {
     "slides": {
       "master": {
         "width": {
-          "$value": "1280pt",
+          "$value": "1280px",
           "$type": "dimension",
           "$description": "Slide master width. 1280x720 (16:9) is the canonical Verdigris slide ratio. PowerPoint widescreen, Keynote 'Wide', Google Slides default all match."
         },
         "height": {
-          "$value": "720pt",
+          "$value": "720px",
           "$type": "dimension"
         }
       },

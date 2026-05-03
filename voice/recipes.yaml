@@ -223,7 +223,7 @@ recipes:
       supporting: Seren (honest mutual-fit evaluation)
 
   # ── Sales collateral (decks) ────────────────────────────────────────
-  # Added 2026-05-02 from the Abcam pilot kickoff review (Z2O-1318 through Z2O-1323).
+  # Added 2026-05-02 from the customer pilot kickoff review (Z2O-1318 through Z2O-1323).
   # Per-genre voice mixes for the slides cell. See categories/slides/ for full specs.
 
   pilot_kickoff_deck:
@@ -455,7 +455,7 @@ audience_fit_diction:
         - "Customers typically see a 30% reduction in unplanned outages"
       good_examples:
         - "Your team should expect to see a 30% reduction in unplanned outages"
-        - "At Abcam's scale, we'd expect to see a 30% reduction in unplanned outages"
+        - "At a similar fleet scale, we'd expect to see a 30% reduction in unplanned outages"
     - id: "voice.audience-fit-diction.pilot-phase"
       description: |
         Replace "pilot phase" with "first 90 days" or "this engagement". "Phase"

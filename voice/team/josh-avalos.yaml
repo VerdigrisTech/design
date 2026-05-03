@@ -82,7 +82,8 @@ verbal_fingerprints:
   - "cc @... (radical transparency pattern)"
 
 voice_sample: |
-  :bangbang: *Official Escalation* Bentaus installed device BBE20002165
+  :bangbang: *Official Escalation* A field-installed device (specific
+  partner + serial redacted from public profile, 2026-05-03 PII review)
   was moved to ethernet and rssh has been steadily resetting every
   ~2 minutes.
 
