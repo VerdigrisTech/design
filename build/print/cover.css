@@ -46,6 +46,15 @@
   --vd-cover-deck-to-byline-min: 1.4in;     /* floor: below this, cover reads as page-1 article */
   --vd-cover-deck-to-byline: 1.6in;         /* default */
   --vd-cover-deck-to-byline-max: 2.6in;     /* ceiling: above this, cover reads as wrong-page-size */
+
+  /* Confidentiality tier colors (shared across sales-collateral cells:
+     slides, one-pagers, case-studies). Declared here so all four cells
+     consume from one place. Loop 4 CSS audit moved these out of slides.css
+     and one-pager.css duplicates (2026-05-03). */
+  --vd-conf-public: var(--vd-muted);        /* default tier; subtle */
+  --vd-conf-customer: #c79100;              /* warm yellow; matches .vd-methods-draft */
+  --vd-conf-partner: #6b4ba0;               /* muted purple; distinct from teal/yellow */
+  --vd-conf-internal: #8a3a3a;              /* muted red; signals "do not share" */
 }
 
 /* ---- Named pages ----
@@ -193,7 +202,10 @@ sup {
 .vd-cover-byline .vd-date .vd-meta {
   display: block;
   font-size: 8pt;
-  color: rgba(255, 255, 255, 0.40);
+  /* 0.40 opacity at 8pt fails WCAG AA on dark (--vd-neutral-950) background
+     (~2.2:1 contrast ratio). Bumped to 0.55 to clear AA at small type.
+     Loop 4 CSS audit (2026-05-03). */
+  color: rgba(255, 255, 255, 0.55);
   text-transform: uppercase;
   letter-spacing: 0.10em;
   padding-top: 4px;
@@ -390,7 +402,7 @@ ol.vd-actions .vd-action-body { font-size: 10pt; line-height: 1.55; color: var(-
    block so a CEO reviewing on screen or print cannot ship to LBNL by mistake. */
 .vd-methods.vd-methods-draft {
   background: #fff4d6;                /* warm yellow alert tint */
-  border-left-color: #c79100;
+  border-left-color: var(--vd-conf-customer);  /* same warm yellow as confidentiality tier */
   border-left-width: 4pt;
 }
 .vd-methods.vd-methods-draft strong:first-child {

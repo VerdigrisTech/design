@@ -27,6 +27,8 @@ Profiled from Slack messages (April 2026). Each person is an additional source f
 | Seren Coskun | `team/seren-coskun.yaml` | People intelligence, diplomatic precision, cross-cultural range |
 | Mike Mahedy | `team/mike-mahedy.yaml` | Field credibility, industry insider voice, manufacturing fluency |
 | Thomas Chung | `team/thomas-chung.yaml` | Systems-thinking leadership, transparent operational care, taste editorial |
+| Mark Chung | `team/mark-chung.yaml` | Strategic narrative, mission gravity, editorial vision, founder voice |
+| Jon Chu | `team/jon-chu.yaml` | Field-credible engineering depth, scope discipline, bench diagnostic |
 
 ### Not yet profiled (insufficient Slack data)
 
@@ -48,3 +50,12 @@ When writing any Verdigris content, work through these six questions in order. T
 ## What lives where
 
 Voice was previously bundled at `verdigriswww/canonical/voice/`. It now lives in `VerdigrisTech/design/voice/` because voice is a foundation of the design system, not a marketing artifact. Other design foundations (color, typography, motion, accessibility) sit alongside in `design/foundations/` — voice gets its own top-level directory because it's a multi-file sub-system rather than a single doc.
+
+## Public vs. internal
+
+Two tiers of voice content:
+
+- **Public (shipped in `@verdigristech/design-tokens` npm package):** `recipes.yaml`, `ingredients.yaml`, `feelings.yaml`, `USE.md`, this `README.md`. Recipes name voice sources by handle (e.g., "Mark", "Seren") but contain no Slack quotes, customer data, or PII. Safe for any consumer.
+- **Repo-internal only (NOT in npm package):** `team/*.yaml` profile files. Excluded from the published package via `package.json` `files` array. Profiles include Slack-message-derived voice samples that may contain PII, customer-identifying details, or operational specifics inappropriate for public distribution. Verdigris team members access these directly from the GitHub repo. AI agents that need profile detail should be granted repo-clone access, not consume from npm.
+
+This split was set 2026-05-03 after Loop 5 PII review. The earlier draft of the package shipped team profiles publicly; that exposed family scheduling info, customer equipment IDs, and customer names that should not have left the repo. See `LEARNINGS.md` § "Public packages need a PII review" for the principle.

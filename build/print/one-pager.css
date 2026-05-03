@@ -1,0 +1,318 @@
+/* ============================================================
+   Verdigris One-Pager - reference stylesheet
+   Single US-Letter page (8.5x11), portrait, paged for PDF render
+   (Chrome --print-to-pdf or WeasyPrint).
+
+   Status: experimental. Graduates after 2 surfaces ship.
+
+   Consumption:
+     <link rel="stylesheet" href="path/to/cover.css">
+     <link rel="stylesheet" href="path/to/one-pager.css">
+     <body data-genre="solution-overview"> | data-genre="comparative">
+       <article class="vd-onepager">...</article>
+     </body>
+
+   Extends cover.css; cover.css must load first.
+   Selectors namespaced .vd-onepager-* to avoid collision.
+
+   Tokens reused from tokens/spacing/print.json (frame, page),
+   tokens/typography/font-family.json, build/dist/hex/colors.json.
+   ============================================================ */
+
+:root {
+  /* One-pager rhythm */
+  --vd-op-frame-top: 0.75in;
+  --vd-op-frame-side: 0.75in;
+  --vd-op-frame-bottom: 0.85in;          /* leaves room for footer band */
+
+  --vd-op-title-to-deck: 14pt;
+  --vd-op-deck-to-body: 28pt;
+  --vd-op-body-to-cta: 28pt;
+
+  --vd-op-cta-strip-height: 0.6in;
+  --vd-op-footer-height: 28pt;
+}
+
+/* ---- Named pages ---- */
+@page onepager {
+  size: Letter;
+  margin: 0;
+}
+
+/* ---- Page container ---- */
+.vd-onepager {
+  page: onepager;
+  page-break-after: avoid;            /* one-pager is exactly one page */
+  page-break-inside: avoid;
+  width: 8.5in;
+  height: 11in;
+  background: #ffffff;
+  color: var(--vd-ink);
+  display: flex;
+  flex-direction: column;
+  padding: var(--vd-op-frame-top) var(--vd-op-frame-side) calc(var(--vd-op-frame-bottom) + var(--vd-op-footer-height));
+  position: relative;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+}
+
+/* ---- Top bar: logomark + eyebrow ---- */
+.vd-onepager-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 18pt;
+  border-bottom: 0.5pt solid var(--vd-rule-paper);
+}
+.vd-onepager-top .vd-onepager-logo {
+  height: 28pt;
+  width: auto;
+}
+.vd-onepager-top .vd-onepager-eyebrow {
+  font-family: 'Lato', sans-serif;
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+}
+.vd-onepager-top .vd-onepager-eyebrow .vd-dot {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: var(--vd-teal);
+  border-radius: 50%;
+  margin-right: 8pt;
+  vertical-align: middle;
+}
+
+/* ---- Headline + deck ---- */
+h1.vd-onepager-headline {
+  font-family: 'Lato', sans-serif;
+  font-size: 26pt;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.18;
+  color: var(--vd-ink);
+  margin: 0;
+  padding-top: 22pt;
+  max-width: 6.4in;
+  text-wrap: pretty;
+}
+h1.vd-onepager-headline .vd-accent { color: var(--vd-teal); }
+
+p.vd-onepager-deck {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  line-height: 1.45;
+  color: var(--vd-muted);
+  margin: 0;
+  padding-top: var(--vd-op-title-to-deck);
+  max-width: 5.6in;
+}
+
+/* ---- Body content area (genre-specific) ---- */
+.vd-onepager-body {
+  flex: 1 1 auto;
+  padding-top: var(--vd-op-deck-to-body);
+  padding-bottom: var(--vd-op-body-to-cta);
+}
+
+/* ============================================================
+   GENRE: SOLUTION OVERVIEW
+   Title block + 3 evidence callouts + CTA strip.
+   Use [data-genre="solution-overview"] on <body>.
+   ============================================================ */
+.vd-onepager[data-genre="solution-overview"] .vd-onepager-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22pt;
+  align-items: start;
+}
+
+.vd-onepager-callout {
+  page-break-inside: avoid;
+}
+.vd-onepager-callout .vd-callout-num {
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--vd-teal);
+  letter-spacing: 0.08em;
+}
+.vd-onepager-callout h3 {
+  font-family: 'Lato', sans-serif;
+  font-size: 13pt;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--vd-ink);
+  margin: 0;
+  padding-top: 8pt;
+  padding-bottom: 6pt;
+}
+.vd-onepager-callout p {
+  font-size: 10pt;
+  line-height: 1.5;
+  color: var(--vd-ink);
+  margin: 0;
+}
+.vd-onepager-callout .vd-callout-metric {
+  display: block;
+  font-family: 'Lato', sans-serif;
+  font-size: 24pt;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--vd-teal);
+  padding-top: 4pt;
+}
+
+/* ============================================================
+   GENRE: COMPARATIVE
+   Numbered N-grid (e.g., "7 Ways to Avoid X") + thesis block + CTA strip.
+   Use [data-genre="comparative"] on <body>.
+   Body splits into a wide grid (5 of 12 cols) + thesis (7 of 12 cols).
+   ============================================================ */
+.vd-onepager[data-genre="comparative"] .vd-onepager-body {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 36pt;
+  align-items: start;
+}
+
+.vd-onepager-numlist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: vdnum;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10pt;
+}
+.vd-onepager-numlist li {
+  counter-increment: vdnum;
+  position: relative;
+  padding-left: 32pt;
+  font-size: 10pt;
+  line-height: 1.5;
+  color: var(--vd-ink);
+  page-break-inside: avoid;
+}
+.vd-onepager-numlist li::before {
+  content: counter(vdnum, decimal-leading-zero);
+  position: absolute;
+  left: 0; top: -1pt;
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--vd-teal);
+  letter-spacing: 0.06em;
+}
+.vd-onepager-numlist li strong {
+  font-weight: 600;
+  color: var(--vd-ink);
+}
+
+.vd-onepager-thesis {
+  padding: 10pt 0 10pt 16pt;
+  border-left: 3pt solid var(--vd-teal);
+  page-break-inside: avoid;
+}
+.vd-onepager-thesis .vd-thesis-label {
+  font-family: 'Lato', sans-serif;
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vd-teal);
+  padding-bottom: 6pt;
+}
+.vd-onepager-thesis p {
+  font-size: 11pt;
+  line-height: 1.55;
+  color: var(--vd-ink);
+  margin: 0 0 8pt 0;
+}
+.vd-onepager-thesis p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   CTA STRIP
+   Fixed footer band above the page-system footer; carries the call-to-action.
+   ============================================================ */
+.vd-onepager-cta {
+  padding: 14pt 18pt;
+  background: var(--vd-neutral-950);
+  color: rgba(255, 255, 255, 0.92);
+  border-radius: 4pt;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18pt;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.vd-onepager-cta .vd-cta-text {
+  font-family: 'Lato', sans-serif;
+  font-size: 13pt;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.96);
+}
+.vd-onepager-cta .vd-cta-text .vd-accent { color: var(--vd-teal); }
+.vd-onepager-cta .vd-cta-action {
+  font-family: 'Inter', sans-serif;
+  font-size: 11pt;
+  font-weight: 500;
+  color: var(--vd-teal-soft);
+  white-space: nowrap;
+}
+.vd-onepager-cta .vd-cta-action::before {
+  content: "→ ";
+  color: var(--vd-teal);
+  margin-right: 4pt;
+}
+
+/* ============================================================
+   PAGE FOOTER (logomark + confidentiality + tagline + URL)
+   Required band; reuses sales-collateral confidentiality colors.
+   ============================================================ */
+.vd-onepager-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--vd-op-footer-height);
+  padding: 0 var(--vd-op-frame-side);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-size: 8.5pt;
+  color: var(--vd-muted);
+  border-top: 0.4pt solid var(--vd-rule-paper);
+}
+.vd-onepager-footer .vd-onepager-tagline {
+  font-family: 'Lato', sans-serif;
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+.vd-onepager-footer .vd-onepager-url {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 8pt;
+  letter-spacing: 0.04em;
+}
+.vd-onepager-footer .vd-conf-marking {
+  font-family: 'Lato', sans-serif;
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+/* Confidentiality colors inherited from cover.css root tokens.
+   Loop 4 CSS audit consolidated these 2026-05-03 to remove duplication. */
+.vd-onepager-footer .vd-conf-public { color: var(--vd-conf-public); }
+.vd-onepager-footer .vd-conf-customer { color: var(--vd-conf-customer); }
+.vd-onepager-footer .vd-conf-partner { color: var(--vd-conf-partner); }
+.vd-onepager-footer .vd-conf-internal { color: var(--vd-conf-internal); }

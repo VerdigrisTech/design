@@ -72,6 +72,28 @@ best_for:
       buying process" energy. Operators and procurement teams feel
       the product page was written by someone who knows their world.
     target_feeling: relief
+  - recipe: pilot_kickoff_deck
+    role: primary
+    why: |
+      Field credibility from actual customer-site work is what the
+      post-signature audience recognizes. The customer team executing
+      the pilot needs to feel "we have lived your problems" -- Mike's
+      voice ('replaced redundant unit at customer site, equipment IDs preserved internally,
+      planned-maintenance-window framing) lands as operator-recognizable
+      in a way that founder voice (Mark) or operational voice (Thomas)
+      do not at the kickoff stage.
+    target_feeling: confidence
+    added_2026_05_02: "Loop 3 adversarial review surfaced that Mike's primary assignment in pilot_kickoff_deck was inferred from his strongest_ingredients (operator_empathy, technical_precision) rather than documented. This entry closes that documentation gap."
+  - recipe: one_pager
+    role: primary_solution_overview
+    why: |
+      Solution overview one-pagers carry 3 evidence callouts, each with an
+      operator-recognizable anchor metric. Mike's voice makes the
+      callouts read as 'someone who has been to your facility wrote
+      this' rather than 'a marketing team optimized this for the
+      website.' On comparative one-pagers his role is recessive
+      (Mark + Jimit lead).
+    target_feeling: confidence
 
 verbal_fingerprints:
   - "please sanity check"

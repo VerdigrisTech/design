@@ -74,6 +74,24 @@ const ALLOWLIST: Record<string, string[]> = {
   "voice-specimen.html": ["Team member name (Josh)", "Team member name (Jimit)"],
   // voice/README.md documents the voice foundation's team profile sources
   "voice/README.md": ["Team member name (Josh)", "Team member name (Jimit)"],
+  // Slide cell genre specs name voice sources (Mark, Jimit, Mike, Jon, Thomas) per the voice recipe.
+  "categories/slides/index.md": ["Team member name (Jimit)"],
+  "categories/slides/pilot-kickoff.md": ["Team member name (Jimit)", "Linear issue reference"],
+  "categories/slides/customer-101.md": ["Team member name (Jimit)"],
+  "categories/slides/partner-enablement.md": ["Team member name (Jimit)"],
+  "categories/slides/internal-team.md": ["Team member name (Jimit)"],
+  // Sales collateral production guide names voice sources for distribution decisions.
+  "workflows/sales-collateral.md": ["Team member name (Jimit)"],
+  // Sidebar lists genre voice mixes inline as nav hints.
+  "_layouts/default.html": ["Team member name (Jimit)"],
+  // LEARNINGS.md documents cross-cell principles, including voice-recipe ones that name the team.
+  "LEARNINGS.md": ["Team member name (Jimit)", "Team member name (Josh)"],
+  // New voice profile YAMLs (Mark + Jon) reference team members in voice samples.
+  "voice/team/mark-chung.yaml": ["Team member name (Jimit)"],
+  "voice/team/jon-chu.yaml": ["Team member name (Jimit)", "Team member name (Josh)"],
+  // One-pager + case-study cells reference voice sources by name in their voice-recipe sections.
+  "categories/one-pagers/guide.md": ["Team member name (Jimit)"],
+  "categories/case-studies/guide.md": ["Team member name (Jimit)"],
 };
 
 // --- Scanner ---

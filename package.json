@@ -20,14 +20,32 @@
     "./css/hsl": "./build/dist/css/hsl.css",
     "./hex": "./build/dist/hex/colors.json",
     "./tailwind": "./build/dist/tailwind/preset.js",
+    "./print/cover.css": "./build/print/cover.css",
+    "./print/slides.css": "./build/print/slides.css",
+    "./print/one-pager.css": "./build/print/one-pager.css",
+    "./print/case-study.css": "./build/print/case-study.css",
     "./tokens/*": "./tokens/*",
-    "./rules/*": "./rules/*"
+    "./rules/*": "./rules/*",
+    "./voice/recipes.yaml": "./voice/recipes.yaml",
+    "./voice/ingredients.yaml": "./voice/ingredients.yaml",
+    "./voice/feelings.yaml": "./voice/feelings.yaml",
+    "./voice/USE.md": "./voice/USE.md",
+    "./voice/README.md": "./voice/README.md"
   },
   "files": [
     "build/dist/",
+    "build/print/",
     "tokens/",
     "rules/",
     "foundations/",
+    "voice/recipes.yaml",
+    "voice/ingredients.yaml",
+    "voice/feelings.yaml",
+    "voice/USE.md",
+    "voice/README.md",
+    "categories/",
+    "workflows/",
+    "LEARNINGS.md",
     "AGENTS.md"
   ],
   "scripts": {

@@ -261,6 +261,62 @@ function checkMaturityField() {
 }
 
 // ---------------------------------------------------------------------------
+// Inheritance integrity
+// ---------------------------------------------------------------------------
+// Cells that inherit rules from another cell (e.g., one-pagers + case-studies
+// inheriting sales-collateral universals from the slides cell) declare the
+// inheritance via `inherits_from_sales_collateral: [...]` listing rule IDs.
+// This check confirms every referenced rule ID actually exists in the file.
+// Without this check, the inheritance was documentation-only -- a typo or a
+// renamed rule would silently break the inheritance chain.
+function checkInheritanceIntegrity() {
+  const content = readFileSync(RULES_FILE, "utf-8");
+  const lines = content.split("\n");
+
+  // Collect every rule ID declared in the file. Rules appear as both top-level
+  // keys (`id: "..."` after a key) and list items (`- id: "..."`); match both.
+  const declaredIds = new Set<string>();
+  for (const line of lines) {
+    const m = line.trim().match(/^-?\s*id:\s*"([^"]+)"/);
+    if (m) declaredIds.add(m[1]);
+  }
+
+  // Find every "inherits_from_sales_collateral:" block and collect referenced IDs
+  let unresolved = 0;
+  let inBlock = false;
+  let blockStartLine = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim();
+    if (/^inherits_from_sales_collateral:/.test(trimmed)) {
+      inBlock = true;
+      blockStartLine = i + 1;
+      continue;
+    }
+    if (inBlock) {
+      const itemMatch = trimmed.match(/^-\s*"([^"]+)"/);
+      if (itemMatch) {
+        const refId = itemMatch[1];
+        if (!declaredIds.has(refId)) {
+          error(
+            `Unresolved inheritance at line ${i + 1}: "${refId}" referenced from inherits_from_sales_collateral block (line ${blockStartLine}) but not declared anywhere in the file`
+          );
+          unresolved++;
+        }
+      } else if (trimmed.length > 0 && /^[a-z_]+:/.test(trimmed)) {
+        // End of the inherits list: a new field key at the same indent.
+        // Blank lines DO NOT terminate -- YAML allows them between list items
+        // (gemini-code-assist review on PR #43, 2026-05-03).
+        inBlock = false;
+      }
+    }
+  }
+
+  if (unresolved === 0) {
+    console.log("  OK inheritance references resolve");
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 function main() {
@@ -272,6 +328,7 @@ function main() {
   checkLlmEvalConvention();
   checkFloorsAndCeilings();
   checkMaturityField();
+  checkInheritanceIntegrity();
   checkSidebarCoverage();
 
   console.log(

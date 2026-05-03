@@ -2930,6 +2930,126 @@ composition:
           llm_eval: "Does any chart on this slide use more than 3 distinct colors, or does any data visualization occupy more than 60% of the slide content zone? Answer YES if either limit is exceeded, NO if charts use 3 or fewer colors and fit within 60%."
     spacing: "8% safe margin inset from slide edges for 16:9. Content zone centered. Vertical centering default."
 
+    # ---- Sales collateral genres (added 2026-05-02 from customer pilot kickoff review) ----
+    # The arc + coupling rules above apply to investor pitch / general sales decks.
+    # The genres below are sales-collateral-specific (pilot kickoff, customer 101, internal team, partner enablement).
+    # Pick a genre via the mode framework below; mode-specific rules apply on top of (or override) the base rules.
+    # See categories/slides/index.md for the genre selection decision tree.
+    modes:
+      pilot_kickoff:
+        description: "First artifact a customer receives after signing a pilot. Founder + working lead authority; explicit pilot scope, dates, success criteria."
+        length: { min: 12, max: 20 }
+        applies_to: "produced decks (intended for distribution to a real customer engagement). Reference example HTMLs under categories/slides/examples/ may be shorter to demonstrate patterns without writing fictional content for every required slide; example length is calibrated to teaching, not to spec compliance."
+        confidentiality_default: "CUSTOMER-CONFIDENTIAL"
+        date_format: "absolute"
+        logomark_variant: "full_lockup"
+        voice_recipe: "pilot_kickoff_deck"
+        exemplar_archetypes:
+          - "VC portfolio-company kickoff: founder + working lead authority, explicit scope, decision dates (a16z, Sequoia, Y Combinator portfolio kickoffs cited in industry talks; specific decks not all public)"
+          - "Management consulting client onboarding: role assignments, risk register, calendar fidelity (McKinsey, Bain, BCG patterns documented in 'pyramid principle' literature; specific decks proprietary)"
+          - "Enterprise SaaS launch packet: confidentiality discipline, PDF-first export, no animation (Stripe, Atlassian, Notion enterprise patterns; some templates available via partner programs)"
+        note_on_exemplars: "Exemplars are archetype descriptions, not pointers to specific accessible artifacts. Verdigris should accumulate its own canonical examples under categories/slides/examples/ as real surfaces ship; cite those once available."
+      internal_team:
+        description: "Verdigris-internal coordination: pre-meeting prep, post-mortems, weekly engagement updates."
+        length: { min: 8, max: 15 }
+        confidentiality_default: "INTERNAL ONLY"
+        date_format: "week_n_acceptable"
+        logomark_variant: "wordmark_only"
+        voice_recipe: "internal_team_deck"
+        note_on_genre_status: "Internal team is a genre, not a mode flag on pilot_kickoff, because it differs structurally on five axes (length, voice mix from 3-voice to single-voice, confidentiality tier color, logomark variant, date format). The deltas are not surface adjustments -- they reflect a different rhetorical context (Verdigris-only audience, no customer-facing register required). See categories/slides/internal-team.md for the genre-status defense."
+      customer_101:
+        description: "First substantive meeting with a prospect. Story-led; founder voice carries it."
+        length: { min: 15, max: 25 }
+        confidentiality_default: "PUBLIC"
+        date_format: "absolute"
+        logomark_variant: "full_lockup"
+        voice_recipe: "customer_101_deck"
+        exemplar_archetypes:
+          - "Founder-led intro decks: Mark voice + customer-empathy primary (Anthropic 'Core Views', Stripe Press long-form patterns, early-stage founder talks)"
+          - "Technical product intros: high-resolution proof + comparative framing (Notion, Figma, Linear early-stage decks circulated to prospects)"
+        note_on_exemplars: "Public examples of these archetypes are scattered. The discipline is the framework, not the specific exemplar."
+      partner_enablement:
+        description: "Channel partner co-sell collateral. Self-contained training packet for partner AEs. Length 20-30 exceeds other genres because the deck must replace, in document form, the live training a partner AE would otherwise need; included is qualifying questions, common objections, deal registration, technical FAQ -- treated as one artifact rather than a deck PLUS an appendix."
+        length: { min: 20, max: 30 }
+        confidentiality_default: "PARTNER-CONFIDENTIAL"
+        date_format: "absolute"
+        logomark_variant: "full_lockup"
+        voice_recipe: "partner_enablement_deck"
+        exemplar_archetypes:
+          - "Verified-Partner enablement packets: qualifying questions, technical FAQ, deal-registration mechanics (Stripe Verified Partner, AWS Solutions Architect partner training, Salesforce ISV partner packets)"
+          - "Channel-co-sell training: market positioning + objection handling (Microsoft, Adobe channel partner programs)"
+        note_on_exemplars: "Partner-enablement decks are typically distributed under partner agreement; public examples are rare. The genre is calibrated against the structure these archetypes use, not specific accessible artifacts."
+    sales_collateral_rules:
+      - id: "composition.persuade-slide-deck.logomark-consistency"
+        description: "Every slide carries the logomark in the footer band, left-aligned, fixed 20pt height. Title slide additionally carries a full lockup top-left at 44-60pt. Variant must match the genre (full_lockup for pilot_kickoff/customer_101/partner_enablement; wordmark_only for internal_team). A logomark that drifts in size, position, or variant signals 'ad-hoc deck, not template-produced.'"
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1318"
+        modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
+        genre_metadata_field: "data-genre on <body>"
+        test:
+          llm_eval: "On this slide deck, does the logomark appear in the footer of every slide at consistent position (left) and consistent size (~20pt)? Does the title slide additionally carry a full lockup top-left? Does the variant (full lockup vs. wordmark-only) match what the declared genre (data-genre attribute on <body>) requires? Answer YES if logomark drifts in position, size, or variant across slides, OR if the variant doesn't match the declared genre; NO if every slide carries the logomark consistently per the genre's spec."
+        anti_examples:
+          - "Logomark at 20pt on slide 1, 18pt on slide 2, 24pt on slide 5 (size drift)"
+          - "Logomark left-aligned on most slides, center-aligned on the 'transition' slide (position drift)"
+          - "Pilot kickoff deck using wordmark-only on slides 8-12 because 'they're more information-dense' (variant drift mid-deck)"
+          - "Internal team deck using the full lockup (variant mismatch with declared genre)"
+      - id: "composition.persuade-slide-deck.confidentiality-marking"
+        description: "Every slide carries a confidentiality marking in the footer band (right-aligned). Tier defaults: pilot_kickoff=CUSTOMER-CONFIDENTIAL, internal_team=INTERNAL ONLY, customer_101=PUBLIC, partner_enablement=PARTNER-CONFIDENTIAL. The marking is mandatory; absence is a violation. Tier color signals tier without requiring the reader to parse the text."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1319"
+        modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
+        genre_metadata_field: "data-confidentiality on <body>"
+        test:
+          llm_eval: "Does every slide in this deck carry a confidentiality marking (PUBLIC, CUSTOMER-CONFIDENTIAL, PARTNER-CONFIDENTIAL, or INTERNAL ONLY) in the footer? Does the tier match the declared genre's default (or, if intentionally upgraded, is the upgrade documented in the deck's metadata)? Answer YES if any slide is missing the marking, OR if tier varies inconsistently within the deck, OR if the declared tier conflicts with the genre's default without justification; NO if every slide carries the same correct marking."
+        anti_examples:
+          - "Title slide says PUBLIC, slide 8 says CUSTOMER-CONFIDENTIAL (tier drift mid-deck)"
+          - "No confidentiality footer on any slide (omission is the most common failure mode)"
+          - "Pilot kickoff deck declares PUBLIC tier (genre-default is CUSTOMER-CONFIDENTIAL; upgrade requires documented rationale)"
+      - id: "composition.persuade-slide-deck.template-roles-not-names"
+        description: "Slide TEMPLATES use role labels (e.g., 'Pilot Sponsor', 'Working Lead'), not specific people. Produced decks fill in names alongside the role label ('Pilot Sponsor: Mark Chung, CEO'). A name baked into a template is no longer a template; it's a one-off artifact masquerading as reusable infrastructure. Pairs with LEARNINGS.md 'rendering layer never invents facts.'"
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1320"
+        modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
+        applies_to: "TEMPLATE artifacts only (not produced/filled-in decks)"
+        test:
+          llm_eval: "Is this artifact a TEMPLATE (intended to be cloned and filled in for multiple future engagements) or a PRODUCED DECK (a specific deck for a specific named engagement)? If a TEMPLATE: does it use role labels exclusively (e.g., 'Pilot Sponsor', 'VP of Operations'), or does it bake in specific individual names that lock the template to one person? Answer YES if the template contains specific individual names where role labels are appropriate; NO if templates use role labels (produced decks may add names alongside roles)."
+      - id: "composition.persuade-slide-deck.absolute-dates"
+        description: "External-audience genres (pilot_kickoff, customer_101, partner_enablement) use absolute calendar dates ('2026-06-15' or 'June 15, 2026') for every timeline claim. Week-N notation ('Week 3') is acceptable in internal_team only. Mixed formats in one deck is a smell."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1322"
+        modes: ["pilot_kickoff", "customer_101", "partner_enablement"]
+        test:
+          llm_eval: "Does this deck use absolute calendar dates (e.g., '2026-06-15', 'June 15 2026') for every timeline claim, or does it use week-N notation ('Week 3', 'Week 4 checkpoint')? Fiscal anchors ('Q3 2026') count as absolute. Answer YES if any external-audience deck uses week-N notation OR mixes formats (some absolute, some week-N); NO if every external-audience deck uses absolute dates throughout."
+      - id: "composition.persuade-slide-deck.table-formatting"
+        description: "Tables on a sales-collateral slide max 6 columns, max 8 rows, cell padding floor/ceiling 8-16pt vertical / 12-20pt horizontal. Header row uses Lato 13pt 700 in --vd-muted (uppercase, 0.10em letterspacing) -- same eyebrow tier as section eyebrows in the whitepaper cell. Above 6 cols / 8 rows, split across slides or move to an appendix. Supporting visuals follow .vd-figure pattern with caption + credit line."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1323"
+        modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
+        test:
+          max_columns: 6
+          max_rows: 8
+          cell_padding_y_min: "8pt"
+          cell_padding_y_max: "16pt"
+          cell_padding_x_min: "12pt"
+          cell_padding_x_max: "20pt"
+          llm_eval: "Do all tables on slides in this deck stay within 6 columns and 8 rows per slide? Do they use the canonical header treatment (Lato 13pt 700 uppercase muted) and cell padding within the 8-16pt vertical / 12-20pt horizontal range? Answer YES if any table exceeds 6 columns or 8 rows on a single slide, OR uses padding outside the range, OR has inconsistent header treatment across the deck; NO if every table conforms."
+        anti_examples:
+          - "Pilot scope table with 8 columns of customer-by-customer breakdowns (split into appendix or use small-multiples)"
+          - "Timeline table with 12 rows on one slide (split across two slides by phase)"
+          - "Cell padding 4pt vertical (below the 8pt floor -- readers can't parse rows)"
+
+    sales_collateral_notes: "These rules apply to the four sales-collateral genres (pilot_kickoff, internal_team, customer_101, partner_enablement). They are mode-conditional; check the rule's modes: list before applying. The diction rule from the same pilot kickoff review (Z2O-1321) lives in voice/recipes.yaml as voice.audience-fit-diction.exit-criteria, not here, because diction is a voice concern not a visual one. See categories/slides/ for full per-genre specs and build/print/slides.css for the reference stylesheet."
+
   # ---------------------------------------------------------------------------
   # PERSUADE x WHITEPAPER COVER -- briefings and editorial PDFs
   # ---------------------------------------------------------------------------
@@ -3080,6 +3200,185 @@ composition:
       date: "Inter 9.5pt 400, contrast tier 2-3"
     surface: "Dark default. neutral.950 background. Light cover variant deferred until a real surface needs it."
     weasyprint_notes: "Use named @page (not :first), Flex column (not Grid), padding-top (not margin-top) for vertical rhythm. See build/print/cover.css and categories/whitepapers/cover.md for working stylesheet and known WeasyPrint issue references."
+
+  # ---------------------------------------------------------------------------
+  # PERSUADE x ONE-PAGER -- single-page leave-behinds
+  # ---------------------------------------------------------------------------
+  persuade_one_pager:
+    id: "composition.persuade-one-pager"
+    type: "reference"
+    maturity: "experimental"
+    description: "Single Letter page, scanned cold without a presenter, conveying one Verdigris value proposition or one decision aid. Two genres: solution_overview (capability/segment focus) and comparative (decision aid). Inherits sales-collateral universals (logomark, confidentiality, roles, dates) from composition.persuade-slide-deck. See categories/one-pagers/guide.md."
+    modes:
+      solution_overview:
+        description: "Capability or segment focus. Title block + 3 evidence callouts in 3-column grid + CTA strip. Metric-led; reads as a fact sheet."
+        length: 1
+        confidentiality_default: "PUBLIC"
+        voice_recipe: "one_pager"
+        existing_verdigris_examples:
+          - "Verdigris 'Signals Overview' (Notion Sales Collateral Cheat Sheet) -- pre-cell; needs refresh against this spec"
+          - "Verdigris 'Signals for AI Data Centers' -- pre-cell; closest existing artifact to the canonical solution-overview shape"
+        exemplar_archetypes:
+          - "Product fact-sheet pattern: title + 3 callouts with anchor metric per callout + actionable CTA (Stripe product pages at stripe.com/{product}, Linear feature pages)"
+      comparative:
+        description: "Decision aid framed as 'X ways to evaluate / avoid Y'. Numbered N-grid + thesis block + CTA strip. Argument-led; reads as an opinionated checklist."
+        length: 1
+        confidentiality_default: "PUBLIC"
+        voice_recipe: "one_pager"
+        existing_verdigris_examples:
+          - "Verdigris '7 Ways to Avoid Vendor Lock-In' (Notion) -- canonical for comparative genre"
+          - "Verdigris 'Architectural Advantages' -- pre-cell; needs thesis-block discipline added"
+        exemplar_archetypes:
+          - "Opinionated checklist pattern: numbered list + thesis sidebar (a16z 'X mistakes' format, Andreessen Horowitz portfolio essays distilled into one-pagers)"
+        note_on_company_overview: "The existing Verdigris 'About Verdigris' one-pager fits AWKWARDLY into either solution_overview or comparative. It's currently positioned as solution_overview (capability focus = 'the company') but the structural fit is poor. A future 'company_overview' genre may be earned if more company-level one-pagers emerge; for now, About Verdigris is grandfathered as solution_overview with documented deviation."
+    rules:
+      - id: "composition.persuade-one-pager.single-page"
+        description: "A one-pager is exactly one Letter page. If content does not fit at the cell's typography scale, eject content -- do not shrink type. Below the type floor (10pt body, 13pt callout headline, 9pt footer) the page reads as a dense legal document."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["solution_overview", "comparative"]
+        test:
+          llm_eval: "Does this one-pager artifact fit on exactly one Letter page when rendered to PDF, with body type at 10pt or larger, callout headline at 13pt or larger, and footer at 9pt or larger? Answer YES if the page exceeds one Letter OR if any required type slot is below the floor (10pt body, 13pt callout headline, 9pt footer); NO if the page fits on one Letter at the spec typography scale."
+      - id: "composition.persuade-one-pager.cta-strip-required"
+        description: "A CTA strip is required at the bottom of the body, above the page footer. Dark band (--vd-neutral-950), two parts only: primary message (Lato 700, 1 sentence + optional teal accent) + action (Inter 500, prefixed with arrow glyph, terse). Always actionable -- not 'learn more' but 'see Signals in action' + '→ schedule a 30-minute walkthrough.'"
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["solution_overview", "comparative"]
+        test:
+          structural:
+            css_selector_required: ".vd-onepager-cta"
+            note: "Cheap structural pre-flight: presence of .vd-onepager-cta element. Fires before the LLM eval."
+          llm_eval: "Does this one-pager have a dark CTA strip directly above the footer band, containing exactly two parts: a primary action message and a specific actionable next step? Is the action specific (e.g., 'schedule a walkthrough', 'read the whitepaper') rather than generic ('learn more')? Answer YES if the CTA strip is missing, light-on-light, or contains generic 'learn more' actions; NO if the CTA strip is present, dark-banded, and specifically actionable."
+      - id: "composition.persuade-one-pager.solution-overview.callout-count"
+        description: "Solution overview genre: exactly 3 evidence callouts. Two callouts read as half-empty; four callouts crowd the grid and the metrics compete for attention."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["solution_overview"]
+        test: { min: 3, max: 3 }
+      - id: "composition.persuade-one-pager.comparative.numbered-list-count"
+        description: "Comparative genre: 5-12 numbered items, typically 7. Below 5 reads as thin; above 12 fails single-page constraint at the type floor."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["comparative"]
+        test:
+          structural:
+            css_selector: "ol.vd-onepager-numlist > li"
+            count_min: 5
+            count_max: 12
+            note: "Cheap structural test: count <li> elements in the numbered list. Replaces an llm_eval that would have required reading the artifact."
+          min: 5
+          max: 12
+      - id: "composition.persuade-one-pager.comparative.thesis-block-required"
+        description: "Comparative genre: a thesis block (left-rule teal callout, 11pt body, 2-3 short paragraphs) is required. The thesis block is what makes the comparative genre work -- without it, the page is a checklist; with it, the page argues something. A reader who reads ONLY the thesis block should still get the value of the page."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["comparative"]
+        test:
+          structural:
+            css_selector_required: "aside.vd-onepager-thesis"
+            note: "Presence check is structural; quality check is llm_eval below."
+          llm_eval: "Does this comparative-genre one-pager contain a thesis block (left-rule teal callout, ~2-3 short paragraphs) that articulates the underlying argument? Could a reader who reads ONLY the thesis block grasp the value of the page? Answer YES if the thesis block is missing, present-but-empty, or so weak the page becomes a checklist; NO if the thesis block carries the argument independently."
+      - id: "composition.persuade-one-pager.body-measure"
+        description: "Body text on a one-pager respects the typography.body-measure rule (45-75ch). Numbered list items in comparative genre may exceed the upper bound briefly when the item is a one-sentence proposition + one-sentence explanation; otherwise hold the measure."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        modes: ["solution_overview", "comparative"]
+        test:
+          inherits: "typography.body-measure"
+
+    inherits_from_sales_collateral:
+      - "composition.persuade-slide-deck.logomark-consistency"
+      - "composition.persuade-slide-deck.confidentiality-marking"
+      - "composition.persuade-slide-deck.template-roles-not-names"
+      - "composition.persuade-slide-deck.absolute-dates"
+    typography:
+      eyebrow: "Lato 9pt 700, 0.16em letterspacing, uppercase, --vd-muted"
+      headline: "Lato 700, 26pt, max 6.4in width, max 3 lines"
+      deck: "Inter 12pt 400, max 5.6in width, ~24 word ceiling"
+      callout_headline: "Lato 700, 13pt"
+      callout_body: "Inter 400, 10pt"
+      anchor_metric: "Lato 700, 24pt, --vd-teal"
+      numbered_list_item: "Inter 400, 10pt; number JetBrains Mono 700, 11pt, --vd-teal"
+      thesis_body: "Inter 400, 11pt"
+      cta_text: "Lato 700, 13pt on dark band"
+      footer: "Inter 8.5pt 400 / Lato 8pt 700"
+
+  # ---------------------------------------------------------------------------
+  # PERSUADE x CASE STUDY -- single-genre proof artifact (web + PDF mirror)
+  # ---------------------------------------------------------------------------
+  persuade_case_study:
+    id: "composition.persuade-case-study"
+    type: "reference"
+    maturity: "experimental"
+    description: "Customer-validated proof artifact. Single genre (no fragmentation needed). Two render targets: web (verdigris.co/resources/case-studies/...) and PDF mirror. Required sections: executive_summary -> problem -> approach -> outcome (single anchor metric) -> quote (named operator + role + organization) -> replicate (CTA). See categories/case-studies/guide.md."
+    render_targets:
+      web:
+        canonical: "verdigris.co/resources/case-studies/{slug}"
+        layout: "Jekyll (design system documentation site uses the same approach for sister cells)"
+      pdf_mirror:
+        canonical: "Drive /Verdigris/Collateral/case-study/{slug}/{slug}-YYYYMMDD-vN.pdf"
+        rendering: "build/print/case-study.css; Chrome --print-to-pdf or WeasyPrint"
+    required_sections:
+      executive_summary: "1 paragraph, the entire case in 4-6 sentences"
+      problem: "What the customer needed to solve, in their language and at their scale"
+      approach: "What Verdigris did; specific to this engagement"
+      outcome: "Single anchor metric, bolded; secondary observations supporting"
+      quote: "Named operator + role + organization (organization may be redacted to 'Fortune 50 Telecom' for confidentiality)"
+      replicate: "Closing CTA inviting the reader to do this in their own facility"
+    rules:
+      - id: "composition.persuade-case-study.single-anchor-metric"
+        description: "Exactly one bolded outcome metric per case study, presented in the dedicated .vd-cs-anchor block (not just any <strong> in prose). Multiple competing metrics dilute the proof; the reader scanning the page should see one number that defines the win. Secondary observations support the anchor in surrounding prose, not as competing bolded metrics. Pairs with the per-instance qualifier discipline (Z2O-1310) -- 'per facility' / 'per rack' multipliers on the anchor metric require explicit context."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        related_issues: ["Z2O-1310"]
+        test:
+          llm_eval: "Does this case study contain exactly one bolded outcome metric in the .vd-cs-anchor block, with secondary observations supporting the anchor in surrounding prose (not as competing bolded metrics in <strong> tags)? Answer YES if the case study presents two or more competing bolded outcome numbers (the anchor block PLUS additional bolded metrics in body text), OR has zero anchor metric, OR the anchor uses a per-instance qualifier ('per facility', 'per rack', 'per circuit') without explicit fleet context; NO if the case study has exactly one anchor metric, with secondary observations in unbolded supporting prose."
+        anti_examples:
+          - "Anchor metric '$1.3M-$3M' AND a second bolded metric '21 days' AND a third '800+ rectifiers' competing for attention (split into one anchor + supporting prose)"
+          - "Anchor metric '$3M per facility' without stating fleet size N (per-instance qualifier silently multiplies the canonical claim -- see Z2O-1310)"
+          - "Zero bolded metrics; the outcome is buried in prose (the reader scanning has nothing to take away)"
+      - id: "composition.persuade-case-study.quote-attribution"
+        description: "Customer quotes require: (1) named individual OR explicit role label ('VP of Operations'), (2) organization name OR explicit redaction ('Fortune 50 Telecom'). A quote attributed only to the company ('Per Acme Corp') without a human voice fails the trust register; the case study reads as marketing rather than evidence."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does every customer quote in this case study include both (a) a named individual OR an explicit role label, AND (b) an organization name OR an explicit redaction marker? Answer YES if any quote is attributed only to the company without role or individual; NO if every quote carries human attribution + organization (or explicit redaction)."
+      - id: "composition.persuade-case-study.required-sections"
+        description: "All six required sections must be present in order: executive_summary, problem, approach, outcome, quote, replicate. Missing sections weaken the proof structure; reordering breaks the read."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Does this case study contain all six required sections in this order: executive summary -> problem -> approach -> outcome (with single anchor metric) -> quote (with attribution) -> replicate (closing CTA)? Answer YES if any required section is missing or reordered; NO if all six are present and ordered correctly."
+      - id: "composition.persuade-case-study.web-pdf-parity"
+        description: "Case studies render to two targets (web + PDF mirror). Both must carry the same content, citations, anchor metric, and quote attribution. The PDF mirror MAY drop interactive elements (live charts, embedded video) but MUST NOT add or modify content claims relative to the web canonical. The web is canonical for content; the PDF is canonical for distribution as an attachment."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Compare the web and PDF versions of this case study. Do they carry the same content, citations, anchor metric, and quote attribution? Does the PDF avoid adding or modifying content claims relative to the web canonical (interactive elements may be dropped)? Answer YES if the PDF differs in content claims, anchor metric, or attribution from the web canonical; NO if the two versions are content-equivalent and only differ in interactive vs. static rendering."
+      - id: "composition.persuade-case-study.figure-discipline"
+        description: "Figures (charts of the anchor metric, before/after visualizations) follow the .vd-figure pattern from cover.css: figure + caption with label + credit line. Charts cite their data source; uncredited proprietary charts fail the trust register."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        test:
+          llm_eval: "Do all figures in this case study follow the .vd-figure pattern (figure + caption with figure-label + credit line citing data source)? Answer YES if any figure is uncredited or lacks a caption with label; NO if every figure carries the canonical pattern."
+
+    inherits_from_sales_collateral:
+      - "composition.persuade-slide-deck.logomark-consistency"
+      - "composition.persuade-slide-deck.template-roles-not-names"
+      - "composition.persuade-slide-deck.absolute-dates"
+    note_on_confidentiality: "Case studies default to PUBLIC tier (intended for distribution). Customer-redacted variants (e.g., 'Fortune 50 Telecom') are still PUBLIC; the redaction is content discipline, not a confidentiality tier."
+    voice_recipe: "case_study"
 
   # ---------------------------------------------------------------------------
   # IDENTIFY x AD BANNER -- brand recognition ads

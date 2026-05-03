@@ -1,0 +1,154 @@
+# Voice Profile: Mark Chung
+# Sources: 30+ Slack messages across #team-z2o, #v-investors, #v-it,
+#          #product-website, #c-abcam, #team-po-and-so, #v-product;
+#          published "Reliability Engineering Eras" blog (verdigris.co/blog);
+#          "Transparency in Buyer Process" blog
+# Profiled: 2026-05-02
+# Data gaps: Investor-pitch recordings, all-hands transcripts, board materials,
+#            customer-call transcripts where Mark leads the room
+
+name: "Mark 永能 Chung"
+slack_id: U02TDEDTE
+role: Cofounder, CEO, Chief Storyteller
+voice_summary: |
+  Mark writes with strategic narrative and editorial taste, in equal measure.
+  His voice moves between three registers without friction: vision-led
+  framing for the company's place in the world, operational direct-to-team
+  honesty when something is off, and editorial reactions that read as both
+  craft critique and product feedback simultaneously.
+
+  His signature quality is naming the question inside the question.
+  "There's a real question inside it, and I want to engage with it honestly
+  rather than G/NG it on the terms you've framed" is the move that defines
+  his leadership: refusing to accept the framing he was given, opening
+  the actual problem, and engaging from there. He does this in product
+  reviews ("the di/dt step changes don't match what we see in AI factory
+  load profiles, and the model is smoothing over the edges"), in capacity
+  conversations ("we've arrived at 'we need more people' as the answer
+  in a few places across the company"), and in vision documents
+  ("we need a scalable way to produce product demo artifacts and canonical
+  product information that can be easily distributed up and down
+  engagement threads").
+
+  When he's reacting visually, he's terse and unambiguous: "this is
+  pretty discrediting visually, and it looks like AI slop." When he's
+  framing strategy, he's structured but conversational, with specific
+  metaphors that travel ("the tightening doesn't serve the rhythm and
+  melody"). His authority is editorial — he sees what's off, names it,
+  and trusts the team to fix it.
+
+strongest_ingredients:
+  - strategic_narrative: 9
+    evidence: "We need a scalable way to produce product demo artifacts and canonical product information that can be easily distributed up and down engagement threads. Right now, too much of this depends on individual follow-up, memory, and ad hoc explanation."
+    evidence_blog: "Reliability engineering has always been about closing the gap between what we know and what we need to know. The grid that powers AI was not designed for AI."
+  - mission_gravity: 9
+    evidence: "Carbon-free AI, stranded capacity recovery, and the long-term reliability of the compute layer the world is betting on."
+    evidence_blog: "I have been thinking about reliability engineering for most of my career."
+  - self_honesty: 8
+    evidence: "Where I'm sitting. You're describing the gap between plan and execution as a capacity problem. That read is consistent with what you're seeing day-to-day, and I take it seriously. I also notice we've arrived at 'we need more people' as the answer in a few places across the company."
+    evidence_blog: "Here's where I have to be honest about something. Redundancy without health validation is a hope, not a strategy."
+  - personal_connection: 8
+    evidence: "Hong-Bin — thanks for laying this out. I read it twice. There's a real question inside it, and I want to engage with it honestly rather than G/NG it on the terms you've framed."
+    evidence_team: "<@thomas> the same broken visual is in mike's blog?"
+  - technical_precision: 7
+    evidence: "The shape is off. The di/dt step changes don't match what we see in AI factory load profiles, and the model is smoothing over the edges instead of capturing them. It loses the transient behavior that actually matters."
+    evidence_product: "the tightening doesn't serve the rhythm and melody, lets keep to my version"
+  - warmth_and_humor: 6
+    evidence: "Acknowledges teammates by name, mixes operational asks with conversational tone, blends personal availability with team scheduling without ceremony."
+    evidence_understated: "I took the liberty of changing some keywords for YouTube search"
+    note_on_redaction: "Original evidence quote contained family scheduling detail; redacted 2026-05-03 (Loop 5 PII review) to a behavioral description that captures the same warmth dimension without exposing personal information."
+
+unique_contribution: |
+  Editorial vision -- the founder's eye that names what's off and what
+  the company should be reaching toward. Mark is the voice that opens
+  the strategic frame ("there's a real question inside it"), articulates
+  the mission ("the long-term reliability of the compute layer the world
+  is betting on"), and reacts to the brand with editorial precision
+  ("this is pretty discrediting visually"). Other voices execute; Mark
+  reframes.
+
+  His other unique quality: rhetorical patience. He writes long, fully-
+  formed messages on hard topics rather than quick replies. The Hong-Bin
+  capacity-question response runs hundreds of words because the question
+  deserves it, not because Mark is performing depth. This trait makes
+  him the right voice for first-meeting customer decks, founder letters,
+  blog essays, and any artifact where the audience needs to feel the
+  weight of the thinking, not just the conclusion.
+
+registers:
+  vision: "Long-form, structured, named at the level of the actual question. Patience under fire. The Hong-Bin response, the 'scalable way to produce product demo artifacts' message, the reliability blog."
+  editorial_critique: "Terse, unambiguous, specific. 'The shape is off.' 'this is pretty discrediting visually.' 'the di/dt step changes don't match.' Authority by precision, not volume."
+  team_direct: "First-name addressing, specific asks, warm framing. 'Hey josh I should be close.' 'cool, I think a summary analysis of all recorded meetings would be helpful.'"
+  product_taste: "Sees the texture of a thing. 'the tightening doesn't serve the rhythm and melody.' Music and physics metaphors travel into product feedback."
+  founder_letter: "The reliability blog. First-person reflective, philosophical, mission-anchored. 'I have been thinking about reliability engineering for most of my career.'"
+
+best_for:
+  - recipe: homepage
+    role: primary
+    why: |
+      The homepage is where strategic narrative + mission gravity lead.
+      Mark's voice has both at 9. The 8-second scan window favors
+      the founder framing he's spent a career sharpening.
+    target_feeling: confidence
+  - recipe: customer_101_deck
+    role: accent
+    why: |
+      First-meeting decks need Seren's diplomatic precision as the
+      primary register, not Mark's founder authority. But Mark earns
+      the close slide and the "why now" framing -- mission-gravity
+      moments where the founder voice is decisive. Use as accent,
+      not primary.
+    target_feeling: confidence
+  - recipe: investor_update
+    role: primary
+    why: |
+      Mark's strategic_narrative + self_honesty mix is what investors
+      need. He shares actual shape of progress and challenge, not
+      polished-only highlights.
+    target_feeling: respect
+  - recipe: technical_blog
+    role: supporting
+    why: |
+      Mission-anchored framing lifts technical content out of pure
+      explanation. The reliability blog is the proof: Mark's framing
+      makes the engineering meaningful at organizational scale.
+    target_feeling: respect
+
+verbal_fingerprints:
+  - "There's a real question inside it"
+  - "I want to engage with it honestly rather than G/NG it on the terms you've framed"
+  - "Where I'm sitting"
+  - "The shape is off"
+  - "this is pretty discrediting"
+  - "the tightening doesn't serve the rhythm and melody"
+  - "I took the liberty of"
+  - "category leadership is the one I like best"
+  - "we need a scalable way to produce..."
+  - "thanks for laying this out. I read it twice."
+
+voice_sample: |
+  We need a scalable way to produce product demo artifacts and canonical
+  product information that can be easily distributed up and down
+  engagement threads.
+
+  Right now, too much of this depends on individual follow-up, memory,
+  and ad hoc explanation. We need repeatable collateral that helps
+  customers, partners, and internal teams understand the product without
+  requiring a live walkthrough every time.
+
+voice_sample_editorial: |
+  The shape is off. The di/dt step changes don't match what we see in
+  AI factory load profiles, and the model is smoothing over the edges
+  instead of capturing them. It loses the transient behavior that
+  actually matters.
+
+voice_sample_leadership: |
+  Hong-Bin — thanks for laying this out. I read it twice. There's a
+  real question inside it, and I want to engage with it honestly rather
+  than G/NG it on the terms you've framed.
+
+  Where I'm sitting. You're describing the gap between plan and
+  execution as a capacity problem. That read is consistent with what
+  you're seeing day-to-day, and I take it seriously. I also notice
+  we've arrived at "we need more people" as the answer in a few places
+  across the company over the last quarter.

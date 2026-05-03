@@ -1,0 +1,173 @@
+---
+layout: default
+title: One-Pagers
+status: experimental
+status_note: First one-pager cell. Graduates to convention after 2 surfaces ship using these patterns (target: refresh of the existing 5 one-pagers in the Notion Sales Collateral Cheat Sheet).
+---
+
+# One-Pagers
+
+A one-pager is a single Letter page, scanned cold without a presenter, that conveys one Verdigris value proposition or one decision aid. It's the leave-behind after a meeting, the attachment to an outbound email, the asset a partner AE shares with their customer in a single message. It must succeed on its own — no narrator, no calendar to anchor it, no follow-up guaranteed.
+
+This guide defines two genres of one-pager and the rules that apply across them. The Notion *Sales Collateral Cheat Sheet* lists five existing Verdigris one-pagers (About Verdigris, Architectural Advantages, 7 Ways to Avoid Vendor Lock-In, Signals for AI Data Centers, Signals Overview); they're the first surfaces this cell graduates against.
+
+## Pick the genre first
+
+| Genre | When to use | Authority signal |
+|---|---|---|
+| **Solution overview** | Describing one Verdigris capability or one segment fit (Signals, AI Factory, etc.) | Title + 3 evidence callouts + CTA strip; metric-led; reads as a fact sheet |
+| **Comparative** | Decision aid framed as "X ways to evaluate / avoid Y" | Numbered N-grid + thesis block + CTA strip; argument-led; reads as an opinionated checklist |
+
+The genres differ on five axes. **Pick one and commit.** A solution overview dressed as a comparative reads as scattered (too many open questions for a leave-behind); a comparative dressed as a solution overview reads as flat (no thesis, no opinion, no reason to keep the page).
+
+| Axis | Solution overview | Comparative |
+|---|---|---|
+| **Layout** | Title block + 3 callouts in 3-column grid + CTA strip | Title block + numbered list (5-12 items) on left + thesis on right + CTA strip |
+| **Voice center of gravity** | Mike (field credibility) + technical_precision | Jimit (market fluency) + strategic_narrative |
+| **Anchor metric** | One per callout, three total (capability) | One total (overall thesis) |
+| **CTA pattern** | "See [product] in action" / "Schedule a 30-min walkthrough" | "Read the full whitepaper" / "Talk to a Verdigris architect" |
+| **Reference exemplars** | "Signals Overview", "Signals for AI Data Centers" | "7 Ways to Avoid Vendor Lock-In", "Architectural Advantages" |
+
+## The one-pager is a single page (universal)
+
+Whichever genre you pick, this rule holds.
+
+A one-pager is **exactly one page**. Not "one page, mostly." Not "with a small back side." If the content does not fit on one Letter page at the typography scale this cell defines, **eject content**, do not shrink type. Below the type floor (10pt body, 13pt callout headline, 9pt footer) the page reads as a dense legal document, not a leave-behind, and reviewers stop reading.
+
+If the content genuinely needs two pages, it is not a one-pager — it is a brief or a short whitepaper, and belongs in `categories/whitepapers/cover.md` or a future briefs cell.
+
+## Hierarchy
+
+Required, in this order, top to bottom:
+
+1. **Top bar** — Verdigris logomark (left, 28pt tall) + eyebrow (right, dot + series + audience, e.g., `· Signals for AI data centers`)
+2. **Headline** (Lato 700, 26pt, max 6.4in wide, max 3 lines, one teal accent phrase)
+3. **Deck** (Inter 12pt, max 5.6in wide, one sentence, ~24 words ceiling)
+4. **Body** (genre-specific — see below)
+5. **CTA strip** (dark band with primary message + action; full width)
+6. **Footer** (logomark / tagline + confidentiality marking + URL)
+
+## Body — solution overview genre
+
+Three callouts in a 3-column grid. Each callout:
+
+- **Number** (`01`, `02`, `03`) in JetBrains Mono, teal — establishes scan order
+- **Headline** — 13pt Lato 700, 1-3 words; the capability or the outcome (e.g., "Detect failures earlier", "Recover stranded capacity")
+- **Body** — 10pt Inter 400, 2-4 sentences max; what the capability does and why it matters
+- **Anchor metric** — 24pt Lato 700, teal; one number per callout (e.g., "21 days", "$1.3M-$3M", "8 kHz")
+
+Three callouts is the floor and the ceiling. Two callouts read as half-empty; four callouts crowd the grid and the metrics compete.
+
+## Body — comparative genre
+
+Numbered list on the left (5/12 cols), thesis block on the right (4/12 cols).
+
+- **Numbered list** — 5-12 items (typically 7), each item is a one-sentence proposition + one-sentence explanation. The first sentence must be readable as a standalone claim ("Choose vendors with open APIs" not "Open APIs matter").
+- **Thesis block** — left-rule teal callout, 11pt body, 2-3 short paragraphs articulating the underlying argument. Reader who reads ONLY the thesis block should still get the value of the page.
+
+The thesis block is what makes the comparative genre work. Without it, a numbered list is just a checklist; with it, the page argues something and the reader has a reason to keep it.
+
+## Spacing rhythm
+
+All values from `tokens/spacing/print.json` (frame primitives) and the one-pager-specific values in `build/print/one-pager.css`. Floor + ceiling for every gap.
+
+| Gap | Floor | Default | Ceiling |
+|---|---|---|---|
+| Frame top | 0.6in | 0.75in | 0.85in |
+| Frame side | 0.6in | 0.75in | 0.85in |
+| Frame bottom (above footer) | 0.7in | 0.85in | 1.0in |
+| Title to deck | 10pt | 14pt | 18pt |
+| Deck to body | 22pt | 28pt | 36pt |
+| Body to CTA strip | 22pt | 28pt | 36pt |
+| CTA strip height | 0.5in | 0.6in | 0.75in |
+| Footer height | — | 28pt | — (fixed) |
+
+## Typography
+
+| Slot | Font | Size | Weight | Color |
+|---|---|---|---|---|
+| Eyebrow | Lato | 9pt | 700 | `--vd-muted` (uppercase, 0.16em letterspacing) |
+| Headline | Lato | 26pt | 700 | `--vd-ink`, one accent in teal |
+| Deck | Inter | 12pt | 400 | `--vd-muted` |
+| Callout headline (solution overview) | Lato | 13pt | 700 | `--vd-ink` |
+| Callout body | Inter | 10pt | 400 | `--vd-ink` |
+| Anchor metric | Lato | 24pt | 700 | `--vd-teal` |
+| Numbered list item | Inter | 10pt | 400 | `--vd-ink` (number in JetBrains Mono 11pt 700 teal) |
+| Thesis body | Inter | 11pt | 400 | `--vd-ink` |
+| CTA strip text | Lato | 13pt | 700 | rgba(255,255,255,0.96) on dark band |
+| Footer | Inter / Lato | 8-9pt | 400 / 700 | `--vd-muted` |
+
+## CTA strip
+
+The CTA strip is the load-bearing close of the page. Three rules:
+
+1. **Dark background.** `--vd-neutral-950`. Always. The strip carries the page's center of gravity; light-on-light dilutes.
+2. **Two parts only:** primary message (left, Lato 700, 1 sentence + optional teal accent) + action (right, Inter 500, prefixed `→`, terse).
+3. **Always actionable.** Not "Learn more about Signals." Specific: "See Signals in action" + "→ Schedule a 30-minute walkthrough". The action is what the reader does next, not what Verdigris would like them to think.
+
+## Logomark consistency
+
+Inherits the `composition.persuade-slide-deck.logomark-consistency` rule. Top-bar logomark always left, 28pt tall, full-color lockup on light background. Footer logomark uses the same lockup at 18pt. One mark per page (top bar OR footer; never duplicated in body).
+
+## Confidentiality marking
+
+Inherits the `composition.persuade-slide-deck.confidentiality-marking` rule. Default tier:
+
+- **PUBLIC** — for solution overview and comparative genres distributed via verdigris.co/resources/one-pagers/, attached to outbound emails, shared with prospects
+- **PARTNER-CONFIDENTIAL** — for partner-specific one-pagers (co-branded, partner pricing details)
+- **CUSTOMER-CONFIDENTIAL** — rare for one-pagers; if an artifact is customer-confidential, it's probably a brief, not a one-pager
+
+The marking lives in the footer band, right side. Same color discipline as the slides cell.
+
+## Roles, not names
+
+Inherits the `composition.persuade-slide-deck.template-roles-not-names` rule. A one-pager template uses role labels ("Verdigris Field Engineer") not specific people, except where the page is specifically attributed (named-author thought-leadership pieces).
+
+## Date format
+
+Inherits the `composition.persuade-slide-deck.absolute-dates` rule. One-pagers use absolute calendar dates for any timeline claim. "Q3 2026" is acceptable as a fiscal anchor; "Week 3" is not.
+
+## Voice recipe
+
+The `one_pager` recipe in `voice/recipes.yaml` branches by genre:
+
+**Solution overview** — Mike primary (field credibility on the 3 callouts; operator-recognizable specifics) + Jon supporting (technical precision on capability claims). Mark is absent: founder voice scanned cold reads as a brochure when paired with capability descriptions.
+
+**Comparative** — **Mark primary** (the thesis block carries the argument; Mark's strategic_narrative 9 + mission_gravity 9 land the founder weight where it's needed) + Jimit supporting (outside-in market positioning across the numbered list items). Mike doesn't appear; the comparative is positioning + argument, not field credibility.
+
+The Mark-primary assignment on comparative was flipped from Jimit-primary on 2026-05-02 after Loop 3 adversarial review showed the thesis block is the load-bearing element of a comparative one-pager — the voice carrying the thesis is the voice carrying the page. Jimit's market fluency works as supporting, layered through the numbered list items.
+
+Diction discipline applies (audience_fit_diction): never use internal jargon; spell out acronyms on first use; specific numbers always; CTA action is concrete.
+
+## Reference exemplars (Notion Sales Collateral Cheat Sheet)
+
+| Existing one-pager | Genre | Status |
+|---|---|---|
+| About Verdigris | Solution overview | Pre-cell; needs refresh against this spec |
+| Architectural Advantages | Comparative | Pre-cell; needs refresh |
+| 7 Ways to Avoid Vendor Lock-In | Comparative | Pre-cell; canonical example for comparative genre |
+| Signals for AI Data Centers | Solution overview | Pre-cell; canonical example for solution overview genre |
+| Signals Overview | Solution overview | Pre-cell; needs refresh |
+
+The first surface refresh under this cell should be one of the comparative pages ("7 Ways..." or "Architectural Advantages"), since the comparative genre's thesis-block discipline is the most underdeveloped part of the existing five.
+
+## What this cell does NOT cover
+
+- **Two-pagers / tri-folds.** Different rendering; defer until a real surface needs one.
+- **Web one-pagers (HTML / responsive).** This cell is print-first. A future one-pager-web sub-cell can graduate when verdigris.co adds dedicated one-pager pages.
+- **Customer-specific one-pagers.** For a customer one-off, use the brief or pilot-kickoff genre instead — one-pagers are designed for repeated, identical distribution.
+- **Slide one-pager exports.** A "summary slide" exported to PDF is not a one-pager; it's a slide. The two genres have different rhythms (slides project; one-pagers scan).
+
+## Why this guide exists
+
+Verdigris produces one-pagers for ~7 distinct surfaces but ships them as bespoke artifacts. The Notion *Sales Collateral Cheat Sheet* lists five active one-pagers; reviewing them surfaces inconsistencies in metric placement (some have 2 callouts, some have 4), CTA discipline (most have a generic "learn more"), and thesis discipline (the comparative pages mostly lack a thesis block). Codifying the two genres makes the next refresh cycle a template-fill, not a redesign.
+
+The genre framework was synthesized via the [adversarial-review workflow](../../workflows/adversarial-review). The decision to ship two genres (rather than one universal one-pager spec) was load-bearing: the comparative pages and the solution-overview pages have genuinely different rhetorical structures, and forcing them into one spec would underspecify both.
+
+## See also
+
+- [`workflows/sales-collateral`](../../workflows/sales-collateral) — production guide spanning all collateral types
+- [`categories/slides/`](../slides/) — sister cell; sales-collateral universals (logomark, confidentiality, roles, dates) inherited here
+- [`categories/whitepapers/cover`](../whitepapers/cover) — sister cell; print-rendering patterns inherited via cover.css
+- [`build/print/one-pager.css`](../../build/print/one-pager.css) — reference stylesheet
+- [`voice/recipes.yaml`](../../voice/recipes.yaml) — `one_pager` recipe

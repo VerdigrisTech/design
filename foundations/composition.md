@@ -50,8 +50,10 @@ With 60%+ of traffic arriving from LLMs with intent already shaped, each page mu
 | Persuade x Web page | **Defined** | Narrative roles, coupling rules, whitespace principle |
 | Persuade x Ad banner | **Defined** | Z-pattern, max 4 elements, 30% whitespace |
 | Persuade x Email | **Defined** | Single column 600px, system fonts, 1 CTA per section |
-| Persuade x Slide deck | **Defined** | 10-15 slides, 24pt floor, dark bookends, single turn |
+| Persuade x Slide deck | **Defined** | 10-15 slides, 24pt floor, dark bookends, single turn (investor pitch / general). Four sales-collateral genres add mode-conditional rules: pilot kickoff (12-20pp, CUSTOMER-CONFIDENTIAL, full lockup), customer 101 (15-25pp, PUBLIC), partner enablement (20-30pp, PARTNER-CONFIDENTIAL), internal team (8-15pp, INTERNAL ONLY, wordmark only). See `categories/slides/` and `workflows/sales-collateral.md` |
 | Persuade x Whitepaper cover | **Experimental** | Three modes (lab_tradition, policy_brief, ceo_brief). Cover-only page 1, deck-to-byline 1.4-2.6in, mode determines author convention + CTA labeling + disclosure pattern. See `categories/whitepapers/cover.md` |
+| Persuade x One-pager | **Experimental** | Single Letter page, scanned cold. Two genres: solution_overview (3 evidence callouts, metric-led) and comparative (5-12 numbered items + thesis block, argument-led). Required CTA strip. Inherits sales-collateral universals from slides cell. See `categories/one-pagers/guide.md` |
+| Persuade x Case study | **Experimental** | Single genre. Dual render target (web canonical + PDF mirror, parity required). Six required sections: executive summary -> problem -> approach -> outcome (single bolded anchor metric) -> quote (named operator + role + organization or explicit redaction) -> replicate. See `categories/case-studies/guide.md` |
 | Inform x Web page | **Defined** | Metronomic rhythm, 3rem padding, 65ch line length |
 | Inform x Slide deck | **Defined** | One idea per slide, 60% whitespace, teal in diagrams |
 | Analyze x Dashboard | **Defined** | 12-col grid, full palette, 13-14px body, tabular-nums |

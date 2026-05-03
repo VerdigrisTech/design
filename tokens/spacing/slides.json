@@ -1,0 +1,188 @@
+{
+  "$description": "Slide-deck-only spacing scale for sales collateral decks (pilot kickoff, customer 101, internal team, partner enablement). 16:9 master, 1280x720px = 13.33in x 7.5in (standard widescreen). Every gap has a floor AND a ceiling per the project rule that AI agents optimize toward maximums without bounds. Mirrors tokens/spacing/print.json conventions. UNIT CHOICE NOTE: master width/height are CSS pixels (1px = 1/96in for print), NOT points (1pt = 1/72in). The equivalent-physical-size pt notation would be 960pt x 540pt; px was chosen because it matches the universal slide-shorthand used by PowerPoint, Keynote, Google Slides, and web design tools (where '1280x720 widescreen' is recognized at-a-glance). Both produce the same physical size in PDF rendering. Internal type sizes (frame, type, footer) use pt (typographic conventional); only the master uses px. Reviewed by gemini-code-assist on PR #43 2026-05-03 — Gemini suggested pt (960x540), Verdigris kept px for consumer recognition; both mathematically equivalent.",
+  "spacing": {
+    "slides": {
+      "master": {
+        "width": {
+          "$value": "1280px",
+          "$type": "dimension",
+          "$description": "Slide master width. 1280x720 (16:9) is the canonical Verdigris slide ratio. PowerPoint widescreen, Keynote 'Wide', Google Slides default all match."
+        },
+        "height": {
+          "$value": "720px",
+          "$type": "dimension"
+        }
+      },
+      "frame": {
+        "top-min": {
+          "$value": "48pt",
+          "$type": "dimension",
+          "$description": "Slide top margin floor. Below this, the title block crowds the top edge."
+        },
+        "top-max": {
+          "$value": "72pt",
+          "$type": "dimension",
+          "$description": "Slide top margin ceiling. Above this, the slide reads as half-empty."
+        },
+        "side-min": {
+          "$value": "56pt",
+          "$type": "dimension"
+        },
+        "side-max": {
+          "$value": "88pt",
+          "$type": "dimension"
+        },
+        "bottom-min": {
+          "$value": "48pt",
+          "$type": "dimension",
+          "$description": "Above the footer band. Footer occupies 32pt below this."
+        },
+        "bottom-max": {
+          "$value": "64pt",
+          "$type": "dimension"
+        }
+      },
+      "footer": {
+        "height": {
+          "$value": "32pt",
+          "$type": "dimension",
+          "$description": "Footer band: logomark + page number + confidentiality marking. Fixed height across all slides for visual continuity."
+        },
+        "padding-side": {
+          "$value": "56pt",
+          "$type": "dimension",
+          "$description": "Footer left/right padding matches frame side-min so footer aligns with content."
+        }
+      },
+      "logomark": {
+        "footer-height": {
+          "$value": "20pt",
+          "$type": "dimension",
+          "$description": "Logomark height in footer. Floor + ceiling intentionally tight; the rule (Z2O-1318) is consistency, not size variation."
+        },
+        "title-slide-height-min": {
+          "$value": "44pt",
+          "$type": "dimension",
+          "$description": "Title slide may use a larger lockup; floor and ceiling still apply."
+        },
+        "title-slide-height-max": {
+          "$value": "60pt",
+          "$type": "dimension"
+        }
+      },
+      "grid": {
+        "columns": {
+          "$value": "12",
+          "$type": "number",
+          "$description": "12-column grid for slide content. Mirrors web/print grids; supports 1, 2, 3, 4, 6 column splits cleanly."
+        },
+        "gutter-min": {
+          "$value": "20pt",
+          "$type": "dimension"
+        },
+        "gutter-max": {
+          "$value": "32pt",
+          "$type": "dimension"
+        }
+      },
+      "rhythm": {
+        "title-to-deck-min": {
+          "$value": "16pt",
+          "$type": "dimension",
+          "$description": "Slide title (eyebrow + headline) to deck/subtitle gap."
+        },
+        "title-to-deck-max": {
+          "$value": "28pt",
+          "$type": "dimension"
+        },
+        "deck-to-body-min": {
+          "$value": "32pt",
+          "$type": "dimension"
+        },
+        "deck-to-body-max": {
+          "$value": "56pt",
+          "$type": "dimension"
+        },
+        "body-block-gap-min": {
+          "$value": "16pt",
+          "$type": "dimension",
+          "$description": "Vertical gap between body blocks (paragraphs, bullet groups, callouts)."
+        },
+        "body-block-gap-max": {
+          "$value": "28pt",
+          "$type": "dimension"
+        }
+      },
+      "table": {
+        "cell-padding-y-min": {
+          "$value": "8pt",
+          "$type": "dimension",
+          "$description": "Table cell vertical padding floor. Below this, rows compress; readability suffers."
+        },
+        "cell-padding-y-max": {
+          "$value": "16pt",
+          "$type": "dimension"
+        },
+        "cell-padding-x-min": {
+          "$value": "12pt",
+          "$type": "dimension"
+        },
+        "cell-padding-x-max": {
+          "$value": "20pt",
+          "$type": "dimension"
+        },
+        "max-columns": {
+          "$value": "6",
+          "$type": "number",
+          "$description": "Hard ceiling on table columns per slide. Above 6, the slide cannot be read at projection distance."
+        },
+        "max-rows": {
+          "$value": "8",
+          "$type": "number",
+          "$description": "Hard ceiling on table rows per slide. Above 8, split across slides or move to an appendix."
+        }
+      },
+      "type": {
+        "headline-min": {
+          "$value": "32pt",
+          "$type": "dimension",
+          "$description": "Slide headline floor. Below 32pt, headline competes with body for emphasis."
+        },
+        "headline-default": {
+          "$value": "36pt",
+          "$type": "dimension"
+        },
+        "headline-max": {
+          "$value": "44pt",
+          "$type": "dimension",
+          "$description": "Above 44pt, headline crowds and limits to ~5 words. Use for one-word emphasis slides only."
+        },
+        "deck-min": {
+          "$value": "18pt",
+          "$type": "dimension"
+        },
+        "deck-max": {
+          "$value": "22pt",
+          "$type": "dimension"
+        },
+        "body-min": {
+          "$value": "18pt",
+          "$type": "dimension",
+          "$description": "Body type floor. The 'persuade × slide deck' composition rule sets a 24pt floor for emphasis text; this 18pt is the absolute floor for non-emphasis body. Below 18pt fails projection legibility."
+        },
+        "body-max": {
+          "$value": "24pt",
+          "$type": "dimension"
+        },
+        "footer-min": {
+          "$value": "10pt",
+          "$type": "dimension"
+        },
+        "footer-max": {
+          "$value": "13pt",
+          "$type": "dimension"
+        }
+      }
+    }
+  }
+}
