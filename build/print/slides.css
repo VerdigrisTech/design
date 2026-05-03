@@ -1,6 +1,6 @@
 /* ============================================================
    Verdigris Slide Decks - reference stylesheet
-   16:9 master, 1280x720pt, paged via @page for PDF render
+   16:9 master, 1280x720px (13.33in x 7.5in widescreen), paged via @page for PDF render
    (Chrome --print-to-pdf or WeasyPrint).
 
    Status: experimental. Graduates after 2 customer-facing decks
@@ -27,9 +27,13 @@
    ============================================================ */
 
 :root {
-  /* Slide master (16:9, 1280x720pt) */
-  --vd-slide-width: 1280pt;
-  --vd-slide-height: 720pt;
+  /* Slide master (16:9, 1280x720px = 13.33in x 7.5in, standard widescreen).
+     IMPORTANT: px not pt. 1pt = 1/72in (so 1280pt would be ~17.78in, oversized).
+     CSS px maps to 1/96in for print rendering. PowerPoint/Keynote widescreen
+     exports to PDF at 13.33in x 7.5in, which is 1280x720px. Match that.
+     [Fixed 2026-05-03 after Loop 4 CSS audit caught the pt vs px scaling bug.] */
+  --vd-slide-width: 1280px;
+  --vd-slide-height: 720px;
 
   /* Frame: floor + ceiling per the project rule */
   --vd-slide-frame-top-min: 48pt;
@@ -62,11 +66,8 @@
   --vd-slide-body-emphasis: 24pt;
   --vd-slide-footer-text: 11pt;
 
-  /* Confidentiality colors (footer band tints) */
-  --vd-conf-public: var(--vd-muted);
-  --vd-conf-customer: #c79100;          /* warm yellow, matches .vd-methods-draft */
-  --vd-conf-partner: #6b4ba0;           /* muted purple, distinct from teal/yellow */
-  --vd-conf-internal: #8a3a3a;          /* muted red, signals "do not share" */
+  /* Confidentiality colors are declared in cover.css root and inherited here.
+     Refactored 2026-05-03 (Loop 4 CSS audit) -- removing duplicates that drift. */
 }
 
 /* ---- Named pages per genre ----
@@ -74,17 +75,17 @@
    IMPORTANT: WeasyPrint @page :first issue (#2088) — use named pages.
 */
 @page slide-cover {
-  size: 1280pt 720pt;
+  size: 1280px 720px;
   margin: 0;
   background: var(--vd-neutral-950);
 }
 @page slide-body-light {
-  size: 1280pt 720pt;
+  size: 1280px 720px;
   margin: 0;
   background: #ffffff;
 }
 @page slide-body-dark {
-  size: 1280pt 720pt;
+  size: 1280px 720px;
   margin: 0;
   background: var(--vd-neutral-950);
 }
@@ -99,8 +100,8 @@
    ============================================================ */
 .vd-slide {
   position: relative;
-  width: 1280pt;
-  height: 720pt;
+  width: 1280px;
+  height: 720px;
   page-break-after: always;
   overflow: hidden;
   display: flex;
@@ -379,6 +380,11 @@ table.vd-slide-table td:first-child {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  /* Default tier color: PUBLIC. If the marking element omits a tier-specific
+     class (a producer error), the marking still renders legibly rather than
+     inheriting the body color, which on dark slides would be near-invisible.
+     The four tier-specific classes below override this default. */
+  color: var(--vd-conf-public);
 }
 .vd-slide-footer .vd-conf-public { color: var(--vd-conf-public); }
 .vd-slide-footer .vd-conf-customer { color: var(--vd-conf-customer); }

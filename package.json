@@ -20,14 +20,24 @@
     "./css/hsl": "./build/dist/css/hsl.css",
     "./hex": "./build/dist/hex/colors.json",
     "./tailwind": "./build/dist/tailwind/preset.js",
+    "./print/cover.css": "./build/print/cover.css",
+    "./print/slides.css": "./build/print/slides.css",
+    "./print/one-pager.css": "./build/print/one-pager.css",
+    "./print/case-study.css": "./build/print/case-study.css",
     "./tokens/*": "./tokens/*",
-    "./rules/*": "./rules/*"
+    "./rules/*": "./rules/*",
+    "./voice/*": "./voice/*"
   },
   "files": [
     "build/dist/",
+    "build/print/",
     "tokens/",
     "rules/",
     "foundations/",
+    "voice/",
+    "categories/",
+    "workflows/",
+    "LEARNINGS.md",
     "AGENTS.md"
   ],
   "scripts": {

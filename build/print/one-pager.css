@@ -310,7 +310,9 @@ p.vd-onepager-deck {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-.vd-onepager-footer .vd-conf-public { color: var(--vd-muted); }
-.vd-onepager-footer .vd-conf-customer { color: #c79100; }
-.vd-onepager-footer .vd-conf-partner { color: #6b4ba0; }
-.vd-onepager-footer .vd-conf-internal { color: #8a3a3a; }
+/* Confidentiality colors inherited from cover.css root tokens.
+   Loop 4 CSS audit consolidated these 2026-05-03 to remove duplication. */
+.vd-onepager-footer .vd-conf-public { color: var(--vd-conf-public); }
+.vd-onepager-footer .vd-conf-customer { color: var(--vd-conf-customer); }
+.vd-onepager-footer .vd-conf-partner { color: var(--vd-conf-partner); }
+.vd-onepager-footer .vd-conf-internal { color: var(--vd-conf-internal); }
