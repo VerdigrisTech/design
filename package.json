@@ -55,6 +55,7 @@
     "validate:all": "npm run validate && npm run validate:rules",
     "lint:external": "tsx build/lint-external.ts",
     "test:validators": "bash tests/validate-rules.test.sh",
+    "test:package": "tsx build/test-package.ts",
     "test:browser": "playwright test",
     "test:browser:install": "playwright install --with-deps",
     "clean": "rm -rf build/dist _site test-results playwright-report"

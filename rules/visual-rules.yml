@@ -2146,6 +2146,7 @@ composition:
         description: "Only the primary page (homepage) uses the full-scale hero with gradient strip. Secondary and convert pages use standard or minimal scales. Two full-scale heroes in a visitor session feels like two homepages. The site must have exactly one full-scale hero (the homepage)."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           min_full_scale_heroes: 1   # homepage must have one
           max_full_scale_heroes: 1   # only homepage gets one
@@ -2155,6 +2156,7 @@ composition:
         severity: "warning"
         type: "constraint"
         maturity: "experimental"   # added 2026-04-21; graduate to rule after 30 days with no surfaced violations
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Given this page's role, does the hero posture fail to match? Authoritative should be used for product/platform/hardware/solutions pages where visitors are evaluating capability. Belonging should be used for identity pages (about, mission, investors, annual report) where the site speaks as itself. Restrained should be used for awareness-stage surfaces (industry landings from search), recruiting pages, and partner pages where full authoritative weight would over-sell. Answer YES if the posture is mismatched, NO if it matches."
           input_scope: ["current_page"]
@@ -2164,6 +2166,7 @@ composition:
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           min_authoritative_heroes_per_site: 1   # at least one authoritative anchor
           # no ceiling -- product surfaces legitimately multiply (typical site has 5-14)
@@ -2173,6 +2176,7 @@ composition:
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           min_belonging_heroes_per_site: 0
           max_belonging_heroes_per_site: 2   # About + optional identity companion
@@ -2181,6 +2185,7 @@ composition:
         description: "At most one turn moment (earned accent) per 3-page navigation depth. The homepage gets priority. At least one turn must exist across the persuade pages (the homepage). If every page has a turn, the accent becomes wallpaper. If no page has a turn, the brand palette is underused."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           min_turns_per_site: 1           # at least one turn across persuade pages
           max_turns_per_session_depth: 1
@@ -2191,6 +2196,7 @@ composition:
         description: "When multiple pages use accent moments, they must use different palette regions. Two identical accents in a session feels like a template, not a design."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Do any two pages that both have accent/turn moments use the same palette region (e.g., both midnight-purple, both cyber-yellow)? Answer YES if accents repeat across pages, NO if they use different regions."
           input_scope: ["all_pages_with_turn_moments"]
@@ -2199,6 +2205,7 @@ composition:
         description: "Visual intensity should de-escalate as visitors move from persuade toward convert/inform. A convert page should feel like arrival, not another pitch. Intensity is the combination of scale (full > standard > minimal > none) and posture (authoritative > belonging > restrained). Transitions: persuade-to-persuade reduces (standard scale, no turn unless 6+ sections); persuade-to-inform reduces (no hero, metronomic rhythm); persuade-to-convert reduces sharply (minimal scale, single CTA, no turn); inform-to-convert maintains (both low-energy); any-to-narrate resets (own register)."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Given the upstream page (the page that links to this one) and this page, compare their visual intensity as scale-times-posture (hero scale, hero posture, accent usage, section count, color budget). Does this page maintain or increase intensity when it should de-escalate? Answer YES if intensity fails to de-escalate, NO if it de-escalates or maintains appropriately."
           input_scope: ["upstream_page", "current_page"]
@@ -2211,6 +2218,7 @@ composition:
           header: "Lightest element on every page. No per-page styling."
           footer: "Always dark. Same structure across pages."
           breadcrumb: "Teal as functional color (trust region). Not decorative."
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does any page have a header or footer with styling that differs from other pages (different background color, modified structure, per-page color scheme, or unique layout)? Answer YES if a violation exists, NO if header and footer are consistent."
 
@@ -2279,6 +2287,7 @@ composition:
         description: "Every Canvas-rendered text element must have an identical HTML fallback using the same typography tokens. The fallback is shown for prefers-reduced-motion and when Canvas is unavailable."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does this Canvas text element have a corresponding HTML fallback that uses the same font family, weight, size, and color? Is the fallback visible when prefers-reduced-motion is active? Answer YES if the fallback is missing or mismatched, NO if it exists and matches."
 
@@ -2286,6 +2295,7 @@ composition:
         description: "Never render body copy, paragraphs, or readable text to Canvas. Canvas text is for display headings with effects only."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Is body copy, paragraph text, or text meant to be read at length rendered via Canvas instead of DOM? Answer YES if body copy uses Canvas, NO if Canvas is limited to display headings."
 
@@ -2293,6 +2303,7 @@ composition:
         description: "Canvas elements rendering text must have role='img' and aria-label matching the text content."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           regex: "role=['\"]img['\"].*aria-label|aria-label.*role=['\"]img['\"]"
 
@@ -2407,6 +2418,7 @@ composition:
         description: "Every Canvas effect on the page must demonstrate a product capability. If removing the effect loses information (not just visual interest), it belongs. If removing it loses nothing, it does not."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does this Canvas text effect or data visualization demonstrate a specific product capability (8kHz resolution, fault detection, load identification), or is it purely decorative? Answer YES if purely decorative, NO if it demonstrates capability."
 
@@ -2414,6 +2426,7 @@ composition:
         description: "At most 2 animated elements visible in any single viewport simultaneously. The ambient waveform counts when opacity exceeds 10%. Named effects count when actively animating. This prevents the page from becoming a tech demo."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           max_simultaneous_animated: 2
 
@@ -2421,6 +2434,7 @@ composition:
         description: "Named text effects (measurement bar reveal, harmonic typography, waveform-to-text reveal) are exclusive to the Demonstrate x Web Page cell. They do not appear on the homepage, product pages, or any other page type."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Are any named Canvas text effects (measurement bar reveal, harmonic typography, waveform-to-text reveal) used on a page that is not the Technology/Signal page? Answer YES if effects appear on other pages, NO if they are restricted to the Technology page."
 
@@ -2428,6 +2442,7 @@ composition:
         description: "Heading text must reach full legibility within 600ms (under 40 chars) or 800ms (40+ chars). The animation may continue after legibility but the text must be readable. This prevents effects from blocking comprehension at the highest-stakes moments."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           legibility_deadline_short: "600ms"
           legibility_deadline_long: "800ms"
@@ -2516,26 +2531,42 @@ composition:
         description: "Every persuasive page must have at least a hook and a close."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           required: ["hook", "close"]
+        anti_examples:
+          - "Product page that opens with a hero (hook) then runs three feature sections and ends without a CTA section. No close means no asked-for next action; the reader scrolls off the page with nowhere to go"
+          - "Solution page with no hero band, just a mid-page heading 'Our solution' followed by feature cards. Missing hook means the visitor lands on body content with no top-of-page framing"
       - id: "composition.persuade-web-page.arc.single-turn"
         description: "At most one turn section per page. The turn is the earned accent moment -- more than one dilutes it."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           max: 1
+        anti_examples:
+          - "Product page with two accent sections: a teal-banded 'Customer love' band at section 4 and a purple-banded 'Industry recognition' band at section 7. Two earned-accent moments compete for the role of inflection"
+          - "Solution page using accent backgrounds on every other section (alternating teal-tinted and neutral). Accent stops being the earned moment and becomes pattern decoration"
       - id: "composition.persuade-web-page.arc.max-low-energy"
         description: "No more than 3 consecutive low-energy sections (context, evidence, proof) without a turn or a visual break. Prevents the middle of the page from going flat."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           max_consecutive: 3
+        anti_examples:
+          - "Page with sections in order: hook, evidence, evidence, evidence, evidence, evidence, close (5 evidence sections in a row, no turn or visual break). Mid-page reads as a flat technical brochure"
+          - "Sections: hook, context, context, evidence, proof, proof, close (4 low-energy sections between hook and close). Insert a turn around section 4 or break the flow with a different visual treatment"
       - id: "composition.persuade-web-page.arc.turn-after-evidence"
         description: "The turn should follow at least one evidence or proof section. The shift hits harder after the reader has absorbed information."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does the page have an accent or highlighted section that appears before any evidence or proof section? Answer YES if the accent comes too early, NO if it follows evidence."
+        anti_examples:
+          - "Page with accent turn at section 2 (immediately after hook, before any evidence). Reader hasn't absorbed enough to feel the shift; the accent reads as decorative rather than earned"
+          - "Marketing landing page where the teal-banded 'Why this matters' section sits at position 2 with three evidence sections after it. Move the accent to position 5 or 6 so it follows the proof"
 
     # --- Minimal arc (short pages with 3-6 sections) ---
     # Product pages, solution pages, and partner pages may only have 3-6 sections.
@@ -2555,8 +2586,12 @@ composition:
           description: "Even short persuasive pages need a hook (first) and close (last)."
           severity: "error"
           type: "constraint"
+          # no linear_issue (pre-tracking)
           test:
             required: ["hook", "close"]
+          anti_examples:
+            - "4-section partner page: feature-grid, evidence, evidence, evidence (no hook hero, no close CTA). Reader lands and exits with no top-of-page framing or bottom-of-page action"
+            - "Short product subpage with hero (hook) but ending mid-content on the third feature card (no close section). Page just stops; the asked-for next action is missing"
         - id: "composition.persuade-web-page.minimal-arc.no-turn-ok"
           description: "Pages with ≤6 sections may omit the turn. The page is too short for the accent to feel earned."
           severity: "info"
@@ -2570,6 +2605,7 @@ composition:
           description: "Dark background sections (L < 0.3) need generous padding. Visual weight needs room to breathe. Dark surfaces signal premium when given space. Values are responsive -- mobile gets less padding to avoid wasting screen real estate."
           severity: "warning"
           type: "constraint"
+          # no linear_issue (pre-tracking)
           test:
             when: { background_lightness: { max: 0.3 } }
             then:
@@ -2578,10 +2614,14 @@ composition:
                 tablet: { min: "6rem", max: "10rem" }       # 640-767px
                 desktop: { min: "8rem", max: "14rem" }      # 768px+
           note: "8rem is ~20% of a mobile viewport -- too aggressive. 4rem on mobile preserves the generous feel without wasting half the screen."
+          anti_examples:
+            - "Dark hero section with 2rem desktop padding (well below the 8rem floor). Headline + sub + CTA stack hug the section edges; dark surface reads as cramped, not premium"
+            - "Dark close section with 18rem desktop padding (above the 14rem ceiling). Reader scrolls past empty bands looking for the CTA; padding stops feeling generous and starts wasting attention"
         - id: "composition.persuade-web-page.coupling.tinted-padding"
           description: "Tinted background sections (chroma > 0.01) need medium padding."
           severity: "warning"
           type: "constraint"
+          # no linear_issue (pre-tracking)
           test:
             when: { background_chroma: { min: 0.01 } }
             then:
@@ -2589,10 +2629,14 @@ composition:
                 mobile: { min: "3rem", max: "5rem" }
                 tablet: { min: "4rem", max: "7rem" }
                 desktop: { min: "5rem", max: "10rem" }
+          anti_examples:
+            - "Teal-tinted accent section with 12rem desktop padding (above the 10rem ceiling). Tinted surfaces don't carry the same visual weight as dark; over-padding makes them feel hollow"
+            - "Lightly tinted neutral section with 2rem desktop padding (below the 5rem floor). The tint reads as decoration rather than a deliberate section change"
         - id: "composition.persuade-web-page.coupling.neutral-padding"
           description: "Neutral background sections (low chroma, not dark) use standard padding."
           severity: "warning"
           type: "constraint"
+          # no linear_issue (pre-tracking)
           test:
             when: { background_chroma: { max: 0.01 }, background_lightness: { min: 0.3 } }
             then:
@@ -2600,39 +2644,55 @@ composition:
                 mobile: { min: "3rem", max: "4rem" }
                 tablet: { min: "3rem", max: "5rem" }
                 desktop: { min: "4rem", max: "6rem" }
+          anti_examples:
+            - "Default white-background section with 10rem desktop padding (above the 6rem ceiling). Neutral sections reading the same as dark sections collapses the dark/light contrast that the section flow depends on"
+            - "Inform-style neutral content section with 1rem desktop padding (below the 4rem floor). Sections start running together; reader can't tell where one ends and the next begins"
       color_to_typography:
         - id: "composition.persuade-web-page.coupling.tinted-line-height"
           description: "Tinted or dark backgrounds loosen body line-height to 1.65-1.75 for readability."
           severity: "warning"
           type: "constraint"
+          # no linear_issue (pre-tracking)
           test:
             when:
               any_of:
                 - { background_chroma: { min: 0.01 } }
                 - { background_lightness: { max: 0.3 } }
             then: { body_line_height: { min: 1.65, max: 1.75 } }
+          anti_examples:
+            - "Body copy on dark hero at line-height 1.4 (below the 1.65 floor). Lines visually merge on dark; reader loses their place mid-paragraph"
+            - "Body copy on teal-tinted section at line-height 2.0 (above the 1.75 ceiling). Lines drift apart and the paragraph stops cohering as one block"
         - id: "composition.persuade-web-page.coupling.tinted-line-length"
           description: "Tinted or dark backgrounds use tighter max line length (65ch vs 75ch default). Reduced line length offsets the cognitive load of colored or dark surfaces."
           severity: "warning"
           type: "constraint"
+          # no linear_issue (pre-tracking)
           test:
             when:
               any_of:
                 - { background_chroma: { min: 0.01 } }
                 - { background_lightness: { max: 0.3 } }
             then: { max_line_length: "65ch" }
+          anti_examples:
+            - "Body copy on dark close section at 90ch wide (well above the 65ch ceiling for dark surfaces). Reader's eye loses the line return on dark; saccades fail"
+            - "Tinted accent band running paragraph text at 75ch (default web measure carried into a tinted surface). The cognitive load of color + long lines stacks; tighten to 65ch"
         - id: "composition.persuade-web-page.coupling.dark-letter-spacing"
           description: "Body text on dark backgrounds gets slightly looser letter-spacing (+0.01em) for readability."
           severity: "warning"
           type: "constraint"
+          # no linear_issue (pre-tracking)
           test:
             when: { background_lightness: { max: 0.3 } }
             then: { body_letter_spacing: { min: "0.01em", max: "0.03em" } }
+          anti_examples:
+            - "Dark hero body copy at letter-spacing 0 (default tight tracking). Letters touch on dark surfaces; the word shape compresses and reads as denser than the same copy on light"
+            - "Dark CTA paragraph at letter-spacing 0.06em (above the 0.03em ceiling). Words start drifting apart and the line stops reading as one unit"
       type_to_spacing:
         - id: "composition.persuade-web-page.coupling.heading-padding"
           description: "Section padding scales with the largest heading in the section. H1 sections need large padding; H3-led sections can use standard. All values are responsive."
           severity: "warning"
           type: "constraint"
+          # no linear_issue (pre-tracking)
           test:
             h1:
               section_padding:
@@ -2648,6 +2708,9 @@ composition:
               section_padding:
                 mobile: { min: "3rem", max: "4rem" }
                 desktop: { min: "4rem", max: "6rem" }
+          anti_examples:
+            - "H1 hero section with 4rem desktop padding (below the 8rem floor for H1). The hero heading is too large for the section padding; the headline crowds the section edges"
+            - "H3-led feature section with 12rem desktop padding (above the 6rem ceiling for H3). Small heading floating in a cathedral of space reads as misalignment, not generosity"
 
     # --- Whitespace principle ---
     whitespace:
@@ -2683,16 +2746,19 @@ composition:
         description: "65ch max line length throughout. Tighter than persuade."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { max_line_length: "65ch" }
       - id: "composition.inform-web-page.coupling.uniform-padding"
         description: "Uniform 3rem section padding regardless of heading level. Steady rhythm, no drama."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { section_padding: { value: "3rem" } }
       - id: "composition.inform-web-page.coupling.color-wayfinding"
         description: "Color marks navigation state (active sidebar, section indicator), not atmosphere. No tinted section backgrounds. Brand accent on interactive elements only."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does this inform page use brand color for atmospheric or decorative purposes (tinted section backgrounds, gradient strips, colored dividers)? Color should only mark navigation state and interactive elements. Answer YES if decorative color is found, NO if color is restricted to wayfinding and interactivity."
 
@@ -2713,11 +2779,13 @@ composition:
         description: "24pt body minimum for projection readability."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { body_size: { min: "24pt" } }
       - id: "composition.inform-slide-deck.coupling.whitespace"
         description: "60% minimum whitespace per slide. Inform slides are sparse."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           whitespace_percent: { min: 60 }
 
@@ -2756,6 +2824,7 @@ composition:
         description: "Teal is the default/primary series color. Teal-dominance rule (70%) relaxes for dashboards but teal remains the first color in any categorical set."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does any categorical data visualization on this dashboard use a non-teal color as the first/default/primary series color? Answer YES if another color leads instead of teal, NO if teal is the first color in each categorical set."
     typography:
@@ -2769,6 +2838,7 @@ composition:
         description: "Whitespace is compressed with discipline, not eliminated. Panel gap 0.75-1rem, card padding 1-1.5rem. Tighter than persuade but never cramped."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           panel_gap: { min: "0.75rem", max: "1rem" }
           card_padding: { min: "1rem", max: "1.5rem" }
@@ -2798,23 +2868,27 @@ composition:
         description: "One primary filled CTA button per page. Secondary actions use ghost or text-link treatment only."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does this convert page have more than one primary filled CTA button? Count only filled/solid-background buttons, not ghost or text-link treatments. Answer YES if there is more than one primary filled CTA, NO if there is exactly one."
       - id: "composition.convert-web-page.funnel.max-tiers"
         description: "Max 3 pricing tiers. More than 6 options drops conversion from 30% to 3% (Hick's Law)."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { max: 3 }
       - id: "composition.convert-web-page.funnel.reassurance"
         description: "Every primary CTA needs micro-reassurance within 1rem below: 'No credit card required,' 'Cancel anytime,' '30-second setup.'"
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Is the primary CTA button missing micro-reassurance text (e.g., 'No credit card required', 'Cancel anytime', '30-second setup') within 1rem below it? Answer YES if reassurance is missing, NO if present."
       - id: "composition.convert-web-page.funnel.no-escape"
         description: "Convert pages should minimize navigation distractions. Reduced header, no sidebar, no competing links in the main content area."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does this convert page have a full navigation header, sidebar, or competing links in the main content area that distract from the primary conversion action? Answer YES if distractions are present, NO if the page is focused."
     coupling:
@@ -2822,11 +2896,13 @@ composition:
         description: "Section padding 3rem-4rem. Momentum over luxury. No 8rem hero-scale padding."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { section_padding: { min: "3rem", max: "4rem" } }
       - id: "composition.convert-web-page.coupling.functional-color"
         description: "CTA button and the recommended-tier highlight are the only saturated elements. Everything else neutral. No tinted section backgrounds, no gradient strips. The recommended-tier highlight is functional (guides the decision, users spend 42% more time on highlighted plans), not decorative."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Are there saturated or brand-colored elements on this convert page beyond the primary CTA button and the recommended-tier highlight? Look for tinted section backgrounds, gradient strips, or decorative color. Answer YES if non-functional saturated elements exist, NO if color is restricted to CTA and tier highlight only."
 
@@ -2847,11 +2923,13 @@ composition:
         description: "Max 4 visual elements. More than 4 creates clutter at glance speed."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { max: 4 }
       - id: "composition.persuade-ad-banner.brand-recognition"
         description: "Logo must be visible within 1 second. Place in top-left or top-center."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Is the Verdigris logo missing, hidden, or placed outside top-left/top-center of this ad banner? Answer YES if the logo is absent or misplaced, NO if it is prominent and correctly positioned."
 
@@ -2871,12 +2949,14 @@ composition:
         description: "Single column layout, 600px max. Multi-column breaks on mobile email clients."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           max: 600
       - id: "composition.persuade-email.cta-per-section"
         description: "One CTA per content section. Multiple competing CTAs reduce click-through."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does any content section in this email contain more than one CTA button or CTA link? Answer YES if any section has multiple competing CTAs, NO if each section has at most one CTA."
 
@@ -2899,35 +2979,60 @@ composition:
         description: "10-15 slides total. Under 10 feels thin; over 15 loses attention (DocSend data: investors spend ~15 seconds per slide)."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { min: 10, max: 15 }
+        anti_examples:
+          - "8-slide investor deck: hook + 2 context + 3 evidence + close. Reader leaves the room asking 'where was the proof?' (below floor; missing proof + turn)"
+          - "22-slide sales deck with appendix-style technical specs slides 16-22. Investor attention drops off around slide 12; the appendix material belongs in a follow-up packet (above ceiling)"
       - id: "composition.persuade-slide-deck.arc.single-turn"
         description: "One turn slide per deck. The accent moment. More than one dilutes the inflection."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { max: 1 }
+        anti_examples:
+          - "Two accent slides labeled 'Traction' (slide 7, ARR growth) and 'Inflection' (slide 11, customer logo win). The reader can't tell which is the inflection moment; pick one"
+          - "Three teal-accent slides scattered across the deck (every fifth slide gets a hit of color). Accent inflation reads as decorative, not earned"
       - id: "composition.persuade-slide-deck.arc.max-low-energy"
         description: "Max 4 consecutive low-energy slides (context, evidence, proof) before a turn or visual break."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { max_consecutive: 4 }
+        anti_examples:
+          - "Slides 4-9: six consecutive evidence slides (problem detail, market sizing, competitive landscape, product screenshots, architecture, integrations). Reader fatigue sets in around slide 7; insert a turn or visual break by slide 8"
+          - "Slides 6-12: seven proof-tier slides in a row (logos, financials, team bios, advisors). Same energy level for 7 clicks reads as a long flat plateau"
     coupling:
       - id: "composition.persuade-slide-deck.coupling.type-floor"
         description: "24pt body minimum for projection. 40-72pt headline range. Max 6 lines of body text per slide. Max 2 type sizes per slide."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { body_size: { min: "24pt" }, headline_size: { min: "40pt", max: "72pt" } }
+        anti_examples:
+          - "Body copy at 18pt to fit a five-bullet list on one slide. Back-row attendees can't read it; eject content or split the slide instead of shrinking type"
+          - "Headline at 80pt overflowing the 16:9 safe zone. Above the 72pt ceiling the headline starts dictating the slide's composition rather than supporting it"
+          - "Slide with 4 distinct type sizes (32pt heading, 24pt sub, 20pt body, 14pt caption). Above 2 sizes per slide reads as document-style, not deck-style"
       - id: "composition.persuade-slide-deck.coupling.dark-bookends"
         description: "Dark slides restricted to hook and close (bookends). Mid-deck dark slides break the light flow."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Are there any dark-background slides in the middle of this deck (not the first or last slide)? Answer YES if dark slides appear mid-deck, NO if dark backgrounds are restricted to the opening and closing slides only."
+        anti_examples:
+          - "Dark-background 'Mission' slide at slide 6 in a 14-slide deck (mid-deck dark slide breaks the light flow established by slides 2-5)"
+          - "Three dark slides at positions 1, 7, and 14 (intermittent dark mid-deck creates a strobing rhythm; collapse the middle dark slide into the light flow or move it adjacent to a bookend)"
       - id: "composition.persuade-slide-deck.coupling.chart-colors"
         description: "Max 3 colors per chart. Data viz limited to 60% of slide content zone."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does any chart on this slide use more than 3 distinct colors, or does any data visualization occupy more than 60% of the slide content zone? Answer YES if either limit is exceeded, NO if charts use 3 or fewer colors and fit within 60%."
+        anti_examples:
+          - "Stacked bar chart with 7 series, each in a different palette region (rainbow chart). Reader can't track any single series across categories; collapse to top-3 + 'other'"
+          - "Full-bleed line chart taking 90% of slide content zone with axis labels off-slide. Above the 60% cap the chart competes with the headline rather than supporting it"
     spacing: "8% safe margin inset from slide edges for 16:9. Content zone centered. Vertical centering default."
 
     # ---- Sales collateral genres (added 2026-05-02 from customer pilot kickoff review) ----
@@ -3001,10 +3106,20 @@ composition:
         type: "constraint"
         maturity: "experimental"
         linear_issue: "Z2O-1319"
+        related_issues: ["Z2O-1334"]
         modes: ["pilot_kickoff", "internal_team", "customer_101", "partner_enablement"]
         genre_metadata_field: "data-confidentiality on <body>"
         test:
-          llm_eval: "Does every slide in this deck carry a confidentiality marking (PUBLIC, CUSTOMER-CONFIDENTIAL, PARTNER-CONFIDENTIAL, or INTERNAL ONLY) in the footer? Does the tier match the declared genre's default (or, if intentionally upgraded, is the upgrade documented in the deck's metadata)? Answer YES if any slide is missing the marking, OR if tier varies inconsistently within the deck, OR if the declared tier conflicts with the genre's default without justification; NO if every slide carries the same correct marking."
+          structural:
+            css_selector: "section.vd-slide span[class*='vd-conf-']"
+            count_per: "section.vd-slide"
+            count_min: 1
+            count_max: 1
+            failure_messages:
+              count_zero: "Slide is missing a confidentiality marking (no .vd-conf-* span in <section class='vd-slide'>)."
+              count_over: "Slide carries multiple confidentiality markings; tier must be unambiguous (one .vd-conf-* span per slide)."
+            note: "Cheap structural pre-flight: count vd-conf-* markers per slide. Replaces the slide-by-slide scan the llm_eval would otherwise do; llm_eval below fires only when structural passes, to catch suspiciously generic marker text or tier-mismatch against the declared genre."
+          llm_eval: "Does every slide in this deck carry a confidentiality marking (PUBLIC, CUSTOMER-CONFIDENTIAL, PARTNER-CONFIDENTIAL, or INTERNAL ONLY) in the footer? Does the tier match the declared genre's default (or, if intentionally upgraded, is the upgrade documented in the deck's metadata)? Is the marker text specific (customer-name-bound or genre-bound) rather than a generic placeholder like 'Confidential' with no further qualifier? Answer YES if any slide is missing the marking, OR if tier varies inconsistently within the deck, OR if the declared tier conflicts with the genre's default without justification, OR if a marker is suspiciously generic where the recipe expects a customer-bound marker; NO if every slide carries the same correct marking."
         anti_examples:
           - "Title slide says PUBLIC, slide 8 says CUSTOMER-CONFIDENTIAL (tier drift mid-deck)"
           - "No confidentiality footer on any slide (omission is the most common failure mode)"
@@ -3019,6 +3134,9 @@ composition:
         applies_to: "TEMPLATE artifacts only (not produced/filled-in decks)"
         test:
           llm_eval: "Is this artifact a TEMPLATE (intended to be cloned and filled in for multiple future engagements) or a PRODUCED DECK (a specific deck for a specific named engagement)? If a TEMPLATE: does it use role labels exclusively (e.g., 'Pilot Sponsor', 'VP of Operations'), or does it bake in specific individual names that lock the template to one person? Answer YES if the template contains specific individual names where role labels are appropriate; NO if templates use role labels (produced decks may add names alongside roles)."
+        anti_examples:
+          - "Pilot kickoff TEMPLATE with 'Pilot Sponsor: Mark Chung' baked into slide 3. Cloning this template for a new customer carries Mark's name into a slide that should have a role label only"
+          - "Customer 101 TEMPLATE with the working lead's photo and bio embedded in slide 4. The next person who clones the template must remember to swap the photo or it ships with the wrong face"
       - id: "composition.persuade-slide-deck.absolute-dates"
         description: "External-audience genres (pilot_kickoff, customer_101, partner_enablement) use absolute calendar dates ('2026-06-15' or 'June 15, 2026') for every timeline claim. Week-N notation ('Week 3') is acceptable in internal_team only. Mixed formats in one deck is a smell."
         severity: "error"
@@ -3028,6 +3146,9 @@ composition:
         modes: ["pilot_kickoff", "customer_101", "partner_enablement"]
         test:
           llm_eval: "Does this deck use absolute calendar dates (e.g., '2026-06-15', 'June 15 2026') for every timeline claim, or does it use week-N notation ('Week 3', 'Week 4 checkpoint')? Fiscal anchors ('Q3 2026') count as absolute. Answer YES if any external-audience deck uses week-N notation OR mixes formats (some absolute, some week-N); NO if every external-audience deck uses absolute dates throughout."
+        anti_examples:
+          - "Pilot kickoff timeline labeled 'Week 1: kickoff, Week 4: data flow, Week 8: checkpoint' (week-N notation used in an external-audience deck; customer reading this 6 weeks later cannot resolve which calendar week it refers to)"
+          - "Mixed format on one slide: 'Phase 1 starts June 15. Phase 2 in Week 4.' (mixing absolute + week-N reads as inconsistent and signals the template was edited by multiple people without a style pass)"
       - id: "composition.persuade-slide-deck.table-formatting"
         description: "Tables on a sales-collateral slide max 6 columns, max 8 rows, cell padding floor/ceiling 8-16pt vertical / 12-20pt horizontal. Header row uses Lato 13pt 700 in --vd-muted (uppercase, 0.10em letterspacing) -- same eyebrow tier as section eyebrows in the whitepaper cell. Above 6 cols / 8 rows, split across slides or move to an appendix. Supporting visuals follow .vd-figure pattern with caption + credit line."
         severity: "error"
@@ -3089,101 +3210,157 @@ composition:
         severity: "error"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking; PR #42 predated the linear_issue convention)
         test:
           llm_eval: "Does the cover page (page 1) contain body paragraphs that are part of the document's argument (not byline, deck, or eyebrow)? Answer YES if body copy appears on the cover, NO if the cover only carries identity, eyebrow, headline, deck, byline, and date."
+        anti_examples:
+          - "Cover with the executive summary's first paragraph reproduced under the deck (body copy bleeding onto the cover; reader starts reading at page 1 instead of treating the cover as a quiet identity surface)"
+          - "Cover with three short paragraphs of context above the byline (turns the cover into page 1 of an article)"
       - id: "composition.persuade-whitepaper-cover.no-section-headers"
         description: "The cover MUST NOT contain section headers (e.g., 'THE PROBLEM', '01 Introduction'). A cover has a title; sections start on page 2."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does the cover page contain any section headers, section eyebrows like 'THE PROBLEM' or numbered section titles? Answer YES if section headers appear on the cover, NO if the cover has only one title (the headline)."
+        anti_examples:
+          - "Cover with '01 Introduction' eyebrow above the deck (numbered section starting on page 1; sections belong on page 2 onward)"
+          - "Cover with 'THE PROBLEM' band between the headline and the byline (cover now competes with itself for which line is the title)"
       - id: "composition.persuade-whitepaper-cover.deck-to-byline-gap"
         description: "Vertical gap between the deck (subhead) and the byline. Floor 1.4in keeps the cover from reading as a page-1 article. Ceiling 2.6in keeps it from reading as wrong-page-size."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           min_in: 1.4
           max_in: 2.6
           note: "Default 1.6in. The single load-bearing measurement on the cover."
+        anti_examples:
+          - "Deck-to-byline gap of 0.6in (well below the 1.4in floor; cover reads as page 1 of an article rather than as a cover)"
+          - "Deck-to-byline gap of 3.5in (above the 2.6in ceiling; cover reads as wrong page size or as if content were missing in the middle)"
       - id: "composition.persuade-whitepaper-cover.divider-count"
         description: "At most one horizontal divider on the cover, sitting between the quiet field and the byline. Multiple dividers fragment the surface."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test: { max: 1 }
+        anti_examples:
+          - "Cover with 3 horizontal dividers (one above the headline, one above the byline, one above the date). Surface fragments into stacked bands; the quiet field is gone"
+          - "Cover with a divider between every cover element (eyebrow / headline / deck / byline / date all separated by rules). Reads as a form, not a cover"
       - id: "composition.persuade-whitepaper-cover.deck-word-count"
         description: "Deck (subhead) maximum word count. Longer decks crowd the cover and fail the cover register."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test: { max: 24 }
+        anti_examples:
+          - "Deck running 38 words ('A comprehensive analysis of the implications of behind-the-meter telemetry deployment in hyperscale data center environments, with recommendations for federal procurement strategy and grid reliability outcomes through 2030.') Above the 24-word ceiling; deck stops being a deck and becomes an abstract"
+          - "Deck running 30 words split across 3 lines, taking up the full width of the deck max (4.75in). Cover register collapses; reads as page 1 of a paper"
       - id: "composition.persuade-whitepaper-cover.headline-font"
         description: "Cover headline uses Lato 700 (display font per fontFamily.display). Serif headlines violate the system's Inter+Lato lock at foundations/typography.md:128-159."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Is the cover headline set in Lato (or its fallback stack), not a serif face like Charter, Georgia, or Source Serif? Answer YES if a serif is used, NO if Lato is used."
+        anti_examples:
+          - "Cover headline set in Charter to 'feel like a journal' (serif violates the Inter+Lato lock; whitepaper authority comes from typographic discipline, not borrowed serif gravitas)"
+          - "Cover headline set in Georgia to mimic Brookings cover style (different brand register; Brookings is its own brand)"
       - id: "composition.persuade-whitepaper-cover.dark-surface-headline-weight"
         description: "On dark covers (background L < 0.3), drop headline weight one tier (Lato 700 max, not 800/900). Heavy weights bloom on dark."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Is the cover background dark (lightness below 30%) AND the headline weight 800 or heavier? Answer YES if a heavy weight is used on dark, NO if the cover is light or the headline weight is 700 or lighter."
+        anti_examples:
+          - "Dark neutral.950 cover with headline at Lato 800 (weight blooms on dark surface; letters thicken into each other)"
+          - "Dark cover with headline at Lato 900 'because it needs more presence' (the dark surface already provides presence; heavy weight on dark over-corrects)"
       - id: "composition.persuade-whitepaper-cover.dark-surface-color"
         description: "Dark cover background MUST be color.neutral.950 (oklch 0.141 0.005 285.823, hex #09090b per build/dist/hex/colors.json). Invented navy hex values are a brand violation."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Is the dark cover background color color.neutral.950 (its canonical hex is #09090b), as opposed to an invented hand-picked navy like #0b1530 or #0c0c10? Answer YES if a non-token color is used, NO if neutral.950 (#09090b) is used."
+        anti_examples:
+          - "Dark cover background hand-picked as #0b1530 'because it's a more dignified navy' (invented color; not a token)"
+          - "Dark cover background at #0c0c10 (close-but-not-equal to neutral.950; brand color discipline broken)"
       - id: "composition.persuade-whitepaper-cover.deck-contrast-tier"
         description: "Deck (subhead) on dark covers must use contrast tier 2 (~70-78% L), not pure white. Two near-white texts compete."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "On a dark cover, is the deck rendered in pure white (#fff or rgba 1.0)? Answer YES if pure white, NO if a tier-2 muted white (~rgba 0.70-0.78) is used."
+        anti_examples:
+          - "Dark cover with both headline and deck at #fff (two pure-white texts at different sizes compete; no hierarchy)"
+          - "Dark cover deck at #f5f5f5 (still effectively tier 1; not the muted tier-2 the rule expects)"
       - id: "composition.persuade-whitepaper-cover.prepared-for-line"
         description: "Policy-brief mode: include a 'Prepared for: <institution + group>' line below the byline. CEO-brief and lab-tradition modes: optional (the eyebrow already names the audience; in CEO mode the line reads as consultancy theater)."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         applies_to_modes: ["policy_brief"]
         test:
           llm_eval: "Is the cover in policy_brief mode (named institution addresses policymakers) AND missing a 'Prepared for: ...' line below the byline? Answer YES if policy_brief mode without the line, NO if either a different mode or the line is present."
+        anti_examples:
+          - "Policy-brief cover addressed to LBNL but missing a 'Prepared for: Lawrence Berkeley National Laboratory, ETA Division' line (policy-brief register expects explicit institutional addressee)"
+          - "Policy-brief cover with a 'For: DOE' shorthand below the byline (truncated form drops the addressed group; full institution + group expected)"
       - id: "composition.persuade-whitepaper-cover.coi-disclosure"
         description: "When the author benefits commercially from the recommendations being adopted, the cover MUST carry a one-sentence Disclosure block. Pattern: 'Disclosure. The author is [role] of [vendor], which develops [products discussed]. Views are the author's.' Drop boilerplate like 'has not been peer-reviewed'; it advertises insecurity. Required across all three modes when the commercial-interest condition holds."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         applies_to_modes: ["lab_tradition", "policy_brief", "ceo_brief"]
         test:
           llm_eval: "Does the author benefit commercially from the briefing's recommendations being adopted (their employer sells products that would be mandated/funded), AND the cover lacks a one-sentence Disclosure block? Answer YES if commercial-interest exists without disclosure, NO if either no commercial interest OR a disclosure is present."
+        anti_examples:
+          - "Verdigris-authored brief recommending federal funding for behind-the-meter telemetry, with no Disclosure block on the cover (Verdigris sells the products that would be funded; commercial interest is undisclosed)"
+          - "Cover Disclosure block reading 'This document has not been peer-reviewed and represents the author's personal views' (boilerplate-only; doesn't disclose the actual commercial interest)"
       - id: "composition.persuade-whitepaper-cover.recommendations-labeling"
         description: "Section label for numbered policy asks differs by mode. lab_tradition: 'Implications' or 'Open Questions for <audience>' (lab convention rarely tells DOE what to do). policy_brief: 'Recommendations to <institution>' (think-tank convention). ceo_brief: 'Bottom line' or 'What to do' (CEO directness). Mismatching label to mode reads as borrowing authority from a genre the document does not occupy."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does the recommendations-section label match the document's mode? Lab_tradition expects 'Implications' or 'Open Questions'; policy_brief expects 'Recommendations to <institution>'; ceo_brief expects 'Bottom line' or 'What to do'. Answer YES if there is a mode-label mismatch (e.g., a CEO brief labels its asks 'Recommendations to LBNL'), NO if the label matches the mode."
+        anti_examples:
+          - "CEO brief with section 'Recommendations to LBNL' (CEO mode borrows think-tank framing it doesn't occupy; reads as performative)"
+          - "Lab-tradition report with section 'What to do' (lab convention doesn't dictate; the report's authority comes from analysis, not directives)"
       - id: "composition.persuade-whitepaper-cover.methods-callout"
         description: "Any quantitative claim resting on proprietary field data MUST be footnoted to a Methods callout. Required content: site count n, geography, instrumentation, observation window, 95% CI, anonymization, data-availability statement."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does the briefing cite a numerical claim attributed to vendor field measurements (not a public source) AND fail to provide a Methods callout with site count, instrumentation, observation window, and CI? Answer YES if a vendor-data claim lacks a methods callout, NO if either no vendor-data claim exists or a methods callout is present."
+        anti_examples:
+          - "Brief claims '37% load reduction observed in field deployments' with no Methods callout describing site count, instrumentation, or CI (vendor-data claim with no methodology; reader can't evaluate the claim)"
+          - "Brief cites '$3M annual savings per facility' with footnote 'Source: Verdigris field data' (footnote without the required Methods content; site count and CI absent)"
       - id: "composition.persuade-whitepaper-cover.citation-format"
         description: "Citations MUST follow ANSI/NISO baseline: author, 'quoted title,' series ID or arXiv ID, (year), URL. Bare domains alone are insufficient. arXiv preprints require year. Government/lab reports require report numbers."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does the sources list contain entries that are missing year, missing quoted titles, or have only bare domains as URLs? Answer YES if any citation lacks year, quoted title, or has only a bare domain, NO if all citations carry author + quoted title + year + full URL."
+        anti_examples:
+          - "Citation reading 'LBNL, eta-publications.lbl.gov' (bare domain; no quoted title, no year, no report number)"
+          - "arXiv preprint citation reading 'Smith et al., arXiv:2401.12345' (missing year and quoted title; below ANSI/NISO baseline)"
     spacing:
       page_size: "8.5in x 11in (Letter) or 210mm x 297mm (A4)"
       frame: "0.85in top, sides, bottom (default). Floor/ceiling not yet codified; add to tokens/spacing/print.json if a real surface needs to deviate."
@@ -3238,32 +3415,46 @@ composition:
         type: "constraint"
         maturity: "experimental"
         modes: ["solution_overview", "comparative"]
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does this one-pager artifact fit on exactly one Letter page when rendered to PDF, with body type at 10pt or larger, callout headline at 13pt or larger, and footer at 9pt or larger? Answer YES if the page exceeds one Letter OR if any required type slot is below the floor (10pt body, 13pt callout headline, 9pt footer); NO if the page fits on one Letter at the spec typography scale."
+        anti_examples:
+          - "Solution overview rendered with body at 8pt to fit 4 callouts on one page (below the 10pt body floor; reads as legal-document density)"
+          - "Comparative one-pager spilling onto a second page with the CTA strip orphaned at the top of page 2 (one-pager constraint violated; either eject content or move to a 2-page brief format)"
       - id: "composition.persuade-one-pager.cta-strip-required"
         description: "A CTA strip is required at the bottom of the body, above the page footer. Dark band (--vd-neutral-950), two parts only: primary message (Lato 700, 1 sentence + optional teal accent) + action (Inter 500, prefixed with arrow glyph, terse). Always actionable -- not 'learn more' but 'see Signals in action' + '→ schedule a 30-minute walkthrough.'"
         severity: "error"
         type: "constraint"
         maturity: "experimental"
         modes: ["solution_overview", "comparative"]
+        # no linear_issue (pre-tracking)
         test:
           structural:
             css_selector_required: ".vd-onepager-cta"
             note: "Cheap structural pre-flight: presence of .vd-onepager-cta element. Fires before the LLM eval."
           llm_eval: "Does this one-pager have a dark CTA strip directly above the footer band, containing exactly two parts: a primary action message and a specific actionable next step? Is the action specific (e.g., 'schedule a walkthrough', 'read the whitepaper') rather than generic ('learn more')? Answer YES if the CTA strip is missing, light-on-light, or contains generic 'learn more' actions; NO if the CTA strip is present, dark-banded, and specifically actionable."
+        anti_examples:
+          - "One-pager with CTA strip reading 'Learn more →' (generic placeholder action; does not name the next step)"
+          - "Light-on-light CTA strip at the bottom of the page (missing the dark band that lifts the action out of the body grid)"
+          - "Page ends with the third callout; no CTA strip at all (reader has nothing to do after scanning)"
       - id: "composition.persuade-one-pager.solution-overview.callout-count"
         description: "Solution overview genre: exactly 3 evidence callouts. Two callouts read as half-empty; four callouts crowd the grid and the metrics compete for attention."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
         modes: ["solution_overview"]
+        # no linear_issue (pre-tracking)
         test: { min: 3, max: 3 }
+        anti_examples:
+          - "Solution overview with 2 callouts (page reads half-empty; reader expects the third callout slot)"
+          - "Solution overview with 4 callouts crammed into the 3-column grid (callouts compete for attention; the anchor metric loses its weight)"
       - id: "composition.persuade-one-pager.comparative.numbered-list-count"
         description: "Comparative genre: 5-12 numbered items, typically 7. Below 5 reads as thin; above 12 fails single-page constraint at the type floor."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
         modes: ["comparative"]
+        # no linear_issue (pre-tracking)
         test:
           structural:
             css_selector: "ol.vd-onepager-numlist > li"
@@ -3272,25 +3463,36 @@ composition:
             note: "Cheap structural test: count <li> elements in the numbered list. Replaces an llm_eval that would have required reading the artifact."
           min: 5
           max: 12
+        anti_examples:
+          - "Comparative one-pager with 4 numbered items (below the 5 floor; the page reads as 'a few quick takes' rather than a structured argument)"
+          - "Comparative one-pager with 14 numbered items (above the 12 ceiling; either the type drops below the floor or the page spills to a second page)"
       - id: "composition.persuade-one-pager.comparative.thesis-block-required"
         description: "Comparative genre: a thesis block (left-rule teal callout, 11pt body, 2-3 short paragraphs) is required. The thesis block is what makes the comparative genre work -- without it, the page is a checklist; with it, the page argues something. A reader who reads ONLY the thesis block should still get the value of the page."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
         modes: ["comparative"]
+        # no linear_issue (pre-tracking)
         test:
           structural:
             css_selector_required: "aside.vd-onepager-thesis"
             note: "Presence check is structural; quality check is llm_eval below."
           llm_eval: "Does this comparative-genre one-pager contain a thesis block (left-rule teal callout, ~2-3 short paragraphs) that articulates the underlying argument? Could a reader who reads ONLY the thesis block grasp the value of the page? Answer YES if the thesis block is missing, present-but-empty, or so weak the page becomes a checklist; NO if the thesis block carries the argument independently."
+        anti_examples:
+          - "Comparative one-pager with no thesis block (just the numbered list and a CTA strip; reads as a checklist with no argument behind it)"
+          - "Thesis block present but reads 'These are the 7 things to think about.' (placeholder thesis; doesn't carry the argument)"
       - id: "composition.persuade-one-pager.body-measure"
         description: "Body text on a one-pager respects the typography.body-measure rule (45-75ch). Numbered list items in comparative genre may exceed the upper bound briefly when the item is a one-sentence proposition + one-sentence explanation; otherwise hold the measure."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
         modes: ["solution_overview", "comparative"]
+        # no linear_issue (pre-tracking)
         test:
           inherits: "typography.body-measure"
+        anti_examples:
+          - "Solution overview body paragraphs running 95ch wide (above the 75ch ceiling; reader's eye loses the line return)"
+          - "Comparative numbered list with 35ch items (below the 45ch floor; tight column reads as a sidebar rather than the page's main argument)"
 
     inherits_from_sales_collateral:
       - "composition.persuade-slide-deck.logomark-consistency"
@@ -3337,9 +3539,25 @@ composition:
         severity: "error"
         type: "constraint"
         maturity: "experimental"
-        related_issues: ["Z2O-1310"]
+        related_issues: ["Z2O-1310", "Z2O-1335"]
+        # no linear_issue (pre-tracking)
         test:
-          llm_eval: "Does this case study contain exactly one bolded outcome metric in the .vd-cs-anchor block, with secondary observations supporting the anchor in surrounding prose (not as competing bolded metrics in <strong> tags)? Answer YES if the case study presents two or more competing bolded outcome numbers (the anchor block PLUS additional bolded metrics in body text), OR has zero anchor metric, OR the anchor uses a per-instance qualifier ('per facility', 'per rack', 'per circuit') without explicit fleet context; NO if the case study has exactly one anchor metric, with secondary observations in unbolded supporting prose."
+          structural:
+            anchor_count:
+              css_selector: ".vd-cs-anchor .vd-anchor-metric"
+              count_min: 1
+              count_max: 1
+              failure_messages:
+                count_zero: "Case study has no anchor metric (.vd-cs-anchor .vd-anchor-metric not found). Reader scanning the page has no number to take away."
+                count_over: "Case study has 2 or more anchor metrics (.vd-cs-anchor .vd-anchor-metric appears multiple times). Pick one anchor; move the rest into supporting prose."
+            competing_bold_metrics:
+              css_selector: "strong, b"
+              outside_selector: ".vd-cs-anchor"
+              regex_match: "\\b\\d+(\\.\\d+)?%?\\b"
+              count_max: 0
+              failure_message: "Bolded numeric metric found in <strong>/<b> outside the .vd-cs-anchor container. Competing bolded metrics dilute the anchor; unbold the secondary observations or move them into the anchor block."
+            note: "Cheap structural pre-flight: count anchor elements + count bolded numeric patterns outside the anchor container. Replaces the case-study-wide scan the llm_eval would otherwise do; llm_eval below fires only when structural passes, to catch the per-instance-qualifier semantic case ('per facility' without fleet size N)."
+          llm_eval: "Does this case study contain exactly one bolded outcome metric in the .vd-cs-anchor block, with secondary observations supporting the anchor in surrounding prose (not as competing bolded metrics in <strong> tags)? Does the anchor avoid per-instance qualifiers ('per facility', 'per rack', 'per circuit') without explicit fleet context (N facilities)? Answer YES if the case study presents two or more competing bolded outcome numbers (the anchor block PLUS additional bolded metrics in body text), OR has zero anchor metric, OR the anchor uses a per-instance qualifier without explicit fleet context; NO if the case study has exactly one anchor metric, with secondary observations in unbolded supporting prose."
         anti_examples:
           - "Anchor metric '$1.3M-$3M' AND a second bolded metric '21 days' AND a third '800+ rectifiers' competing for attention (split into one anchor + supporting prose)"
           - "Anchor metric '$3M per facility' without stating fleet size N (per-instance qualifier silently multiplies the canonical claim -- see Z2O-1310)"
@@ -3349,29 +3567,59 @@ composition:
         severity: "error"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does every customer quote in this case study include both (a) a named individual OR an explicit role label, AND (b) an organization name OR an explicit redaction marker? Answer YES if any quote is attributed only to the company without role or individual; NO if every quote carries human attribution + organization (or explicit redaction)."
+        anti_examples:
+          - "Quote attributed 'Per Acme Corp.' (company-only attribution; no human voice). Reads as marketing copy with quotes around it"
+          - "Quote attributed only as 'Acme Corp Customer' (anonymized but with no role label, no individual, no explicit redaction marker like 'Fortune 50 Telecom'). The trust register collapses; reader can't tell if this is a real operator or a composite"
       - id: "composition.persuade-case-study.required-sections"
         description: "All six required sections must be present in order: executive_summary, problem, approach, outcome, quote, replicate. Missing sections weaken the proof structure; reordering breaks the read."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
+        related_issues: ["Z2O-1336"]
+        # no linear_issue (pre-tracking)
         test:
-          llm_eval: "Does this case study contain all six required sections in this order: executive summary -> problem -> approach -> outcome (with single anchor metric) -> quote (with attribution) -> replicate (closing CTA)? Answer YES if any required section is missing or reordered; NO if all six are present and ordered correctly."
+          structural:
+            section_order:
+              css_selector: "section[data-cs-section], section > h1, section > h2, section > h3"
+              expected_sections:
+                - { slug: "executive_summary", heading_patterns: ["executive summary", "summary"] }
+                - { slug: "problem", heading_patterns: ["problem", "the problem", "challenge", "the challenge"] }
+                - { slug: "approach", heading_patterns: ["approach", "the approach", "what we did", "solution"] }
+                - { slug: "outcome", heading_patterns: ["outcome", "the outcome", "results", "the result"] }
+                - { slug: "quote", heading_patterns: ["quote", "in their words", "from the operator"] }
+                - { slug: "replicate", heading_patterns: ["replicate", "do this", "next steps", "get started"] }
+              match: "case_insensitive_substring"
+              order: "strict"
+              failure_messages:
+                missing: "Required section '{slug}' not found. Expected one of: {heading_patterns}."
+                out_of_order: "Section '{slug}' appears at position {actual} but should be at position {expected}. Reordering breaks the executive_summary -> problem -> approach -> outcome -> quote -> replicate read."
+            note: "Cheap structural pre-flight: walk <section> elements (or h1/h2/h3 headings inside them) and verify the six canonical headings appear in order. Heading detection is case-insensitive substring against the documented synonym lists. The llm_eval below fires only when structural passes, to catch sections that exist structurally but are populated with placeholder text rather than real case-study content."
+          llm_eval: "Are the six required sections in this case study (executive summary, problem, approach, outcome, quote, replicate) actually populated with case-study content, or do any contain placeholder text, lorem ipsum, or one-line stubs that fail to carry the section's purpose? Answer YES if any section is structurally present but content-empty (placeholder, stub, or lorem ipsum); NO if all six sections carry real case-study content."
       - id: "composition.persuade-case-study.web-pdf-parity"
         description: "Case studies render to two targets (web + PDF mirror). Both must carry the same content, citations, anchor metric, and quote attribution. The PDF mirror MAY drop interactive elements (live charts, embedded video) but MUST NOT add or modify content claims relative to the web canonical. The web is canonical for content; the PDF is canonical for distribution as an attachment."
         severity: "error"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Compare the web and PDF versions of this case study. Do they carry the same content, citations, anchor metric, and quote attribution? Does the PDF avoid adding or modifying content claims relative to the web canonical (interactive elements may be dropped)? Answer YES if the PDF differs in content claims, anchor metric, or attribution from the web canonical; NO if the two versions are content-equivalent and only differ in interactive vs. static rendering."
+        anti_examples:
+          - "Web version shows anchor metric '$3M annual savings'; PDF mirror shows '$3.2M annual savings' (PDF revised independently after the web version shipped; the two versions disagree on the load-bearing claim)"
+          - "PDF mirror adds a 'Future roadmap' section absent from the web canonical (PDF is a distribution mirror, not a place to add content the web hasn't published)"
       - id: "composition.persuade-case-study.figure-discipline"
         description: "Figures (charts of the anchor metric, before/after visualizations) follow the .vd-figure pattern from cover.css: figure + caption with label + credit line. Charts cite their data source; uncredited proprietary charts fail the trust register."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Do all figures in this case study follow the .vd-figure pattern (figure + caption with figure-label + credit line citing data source)? Answer YES if any figure is uncredited or lacks a caption with label; NO if every figure carries the canonical pattern."
+        anti_examples:
+          - "Bar chart of anchor metric pasted into the case study with no caption, no figure label, no data-source credit line. Reader has no way to evaluate whether the chart reflects real telemetry or a hand-drawn comp"
+          - "Before/after circuit topology image with caption 'Improvement after Verdigris install' (no figure number, no credit line citing the source dataset or instrument). Uncredited proprietary chart"
 
     inherits_from_sales_collateral:
       - "composition.persuade-slide-deck.logomark-consistency"
@@ -3396,6 +3644,7 @@ composition:
         description: "Verdigris teal + neutrals only. No other palette regions. Instant recognition requires consistency."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does this identify ad banner use any colors beyond Verdigris teal and neutrals (white, gray, black)? Look for secondary palette regions like purple, yellow, or blue. Answer YES if non-teal/non-neutral colors are present, NO if only teal and neutrals are used."
 
@@ -3443,6 +3692,7 @@ composition:
         description: "B2B AI interactions favor competence over personality. No emoji in AI responses, no casual tone, no character-driven interactions."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval:
             prompt: "Evaluate this AI chat response for personality signals that conflict with B2B infrastructure professionalism."
@@ -3461,6 +3711,7 @@ composition:
         description: "AI responses use flat document layout, not chat bubbles. Bubbles are for consumer messaging, not expert tools."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           regex: "chat-bubble|message-bubble|bubble-|rounded-full.*message"
 
@@ -3484,12 +3735,14 @@ composition:
         description: "AI-generated content on non-chat surfaces must have a consistent visual marker distinguishing it from human-authored content."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           regex: "border-l-2|border-left.*2px|ai-marker|provenance|data-ai-generated"
       - id: "composition.assist-embedded.provenance"
         description: "AI-generated content must include machine-readable provenance metadata. EU AI Act Article 50 compliance required by August 2026."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           regex: "data-ai-provenance|data-ai-source|ai-provenance|content-credentials|c2pa|data-generated-by"
 
@@ -3565,6 +3818,7 @@ composition:
         description: "Prose sections use 5rem padding. Figures within episodes use 3rem margin. Opening and closing use 8rem."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           opening: { section_padding: { min: "8rem", max: "14rem" } }
           episode: { section_padding: { min: "5rem", max: "8rem" } }
@@ -3574,17 +3828,20 @@ composition:
         description: "Body line-height 1.7 for sustained reading. Looser than persuade (1.6). Magazine-grade readability."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test: { body_line_height: { min: 1.7, max: 1.85 } }
       - id: "composition.narrate-web-page.coupling.figure-margin"
         description: "Figures have 3rem margin above and below within their episode. They breathe separately from prose."
         severity: "warning"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           figure_margin: { min: "3rem", max: "5rem" }
       - id: "composition.narrate-web-page.coupling.no-marketing-patterns"
         description: "No CTA buttons in prose sections. No gradient strips. No card grids as content (cards may appear inside figures). The page is an essay, not a landing page."
         severity: "error"
         type: "constraint"
+        # no linear_issue (pre-tracking)
         test:
           llm_eval: "Does this editorial/narrate page section contain CTA buttons in prose, gradient strips, card grids used as content, or other marketing landing page patterns? Answer YES if marketing patterns are found, NO if the section is pure editorial."
 

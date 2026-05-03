@@ -76,6 +76,19 @@ What is **not** on a pilot kickoff deck:
 - Names baked into templates (use role labels per the rendering-layer-never-invents-facts principle)
 - Internal Verdigris jargon ("EVD atom", "L3 evaluator", "site-coherence gate") — translate to customer language
 
+## Decision framework: where to land in the bounds
+
+The structure spec gives ranges (12-20 slides, 3-5 success criteria, 3-5 risks). The bounds prevent both starvation and bloat; this framework picks within them. Default to the middle column unless an explicit signal pushes you to the floor or the ceiling.
+
+| Boundary | Floor (small) | Default | Ceiling (large) |
+|---|---|---|---|
+| **Slide count (12-20)** | **12 slides** when the customer audience is small (sponsor + working lead only), the pilot is a single site, and the engagement is a known repeat pattern (second pilot with the same customer, or a refresh). | **15-16 slides** for a typical first pilot: sponsor + working lead + 1-2 engineers, single segment, fresh engagement. | **20 slides** when the pilot spans multiple sites or business units, the customer audience is broad (sponsor + working lead + multiple engineering / facilities groups), or the engagement complexity warrants explicit hardware-install + data-flow + path-to-expansion slides instead of folding them into the appendix. |
+| **Success criteria (3-5)** | **3 criteria** when the engagement has one anchor outcome and two supporting observables (typical first pilot). | **4 criteria** when a regulatory or contractual outcome (LL97, SLA, capacity-deferral threshold) joins the technical anchors. | **5 criteria** only when the contract enumerates 5; never invent a fifth to fill the slide. Below 3 the slide reads as under-defined; above 5 the criteria compete for attention and the anchor metric loses definition. |
+| **Risks + mitigations (3-5)** | **3 risks** for a low-complexity pilot (single site, known hardware, established data feed). | **4 risks** for a typical pilot where install logistics, data-feed access, and one customer-side dependency are all in scope. | **5 risks** for multi-site or multi-vendor pilots where coordination risk dominates. Avoid 6+ — the slide turns into a catalog and the customer stops reading. |
+| **Decisions we owe / decisions we need (open-ended)** | **2-3 each** when the contract pre-resolves most decisions and only execution choices remain. | **4-5 each** for a typical first pilot where mid-engagement decisions are still unscoped. | **6-7 each** only when an unusually complex engagement leaves many decisions open; consider whether two of those should have been resolved in the contract instead. |
+
+If the situation pushes you toward the ceiling on three or more boundaries simultaneously, the engagement may be a multi-pilot program rather than one pilot. Pause and check with the engagement lead before producing one oversized deck.
+
 ## Spacing rhythm
 
 All values from `tokens/spacing/slides.json`. Every gap has a floor AND a ceiling.
@@ -142,6 +155,19 @@ The pilot kickoff template uses role labels, not specific people:
 When a real deck is produced from the template, the production step fills in names alongside the roles ("Pilot Sponsor: Mark Chung, CEO"). The role label stays — it's how the customer reads the deck six months later when staffing has shifted.
 
 This is the rendering-layer-never-invents-facts principle from `LEARNINGS.md` applied to slide templates. A name baked into a template is no longer a template; it's a one-off artifact masquerading as reusable infrastructure. When the next pilot needs a new deck, the artifact gets re-cloned from the role-labeled template, not edited from a names-baked precedent.
+
+## Template vs. produced
+
+The roles-not-names rule is concrete in this comparison. Left column is what an agent generates from the spec (or what a producer clones from a previous deck); right column is what a human fills in against the actual engagement. A produced deck MUST NOT ship while any `[FIELD: ...]` placeholder remains.
+
+| Slot | Template stage | Produced stage |
+|---|---|---|
+| Verdigris team slide | `Pilot Sponsor: <span class="vd-template">[FIELD: name + title, e.g. "Mark Chung, CEO"]</span>` | `Pilot Sponsor: Mark Chung, CEO` |
+| Customer team slide | `Customer Pilot Lead: <span class="vd-template">[FIELD: name + title]</span>` | `Customer Pilot Lead: Jane Doe, VP of Energy Operations` |
+| Title slide subtitle | `Pilot kickoff for <span class="vd-template">[FIELD: customer + scope, e.g. "Acme Life Sciences — 5-building pilot"]</span>` | `Pilot kickoff for Acme Life Sciences — 5-building pilot` |
+| Timeline anchor | `Hardware install: <span class="vd-template">[FIELD: absolute date, e.g. "2026-06-15"]</span>` | `Hardware install: 2026-06-15` |
+
+The template stage is what an agent generates from the spec; the produced stage is what a human (or evidence-grounded agent) fills in. Never ship the produced stage without source evidence for every filled placeholder — a sponsor name is verifiable from the contract; an install date is verifiable from the project schedule. If a slot lacks a source, leave the placeholder visible and flag it in the hand-off note.
 
 ## Audience-fit diction (Z2O-1321)
 
@@ -245,7 +271,7 @@ Before distributing a pilot kickoff deck, walk this checklist. Fail any line, fi
 10. One anchor metric (slide 15); not multiple
 11. PDF export tested via Chrome `--print-to-pdf` — no clipping, fonts loaded, footer present on every slide
 12. Hand-off note attached, enumerating any `[FIELD: ...]` placeholders that remain
-13. Naming convention applied: `pilot-kickoff-{customer}-{topic}-{YYYYMMDD}-v{N}.pdf`
+13. Naming convention applied: `pilot-kickoff-{customer}-{topic}-{YYYYMMDD}-v{N}.pdf` — see [`workflows/sales-collateral`](../../workflows/sales-collateral#versioning-vs-refresh) for when to bump the version vs. edit in place
 
 The checklist sits alongside the cell-validator pass; the validator catches structural rule violations (logomark, confidentiality, table dims), the checklist catches content-quality issues (diction, slide count, anchor metric).
 
@@ -267,7 +293,7 @@ Filed as Linear issues Z2O-1318 through Z2O-1323 on 2026-05-02 from a review of 
 - **Z2O-1322** Date / week-N — mixed formats in one deck created ambiguity about the actual pilot calendar
 - **Z2O-1323** Table formatting — ad-hoc tables with inconsistent padding, column counts, header treatment
 
-Each issue is now a rule under `composition.persuade-slide-deck.*` in `rules/visual-rules.yml`, plus a voice rule under `voice/recipes.yaml` for diction. The rules are mode-conditional where the constraint differs across genres (confidentiality default, date format, voice mix). Mark Chung's broader framing on 2026-05-01 — "we need a scalable way to produce product demo artifacts and canonical product information" — drove the decision to absorb production-process scope into the design repo via `workflows/sales-collateral.md`, the production-side counterpart to this cell.
+Each issue is now a rule under `composition.persuade-slide-deck.*` in `rules/visual-rules.yml`, plus a voice rule under `voice/recipes.yaml` for diction. The rules are genre-conditional (via the YAML `modes:` field) where the constraint differs across genres (confidentiality default, date format, voice mix). Mark Chung's broader framing on 2026-05-01 — "we need a scalable way to produce product demo artifacts and canonical product information" — drove the decision to absorb production-process scope into the design repo via `workflows/sales-collateral.md`, the production-side counterpart to this cell.
 
 The genre framework was synthesized via the [adversarial-review workflow](../../workflows/adversarial-review): research the four exemplars, debate the genre splits (does pilot kickoff really differ from customer 101? — yes, on six axes; does internal team belong as a sibling genre or a parent class? — sibling, because the deltas-only against pilot kickoff approach minimizes drift), synthesize the rules, then QA. Per `LEARNINGS.md` "honest history beats clean history," this section preserves the audit trail.
 

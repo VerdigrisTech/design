@@ -45,7 +45,7 @@ The whitepaper cover system shipped a v0.1 with universal "Recommendations to <i
 
 ### 1. Research
 
-Build the institutional reference set before writing rules. For each genre or mode the spec will cover, find 3-5 authoritative exemplars from real institutions. Read or page through them. Capture concrete observations:
+Build the institutional reference set before writing rules. For each genre the spec will cover, find 3-5 authoritative exemplars from real institutions. Read or page through them. Capture concrete observations:
 
 - What is on the cover, in the body, in the back matter
 - What conventions hold across the set, what diverges
@@ -58,23 +58,23 @@ This stage is non-negotiable. Skipping it produces specs that codify the author'
 
 ### 2. Debate
 
-Spawn two reviewer agents (or two passes by the same agent in adversarial mode) holding opposing positions on the most consequential open question.
+Spawn two reviewer agents (or two adversarial passes by the same agent) holding opposing positions on the most consequential open question.
 
 Examples of debate prompts that produced useful tension on the whitepaper cover system:
 
 - "Position A: Recommendations should always be labeled 'Recommendations to <institution>' for accountability. Position B: That label is genre-specific to think-tank briefs and inappropriate for CEO briefs and lab-tradition documents."
 - "Position A: Every vendor-authored brief needs a COI disclosure block on the cover. Position B: COI belongs only when the recommendations directly benefit the author's commercial interest, otherwise it advertises insecurity."
 
-The debate is structured: each side cites exemplars from the research stage; the goal is not consensus but exposure of the tradeoffs. The synthesizer (you, or a third agent) reads both arguments and decides how the spec should resolve the tension — usually with a mode-conditional rule, sometimes by accepting one side, occasionally by reframing the question.
+The debate is structured: each side cites exemplars from the research stage; the goal is not consensus but exposure of the tradeoffs. The synthesizer (you, or a third agent) reads both arguments and decides how the spec should resolve the tension — usually with a genre-conditional rule (encoded via the YAML `modes:` field), sometimes by accepting one side, occasionally by reframing the question.
 
-Output: a synthesis note enumerating which position won, which mode it applies to, and what rules drop out.
+Output: a synthesis note enumerating which position won, which genre it applies to, and what rules drop out.
 
 ### 3. Synthesis
 
 Translate the debate output into spec changes:
 
 - Update the category guide (`categories/<category>/<topic>.md`).
-- Update or add rules in `rules/visual-rules.yml`. Use mode-conditional annotations (`modes: [ceo_brief, policy_brief]`) when the debate produced a mode-specific resolution.
+- Update or add rules in `rules/visual-rules.yml`. Use genre-conditional annotations on the YAML `modes:` field (e.g. `modes: [ceo_brief, policy_brief]`) when the debate produced a genre-specific resolution.
 - Update or add tokens in `tokens/`.
 - Update the reference stylesheet or template in `build/`.
 - Update the composition matrix in `foundations/composition.md` if a new cell or column was introduced.
@@ -144,9 +144,9 @@ The cost of 5 loops is real: 5 loops × 4-5 agents × ~15 min synthesis per loop
 
 **Skipping research and going straight to debate.** Two agents arguing without exemplars produces vibes, not principles. Always research first.
 
-**Synthesizing into universal rules when the debate exposed a genre split.** If position A wins for genre X and position B wins for genre Y, the rule must be mode-conditional. Forcing one side to win across all modes is the failure mode the workflow exists to catch.
+**Synthesizing into universal rules when the debate exposed a genre split.** If position A wins for genre X and position B wins for genre Y, the rule must be genre-conditional (use the `modes:` YAML field). Forcing one side to win across all genres is the failure mode the workflow exists to catch.
 
-**Treating adversarial review as a one-way ratchet toward more rules.** Sometimes the right outcome of debate is removing or weakening a rule. The whitepaper cover system removed three "always required" rules and replaced them with mode-conditional rules — net rule count went down, but precision went up.
+**Treating adversarial review as a one-way ratchet toward more rules.** Sometimes the right outcome of debate is removing or weakening a rule. The whitepaper cover system removed three "always required" rules and replaced them with genre-conditional rules — net rule count went down, but precision went up.
 
 **Conflating adversarial review with code review.** This workflow stress-tests the spec. Code review (`pr-review-toolkit:code-reviewer`) checks that the implementation matches the spec. Both happen, in that order.
 

@@ -129,7 +129,7 @@ Conventions:
 
 ## Dark cover specifics
 
-Most Verdigris briefings (CEO and policy-brief modes) use a dark cover. Lab-tradition documents use a plain white cover; the rules below do not apply.
+Most Verdigris briefings (CEO and policy-brief genres) use a dark cover. Lab-tradition documents use a plain white cover; the rules below do not apply.
 
 1. **Drop headline weight one tier.** Lato 700 (not 800/900). Heavy weights bloom on dark.
 2. **Deck at contrast tier 2** (~70-78% L), not pure white. Two near-white texts compete.
@@ -146,6 +146,19 @@ The recommendations / call-to-action section uses a different label per genre. T
 | Lab tradition | "Implications" or "Open Questions for <audience>" | Prose, sometimes bulleted; rarely numbered |
 | Policy brief / think-tank | "Recommendations to <institution>" | Numbered (typically 3-7) |
 | CEO brief | "Bottom line" / "What to do" / declarative summary | Numbered or prose; declarative voice |
+
+### Decision framework: where to land in the bounds
+
+The genre table sets length and recommendation-count ranges. Pick within them.
+
+| Boundary | Floor (small) | Default | Ceiling (large) |
+|---|---|---|---|
+| **Length, CEO brief (4-12pp)** | **4-5pp** when the audience is a single named institution and the recommendations rest on a single proprietary dataset (the LBNL/DOE briefing model). | **6-8pp** for a typical CEO brief addressed to a research or policy audience: one anchor argument, 2-3 figures, 4-7 numbered recommendations. | **10-12pp** when the brief introduces a novel framework that needs a longer methodology callout, multiple figures, and an extended COI/disclosure section. Above 12 the CEO genre breaks; consider the policy-brief genre instead. |
+| **Length, policy brief (8-25pp)** | **8-10pp** for a focused single-recommendation brief addressed to one institution. | **12-18pp** for a typical policy brief: 3-5 numbered recommendations, methodology sidebar, full citations. | **20-25pp** when the brief covers multiple recommendation areas (regulatory + operational + funding) addressed to overlapping institutional audiences. |
+| **Length, lab tradition (25-80pp)** | **25-35pp** for a focused technical report. | **40-55pp** for a typical lab report: full methodology chapter, multiple figure series, extensive bibliography. | **60-80pp** for a multi-author working paper or year-long study output. |
+| **Numbered recommendations, policy brief (3-7)** | **3 recommendations** when the audience is a single institution and the recommendations are pre-prioritized. | **5 recommendations** for a typical policy brief: institutional addressee, mixed audience seniority. | **7 recommendations** only when the audience expects an exhaustive list (e.g., a regulator's annual review). Above 7 the recommendations compete for institutional attention and adoption rates fall. |
+
+If three or more boundaries push to the ceiling, the brief may be the wrong genre. A 12pp CEO brief with 12 recommendations is structurally a policy brief; switch genres rather than stretch the current one past its frame.
 
 **Methodology callout.** Required when a quantitative claim rests on proprietary or non-public data. Use a letter footnote (m, n, ...) to distinguish from numeric citations. Required content: site count *n*, geography, instrumentation (sample rate, sensor class), observation window, statistical confidence interval, anonymization protocol, data-availability statement. Lab tradition: full chapter. Policy brief: sidebar or appendix. CEO brief: callout box (see `.vd-methods` in `build/print/cover.css`).
 
@@ -177,11 +190,15 @@ Chrome `--print-to-pdf` honors all of these without workarounds.
 
 Lab-tradition and pure policy-brief examples will be added when real surfaces ship.
 
+## Versioning + refresh
+
+Whitepaper revisions follow the canonical naming + versioning protocol. See [`workflows/sales-collateral#versioning-vs-refresh`](../../workflows/sales-collateral#versioning-vs-refresh) for the policy on when an edit is in-place (typo, broken link), a refresh (patch bump for an updated number or refreshed exemplar), or a new version (new anchor argument or scope change). A new anchor metric or a renamed institutional addressee is always a new version, not a refresh.
+
 ## What this rule does NOT cover
 
 - Long-form (>15 page) lab reports. Needs a separate "report" pattern with TOC, chapter breaks, multi-author title page.
 - Bound print (perfect-bound, saddle-stitched). Needs bleed and gutter rules.
-- Light-cover variants of the policy-brief or CEO-brief modes. Most Verdigris briefings are dark. Light covers earn their own pattern when a real surface needs one.
+- Light-cover variants of the policy-brief or CEO-brief genres. Most Verdigris briefings are dark. Light covers earn their own pattern when a real surface needs one.
 - One-pagers and case studies. See `categories/ads-and-templates/guidelines.md`.
 
 ## Structural additions vs content additions
@@ -190,7 +207,7 @@ Lab-tradition and pure policy-brief examples will be added when real surfaces sh
 
 A best-practice **structural slot** (COI disclosure block, Methods callout, byline city, "Prepared for" line) MAY be added by the design layer if and only if:
 
-1. The slot is a documented best practice for the document's mode, AND
+1. The slot is a documented best practice for the document's genre, AND
 2. The content placed in the slot is either (a) verifiable from a real source or (b) clearly marked as a template the author must fill in before distribution.
 
 A **content addition** (filling a citation with a fabricated entry, correcting an author attribution, renaming a section, inventing byline metadata) is never a rendering-layer decision. It is an author decision. The design system flags such items in the hand-off note and lets the author resolve them.
@@ -229,6 +246,18 @@ Conventions:
 
 This is the visible counterpart to the structural-vs-content principle above: the design layer adds the *slot*, marks the *missing content*, and lets the author fill it in. The yellow tint is intentionally jarring; it should never feel "designed enough to ship."
 
+## Template vs. produced
+
+The structural-vs-content principle above is concrete in this comparison. Left column is what an agent generates from the spec; right column is what a human (or evidence-grounded agent) fills in. A produced cover MUST NOT ship while any `[FIELD: ...]` placeholder remains, and every filled value must trace to a source the author can recognize.
+
+| Slot | Template stage | Produced stage |
+|---|---|---|
+| Byline | `<span class="vd-template">[FIELD: author name, e.g. "Mark Chung"]</span>, <span class="vd-template">[FIELD: role + organization, e.g. "Founder & CEO, Verdigris Technologies"]</span>` | `Mark Chung, Founder & CEO, Verdigris Technologies, Moss Landing CA` |
+| Methods callout (n value) | `The study covers <span class="vd-template">[FIELD: site count, e.g. "14"]</span> sites across <span class="vd-template">[FIELD: geography, e.g. "California and Texas"]</span>.` | `The study covers 14 sites across California, Texas, and Virginia.` |
+| Eyebrow | `BRIEFING · <span class="vd-template">[FIELD: addressee group, e.g. "LBNL GRID INTEGRATION GROUP / DOE"]</span>` | `BRIEFING · LBNL GRID INTEGRATION GROUP / DOE` |
+
+The template stage is what a generation pipeline emits. The produced stage is what a human author fills in, sentence by sentence, against real sources. Skipping the template stage and shipping plausible defaults (a guessed n, a guessed geography, a guessed addressee) is the failure mode the placeholder convention exists to prevent.
+
 ## Why this guide changed
 
-v0.1 of this guide treated whitepaper covers as one genre and codified think-tank conventions ("Recommendations to <institution>", required "Prepared for" line, mandatory disclosure block) as universal. A research-and-debate review across LBNL, NREL, CSIS, BCG, Brattle, Anthropic, and Stripe exemplars showed those are mode-specific, not universal. Genre choice now leads the guide; per-mode adjustments follow.
+v0.1 of this guide treated whitepaper covers as one genre and codified think-tank conventions ("Recommendations to <institution>", required "Prepared for" line, mandatory disclosure block) as universal. A research-and-debate review across LBNL, NREL, CSIS, BCG, Brattle, Anthropic, and Stripe exemplars showed those are genre-specific, not universal. Genre choice now leads the guide; per-genre adjustments follow.

@@ -1,0 +1,340 @@
+# Voice Profile: Hong-Bin
+# Sources: 40+ Slack messages across team-edge, team-z2o, team-implementations,
+#          team-bops, team-po-and-so, hiring-discussions, customer-account
+#          channel (one), fulfillment-warehouse, product-hardware, and
+#          regional-team (Taiwan) channels.
+# Profiled: 2026-05-04 (Wave 2)
+# Note on surname: Hong-Bin's Slack display name, real name, and email handle
+#       (hongbin@verdigris.co) all carry no public surname. Filed as
+#       hong-bin.yaml. If a surname is preferred for the file in future, it
+#       should be sourced from him directly, not inferred.
+# Role: Verdigris Edge team lead — firmware, hardware, mechanical, manufacturing,
+#       fleet operations, and the Taiwan engineering organization. Reports to
+#       Mark / Jon side of the org. Primary partner for Mike Mahedy on
+#       hardware NRE and for Jimit on cloud/edge infrastructure boundaries.
+# Redaction note (Loop 5 PII discipline applied at authoring time):
+#       customer-identifying details (account names on the corp denylist,
+#       equipment IDs matching [A-Z]{3}\d{6,10}, vendor/partner names on
+#       customer-facing channels) genericized below. Some Taiwan-channel
+#       material related to founder travel itinerary and Taiwan-specific
+#       hotel recommendations omitted as out-of-band personal logistics.
+#       Hiring-discussion material preserved because it is policy-level
+#       reasoning, not candidate-identifying.
+
+name: Hong-Bin
+slack_id: UEJF8AL87
+role: Edge team lead — firmware, hardware, manufacturing, fleet operations; Verdigris Taiwan engineering lead
+voice_summary: |
+  Hong-Bin writes from a leadership seat that is also still an IC seat.
+  His messages run long when the topic warrants — multi-paragraph
+  policy arguments with numbered sections — and short when it doesn't
+  ("cool", ":thinking_face: I haven't had a chance to review it
+  thoroughly. will comment directly."). The shape adapts to the load,
+  but the discipline is consistent: name what the question actually is,
+  name what answer is needed, and ask for explicit clarity in return.
+
+  His signature quality is structured argument under disagreement. When
+  he disagrees with a founder, he doesn't soften the disagreement, but
+  he does structure it: "I read your reply, and I want to push back,
+  because tossing the question back doesn't move us forward. You
+  responded to a concrete capacity question with three open-ended
+  re-questions. That defers the diagnosis, it doesn't engage with it."
+  The push-back is direct; the structure makes it about the artifact,
+  not the person. He then enumerates the specific re-questions and
+  answers each.
+
+  He also has a recurring move: "G/NG" (go / no-go) prompts that force
+  binary commitment. "Please respond with G/NG explicit clarity. [ ]
+  G/NG to revise OKR to include everything named above. [ ] G/NG to
+  deliberately drop firmware fixes/releases to network for senior
+  embedded system engineer hire. [ ] G/NG to review edge team staffing
+  plan." This is the voice of a team lead who has been bitten by
+  ambiguous direction and now refuses to leave the room without it.
+
+  Hong-Bin operates across cultures (Taiwan-based, leading global
+  hardware/firmware work) and across abstraction levels (PCB ferrite
+  pressure → Edge OKR strategy → hiring policy economics) without
+  signaling the transitions. The voice is the same in each register:
+  precise about scope, honest about constraint, willing to disagree
+  publicly when the path is wrong.
+
+strongest_ingredients:
+  - technical_precision: 8
+    evidence_hardware: |
+      "looks pretty tight. if you press harder on the coil side, would
+      it crack the ferrite?"
+    evidence_lte_survey: |
+      "Only [chipset] (cat-m) supports SGP.32 globally, however, its
+      bandwidth, coverage and signal strength has been proven
+      insufficient. Both [vendor] and [vendor] are NOT answering the
+      profile management middleware immediately, implying that they
+      don't have an off-the-shelf solution."
+    evidence_recommendation: |
+      "Please lmk if you want me to continue this survey or move on
+      with [chipset]? My default path is to continue the survey while
+      keeping [chipset] as our standard lte solution (as a top-down
+      request). My gut-feeling is to migrate to [chipset] that is
+      waiting for your approval."
+  - operator_empathy: 8
+    evidence_release_discipline: |
+      "one revision to cover multiple features is my bad. I knew I
+      should separate them. I must be distracted when juggling around
+      the overwhelming fix schedules and incidents. do you think there
+      is a way you can help enforce in either git or claude that
+      pre-checks PR & releases? it will be very helpful to offload some
+      disciplines to the automated process."
+    evidence_inventory_partner: |
+      "thank you so much for fixing the numbers in the order. It is
+      unfortunate that we couldn't come up with a smarter order
+      template yet. Please feel free to overwrite the order and update
+      the inventory when you see these mismatches."
+    note: |
+      Hong-Bin's empathy is structural: he assumes goodwill from
+      partners (operations, vendors, junior engineers), names his own
+      contribution to a problem ("my bad"), and asks for tooling fixes
+      so the same problem doesn't reach the next person.
+  - self_honesty: 8
+    evidence_capacity: |
+      "I'm willing to put it in as an aspirational target. Honest
+      assessment up-front: based on current bandwidth, we'll likely
+      miss it — same pattern as the EVT OKRs in previous quarters,
+      where the constraint was capacity, not skill. The value of the
+      OKR is the gap as a forcing function for the resourcing
+      conversation; I want us to go in eyes-open about the likely
+      score so we don't end up relitigating it when it lands low."
+    evidence_uncertainty: |
+      "I could be wrong here; this is based on conversations with
+      [colleagues] and my own observation. Would love to be better
+      educated."
+    evidence_distraction: |
+      "I must be distracted when juggling around the overwhelming fix
+      schedules and incidents."
+  - mission_gravity: 7
+    evidence_policy_reasoning: |
+      "The cost shape on this path is fundamentally different from
+      standard recruiting. Standard hiring spends recruitment dollars —
+      postings, agency fees — relatively bounded. A trial contract
+      spends payroll for ~3 months, plus the team's onboarding time
+      across the same window. Salary >> ad spend. If the trial doesn't
+      convert, the full payroll and 3 months of team time is what
+      we've written off — and the OKR slips alongside it, because the
+      capacity spent evaluating someone we then released is capacity
+      that didn't go into delivery."
+    evidence_strategy: |
+      "Faraday is positioned as the successor to Einstein, which is an
+      AC-based load monitoring product. AFAIK we're targeting AI
+      datacenters, which points toward DC-based load monitoring — and
+      IMHO power whip is a better fit for the neocloud scenario."
+    note: |
+      Hong-Bin's mission expression is policy- and strategy-level: he
+      reasons about cost shapes, OKR forcing functions, product
+      positioning, and what the company is actually optimizing for.
+      He does this from inside the engineering org, not from a
+      detached strategic view.
+  - personal_connection: 6
+    evidence_thanks: "thank you 3000~"
+    evidence_directness_with_care: |
+      "<@U02TBQDUR|thomas> cc. <@Judy> — thanks for surfacing the
+      alternatives. Before I sign on to a non-standard path, I want to
+      be clear about what I'm asking for and what I'm not."
+    evidence_bilingual_idiom: |
+      "Sorry we haven't had a hiring system that is based on referral
+      yet."
+    note: |
+      Hong-Bin's connection register is direct + bilingual. "thank
+      you 3000~" (a Marvel reference filtered through his English
+      register) and apologies that name a structural gap rather than a
+      personal failure. Cross-cultural register that lands clear in
+      both directions.
+  - warmth_and_humor: 5
+    evidence_dry: |
+      "I see it differently. But I guess 'policy debates are not time
+      spent well'. Let's leave it as is."
+    evidence_playful: |
+      "I'll tease him with comp. model in Taiwan (lvl 4-5 engineer)
+      along with the advantages of a gold card. (Seren can endorse it.
+      lol)"
+    note: |
+      Humor is dry, often signaling a closing position rather than
+      opening conversation. The "lol" appears once and is doing
+      tonal work — softening a recruiting tactic he knows is a bit
+      cheeky.
+
+unique_contribution: |
+  Engineering-org leadership voice with policy-level rigor. Hong-Bin is
+  the voice that says "before we adopt this process change, here is the
+  cost shape, here are the structural properties of the standard path
+  we'd be deviating from, here is what the policy needs to call
+  explicitly so we don't just push the discretion onto each hiring
+  manager." Other voices have technical depth or strategic framing;
+  Hong-Bin reasons about org-level processes the way Jon reasons about
+  PCBs — naming the design-for-manufacture problem alongside the design
+  problem.
+
+  His other unique quality is the G/NG forcing function. Hong-Bin
+  refuses to leave decision-making in ambient-discussion mode. He
+  enumerates the specific decisions, asks for binary responses, and
+  holds the room until the ambiguity resolves. This is the voice
+  that breaks meeting drift — including with founders.
+
+  He also brings cross-cultural range: the Taiwan engineering org
+  perspective (manufacturing partner relationships, time-zone
+  asynchrony, gold-card visa logistics, Lunar New Year holidays as
+  real working constraints) combined with US-org policy fluency. No
+  other voice in the corpus has both.
+
+registers:
+  policy_argument: |
+    Long, numbered, structured. Names the specific items that need a
+    decision; ends with G/NG checkboxes. The hiring-policy push-back
+    and the Edge OKR thread are canonical examples. Eyes-open caveats
+    throughout.
+  technical_review: |
+    Short questions that probe the failure mode. "looks pretty tight.
+    if you press harder on the coil side, would it crack the
+    ferrite?" "Please don't optimize for speed, but reliability."
+  engineering_summary: |
+    Multi-stakeholder summary in nested bullets — "edge: 1. ...
+    2. ... 3. ... cloud: ... infosec: ..." — followed by tags asking
+    each owner to confirm.
+  cross_cultural_coordination: |
+    Bilingual register, direct apology for structural gaps, courtesy
+    + decisiveness. "Sorry we haven't had a hiring system that is
+    based on referral yet."
+  document_critique: |
+    Names the structural problem in the artifact, not the author. "I
+    cannot read through the whole document because it doesn't have a
+    friendly structure. It takes too much brain energy to try to
+    figure out points you want to make. Please try structure this
+    document in a way where you can be accountable of the features,
+    verifications and schedules documented."
+  inventory_and_partner_ops: |
+    Warm, courteous, names the gap. "thank you so much for fixing the
+    numbers... It is unfortunate that we couldn't come up with a
+    smarter order template yet. Please feel free to overwrite..."
+
+best_for:
+  - recipe: technical_blog
+    role: supporting
+    why: |
+      For posts on hardware, firmware, manufacturing, or fleet
+      operations, Hong-Bin's voice provides the policy-and-tradeoff
+      depth that pure engineering posts often miss. Jon remains
+      primary for the engineering-precision blog voice; Hong-Bin
+      supports on the "why we picked this path over the alternatives"
+      sections.
+    target_feeling: respect
+  - recipe: about_page
+    role: supporting
+    why: |
+      Hong-Bin's voice on the global-team / Taiwan-engineering
+      sections of an about page would describe how the org actually
+      works (timezones, partners, manufacturing relationships)
+      without flattening the cross-cultural reality.
+    target_feeling: belonging
+  - recipe: investor_update
+    role: accent
+    why: |
+      Hong-Bin's eyes-open OKR caveats and capacity-vs-aspiration
+      framing translate well to the "what we're committing to and
+      what's at stake" sections of investor updates. Use as accent on
+      operations/engineering progress; primary remains Mark + Prashanth.
+    target_feeling: confidence
+  - recipe: internal_policy_doc
+    role: primary
+    why: |
+      For internal policy artifacts (hiring process changes,
+      engineering OKR design, cross-team boundary documents) Hong-Bin's
+      structured-argument-with-G/NG-prompts register is the canonical
+      voice. (If `internal_policy_doc` is not yet a named recipe, this
+      profile argues it should be — the voice exists and is
+      load-bearing for org function, even if internal-only.)
+    target_feeling: confidence
+
+verbal_fingerprints:
+  - '"G/NG to..." with checkbox lists'
+  - '"I''m willing to..." / "Honest assessment up-front:"'
+  - '"eyes-open" / "we''ll likely miss it"'
+  - "I read your reply, and I want to push back, because..."
+  - "That defers the diagnosis, it doesn't engage with it."
+  - '"Please lmk" / "lmk"'
+  - "I see it differently."
+  - "thank you 3000~"
+  - "I could be wrong here; this is based on..."
+  - "AFAIK"
+  - '":thinking_face:" / "cool"'
+  - "Sorry we haven't had a [system] that is based on... yet."
+  - "Please try structure this document in a way where you can be accountable of..."
+
+voice_sample_policy: |
+  <@Mark> <@jon> — following up on yesterday's session. We didn't get
+  through everything, and on reflection I want to revise my answers
+  on the open topics.
+
+  1. Fleet management as an Edge OKR — yes, with a caveat.
+
+  I'm willing to put it in as an aspirational target. Honest assessment
+  up-front: based on current bandwidth, we'll likely miss it — same
+  pattern as the EVT OKRs in previous quarters, where the constraint
+  was capacity, not skill. The value of the OKR is the gap as a
+  forcing function for the resourcing conversation; I want us to go in
+  eyes-open about the likely score so we don't end up relitigating it
+  when it lands low.
+
+  2. On hiring and staffing — let's reopen the conversation properly.
+
+  We are hiring right now. A more aggressive hiring plan has been
+  drafted since 2022. I'd welcome a fresh discussion on how to staff
+  Edge so the team can be accountable to the OKRs we set.
+
+  Things are moving. They're moving slower than any of us would like,
+  because the resources to accelerate them haven't been there. That's
+  not the same as not moving.
+
+  Please respond with G/NG explicit clarity.
+
+  [ ] G/NG to revise OKR to include everything named above
+  [ ] G/NG to deliberately drop firmware fixes/releases to network for
+      senior embedded system engineer hire
+  [ ] G/NG to review edge team staffing plan
+
+voice_sample_pushback: |
+  <@Mark> — I read your reply, and I want to push back, because
+  tossing the question back doesn't move us forward.
+
+  You responded to a concrete capacity question with three open-ended
+  re-questions. That defers the diagnosis, it doesn't engage with it.
+  Seven years into this, I'd expect the CEO's job in this exchange to
+  be locating the real bottleneck and committing to address it — not
+  redirecting the burden of proof back to the people surfacing it.
+
+  1. "[Team A] spans many disciplines; [Team B] is more focused."
+
+  That's a description of current state, not an argument. [Team A]
+  covers firmware, mechanical, hardware, manufacturing, fleet ops,
+  support — that's the scope the company chose. Which of those
+  disciplines do you think [Team A] should stop contributing to? If
+  the answer is "none," the discipline count isn't the lever — capacity
+  within them is. If the answer is "some," name them. Without one, the
+  observation doesn't lead anywhere.
+
+voice_sample_summary: |
+  takeaway: [tool] is a more sophisticated iot health monitoring tool.
+  [team] has done diligent sourcing and investigation to endorse [tool].
+  Now it requires buy-ins from engineering team.
+
+  edge:
+  1. define [tool] feature sets to be verified as a "pass" from QA
+  2. investigate the system reliability and ensure the device can run
+     [tool] without trade-offs (both cpu/data/and network).
+  3. investigate the system configuration path and make sure [tool]
+     service is reliable.
+
+  cloud: a further conversation about infrastructure and the access
+  control
+
+  infosec: make sure the employment of this tool doesn't violate SOC2
+
+  <@jimit> <@josh> plz help check if this summary sound right to you
+  too. <@jon> tag you for bringing this conversation to cloud and
+  infosec team.

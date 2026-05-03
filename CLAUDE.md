@@ -6,6 +6,7 @@ This repo (`VerdigrisTech/design`) is the canonical design system for all Verdig
 
 **Package:** `@verdigristech/design-tokens` on GitHub Packages
 **Consumers:** Patina (app UI), www (marketing site), evaluator pipeline, AI agents, Figma
+**Integration guide:** [`CONSUMERS.md`](CONSUMERS.md) — canonical guide for any consumer (Tailwind, raw tokens, CSS imports, voice recipes, rules YAML, versioning).
 
 ## Key Architecture
 
@@ -115,6 +116,11 @@ fix(rules): correct heading weight constraint from 600 to 700
 - **Project:** Design System: VerdigrisTech/design
 - Include issue ID in commit messages: `[Z2O-XXX]`
 
+## Glossary
+
+- **Genre** is the human-facing noun for the artifact-type-within-a-cell distinction (e.g., the slides cell has four genres: pilot kickoff, customer 101, partner enablement, internal team; the whitepaper cell has three: lab_tradition, policy_brief, ceo_brief). Use "genre" in all prose.
+- **`modes:`** is the YAML field on rules in `rules/visual-rules.yml` that lists which genres a rule applies to. The two terms refer to the same concept; "modes" is the technical contract on disk, and "genre" is the producer-facing word. Only say "mode" when explicitly referencing the YAML field (e.g., "the `modes:` field accepts a list of genres").
+
 ## File Structure Rules
 
 ### Tokens (`tokens/`)
@@ -135,11 +141,35 @@ fix(rules): correct heading weight constraint from 600 to 700
 
 ### Visual Rules (`rules/`)
 - YAML format, machine-parseable for evaluator pipeline consumption
-- Schema (v2.1.0): every rule must have `id`, `severity`, `type`, `description`
+- Schema (v4.0.0): every rule must have `id`, `severity`, `type`, `description`
 - Optional `maturity` field: `experimental` (warning, collecting signal), `convention` (warning, deviation requires justification), `rule` (default, blocks merge), `invariant` (axiomatic, cannot override)
 - `type: "reference"` entries omit severity (informational, not enforced)
 - Every guidance rule needs both a floor AND a ceiling — AI agents optimize toward maximums without upper bounds
 - Cross-file consistency: if a value appears in rules, foundations, and specimens, all three must match
+
+#### Custom YAML fields
+
+The schema accreted several fields beyond the base set as the rules system grew. Two categories:
+
+**Rules-system canonical** (validator-checked, structural meaning):
+
+- `linear_issue` (string, e.g. `"Z2O-1318"`). The Linear ticket that conceived the rule. Required on all new rules from PR #43 onward. Use `# no linear_issue (pre-tracking)` for older rules that pre-date this convention. Example: `linear_issue: "Z2O-1318"` on `composition.persuade-slide-deck.logomark-consistency`.
+- `inherits_from_sales_collateral` (list of rule IDs). Declared on a rules block to inherit slide-deck universals (logomark, confidentiality, roles, dates) into one-pager and case-study cells. The validator's `checkInheritanceIntegrity` confirms every referenced rule ID actually exists. Example: `inherits_from_sales_collateral: ["composition.persuade-slide-deck.logomark-consistency"]`.
+- `modes` (list of genre names — see Glossary). Restricts a rule to specific genres within a cell. Used on slide-deck genres (`pilot_kickoff`, `internal_team`, `customer_101`, `partner_enablement`) and on one-pager genres (`solution_overview`, `comparative`). The evaluator skips the rule when the artifact's declared genre is not in this list. Example: `modes: ["pilot_kickoff", "customer_101"]`.
+- `genre_metadata_field` (string). Names the HTML/CSS attribute the evaluator should read to determine the artifact's mode. Currently `data-genre on <body>` and `data-confidentiality on <body>`. Example: `genre_metadata_field: "data-genre on <body>"`.
+- `applies_to_modes` (list of mode names). Functionally identical to `modes`; used on whitepaper-cover rules. Treat as a synonym; future cleanup should consolidate to `modes`.
+
+**Metadata helpers** (informational, not validator-checked):
+
+- `applies_to` (string). Free-form prose narrowing where the rule applies, when `modes` is too coarse. Example: `applies_to: "TEMPLATE artifacts only (not produced/filled-in decks)"`.
+- `applies_to_examples` (list of file paths). Names example artifacts that demonstrate the rule. Used on cell-level reference blocks; mirrors what `existing_verdigris_examples` does for genres.
+- `existing_verdigris_examples` (list of strings). Real-world Verdigris artifacts that approximate the genre. Each entry should explain how the artifact maps to the genre and what's missing. Example: `existing_verdigris_examples: ["Verdigris 'Signals Overview' (Notion) — pre-cell; needs refresh"]`.
+- `exemplar_archetypes` (list of strings). Industry archetypes for the genre when no Verdigris artifact yet exists. Each entry is a one-line pattern description plus public references where available. Example: `exemplar_archetypes: ["Product fact-sheet pattern: title + 3 callouts (Stripe product pages, Linear feature pages)"]`.
+- `note_on_confidentiality` (string). Explains the cell's confidentiality default and exceptions. Example on case-study cell: `note_on_confidentiality: "Case studies default to PUBLIC tier..."`.
+- `related_issues` (list of Linear IDs). Companion tickets that informed the rule but are not the originating ticket. Distinct from `linear_issue` (singular originator). Example: `related_issues: ["Z2O-1310"]` on `single-anchor-metric` (per-instance qualifier discipline came from a different ticket).
+- `anti_examples` (list of strings). Concrete failure shapes the rule catches; complements `examples`. Each entry is one or two lines describing a specific failure mode an LLM evaluator can pattern-match. Generic placeholders ("doesn't follow the rule") are not acceptable.
+
+When adding a new field, document it here in the same PR. Validator drift starts as undocumented fields and ends as silent inheritance breaks.
 
 ### Explorations (`explorations/`)
 - Prototypes, portfolios, working-through-something essays. Not authoritative.

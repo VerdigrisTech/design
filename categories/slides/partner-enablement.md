@@ -53,6 +53,18 @@ Partner enablement decks are longer because they replace, in document form, the 
 - Role labels in templates ("Verdigris Partner Manager" not "Jimit Shah"; produced deck adds the name alongside)
 - Table dims, figures, PDF-exportable
 
+## Decision framework: where to land in the bounds
+
+| Boundary | Floor (small) | Default | Ceiling (large) |
+|---|---|---|---|
+| **Slide count (20-30)** | **20 slides** when the partner already co-sells adjacent products and only needs Verdigris-specific deltas (qualifying questions, deal-reg mechanics, FAQ). | **25 slides** for a typical net-new partner: full wedge framing + qualifying + objections + FAQ + deal-reg. | **30 slides** when the partner is selling into a regulated or unfamiliar segment that needs additional reference customers, technical FAQ, and deeper objection handling. Above 30 the deck stops being self-service training and becomes a binder; split into a deck plus an appendix instead. |
+| **Qualifying questions (5-7)** | **5 questions** for partners selling into a single, well-defined segment (e.g., colocation operators only). | **6 questions** for typical multi-segment partners. | **7 questions** when the partner sells into multiple Verdigris-fit segments and needs disqualifiers per segment. Below 5 the partner AE cannot triage; above 7 they will not memorize the list and will fall back to instinct. |
+| **Common objections (4-6)** | **4 objections** when the partner's customer base mirrors Verdigris's existing case studies. | **5 objections** for typical partners: incumbent BMS, "we have IoT already", pricing, integration, change management. | **6 objections** when the partner's customer base introduces a novel objection class (regulatory framing, jurisdiction-specific compliance, partner-specific procurement gates). |
+| **Reference customers (2-3 slides)** | **2 reference slides** when one anchor customer dominates the partner's segment. | **3 reference slides** for typical partners: anchor + adjacent + outcome summary. | **3 is the ceiling** — beyond that, link to the case-study library instead of pasting more references into the deck. |
+| **Technical FAQ (2-3 slides)** | **2 FAQ slides** for partners with strong in-house technical depth. | **3 FAQ slides** for typical partners where the AE will field common technical questions before escalation. | **3 is the ceiling** — beyond that, the FAQ stops being self-service and the partner needs a Verdigris technical contact in the call. |
+
+If three or more boundaries push to the ceiling, the partnership is probably a strategic rather than a transactional one. Consider a custom partner-launch program rather than a single deck.
+
 ## Diction adjustments specific to partner enablement
 
 The Z2O-1321 diction rule applies, plus partner-specific adjustments:
@@ -64,6 +76,18 @@ The Z2O-1321 diction rule applies, plus partner-specific adjustments:
 - "**Pilot**" — fine; partner AEs understand B2B technical pilots.
 - "**SLA**" — fine to use; partner AEs need to know SLA mechanics to set their customer's expectations.
 - "**Generally available**" — name the actual product status (in pilot, in production at N customers, fleet-deployed). "GA" is internal product-roadmap language.
+
+## Template vs. produced
+
+Partner enablement decks rotate per partner, so placeholders cluster around partner branding, partner-specific pricing, and deal-registration mechanics.
+
+| Slot | Template stage | Produced stage |
+|---|---|---|
+| Title slide co-branding | `Verdigris + <span class="vd-template">[FIELD: partner name, e.g. "Acme Channel Partners"]</span>` | `Verdigris + Acme Channel Partners` |
+| Verdigris technical bench | `Verdigris Partner Manager: <span class="vd-template">[FIELD: name + title, e.g. "Jimit Shah, Director of Partnerships"]</span>` | `Verdigris Partner Manager: Jimit Shah, Director of Partnerships` |
+| Deal-registration mechanics | `Register at <span class="vd-template">[FIELD: deal-reg URL]</span>; partner discount triggers at <span class="vd-template">[FIELD: discount tier, e.g. "Gold tier"]</span>.` | `Register at partners.verdigris.co/register; partner discount triggers at Gold tier.` |
+
+The template stage is what an agent generates from the spec; the produced stage is what a human (or evidence-grounded agent) fills in. Never ship the produced stage without source evidence for every filled placeholder — partner discount tiers are from the signed partnership agreement; the deal-reg URL is from the partnerships site.
 
 ## Voice recipe
 

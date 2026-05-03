@@ -29,12 +29,11 @@ Profiled from Slack messages (April 2026). Each person is an additional source f
 | Thomas Chung | `team/thomas-chung.yaml` | Systems-thinking leadership, transparent operational care, taste editorial |
 | Mark Chung | `team/mark-chung.yaml` | Strategic narrative, mission gravity, editorial vision, founder voice |
 | Jon Chu | `team/jon-chu.yaml` | Field-credible engineering depth, scope discipline, bench diagnostic |
+| Prashanth Shetty | `team/prashanth-shetty.yaml` | Commercial fluency, honest pipeline framing, deal-table ownership |
+| Zeeshan Mohammed | `team/zeeshan-mohammed.yaml` | Structured field reporting, customer-IT bridge, evidence-first escalation |
+| Hong-Bin | `team/hong-bin.yaml` | Engineering-org policy reasoning, G/NG decision forcing, cross-cultural leadership |
 
-### Not yet profiled (insufficient Slack data)
-
-**Prashanth Shetty** (U072APQ694Y) — Only 11 messages found in public channels. To profile: pull from private engineering channels, GitHub PR comments, Linear activity.
-
-**Zeeshan Mohammed** (U05M6KLP4BC) — Only 2 messages found. To profile: pull from private channels, Linear/Notion activity, meeting recordings.
+Wave 2 profiles (Prashanth, Zeeshan, Hong-Bin) added 2026-05-04 from broader Slack corpus access (40+ messages each). Resolves Z2O-1345.
 
 ## How to use
 

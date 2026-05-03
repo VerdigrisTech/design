@@ -454,6 +454,46 @@ function main() {
     }
   }
 
+  // --- Z2O-1342: expanded flat-key exports for typography, spacing, elevation, radius ---
+  //
+  // Flat dotted-key dictionaries mirror the existing hexColors export. Keys preserve
+  // the full token path; values are resolved $value primitives (string or number).
+  // Pattern chosen for consistency with hexColors and to avoid downstream consumer
+  // ambiguity over nested-object navigation.
+
+  type FlatTokenMap = Record<string, string | number>;
+
+  const collect = (predicate: (path: string) => boolean): FlatTokenMap => {
+    const out: FlatTokenMap = {};
+    for (const [path, token] of allTokens) {
+      if (!predicate(path)) continue;
+      out[path] = token.$value as string | number;
+    }
+    return out;
+  };
+
+  const typography: FlatTokenMap = collect(
+    (p) =>
+      p.startsWith("fontFamily.") ||
+      p.startsWith("fontSize.") ||
+      p.startsWith("fontWeight.") ||
+      p.startsWith("lineHeight.") ||
+      p.startsWith("letterSpacing.")
+  );
+
+  // spacing.* covers: tokens/spacing/base.json (spacing.0..32),
+  // tokens/spacing/print.json (spacing.print.*), tokens/spacing/slides.json (spacing.slides.*).
+  // tokens/spacing/layout.json uses path layout.* (separate root) — included for completeness.
+  const spacing: FlatTokenMap = collect(
+    (p) => p.startsWith("spacing.") || p.startsWith("layout.")
+  );
+
+  const elevation: FlatTokenMap = collect(
+    (p) => p.startsWith("shadow.") || p.startsWith("zIndex.")
+  );
+
+  const radius: FlatTokenMap = collect((p) => p.startsWith("radius."));
+
   // Easing functions for Canvas animation. Keys mirror tokens/motion/easing.json
   // but the value is the JS implementation (CSS cubic-bezier strings aren't directly
   // usable in Canvas animation loops).
@@ -472,6 +512,14 @@ export const hexColors = ${JSON.stringify(hexJson, null, 2)};
 export const viz = ${JSON.stringify(viz, null, 2)};
 
 export const durations = ${JSON.stringify(durations, null, 2)};
+
+export const typography = ${JSON.stringify(typography, null, 2)};
+
+export const spacing = ${JSON.stringify(spacing, null, 2)};
+
+export const elevation = ${JSON.stringify(elevation, null, 2)};
+
+export const radius = ${JSON.stringify(radius, null, 2)};
 
 ${easingsSrc}
 `;
@@ -492,11 +540,27 @@ export declare const viz: {
 export declare const durations: Record<string, number>;
 
 export declare const easings: Record<string, (t: number) => number>;
+
+/** Flat-key typography tokens. Keys are full token paths (e.g. "fontSize.h1"). */
+export declare const typography: Record<string, string | number>;
+
+/** Flat-key spacing tokens covering base, layout, print, and slides scales. */
+export declare const spacing: Record<string, string | number>;
+
+/** Flat-key elevation tokens (shadows + z-index). */
+export declare const elevation: Record<string, string | number>;
+
+/** Flat-key border-radius tokens. */
+export declare const radius: Record<string, string | number>;
 `;
   writeFileSync(join(DIST, "index.d.ts"), dts);
 
   console.log(`\nDone. ${allTokens.size} total tokens processed.`);
-  console.log(`  index.js exports: hexColors, viz, durations (${Object.keys(durations).length}), easings`);
+  console.log(
+    `  index.js exports: hexColors, viz, durations (${Object.keys(durations).length}), easings, ` +
+      `typography (${Object.keys(typography).length}), spacing (${Object.keys(spacing).length}), ` +
+      `elevation (${Object.keys(elevation).length}), radius (${Object.keys(radius).length})`
+  );
 }
 
 main();
