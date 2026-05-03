@@ -75,6 +75,28 @@ A customer 101 deck that reads as 100% engineering-detail loses first-meeting au
 
 This recipe was revised after adversarial review (2026-05-02) — the initial recipe had Mark primary at 50%, which over-indexed on founder voice for an audience whose primary need was to feel understood. See `LEARNINGS.md` "Voice recipes need profile YAMLs as evidence."
 
+## Voice at a glance
+
+A producer reading this cell should be able to answer "what voice mix am I writing in?" without leaving the page. Pulled directly from the `customer_101_deck` recipe and the linked profile YAMLs.
+
+**Seren — primary** (Profile: [`voice/team/seren-coskun.yaml`](../../voice/team/seren-coskun.yaml)). Diplomatic precision and people intelligence. Seren names what is positive before what is missing, frames opinions as perspectives rather than verdicts, and offers help in the same breath as feedback. A first-meeting prospect needs to feel HEARD before they are pitched at, which is exactly the register Seren writes in.
+
+> "From my perspective"
+
+Carries: title slide framing, problem-in-their-language, what we do, where we fit, team — about 45% of the deck. Body register throughout.
+
+**Mike — supporting** (Profile: [`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)). Field credibility on the evidence slides. Mike's industry-insider voice supplies the operator-recognizable specifics — OCP-conference observations, real installation patterns, manufacturing economics — that earn credibility a founder voice alone cannot.
+
+> "I was at [conference] and they presented..."
+
+Carries: the 2-4 evidence slides, how-it-works specifics — about 25% of the deck.
+
+**Mark — accent** (Profile: [`voice/team/mark-chung.yaml`](../../voice/team/mark-chung.yaml)). Founder voice on the close slide and the "why now" framing. Mark's strategic_narrative (9) and mission_gravity (9) are decisive on the moments that need founder weight; bounded to specific slides because story-led at 50% overpowers a skeptical first-meeting audience.
+
+> "There's a real question inside it"
+
+Carries: close slide, why-now slide. Stays out of body slides.
+
 ## Why this genre exists
 
 The same pilot kickoff review surfaced that the pilot-kickoff template was being used inappropriately for first meetings, where it landed as "they're assuming we've signed." The customer 101 genre exists so the *first meeting* gets a deck calibrated to its purpose — not a recycled pilot kickoff with the customer name swapped.

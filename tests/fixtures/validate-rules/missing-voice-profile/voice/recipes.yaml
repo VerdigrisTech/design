@@ -1,0 +1,6 @@
+recipes:
+  test_recipe:
+    primary_audience: someone
+    voice_sources:
+      primary: Phantom (a voice profile that does not exist)
+      supporting: Mark (real profile)

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Apex Trading Systems Pilot Kickoff — Verdigris</title>
+  <meta name="description" content="Pilot kickoff deck example, pilot-kickoff genre. Demonstrates all 6 sales-collateral rules. Lightfield-derived from a real upcoming engagement, anonymized per LEARNINGS.md PII discipline.">
+
+  <!--
+    DRAFT: Lightfield-derived example, prepared 2026-05-03.
+    Anonymization applied per LEARNINGS.md PII discipline (PR #43, Loop 5).
+    PENDING GTM REVIEW before public exposure.
+    Source engagement: new-prospect / data-center-strategy / kickoff-window-7-days.
+    Customer name, contact names, site identifiers, and dollar amounts are all
+    fictional substitutes that preserve the ENGAGEMENT SHAPE (industry, scope,
+    anchor pattern, role assignments) without exposing reconnaissance data.
+    Do not publish until GTM has confirmed customer permission OR confirmed
+    permanent fictionalization is sufficient.
+  -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=block" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../../build/print/cover.css">
+  <link rel="stylesheet" href="../../../build/print/slides.css">
+
+  <style>
+    body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; }
+  </style>
+</head>
+<body class="vd-slide-deck" data-genre="pilot-kickoff" data-confidentiality="CUSTOMER-CONFIDENTIAL">
+
+  <!-- ============================================================
+       SLIDE 1 — TITLE
+       ============================================================ -->
+  <section class="vd-slide vd-slide-title">
+    <div class="vd-slide-title-top">
+      <img class="vd-slide-logomark-large" src="../../../assets/logos/lockup-white.svg" alt="Verdigris">
+    </div>
+
+    <div>
+      <p class="vd-slide-eyebrow">Pilot Kickoff · Apex Trading Systems · 3 Colocation Halls</p>
+      <h1>Putting <span class="vd-accent">power-quality eyes</span> on the racks that carry the trade tape.</h1>
+      <p class="vd-slide-deck">A 90-day pilot to quantify rack-level power-quality margin, baseline thermal-derate risk on the trading-engine rows, and define the criteria for site-fleet expansion.</p>
+    </div>
+
+    <div class="vd-slide-byline">
+      <div>
+        <span class="vd-name">Mark Chung</span>
+        <span class="vd-affil">Verdigris CEO · Pilot Sponsor</span>
+      </div>
+      <div class="vd-date">
+        May 12, 2026
+        <span class="vd-meta">v1 · pilot-kickoff-apex-trading-20260512-v1</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 2 — WHY WE'RE HERE
+       ============================================================ -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">02</span>Why we're here</div>
+    <h2 class="vd-slide-headline">Trading-engine racks run at <span class="vd-accent">90%+ of nameplate</span>, but power-quality margin is currently invisible.</h2>
+    <p class="vd-slide-deck-line">From the April 2026 introductory call with the Apex Data Center Strategy team.</p>
+    <div class="vd-slide-body-content">
+      <p>Three findings carried forward from the call:</p>
+      <ul>
+        <li><strong>Density is the constraint, not floor space.</strong> The trading-engine rows are pushed close to PDU thermal envelope to keep latency-critical workloads on copper distance; any unexpected derate event takes revenue-bearing capacity offline.</li>
+        <li><strong>BMS dashboards stop at the PDU.</strong> Per-rack waveform structure, transient events, and harmonic distortion are not visible to the existing monitoring stack. Faults surface as alarms, never as leading indicators.</li>
+        <li><strong>The infra team owns uptime but doesn't own the diagnostic data.</strong> When a rack misbehaves, root-cause investigation depends on vendor logs that arrive days later, in formats that don't cross-correlate with what the trading floor saw.</li>
+      </ul>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">02 / 08</span>
+      <span class="vd-conf-marking vd-conf-customer">Customer-Confidential</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 3 — WHAT WE AGREED TO
+       ============================================================ -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">03</span>What we agreed to</div>
+    <h2 class="vd-slide-headline">Pilot scope, locked at signature.</h2>
+    <p class="vd-slide-deck-line">From the Master Services Agreement, Schedule 1.</p>
+    <div class="vd-slide-body-content">
+      <table class="vd-slide-table">
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th>Scope</th>
+            <th>Customer-side owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sites</td>
+            <td>Three colocation halls (one each: East Coast, Central, West Coast)</td>
+            <td>Director, Data Center Strategy</td>
+          </tr>
+          <tr>
+            <td>Hardware</td>
+            <td>Verdigris meters on 18 trading-engine PDU branch circuits, 6 per hall</td>
+            <td>Site Infrastructure Lead</td>
+          </tr>
+          <tr>
+            <td>Data</td>
+            <td>8 kHz waveform stream &rarr; Verdigris Cloud · 30-day retention</td>
+            <td>Network &amp; Security Lead</td>
+          </tr>
+          <tr>
+            <td>Software</td>
+            <td>Signals dashboard access for 6 named operators across infra + trading-platform engineering</td>
+            <td>Trading Platform Reliability Lead</td>
+          </tr>
+          <tr>
+            <td>Window</td>
+            <td>90 days from hardware-online date</td>
+            <td>Pilot Sponsor</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">03 / 08</span>
+      <span class="vd-conf-marking vd-conf-customer">Customer-Confidential</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 4 — EXPANSION CRITERIA (Z2O-1321 diction)
+       ============================================================ -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">04</span>Expansion criteria</div>
+    <h2 class="vd-slide-headline">Three measurable outcomes that earn the path to multi-hall rollout.</h2>
+    <p class="vd-slide-deck-line">Same wording as the contract. If we hit all three, we move to fleet rollout.</p>
+    <div class="vd-slide-body-content">
+      <ul>
+        <li><strong>Power-quality margin visibility.</strong> Signals identifies the precursor to at least one PDU-class derate event during the 90-day window, with at least 7 days of advance warning.</li>
+        <li><strong>Density-headroom quantification.</strong> Quantify the safe per-rack density headroom across the three halls, expressed as %-of-nameplate the racks can sustain without entering the harmonic regime that triggered the original concern.</li>
+        <li><strong>Operator adoption.</strong> At least 4 of 6 named operators access Signals weekly across the second half of the pilot (post-day-45), unprompted, and reference its data in at least one root-cause investigation.</li>
+      </ul>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">04 / 08</span>
+      <span class="vd-conf-marking vd-conf-customer">Customer-Confidential</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 5 — TEAMS
+       ============================================================ -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">05</span>Pilot teams</div>
+    <h2 class="vd-slide-headline">Who you call when.</h2>
+    <p class="vd-slide-deck-line">Role labels first; names alongside for the duration of this engagement.</p>
+    <div class="vd-slide-body-content vd-cols-2">
+      <div>
+        <p style="font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;">Verdigris</p>
+        <ul>
+          <li><strong>Pilot Sponsor</strong> &mdash; Mark Chung, CEO</li>
+          <li><strong>Working Lead</strong> &mdash; Thomas Chung, VP Operations</li>
+          <li><strong>Field Engineering</strong> &mdash; Mike Mahedy, Senior Field Engineer</li>
+          <li><strong>Data &amp; Analytics</strong> &mdash; Jon Chu, Engineering Lead</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;">Apex Trading Systems</p>
+        <ul>
+          <li><strong>Pilot Sponsor</strong> &mdash; <span class="vd-template">[NAME]</span>, VP Infrastructure</li>
+          <li><strong>Pilot Lead</strong> &mdash; <span class="vd-template">[NAME]</span>, Director of Data Center Strategy</li>
+          <li><strong>Site Infrastructure Lead</strong> &mdash; <span class="vd-template">[NAME]</span></li>
+          <li><strong>Trading Platform Reliability Lead</strong> &mdash; <span class="vd-template">[NAME]</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">05 / 08</span>
+      <span class="vd-conf-marking vd-conf-customer">Customer-Confidential</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 6 — TIMELINE (Z2O-1322 absolute dates)
+       ============================================================ -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">06</span>90-day timeline</div>
+    <h2 class="vd-slide-headline">From signature to expansion decision.</h2>
+    <p class="vd-slide-deck-line">All dates absolute; this calendar is the canonical reference for the engagement.</p>
+    <div class="vd-slide-body-content">
+      <table class="vd-slide-table">
+        <thead>
+          <tr>
+            <th>Milestone</th>
+            <th>Date</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hardware staging + install (3 halls)</td>
+            <td>2026-05-19 to 2026-06-09</td>
+            <td>Verdigris Field Engineering + Site Infrastructure</td>
+          </tr>
+          <tr>
+            <td>Data ingestion live</td>
+            <td>2026-06-12</td>
+            <td>Jon Chu (Verdigris) + Network &amp; Security Lead</td>
+          </tr>
+          <tr>
+            <td>Day-30 + Day-60 reviews</td>
+            <td>2026-07-13 / 2026-08-12</td>
+            <td>Working Leads</td>
+          </tr>
+          <tr>
+            <td>Expansion decision</td>
+            <td>2026-09-11</td>
+            <td>Pilot Sponsors</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">06 / 08</span>
+      <span class="vd-conf-marking vd-conf-customer">Customer-Confidential</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 7 — ANCHOR METRIC
+       ============================================================ -->
+  <section class="vd-slide vd-slide-body vd-slide-light">
+    <div class="vd-slide-eyebrow"><span class="vd-num">07</span>The anchor</div>
+    <h2 class="vd-slide-headline">If we get one thing right, this is it.</h2>
+    <div class="vd-slide-body-content">
+      <div class="vd-slide-callout">
+        <div class="vd-callout-label">Anchor outcome</div>
+        <span class="vd-callout-metric">7+ days</span>
+        <p class="vd-callout-body">of <strong>advance warning</strong> on at least one PDU-class derate event during the 90-day window, sufficient for Apex Trading to schedule a planned migration window rather than absorb an unplanned trading-engine outage during market hours.</p>
+      </div>
+      <p style="padding-top:32pt;">Everything else in the pilot &mdash; density-headroom quantification, operator adoption, multi-hall rollout math &mdash; is in service of validating that this anchor outcome is repeatable across Apex Trading's colocation footprint.</p>
+    </div>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-dark.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">07 / 08</span>
+      <span class="vd-conf-marking vd-conf-customer">Customer-Confidential</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 8 — CLOSE
+       ============================================================ -->
+  <section class="vd-slide vd-slide-close">
+    <p class="vd-slide-eyebrow">Decision: 2026-09-11</p>
+    <h2><span class="vd-accent">7+ days</span> of advance warning on a PDU-class derate event earns the path to multi-hall rollout.</h2>
+    <p class="vd-slide-cta">Next step: Day-30 checkpoint on <strong>2026-07-13</strong>. Calendar invites going out this week to both Pilot Sponsors and both Working Leads. Signals access for the 6 named operators activates 2026-06-12, day of data-ingestion live.</p>
+    <div class="vd-slide-footer">
+      <img class="vd-slide-logomark-footer" src="../../../assets/logos/lockup-white.svg" alt="Verdigris">
+      <span class="vd-slide-page-num">08 / 08</span>
+      <span class="vd-conf-marking vd-conf-customer">Customer-Confidential</span>
+    </div>
+  </section>
+
+</body>
+</html>

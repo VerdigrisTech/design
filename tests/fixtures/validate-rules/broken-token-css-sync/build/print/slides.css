@@ -1,0 +1,5 @@
+/* Test fixture: CSS values diverge from tokens/spacing/slides.json */
+:root {
+  --vd-slide-width: 1280px;
+  --vd-slide-height: 720px;
+}

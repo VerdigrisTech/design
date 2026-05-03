@@ -119,6 +119,17 @@ Run this checklist for every collateral artifact. It applies across types; cell-
 - Example: `pilot-kickoff-abcam-life-sciences-20260502-v1.pdf`.
 - Increment v{N} for revisions; never overwrite a shipped version. Old versions get a `-superseded-by-v{N+1}` suffix or move to `archive/`.
 
+### 11. Pre-merge PII review
+
+Run `workflows/pii-review.md` against any sales-collateral artifact that lands in this repo before merge. The full workflow applies; the sales-collateral-specific checks to run first:
+
+- **Example HTMLs may not name real customers.** Anything in `categories/{slides,one-pagers,case-studies}/examples/*.html` uses fictional placeholders (Acme Life Sciences, Globex Energy) unless a real customer name has documented co-marketing approval (signed case-study consent, public partner page, joint press release on file). Check this before the file lands, not after.
+- **Voice references in cell guides must use approved names.** Cell guides under `categories/slides/*.md` and the corresponding voice recipes name team members and, occasionally, customer or partner contacts. Names of team members are allowlisted per file in `build/lint-external.ts`; names of customers, partners, or external contacts must be either fictional or co-marketing-approved.
+- **No internal-channel quotations.** Slack screenshots, email forwards, Linear comment quotations don't belong in shipped collateral or in the cell guides that document collateral. Rewrite to operational descriptors before merge.
+- **Equipment / facility identifiers.** BBE-class serial numbers, facility nicknames, vendor relationship strings — none of these belong in a customer-shareable artifact unless the customer has signed off on the disclosure.
+
+Failures here are stop-the-line: redact, rename, exclude, or escalate per the pii-review workflow. Do not merge a sales-collateral artifact with an unresolved PII finding.
+
 ## Naming convention (canonical)
 
 Both Drive filenames and the artifact's internal version metadata follow the same pattern:
@@ -200,6 +211,7 @@ This is a one-time cleanup followed by quarterly sweeps. Likely owners: Sales Op
 ## See also
 
 - `workflows/adversarial-review.md` — research / debate / synthesize / QA workflow for new cells
+- `workflows/pii-review.md` — mandatory PII review for any artifact that lands in this repo (referenced from step 11 above)
 - `LEARNINGS.md` — cross-cell principles (rendering layer never invents, pick the genre first, floors AND ceilings)
 - `categories/whitepapers/cover.md` — first applied genre cell, the structural template for slides + one-pagers + case studies
 - `voice/USE.md` — voice recipe selection workflow

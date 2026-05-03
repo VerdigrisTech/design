@@ -1,0 +1,6 @@
+{
+  "name": "fixture-missing-voice-profile",
+  "private": true,
+  "version": "0.0.0",
+  "files": ["voice/recipes.yaml"]
+}
