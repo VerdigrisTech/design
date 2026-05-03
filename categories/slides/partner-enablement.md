@@ -77,6 +77,28 @@ The recipe mirrors the pattern in `partner_materials` (Jimit primary, Seren supp
 
 The split intentionally avoids Mark and Thomas as primary voices: a partner AE doesn't need the founder's voice; they need a teammate-equivalent voice they can carry into their own conversations.
 
+## Voice at a glance
+
+A producer reading this cell should be able to answer "what voice mix am I writing in?" without leaving the page. Pulled directly from the `partner_enablement_deck` recipe and the linked profile YAMLs.
+
+**Jimit — primary** (Profile: [`voice/team/jimit-shah.yaml`](../../voice/team/jimit-shah.yaml)). Outside-in market positioning. Jimit reads what the industry is publishing and pipes the positioning signal back with context, so Verdigris reads as plugged-in, not insular. His advisor register ("Is your facility on Time of Use billing?") is the closest match to a partner AE's own customer-facing voice.
+
+> "These come from three inputs:"
+
+Carries: wedge, joint value proposition, qualifying questions, discovery cheat sheet, deal-registration mechanics — the slides where market language has to translate cleanly into the partner's commercial frame.
+
+**Seren — supporting** (Profile: [`voice/team/seren-coskun.yaml`](../../voice/team/seren-coskun.yaml)). Diplomatic precision on co-sell mechanics. A partnership that reads as "you'll sell our product" instead of "we'll sell together" fails before it starts. Seren's people-first framing makes the partner feel like a collaborator.
+
+> "Please let me know if you need any support from my side"
+
+Carries: pricing-model framing, co-marketing assets, training cadence — the slides where the relationship register has to land warmly.
+
+**Mike — accent** (Profile: [`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)). Industry insider credibility for objection-handling slides. When a partner AE is asked a technical question by their customer, Mike's voice is what they should hear in their head: specific MW numbers, real conference observations, real installation patterns.
+
+> "Interesting that it doesn't talk about..."
+
+Carries: common objections, technical FAQ, reference customers — about 4-6 slides where field credibility is the trust signal.
+
 ## Confidentiality
 
 PARTNER-CONFIDENTIAL is the default tier. Pricing details, deal-registration mechanics, and partner discount tiers are not public information. The marking is mandatory on every slide.

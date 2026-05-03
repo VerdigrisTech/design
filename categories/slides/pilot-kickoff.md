@@ -158,6 +158,28 @@ The voice recipe `pilot_kickoff_deck` (in `voice/recipes.yaml`) sets the dial: M
 
 These are starting points, not exhaustive. The diction pass is a final read-through before distribution: walk every slide, mark any internal jargon, replace it with operator-readable language. Pair with the voice recipe.
 
+## Voice at a glance
+
+A producer reading this cell should be able to answer "what voice mix am I writing in?" without leaving the page. Pulled directly from the `pilot_kickoff_deck` recipe and the linked profile YAMLs.
+
+**Mike — primary** (Profile: [`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)). Field credibility from actual customer-site work. Mike's voice is what makes the install plan, success criteria, and team slide read as "we have lived your problems," not "we read about your problems in a deck." His range covers Slack-brief sanity checks and authoritative long-form, both grounded in real MW numbers and conference observations.
+
+> "I was at [conference] and they presented..."
+
+Carries: install plan, success criteria, team slide, anchor metric — the slides where field-recognizable specificity is the trust signal.
+
+**Thomas — supporting** (Profile: [`voice/team/thomas-chung.yaml`](../../voice/team/thomas-chung.yaml)). Operational clarity, structured-not-corporate. Thomas writes the kind of update that names what's slipping in the same breath as what's working. His self-honesty (10 in profile) is what keeps the deck honest about what's experimental, what's mature, and what's still TBD.
+
+> "people should walk away feeling good"
+
+Carries: timeline, decisions we owe, decisions we need from the customer, escalation — the structural backbone slides.
+
+**Jon — accent** (Profile: [`voice/team/jon-chu.yaml`](../../voice/team/jon-chu.yaml)). Bench-engineer voice for the data-flow and hardware-install slides. Jon doesn't theorize when he can observe; the diction is "looks like a firewall issue to me" rather than "we believe network connectivity may be impacted."
+
+> "looks like a firewall issue to me"
+
+Carries: data flow slide, hardware install slide. Stays out of the rest.
+
 ## Date format (Z2O-1322)
 
 Pilot kickoff decks use **absolute calendar dates** for every timeline claim:

@@ -68,6 +68,28 @@ Uses the existing `case_study` recipe in `voice/recipes.yaml`:
 
 The recipe was audited 2026-05-02 against the new Mark Chung and Jon Chu profile YAMLs and held up — neither founder voice belongs as primary in a case study because the customer is the protagonist, not Verdigris.
 
+## Voice at a glance
+
+A producer reading this cell should be able to answer "what voice mix am I writing in?" without leaving the page. Pulled directly from the `case_study` recipe and the linked profile YAMLs.
+
+**Seren — primary** (Profile: [`voice/team/seren-coskun.yaml`](../../voice/team/seren-coskun.yaml)). The customer's voice is the primary voice in a case study; Seren's people-intelligence translation makes the customer voice land authentically rather than as scrubbed marketing speak. She names what is positive before what is missing and frames opinions as perspectives, which is how a real operator describes a vendor's work.
+
+> "From my perspective"
+
+Carries: executive summary, problem, outcome prose around the anchor metric, quote framing. The body register throughout.
+
+**Mike — supporting** (Profile: [`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)). Field credibility and competitor-comparison context. Mike knows what the customer was comparing Verdigris against because he was at the same conferences, looking at the same vendor product pages.
+
+> "Interesting that it doesn't talk about..."
+
+Carries: approach section, the technical specifics that establish "we did this work, not just described it."
+
+**Jimit — accent** (Profile: [`voice/team/jimit-shah.yaml`](../../voice/team/jimit-shah.yaml)). Market-trend connection — why this win matters beyond one customer. Jimit's outside-in voice connects the customer outcome to the broader category shift, which makes the case study feel strategic rather than anecdotal.
+
+> "Hot new update from Semianalysis..."
+
+Carries: the closing prose around Replicate that gestures past this one engagement. Used sparingly.
+
 ## Citation discipline
 
 Inherits citation conventions from `categories/whitepapers/cover.md`:
@@ -101,6 +123,10 @@ All values from `tokens/spacing/print.json` (frame primitives) and `build/print/
 | Quote attribution | Inter | 10.5pt | 400 | `--vd-muted` (name in 600/`--vd-ink`) |
 | Replicate CTA headline | Lato | 18pt | 700 | rgba(255,255,255,0.96) on dark band |
 | Page footer | Inter | 9pt | 400 | `--vd-muted` |
+
+### Why fixed point sizes (not ranges)
+
+Print artifacts assume a constant reading distance — roughly 18 inches for a printed case study held at a desk or pulled out of a folder. Fixed point sizes lock the visual hierarchy at that distance: every printed copy and every downloaded PDF renders identically, including the 56pt anchor metric that has to land the same way for every reader. The slide cells use ranges (32-44pt headlines, 18-22pt deck) because projection distance varies — a boardroom monitor at 8 feet versus an auditorium screen at 30 feet calls for different sizes, calibrated per venue. Don't borrow the slide-cell range pattern back into case studies; the read-distance assumption is fixed, and the dual-target web/PDF parity rule depends on the typography scale staying constant across both renderings.
 
 ## Reference exemplars
 

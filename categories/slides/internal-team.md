@@ -60,6 +60,34 @@ The pilot-kickoff structure has 18 canonical slides. Internal team decks typical
 | 17. Appendix: assumptions | optional |
 | 18. Close: decision date | required |
 
+## Voice at a glance
+
+Internal-team decks are heterogeneous: engineers need technical precision, operators need empathy, GTM needs market context. A single-voice recipe brittles. The `internal_team_deck` recipe runs four voices, each carrying a slice. Pulled directly from the recipe and the linked profile YAMLs.
+
+**Thomas — primary** (Profile: [`voice/team/thomas-chung.yaml`](../../voice/team/thomas-chung.yaml)). Operational, transparent. Self-honesty is 10 in his profile, which makes him the right voice for "what's slipping." His thinking-out-loud register works for internal context where translation costs more than it gains.
+
+> "people should walk away feeling good"
+
+Carries: title, why-we-here, success criteria, decisions we owe, week-4 checkpoint, close. The structural backbone.
+
+**Mike — supporting** (Profile: [`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)). Translates engineering reality into operator-readable status. Field credibility grounds the customer-side perspective even when the audience is internal.
+
+> "please sanity check"
+
+Carries: customer-side status, hardware-install status when relevant, risks + mitigations.
+
+**Jon — co-supporting** (Profile: [`voice/team/jon-chu.yaml`](../../voice/team/jon-chu.yaml)). Engineering status, bench-diagnostic credibility. Technical_precision is 9 in his profile and is load-bearing for engineering status slides. Internal coordination cannot lead with operations-speak alone.
+
+> "looks like a firewall issue to me"
+
+Carries: data-flow status, hardware-install diagnostics, scope-and-coordination slides. Added 2026-05-02 after Loop 3 review caught the gap.
+
+**Jimit — accent** (Profile: [`voice/team/jimit-shah.yaml`](../../voice/team/jimit-shah.yaml)). Connects the engagement to market signals when relevant.
+
+> "Hot new update from Semianalysis..."
+
+Carries: occasional market-context slides when the engagement intersects strategy. Stays out of routine status decks.
+
 ## Diction adjustments specific to internal decks
 
 The diction rules for external genres (Z2O-1321, e.g., "exit criteria" → "expansion criteria") **do not apply** to internal-team decks. Internal jargon is fine — and faster — when the audience is Verdigris-only.

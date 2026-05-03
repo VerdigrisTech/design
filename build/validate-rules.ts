@@ -10,13 +10,18 @@
  *   - Sidebar coverage (every foundations/*.md and visual layout page in sidebar)
  */
 
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, "..");
+// VD_ROOT lets tests/validate-rules.test.sh point the validator at a fixture
+// directory instead of the real repo. Production runs leave VD_ROOT unset and
+// fall back to the parent of build/ (the actual project root).
+const ROOT = process.env.VD_ROOT
+  ? process.env.VD_ROOT
+  : join(__dirname, "..");
 const RULES_FILE = join(ROOT, "rules", "visual-rules.yml");
 const SIDEBAR_FILE = join(ROOT, "_layouts", "default.html");
 
@@ -317,6 +322,370 @@ function checkInheritanceIntegrity() {
 }
 
 // ---------------------------------------------------------------------------
+// Token / CSS sync
+// ---------------------------------------------------------------------------
+// Loop 4 → Loop 5 regression: build/print/slides.css moved --vd-slide-width
+// to 1280px while tokens/spacing/slides.json kept the master width at 1280pt.
+// The two values had divergent physical sizes in PDF rendering. The validator
+// catches the narrow case (slides master width/height) deterministically and
+// emits warnings for any other token whose $value looks like a CSS dimension
+// but cannot be obviously matched to a CSS variable, so a maintainer can
+// audit the rest by hand.
+function checkTokenCssSync() {
+  const tokensDir = join(ROOT, "tokens");
+  const printDir = join(ROOT, "build", "print");
+  if (!existsSync(tokensDir) || !existsSync(printDir)) {
+    console.log("  OK token/CSS sync (no tokens or print dir)");
+    return;
+  }
+
+  // Walk tokens/**/*.json, collect every leaf with a CSS-dimension $value
+  type TokenLeaf = { path: string; value: string; file: string };
+  const tokens: TokenLeaf[] = [];
+  const dimensionRegex = /^[\d.]+\s*(px|pt|in|mm|cm|em|rem|%)(\s+[\d.]+\s*(px|pt|in|mm|cm|em|rem|%))?$/;
+
+  function walkJson(node: unknown, path: string[], file: string) {
+    if (node === null || typeof node !== "object") return;
+    const obj = node as Record<string, unknown>;
+    if (typeof obj.$value === "string" && dimensionRegex.test(obj.$value.trim())) {
+      tokens.push({ path: path.join("."), value: obj.$value, file });
+      return;
+    }
+    for (const [key, val] of Object.entries(obj)) {
+      if (key.startsWith("$")) continue;
+      walkJson(val, [...path, key], file);
+    }
+  }
+
+  function walkDir(dir: string) {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) walkDir(full);
+      else if (entry.name.endsWith(".json")) {
+        try {
+          const parsed = JSON.parse(readFileSync(full, "utf-8"));
+          walkJson(parsed, [], full);
+        } catch {
+          // JSON syntax errors are caught by validate.ts; skip here
+        }
+      }
+    }
+  }
+  walkDir(tokensDir);
+
+  // Collect every --vd-* declaration across build/print/*.css
+  const cssVars = new Map<string, { value: string; file: string }>();
+  for (const entry of readdirSync(printDir)) {
+    if (!entry.endsWith(".css")) continue;
+    const full = join(printDir, entry);
+    const content = readFileSync(full, "utf-8");
+    // Match --vd-* declarations. Trailing semicolon is optional in CSS for
+    // the last declaration in a block; exclude `}` and newline from the
+    // value so we don't run past the brace.
+    // gemini-code-assist review on PR #44, 2026-05-03 (medium finding).
+    const re = /(--vd-[a-z0-9-]+)\s*:\s*([^;}\n]+);?/g;
+    let m;
+    while ((m = re.exec(content)) !== null) {
+      cssVars.set(m[1], { value: m[2].trim(), file: full });
+    }
+  }
+
+  let mismatches = 0;
+  let unmatched = 0;
+
+  // Deterministic check: slides master width + height MUST match
+  const slidesPairs: Array<[string, string]> = [
+    ["spacing.slides.master.width", "--vd-slide-width"],
+    ["spacing.slides.master.height", "--vd-slide-height"],
+  ];
+  for (const [tokenPath, varName] of slidesPairs) {
+    const tok = tokens.find(t => t.path === tokenPath);
+    const css = cssVars.get(varName);
+    if (!tok || !css) continue;
+    if (tok.value.trim() !== css.value.trim()) {
+      error(
+        `Token/CSS divergence: token "${tokenPath}" = ${tok.value} but CSS "${varName}" = ${css.value}`
+      );
+      mismatches++;
+    }
+  }
+
+  // Heuristic auto-match: only audit tokens scoped to print/slide cells,
+  // since build/print/*.css is the only CSS surface this validator reads.
+  // Web/Tailwind tokens (spacing.1, spacing.2, ...) generate Tailwind classes,
+  // not --vd-* CSS vars, and are out of scope here.
+  const allowlistUnmatched = new Set([
+    // page sizes are not exposed as single CSS vars (they use @page rules)
+    "spacing.print.page.letter",
+    "spacing.print.page.a4",
+  ]);
+  for (const tok of tokens) {
+    if (allowlistUnmatched.has(tok.path)) continue;
+    const segs = tok.path.split(".");
+    if (segs[0] !== "spacing") continue;
+    if (segs[1] !== "print" && segs[1] !== "slides") continue;
+    const candidates: string[] = [];
+    const tail = segs.slice(1).join("-").replace(/_/g, "-");
+    candidates.push(`--vd-${tail}`);
+    if (segs[1] === "slides") candidates.push(`--vd-slide-${segs.slice(2).join("-")}`);
+    if (segs[1] === "print") candidates.push(`--vd-${segs.slice(2).join("-")}`);
+    const matched = candidates.some(c => cssVars.has(c));
+    if (!matched) {
+      unmatched++;
+      if (unmatched <= 5) {
+        warn(`Token "${tok.path}" (${tok.value}) has no obvious CSS variable match; audit manually`);
+      }
+    }
+  }
+  if (unmatched > 5) {
+    warn(`...and ${unmatched - 5} more tokens without obvious CSS matches (${unmatched} total)`);
+  }
+
+  if (mismatches === 0) {
+    console.log("  OK token/CSS sync (slides master matches)");
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Voice profiles exist for every recipe source
+// ---------------------------------------------------------------------------
+// LEARNINGS principle: a voice recipe that names "Mark" or "Jon" as a voice
+// source asserts that a concrete profile exists in voice/team/ to back the
+// claim. Without backing, the recipe is a promise the system can't keep.
+// PR #43 Loop 3 added Mark + Jon profiles after the gap was identified;
+// this check ensures future recipes don't reintroduce the gap.
+function checkVoiceProfilesExist() {
+  const recipesFile = join(ROOT, "voice", "recipes.yaml");
+  const teamDir = join(ROOT, "voice", "team");
+  if (!existsSync(recipesFile)) {
+    console.log("  OK voice profiles (no recipes.yaml)");
+    return;
+  }
+
+  let parsed: unknown;
+  try {
+    const out = execFileSync("python3", [
+      "-c",
+      "import yaml, json, sys; print(json.dumps(yaml.safe_load(sys.stdin.read())))",
+    ], { input: readFileSync(recipesFile, "utf-8"), stdio: ["pipe", "pipe", "pipe"] });
+    parsed = JSON.parse(out.toString());
+  } catch {
+    error("voice/recipes.yaml could not be parsed for profile-existence check");
+    return;
+  }
+
+  // Ingredient-style names that don't need a person profile
+  const ingredientAllowlist = new Set([
+    "any", "team", "verdigris", "the verdigris team", "any team member",
+    "operator", "founder", "engineer", "customer",
+    "technical_precision", "operator_empathy", "strategic_narrative",
+    "self_honesty", "warmth_and_humor", "personal_connection",
+    "mission_gravity", "market_fluency",
+  ]);
+
+  const referenced = new Set<string>();
+  const recipes = (parsed as { recipes?: Record<string, unknown> }).recipes || {};
+  for (const recipe of Object.values(recipes)) {
+    if (!recipe || typeof recipe !== "object") continue;
+    const sources = (recipe as { voice_sources?: Record<string, unknown> }).voice_sources;
+    if (!sources) continue;
+    for (const v of Object.values(sources)) {
+      if (typeof v !== "string") continue;
+      // Strip parenthetical content first ("Mark (storytelling, X)" → "Mark").
+      // Then split on " or " + "," + "/" to handle "Jon or Thomas" / "Jon/Thomas".
+      // Take the first whitespace-separated token of each chunk.
+      const stripped = v.replace(/\([^)]*\)/g, "");
+      for (const chunk of stripped.split(/\s+or\s+|,|\//i)) {
+        const m = chunk.trim().match(/^([A-Za-z][A-Za-z_-]*)/);
+        if (!m) continue;
+        const name = m[1].toLowerCase();
+        if (ingredientAllowlist.has(name)) continue;
+        if (name.length < 2) continue;
+        referenced.add(name);
+      }
+    }
+  }
+
+  const profileNames = new Set<string>();
+  if (existsSync(teamDir)) {
+    for (const entry of readdirSync(teamDir)) {
+      if (!entry.endsWith(".yaml")) continue;
+      const first = entry.split("-")[0].toLowerCase();
+      profileNames.add(first);
+    }
+  }
+
+  let missing = 0;
+  for (const name of referenced) {
+    if (!profileNames.has(name)) {
+      error(`Voice recipe references "${name}" but no voice/team/${name}-*.yaml profile exists`);
+      missing++;
+    }
+  }
+
+  if (missing === 0) {
+    console.log(`  OK voice profiles exist (${referenced.size} names referenced, all backed)`);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Public-package PII scan
+// ---------------------------------------------------------------------------
+// Loop 5O surfaced: voice/team/mark-chung.yaml carried Mark's volleyball
+// quote, jon-chu.yaml had BBE customer equipment serials, jimit-shah.yaml
+// named T-Mobile. Those files don't ship publicly today (package.json
+// `files` excludes voice/team/), but the same patterns can leak into files
+// that DO ship — categories/, foundations/, voice/recipes.yaml. This check
+// walks every file enumerated by package.json `files` + `exports` and flags
+// PII patterns. Hard PII (family scheduling, equipment serials) is ERROR;
+// customer-name patterns are WARNING for human review.
+function checkPublicPackagePii() {
+  const pkgFile = join(ROOT, "package.json");
+  if (!existsSync(pkgFile)) {
+    console.log("  OK PII scan (no package.json)");
+    return;
+  }
+  const pkg = JSON.parse(readFileSync(pkgFile, "utf-8"));
+
+  // Use `npm pack --dry-run --json` to get the authoritative list of files
+  // that would ship in the published tarball. This handles `.npmignore`,
+  // default exclusions, nested conditional exports, and globs the same way
+  // npm itself does — sidestepping manual-parse fragility.
+  // gemini-code-assist review on PR #44, 2026-05-03 (high + medium findings).
+  const publicPaths = new Set<string>();
+  try {
+    const out = execFileSync("npm", ["pack", "--dry-run", "--json"], {
+      cwd: ROOT,
+      stdio: ["ignore", "pipe", "pipe"],
+    }).toString();
+    const parsed = JSON.parse(out);
+    const filesArray = Array.isArray(parsed) && parsed[0]?.files ? parsed[0].files : [];
+    for (const entry of filesArray) {
+      if (entry?.path) publicPaths.add(entry.path);
+    }
+  } catch (e) {
+    // Fall back to manual parse if npm pack is unavailable (offline, network
+    // sandbox, etc). Keep the recursive walk per Gemini's HIGH finding so
+    // nested conditional exports aren't silently missed.
+    function addPath(p: string) {
+      publicPaths.add(p.replace(/^\.\//, ""));
+    }
+    function walkExports(node: unknown) {
+      if (typeof node === "string") {
+        addPath(node);
+      } else if (node && typeof node === "object") {
+        for (const val of Object.values(node)) walkExports(val);
+      }
+    }
+    for (const entry of pkg.files || []) addPath(entry);
+    if (pkg.exports) walkExports(pkg.exports);
+  }
+
+  const files: string[] = [];
+  function walk(p: string) {
+    const full = join(ROOT, p);
+    if (!existsSync(full)) return;
+    const stat = statSync(full);
+    if (stat.isDirectory()) {
+      for (const entry of readdirSync(full)) {
+        if (entry.startsWith(".")) continue;
+        walk(join(p, entry));
+      }
+    } else if (/\.(md|yaml|yml|json|css|js|ts|html|txt)$/.test(p)) {
+      files.push(p);
+    }
+  }
+  for (const p of publicPaths) {
+    walk(p.replace(/\/$/, ""));
+  }
+
+  const FAMILY_WORDS = /\b(volleyball|school pickup|son's|daughter's|kid's birthday|vacation|appointment)\b/i;
+  const SERIAL_PATTERN = /\b[A-Z]{3}\d{6,10}\b/;
+  // Case-insensitive for consistency with CUSTOMER_DENYLIST.
+  // gemini-code-assist review on PR #44, 2026-05-03 (medium finding).
+  const SITE_DENYLIST = /\b(Aurora|Cambridge UK|Burlingame|Waltham)\b/i;
+  const CUSTOMER_DENYLIST = /\b(Abcam|T-Mobile|T Mobile|tmobile|Verizon|One Power|Bentaus|EnergyHub360)\b/i;
+
+  // Allowlist for files known to legitimately use these terms.
+  // Mirror the spirit of build/lint-external.ts ALLOWLIST.
+  const ALLOWLIST: Record<string, RegExp[]> = {
+    // recipes.yaml's Mike voice-source quote names "Aurora" as a customer-site
+    // replacement context. Field-context, not identifying. If this becomes a
+    // problem, tighten the recipe wording rather than weakening the validator.
+    "voice/recipes.yaml": [SITE_DENYLIST],
+    // workflows/pii-review.md is the human-PII-review SOP. It documents the
+    // patterns by quoting them. Allowlisting the SOP is not a backdoor; the
+    // SOP's job is to name the patterns the validator looks for.
+    "workflows/pii-review.md": [FAMILY_WORDS, SERIAL_PATTERN, SITE_DENYLIST, CUSTOMER_DENYLIST],
+    // workflows/sales-collateral.md uses fictional customer names ("abcam",
+    // "verizon", "t-mobile-redacted") as filename-naming-convention examples.
+    "workflows/sales-collateral.md": [CUSTOMER_DENYLIST],
+    // LEARNINGS.md captures the original Loop 5O incident as a permanent
+    // teaching example. The file is append-only by convention; quoting the
+    // patterns is the point of the learning.
+    "LEARNINGS.md": [FAMILY_WORDS, SERIAL_PATTERN, SITE_DENYLIST, CUSTOMER_DENYLIST],
+    // pilot-kickoff.md discusses pronoun rules and quotes "Customer" as a
+    // diction example, not a customer reference.
+    "categories/slides/pilot-kickoff.md": [CUSTOMER_DENYLIST],
+    // The Abcam example HTML is a known live customer reference that has
+    // been through human review (see LEARNINGS.md). Tracked as a known
+    // reference, not a leak; rename pending in a separate PR.
+    "categories/slides/examples/abcam-kickoff-redux.html": [CUSTOMER_DENYLIST, SITE_DENYLIST],
+    // The slides/examples README must reference its sibling filenames in
+    // the provenance table (including the legacy abcam-kickoff-redux.html
+    // slug). Allowlist the customer-name denylist on this README only;
+    // body content uses fictional placeholders. Re-tighten when the
+    // legacy slug is renamed.
+    "categories/slides/examples/README.md": [CUSTOMER_DENYLIST],
+  };
+
+  let errs = 0;
+  let warns = 0;
+  const seen = new Set<string>();
+
+  for (const f of files) {
+    let content: string;
+    try {
+      content = readFileSync(join(ROOT, f), "utf-8");
+    } catch {
+      continue;
+    }
+    const lines = content.split("\n");
+    const allowed = ALLOWLIST[f] || [];
+    // Hoisted out of the line-loop — same value every iteration.
+    // gemini-code-assist review on PR #44, 2026-05-03 (medium finding).
+    const checks: Array<{ re: RegExp; severity: "error" | "warn"; label: string }> = [
+      { re: FAMILY_WORDS, severity: "error", label: "family/personal scheduling" },
+      { re: SERIAL_PATTERN, severity: "error", label: "equipment serial" },
+      { re: SITE_DENYLIST, severity: "warn", label: "customer site nickname" },
+      { re: CUSTOMER_DENYLIST, severity: "warn", label: "customer name" },
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      for (const c of checks) {
+        if (allowed.some(a => a.source === c.re.source)) continue;
+        if (!c.re.test(line)) continue;
+        const key = `${f}:${i}:${c.label}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const snippet = line.trim().slice(0, 100);
+        if (c.severity === "error") {
+          error(`PII (${c.label}) in public file ${f}:${i + 1} — ${snippet}`);
+          errs++;
+        } else {
+          warn(`Possible PII (${c.label}) in public file ${f}:${i + 1} — ${snippet}`);
+          warns++;
+        }
+      }
+    }
+  }
+
+  if (errs === 0 && warns === 0) {
+    console.log(`  OK PII scan (${files.length} public files clean)`);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 function main() {
@@ -329,6 +698,9 @@ function main() {
   checkFloorsAndCeilings();
   checkMaturityField();
   checkInheritanceIntegrity();
+  checkTokenCssSync();
+  checkVoiceProfilesExist();
+  checkPublicPackagePii();
   checkSidebarCoverage();
 
   console.log(

@@ -1,0 +1,17 @@
+{
+  "$description": "Test fixture: slides master width intentionally diverges from CSS.",
+  "spacing": {
+    "slides": {
+      "master": {
+        "width": {
+          "$value": "1280pt",
+          "$type": "dimension"
+        },
+        "height": {
+          "$value": "720pt",
+          "$type": "dimension"
+        }
+      }
+    }
+  }
+}

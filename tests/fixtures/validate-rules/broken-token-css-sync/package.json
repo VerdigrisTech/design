@@ -1,0 +1,6 @@
+{
+  "name": "fixture-broken-token-css-sync",
+  "private": true,
+  "version": "0.0.0",
+  "files": ["tokens/", "build/print/"]
+}

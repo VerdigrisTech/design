@@ -97,6 +97,10 @@ All values from `tokens/spacing/print.json` (frame primitives) and the one-pager
 | CTA strip text | Lato | 13pt | 700 | rgba(255,255,255,0.96) on dark band |
 | Footer | Inter / Lato | 8-9pt | 400 / 700 | `--vd-muted` |
 
+### Why fixed point sizes (not ranges)
+
+Print artifacts assume a constant reading distance — roughly 18 inches for a one-pager held at a desk or pinned to a board. Fixed point sizes lock the visual hierarchy at that distance: every printed copy renders identically, every PDF held by every prospect reads at the same scale. The slide cells use ranges (32-44pt headlines, 18-22pt deck) because projection distance varies — a boardroom monitor at 8 feet versus an auditorium screen at 30 feet calls for different sizes, calibrated per venue. Don't borrow the slide-cell range pattern back into one-pagers; the read-distance assumption is different and the page should look the same on every desk it lands on.
+
 ## CTA strip
 
 The CTA strip is the load-bearing close of the page. Three rules:
@@ -138,6 +142,44 @@ The `one_pager` recipe in `voice/recipes.yaml` branches by genre:
 The Mark-primary assignment on comparative was flipped from Jimit-primary on 2026-05-02 after Loop 3 adversarial review showed the thesis block is the load-bearing element of a comparative one-pager — the voice carrying the thesis is the voice carrying the page. Jimit's market fluency works as supporting, layered through the numbered list items.
 
 Diction discipline applies (audience_fit_diction): never use internal jargon; spell out acronyms on first use; specific numbers always; CTA action is concrete.
+
+## Voice at a glance
+
+A producer reading this cell should be able to answer "what voice mix am I writing in?" without leaving the page. The mix branches by genre. Pulled directly from the `one_pager` recipe and the linked profile YAMLs.
+
+### Solution overview
+
+**Mike — primary** (Profile: [`voice/team/mike-mahedy.yaml`](../../voice/team/mike-mahedy.yaml)). Field credibility on the 3 callouts. Mike's voice makes the callouts read as "someone who has been to your facility wrote this" rather than "a marketing team optimized this for the website."
+
+> "I was at [conference] and they presented..."
+
+Carries: all three callouts, anchor metrics, deck. The page's center of gravity.
+
+**Jon — supporting** (Profile: [`voice/team/jon-chu.yaml`](../../voice/team/jon-chu.yaml)). Technical precision on capability claims. Jon's bench-diagnostic register grounds the capability descriptions in observable behavior, not abstraction.
+
+> "looks like a firewall issue to me"
+
+Carries: callout body copy where the claim needs engineering specificity. Stays terse.
+
+### Comparative
+
+**Mark — primary** (Profile: [`voice/team/mark-chung.yaml`](../../voice/team/mark-chung.yaml)). The thesis block carries the argument. Mark's strategic_narrative (9) and mission_gravity (9) are decisive on mission-anchored framing; the founder voice on the thesis is what gives the page a reason to be kept rather than scanned and discarded.
+
+> "There's a real question inside it"
+
+Carries: thesis block. Stays out of the numbered list.
+
+**Jimit — supporting** (Profile: [`voice/team/jimit-shah.yaml`](../../voice/team/jimit-shah.yaml)). Outside-in market positioning across the numbered list items. Jimit's market_fluency translates Verdigris claims into the prospect's commercial frame.
+
+> "These come from three inputs:"
+
+Carries: every numbered list item. The thesis is Mark; the body is Jimit.
+
+**Seren — accent (both genres)** (Profile: [`voice/team/seren-coskun.yaml`](../../voice/team/seren-coskun.yaml)). Operator-empathy framing on body copy; rare on a one-pager but available for the diction pass.
+
+> "From my perspective"
+
+Carries: rare. Use when a body sentence needs to soften from "Verdigris does X" to "your team would see X."
 
 ## Reference exemplars (Notion Sales Collateral Cheat Sheet)
 
