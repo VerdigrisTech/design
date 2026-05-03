@@ -601,7 +601,9 @@ function checkPublicPackagePii() {
 
   const FAMILY_WORDS = /\b(volleyball|school pickup|son's|daughter's|kid's birthday|vacation|appointment)\b/i;
   const SERIAL_PATTERN = /\b[A-Z]{3}\d{6,10}\b/;
-  const SITE_DENYLIST = /\b(Aurora|Cambridge UK|Burlingame|Waltham)\b/;
+  // Case-insensitive for consistency with CUSTOMER_DENYLIST.
+  // gemini-code-assist review on PR #44, 2026-05-03 (medium finding).
+  const SITE_DENYLIST = /\b(Aurora|Cambridge UK|Burlingame|Waltham)\b/i;
   const CUSTOMER_DENYLIST = /\b(Abcam|T-Mobile|T Mobile|tmobile|Verizon|One Power|Bentaus|EnergyHub360)\b/i;
 
   // Allowlist for files known to legitimately use these terms.
