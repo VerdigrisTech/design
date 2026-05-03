@@ -379,7 +379,11 @@ function checkTokenCssSync() {
     if (!entry.endsWith(".css")) continue;
     const full = join(printDir, entry);
     const content = readFileSync(full, "utf-8");
-    const re = /(--vd-[a-z0-9-]+)\s*:\s*([^;]+);/g;
+    // Match --vd-* declarations. Trailing semicolon is optional in CSS for
+    // the last declaration in a block; exclude `}` and newline from the
+    // value so we don't run past the brace.
+    // gemini-code-assist review on PR #44, 2026-05-03 (medium finding).
+    const re = /(--vd-[a-z0-9-]+)\s*:\s*([^;}\n]+);?/g;
     let m;
     while ((m = re.exec(content)) !== null) {
       cssVars.set(m[1], { value: m[2].trim(), file: full });
@@ -543,15 +547,38 @@ function checkPublicPackagePii() {
   }
   const pkg = JSON.parse(readFileSync(pkgFile, "utf-8"));
 
+  // Use `npm pack --dry-run --json` to get the authoritative list of files
+  // that would ship in the published tarball. This handles `.npmignore`,
+  // default exclusions, nested conditional exports, and globs the same way
+  // npm itself does — sidestepping manual-parse fragility.
+  // gemini-code-assist review on PR #44, 2026-05-03 (high + medium findings).
   const publicPaths = new Set<string>();
-  function addPath(p: string) {
-    publicPaths.add(p.replace(/^\.\//, ""));
-  }
-  for (const entry of pkg.files || []) addPath(entry);
-  if (pkg.exports && typeof pkg.exports === "object") {
-    for (const v of Object.values(pkg.exports as Record<string, unknown>)) {
-      if (typeof v === "string") addPath(v);
+  try {
+    const out = execFileSync("npm", ["pack", "--dry-run", "--json"], {
+      cwd: ROOT,
+      stdio: ["ignore", "pipe", "pipe"],
+    }).toString();
+    const parsed = JSON.parse(out);
+    const filesArray = Array.isArray(parsed) && parsed[0]?.files ? parsed[0].files : [];
+    for (const entry of filesArray) {
+      if (entry?.path) publicPaths.add(entry.path);
     }
+  } catch (e) {
+    // Fall back to manual parse if npm pack is unavailable (offline, network
+    // sandbox, etc). Keep the recursive walk per Gemini's HIGH finding so
+    // nested conditional exports aren't silently missed.
+    function addPath(p: string) {
+      publicPaths.add(p.replace(/^\.\//, ""));
+    }
+    function walkExports(node: unknown) {
+      if (typeof node === "string") {
+        addPath(node);
+      } else if (node && typeof node === "object") {
+        for (const val of Object.values(node)) walkExports(val);
+      }
+    }
+    for (const entry of pkg.files || []) addPath(entry);
+    if (pkg.exports) walkExports(pkg.exports);
   }
 
   const files: string[] = [];
@@ -623,14 +650,16 @@ function checkPublicPackagePii() {
     }
     const lines = content.split("\n");
     const allowed = ALLOWLIST[f] || [];
+    // Hoisted out of the line-loop — same value every iteration.
+    // gemini-code-assist review on PR #44, 2026-05-03 (medium finding).
+    const checks: Array<{ re: RegExp; severity: "error" | "warn"; label: string }> = [
+      { re: FAMILY_WORDS, severity: "error", label: "family/personal scheduling" },
+      { re: SERIAL_PATTERN, severity: "error", label: "equipment serial" },
+      { re: SITE_DENYLIST, severity: "warn", label: "customer site nickname" },
+      { re: CUSTOMER_DENYLIST, severity: "warn", label: "customer name" },
+    ];
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      const checks: Array<{ re: RegExp; severity: "error" | "warn"; label: string }> = [
-        { re: FAMILY_WORDS, severity: "error", label: "family/personal scheduling" },
-        { re: SERIAL_PATTERN, severity: "error", label: "equipment serial" },
-        { re: SITE_DENYLIST, severity: "warn", label: "customer site nickname" },
-        { re: CUSTOMER_DENYLIST, severity: "warn", label: "customer name" },
-      ];
       for (const c of checks) {
         if (allowed.some(a => a.source === c.re.source)) continue;
         if (!c.re.test(line)) continue;
