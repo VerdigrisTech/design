@@ -3310,7 +3310,7 @@ composition:
         type: "constraint"
         maturity: "experimental"
         # no linear_issue (pre-tracking)
-        applies_to_modes: ["policy_brief"]
+        modes: ["policy_brief"]
         test:
           llm_eval: "Is the cover in policy_brief mode (named institution addresses policymakers) AND missing a 'Prepared for: ...' line below the byline? Answer YES if policy_brief mode without the line, NO if either a different mode or the line is present."
         anti_examples:
@@ -3322,7 +3322,7 @@ composition:
         type: "constraint"
         maturity: "experimental"
         # no linear_issue (pre-tracking)
-        applies_to_modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
         test:
           llm_eval: "Does the author benefit commercially from the briefing's recommendations being adopted (their employer sells products that would be mandated/funded), AND the cover lacks a one-sentence Disclosure block? Answer YES if commercial-interest exists without disclosure, NO if either no commercial interest OR a disclosure is present."
         anti_examples:
@@ -3553,7 +3553,7 @@ composition:
             competing_bold_metrics:
               css_selector: "strong, b"
               outside_selector: ".vd-cs-anchor"
-              regex_match: "\\b\\d+(\\.\\d+)?%?\\b"
+              regex_match: "(?:\\$\\d+(?:[.,]\\d+)*(?:[kMB])?|\\d+(?:[.,]\\d+)+|\\d+%|\\d+x\\b|\\d+\\s*(?:kW|MW|kHz|MHz|hrs?|days?|weeks?|months?|years?)\\b|\\d+[kMB]\\b)"
               count_max: 0
               failure_message: "Bolded numeric metric found in <strong>/<b> outside the .vd-cs-anchor container. Competing bolded metrics dilute the anchor; unbold the secondary observations or move them into the anchor block."
             note: "Cheap structural pre-flight: count anchor elements + count bolded numeric patterns outside the anchor container. Replaces the case-study-wide scan the llm_eval would otherwise do; llm_eval below fires only when structural passes, to catch the per-instance-qualifier semantic case ('per facility' without fleet size N)."
@@ -3583,7 +3583,8 @@ composition:
         test:
           structural:
             section_order:
-              css_selector: "section[data-cs-section], section > h1, section > h2, section > h3"
+              css_selector: "section[data-cs-section], article > section, body > section"
+              section_heading_selector: ":scope > :is(h1, h2, h3):first-of-type"
               expected_sections:
                 - { slug: "executive_summary", heading_patterns: ["executive summary", "summary"] }
                 - { slug: "problem", heading_patterns: ["problem", "the problem", "challenge", "the challenge"] }

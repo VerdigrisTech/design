@@ -113,8 +113,18 @@ console.log(tokens.hexColors['color.brand.verdigris']);
 For raw token JSON without the resolved-primitive convenience:
 
 ```js
-import baseColor from '@verdigristech/design-tokens/tokens/color/base.json' with { type: 'json' };
+// Modern bundlers (Vite, Webpack 5+, esbuild, Rollup with @rollup/plugin-json)
+import baseColor from '@verdigristech/design-tokens/tokens/color/base.json';
+
+// Node.js (no bundler) — works on any LTS without import-attributes flags
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const baseColorPath = require.resolve('@verdigristech/design-tokens/tokens/color/base.json');
+const baseColor = JSON.parse(readFileSync(baseColorPath, 'utf8'));
 ```
+
+Avoid `import ... with { type: 'json' }` (ES2025 import attributes) — it works in modern Node + Chromium but trips older bundler toolchains. The two patterns above cover every consumer.
 
 Failure mode prevented: parsing tokens directly from disk in each consumer. Each parser invents its own reference-resolution and dotted-path convention; over a year, three consumers ship three subtly different views of the same token.
 
