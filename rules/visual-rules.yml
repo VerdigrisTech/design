@@ -3482,7 +3482,7 @@ composition:
         test:
           structural:
             mixed_citation_systems:
-              regex_match: "\\([A-Z][a-z]+(?:\\s+et\\s+al\\.?)?,?\\s+\\d{4}\\)"
+              regex_match: "\\([A-Z][\\w'\\-]*(?:\\s+(?:&|and|et\\s+al\\.?|van|de|der|von|du)\\s+[A-Z]?[\\w'\\-]*)*,\\s+\\d{4}\\)"
               also_present_selector: "p sup, li sup"
               failure_message: "Body contains both author-date '(Author, YYYY)' inline citations AND numeric <sup> citation markers. Pick one system."
           llm_eval: "Does this body mix author-date inline citations like '(Smith et al., 2024)' AND numbered superscript citations in the same prose? Answer YES if both systems coexist, NO if exactly one system is in use throughout."
@@ -3561,7 +3561,7 @@ composition:
           - "Lab-tradition methodology chapter with a .vd-callout-caveat at the top of the section (the caveat is methodological -- it belongs as a paragraph in the methods discussion, not a coloured box)"
 
       - id: "composition.persuade-whitepaper-body.running-header-suppressed-on-chapter-open"
-        description: "Running headers (.vd-running-header) MUST be suppressed on chapter-opening pages (.vd-chapter:first-of-type within a sheet, or any element marked .chapter-open). The running header collides with the chapter title and creates two competing top-of-page identities. ceo_brief at 4-8pp has NO header at all; ceo_brief 9-12pp shows minimal title-only header; lab and policy show paper title + chapter title elsewhere."
+        description: "Running headers MUST be suppressed on chapter-opening pages. Implementation: .vd-chapter declares 'page: chapter-open' which selects the @page chapter-open rule with @top-left/@top-right set to none. Otherwise the running header collides with the chapter title and creates two competing top-of-page identities. ceo_brief at 4-8pp has NO header at all; ceo_brief 9-12pp shows minimal title-only header; lab and policy show paper title + chapter title elsewhere."
         severity: "warning"
         type: "constraint"
         maturity: "experimental"

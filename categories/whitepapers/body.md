@@ -118,7 +118,7 @@ Caption position is below the figure (universal across all three genres; lab and
 | Source line on proprietary data | Required | Required | Required |
 | Source line on public data | Conventional | Conventional | Optional |
 
-Gap above and below the figure block is held by `whitepaper.body.figure-gap-above-min` / `-max` and `whitepaper.body.figure-gap-below-min` / `-max`. If the tokens are not yet populated, default to 18px floor / 28px ceiling above and 12px floor / 20px ceiling below; the token agent will lock the values.
+Gap above and below the figure block is held by `whitepaper.body.figure-gap-above-min` / `-max` and `whitepaper.body.figure-gap-below-min` / `-max`. Current values: 18pt floor / 28pt ceiling above and 12pt floor / 22pt ceiling below. Print uses `pt` (typographic), not `px`.
 
 Page-break behavior: figures never split (`page-break-inside: avoid`). When the figure plus caption exceeds remaining page space, push to the next page even at the cost of white space on the prior page. Same rule the cover uses.
 
@@ -132,7 +132,7 @@ Header row: Lato 600, sentence case, not all caps unless the header is in the ey
 
 Table numbering parallels figure numbering: per chapter for `lab_tradition`, continuous for the other two genres.
 
-Page-break behavior for long tables: the header row repeats on each page break (`thead { display: table-header-group; }`). Cell padding floor/ceiling are held by future tokens `whitepaper.body.table-cell-padding-min` / `-max` (recommend 6px floor / 10px ceiling); the token agent will pick up the recommendation.
+Page-break behavior for long tables: the header row repeats on each page break (`thead { display: table-header-group; }`). Cell padding is held by `whitepaper.body.table-cell-padding-y-min` / `-max` (4pt / 8pt) and `whitepaper.body.table-cell-padding-x-min` / `-max` (8pt / 14pt). Tables sit inside a `<div class="vd-table-wrap">` for vertical rhythm: WeasyPrint's table-layout pass eats the table's own padding, so the wrapper carries it.
 
 ### Equations
 
@@ -156,7 +156,7 @@ Pull-quotes use a single visual pattern across all three genres: teal left rule,
 | Pull-quote frequency | Rare (signals editorial intervention; lab readers register as bias) | Occasional (1-3 per brief, surfaces a recommendation or striking stat) | More frequent (every 1-3 pages, sets rhythm) |
 | Side-margin floor / ceiling | `whitepaper.body.pullquote-side-margin-min` / `-max` | same | same |
 
-Pull-quote font is Lato 700 (matching the headline tier on the cover). The teal left rule is 2px, full vertical height of the quote block.
+Pull-quote font is Lato 700 (matching the headline tier on the cover). The teal left rule is 3pt, full vertical height of the quote block.
 
 Callouts share `.vd-callout` as the base class with modifiers per type:
 

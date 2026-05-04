@@ -8,7 +8,43 @@
  * Reuses CSS custom properties defined in cover.css (--vd-teal, --vd-muted,
  * --vd-ink, --vd-rule-paper, --vd-conf-customer). Assume cover.css is loaded
  * in the same document.
+ *
+ * The :root block below mirrors the spacing.print.whitepaper.body.* token
+ * values as CSS custom properties so this stylesheet uses var() refs and
+ * stays in sync with the JSON. Build pipeline does not yet auto-generate
+ * spacing custom properties (it does for color tokens via oklch.css /
+ * hsl.css); when it does, delete this block and import the generated file.
  */
+
+:root {
+  --vd-wp-running-header-h-min: 0.4in;
+  --vd-wp-running-header-h-max: 0.6in;
+  --vd-wp-running-footer-h-min: 0.4in;
+  --vd-wp-running-footer-h-max: 0.6in;
+  --vd-wp-chapter-pad-min: 1.2in;
+  --vd-wp-chapter-pad-max: 2.0in;
+  --vd-wp-toc-gap-min: 6pt;
+  --vd-wp-toc-gap-max: 12pt;
+  --vd-wp-toc-indent: 0.25in;
+  --vd-wp-fig-above-min: 18pt;
+  --vd-wp-fig-above-max: 28pt;
+  --vd-wp-fig-below-min: 12pt;
+  --vd-wp-fig-below-max: 22pt;
+  --vd-wp-pq-side-min: 0.5in;
+  --vd-wp-pq-side-max: 1.0in;
+  --vd-wp-pq-vert-min: 18pt;
+  --vd-wp-pq-vert-max: 32pt;
+  --vd-wp-body-line-height: 1.55;
+  --vd-wp-body-para: 8pt;
+  --vd-wp-table-pad-y-min: 4pt;
+  --vd-wp-table-pad-x-min: 8pt;
+  --vd-wp-eq-vert-min: 14pt;
+  --vd-wp-eq-vert-max: 24pt;
+  --vd-wp-ref-gap-min: 6pt;
+  /* callout backgrounds: kept inline pending color-token decision (PR followup) */
+  --vd-wp-callout-warning-bg: #fff4d6;
+  --vd-wp-callout-caveat-bg:  #f6f7fa;
+}
 
 /* === Page setup === */
 /* Re-declare @page paper so this file is usable standalone, plus a `chapter-open`
@@ -39,8 +75,8 @@
  * strings; CEO brief omits the h1/chapter elements so the strings stay empty
  * (header reads blank). Header band height: 0.4in floor / 0.6in ceiling
  * (whitepaper.body.running-header-height-{min,max}); enforced via @page margin. */
-.vd-paper h1 { string-set: paper-title content(); }
-.vd-paper .vd-chapter-title { string-set: chapter-title content(); }
+.vd-paper h1 { string-set: paper-title content(text); }
+.vd-paper .vd-chapter-title { string-set: chapter-title content(text); }
 @page paper {
   @top-left  { content: string(paper-title);   font: 9pt/1.3 'Inter', sans-serif; color: var(--vd-muted); }
   @top-right { content: string(chapter-title); font: 9pt/1.3 'Inter', sans-serif; color: var(--vd-muted); }
@@ -48,28 +84,31 @@
 .vd-chapter { page: chapter-open; }
 
 /* === TOC === */
-.vd-toc { padding-top: 6pt; padding-bottom: 6pt; }
+.vd-toc { padding-top: var(--vd-wp-toc-gap-min); padding-bottom: var(--vd-wp-toc-gap-min); }
 .vd-toc-entry {
   display: flex; align-items: baseline;
   font-family: 'Inter', sans-serif; font-size: 10.5pt; line-height: 1.4;
   color: var(--vd-ink);
-  padding-bottom: 6pt; /* whitepaper.body.toc-entry-gap-min */
+  padding-bottom: var(--vd-wp-toc-gap-min);
 }
 .vd-toc-h2 { padding-left: 0; font-weight: 600; }
-.vd-toc-h3 { padding-left: 0.25in; } /* 1x toc-indent-per-level */
-.vd-toc-h4 { padding-left: 0.5in; }  /* 2x toc-indent-per-level */
+.vd-toc-h3 { padding-left: var(--vd-wp-toc-indent); }
+.vd-toc-h4 { padding-left: calc(var(--vd-wp-toc-indent) * 2); }
 .vd-toc-title { flex: 0 0 auto; }
 .vd-toc-page  { flex: 0 0 auto; text-align: right; font-variant-numeric: tabular-nums; color: var(--vd-muted); }
 .vd-toc-leader { flex: 1 1 auto; margin: 0 6pt; }
-[data-genre="lab_tradition"] .vd-toc-leader {
-  border-bottom: 0.5pt dotted var(--vd-muted);
-  position: relative; top: -3pt;
+/* Lab tradition uses the CSS Paged Media leader() function for true typographic
+ * dot leaders (WeasyPrint supports this; degrades to nothing in browsers, which
+ * is acceptable for screen preview). */
+[data-genre="lab_tradition"] .vd-toc-leader::after {
+  content: leader(dotted);
+  color: var(--vd-muted);
 }
 
 /* === Chapter break === */
 .vd-chapter {
   page-break-before: always;
-  padding-top: 1.2in; /* whitepaper.body.chapter-break-top-padding-min */
+  padding-top: var(--vd-wp-chapter-pad-min);
   counter-increment: chapter;
 }
 .vd-chapter-eyebrow {
@@ -104,7 +143,8 @@
 .vd-funding {
   font-family: 'Inter', sans-serif; font-style: italic;
   font-size: 9.5pt; line-height: 1.5; color: var(--vd-ink);
-  padding-top: 26pt; border-top: 0.5pt solid var(--vd-rule-paper); /* WeasyPrint: padding only */
+  /* Vertical rhythm via padding (not margin) to avoid WeasyPrint margin-collapse. */
+  padding-top: 26pt; border-top: 0.5pt solid var(--vd-rule-paper);
 }
 .vd-funding { padding-top: 16pt; }
 /* Suggested citation gets its own vertical rhythm via wrapper padding;
@@ -122,8 +162,8 @@
 
 /* === Body type rhythm === */
 .vd-paper p {
-  line-height: 1.55;   /* body-text-line-height */
-  padding-bottom: 8pt; /* body-paragraph-spacing */
+  line-height: var(--vd-wp-body-line-height);
+  padding-bottom: var(--vd-wp-body-para);
 }
 .vd-paper h2 {
   font-family: 'Lato', 'Inter', sans-serif; font-weight: 700;
@@ -139,8 +179,8 @@
 /* === Figures (body, distinct from cover figures) === */
 .vd-paper { counter-reset: figure table equation chapter; }
 .vd-paper .vd-figure {
-  padding-top: 18pt;    /* figure-gap-above-min */
-  padding-bottom: 12pt; /* figure-gap-below-min */
+  padding-top: var(--vd-wp-fig-above-min);
+  padding-bottom: var(--vd-wp-fig-below-min);
   page-break-inside: avoid;
 }
 .vd-paper .vd-figure-label::before { counter-increment: figure; content: "Figure " counter(figure) ". "; }
@@ -162,13 +202,13 @@
 .vd-table thead th {
   font-family: 'Lato', 'Inter', sans-serif; font-weight: 600; font-size: 9.5pt;
   text-align: left; color: var(--vd-ink);
-  padding: 4pt 8pt; /* table-cell-padding-{y,x}-min */
+  padding: var(--vd-wp-table-pad-y-min) var(--vd-wp-table-pad-x-min);
   border-bottom: 0.5pt solid var(--vd-rule-paper);
 }
 .vd-table td,
 .vd-table tbody th {
   font-family: 'Inter', sans-serif; font-size: 9.5pt; line-height: 1.45; color: var(--vd-ink);
-  padding: 4pt 8pt; vertical-align: top;
+  padding: var(--vd-wp-table-pad-y-min) var(--vd-wp-table-pad-x-min); vertical-align: top;
 }
 .vd-table caption {
   font-family: 'Lato', 'Inter', sans-serif; font-size: 8.5pt; font-weight: 700;
@@ -182,7 +222,7 @@
 /* === Equations === */
 .vd-equation {
   display: block; text-align: center; position: relative;
-  padding-top: 14pt; padding-bottom: 14pt; /* equation-vertical-spacing-min */
+  padding-top: var(--vd-wp-eq-vert-min); padding-bottom: var(--vd-wp-eq-vert-min);
   page-break-inside: avoid;
   font-family: 'Inter', sans-serif; font-size: 11pt; color: var(--vd-ink);
   counter-increment: equation;
@@ -198,10 +238,9 @@
 /* === Pull-quotes === */
 /* Extends .vd-thesis (cover.css) -- teal left rule, no fill, oversized type. */
 .vd-pullquote {
-  /* pullquote-vertical-spacing-min via padding (WeasyPrint margin-collapse safe);
-   * pullquote-side-margin-min via inline padding for indent. */
-  padding: 18pt 0 18pt calc(0.5in + 16pt);
-  margin-right: 0.5in; /* right-side indent has no rhythm sibling, margin OK */
+  /* Vertical rhythm via padding (margin-collapse safe); side indent via padding-left. */
+  padding: var(--vd-wp-pq-vert-min) 0 var(--vd-wp-pq-vert-min) calc(var(--vd-wp-pq-side-min) + 16pt);
+  margin-right: var(--vd-wp-pq-side-min); /* right indent has no rhythm sibling, margin OK */
   border-left: 3pt solid var(--vd-teal);
   font-family: 'Lato', 'Inter', sans-serif; font-weight: 700;
   font-size: 16pt; line-height: 1.3; color: var(--vd-ink);
@@ -222,8 +261,8 @@
   page-break-inside: avoid;
 }
 /* Wrap .vd-callout in a sibling rhythm container if surrounding flow needs space. */
-.vd-callout-warning { border-left-color: var(--vd-conf-customer); background: #fff4d6; }
-.vd-callout-caveat  { border-left-color: var(--vd-muted); background: #f6f7fa; }
+.vd-callout-warning { border-left-color: var(--vd-conf-customer); background: var(--vd-wp-callout-warning-bg); }
+.vd-callout-caveat  { border-left-color: var(--vd-muted); background: var(--vd-wp-callout-caveat-bg); }
 /* Lab tradition: warning/caveat callouts read as marketing register; suppress. */
 [data-genre="lab_tradition"] .vd-callout-warning,
 [data-genre="lab_tradition"] .vd-callout-caveat { display: none; }
@@ -251,6 +290,6 @@
 }
 .vd-ref-entry {
   text-indent: -1.2em; padding-left: 1.2em;
-  padding-bottom: 6pt; /* references-entry-gap-min */
+  padding-bottom: var(--vd-wp-ref-gap-min);
   break-inside: avoid;
 }
