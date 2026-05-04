@@ -1,0 +1,295 @@
+/* Verdigris whitepaper body -- inside-pages reference stylesheet.
+ * Companion to build/print/cover.css; the cover defines page 1, this defines pages 2+.
+ * Same WeasyPrint quirk workarounds apply (named pages, Flex column, padding-top
+ * for vertical rhythm, suppress @top/@bottom on covers). See cover.md "WeasyPrint
+ * quirks" section and the cover.css header for citations.
+ *
+ * Tokens: tokens/spacing/print.json (whitepaper.body.* keys).
+ * Reuses CSS custom properties defined in cover.css (--vd-teal, --vd-muted,
+ * --vd-ink, --vd-rule-paper, --vd-conf-customer). Assume cover.css is loaded
+ * in the same document.
+ *
+ * The :root block below mirrors the spacing.print.whitepaper.body.* token
+ * values as CSS custom properties so this stylesheet uses var() refs and
+ * stays in sync with the JSON. Build pipeline does not yet auto-generate
+ * spacing custom properties (it does for color tokens via oklch.css /
+ * hsl.css); when it does, delete this block and import the generated file.
+ */
+
+:root {
+  --vd-wp-running-header-h-min: 0.4in;
+  --vd-wp-running-header-h-max: 0.6in;
+  --vd-wp-running-footer-h-min: 0.4in;
+  --vd-wp-running-footer-h-max: 0.6in;
+  --vd-wp-chapter-pad-min: 1.2in;
+  --vd-wp-chapter-pad-max: 2.0in;
+  --vd-wp-toc-gap-min: 6pt;
+  --vd-wp-toc-gap-max: 12pt;
+  --vd-wp-toc-indent: 0.25in;
+  --vd-wp-fig-above-min: 18pt;
+  --vd-wp-fig-above-max: 28pt;
+  --vd-wp-fig-below-min: 12pt;
+  --vd-wp-fig-below-max: 22pt;
+  --vd-wp-pq-side-min: 0.5in;
+  --vd-wp-pq-side-max: 1.0in;
+  --vd-wp-pq-vert-min: 18pt;
+  --vd-wp-pq-vert-max: 32pt;
+  --vd-wp-body-line-height: 1.55;
+  --vd-wp-body-para: 8pt;
+  --vd-wp-table-pad-y-min: 4pt;
+  --vd-wp-table-pad-x-min: 8pt;
+  --vd-wp-eq-vert-min: 14pt;
+  --vd-wp-eq-vert-max: 24pt;
+  --vd-wp-ref-gap-min: 6pt;
+  /* callout backgrounds: kept inline pending color-token decision (PR followup) */
+  --vd-wp-callout-warning-bg: #fff4d6;
+  --vd-wp-callout-caveat-bg:  #f6f7fa;
+}
+
+/* === Page setup === */
+/* Re-declare @page paper so this file is usable standalone, plus a `chapter-open`
+ * named page that suppresses headers on chapter title pages. */
+@page paper {
+  size: Letter;
+  margin: 0.85in 0.85in 1.0in 0.85in;
+  @bottom-left {
+    content: "Verdigris Technologies";
+    font: 9pt 'Inter', sans-serif; color: var(--vd-muted);
+    padding-top: 18pt; border-top: 0.5pt solid var(--vd-rule-paper);
+  }
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+    font: 9pt 'Inter', sans-serif; color: var(--vd-muted);
+    padding-top: 18pt; border-top: 0.5pt solid var(--vd-rule-paper);
+  }
+}
+@page chapter-open {
+  size: Letter;
+  margin: 0.85in 0.85in 1.0in 0.85in;
+  @top-left { content: none; }
+  @top-right { content: none; }
+}
+
+/* === Running headers / footers === */
+/* Lab + policy emit running headers by setting paper-title and chapter-title
+ * strings; CEO brief omits the h1/chapter elements so the strings stay empty
+ * (header reads blank). Header band height: 0.4in floor / 0.6in ceiling
+ * (whitepaper.body.running-header-height-{min,max}); enforced via @page margin. */
+.vd-paper h1 { string-set: paper-title content(text); }
+.vd-paper .vd-chapter-title { string-set: chapter-title content(text); }
+@page paper {
+  @top-left  { content: string(paper-title);   font: 9pt/1.3 'Inter', sans-serif; color: var(--vd-muted); }
+  @top-right { content: string(chapter-title); font: 9pt/1.3 'Inter', sans-serif; color: var(--vd-muted); }
+}
+.vd-chapter { page: chapter-open; }
+
+/* === TOC === */
+.vd-toc { padding-top: var(--vd-wp-toc-gap-min); padding-bottom: var(--vd-wp-toc-gap-min); }
+.vd-toc-entry {
+  display: flex; align-items: baseline;
+  font-family: 'Inter', sans-serif; font-size: 10.5pt; line-height: 1.4;
+  color: var(--vd-ink);
+  padding-bottom: var(--vd-wp-toc-gap-min);
+}
+.vd-toc-h2 { padding-left: 0; font-weight: 600; }
+.vd-toc-h3 { padding-left: var(--vd-wp-toc-indent); }
+.vd-toc-h4 { padding-left: calc(var(--vd-wp-toc-indent) * 2); }
+.vd-toc-title { flex: 0 0 auto; }
+.vd-toc-page  { flex: 0 0 auto; text-align: right; font-variant-numeric: tabular-nums; color: var(--vd-muted); }
+.vd-toc-leader { flex: 1 1 auto; margin: 0 6pt; }
+/* Lab tradition uses the CSS Paged Media leader() function for true typographic
+ * dot leaders (WeasyPrint supports this; degrades to nothing in browsers, which
+ * is acceptable for screen preview). */
+[data-genre="lab_tradition"] .vd-toc-leader::after {
+  content: leader(dotted);
+  color: var(--vd-muted);
+}
+
+/* === Chapter break === */
+.vd-chapter {
+  page-break-before: always;
+  padding-top: var(--vd-wp-chapter-pad-min);
+  counter-increment: chapter;
+}
+.vd-chapter-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 11pt; color: var(--vd-teal); letter-spacing: 0.06em;
+  padding-bottom: 8pt;
+}
+.vd-chapter-title {
+  font-family: 'Lato', 'Inter', sans-serif; font-weight: 700;
+  font-size: 24pt; line-height: 1.15; letter-spacing: -0.015em;
+  color: var(--vd-ink); page-break-after: avoid;
+}
+[data-genre="lab_tradition"] .vd-chapter-eyebrow::before { content: counter(chapter) ". "; }
+[data-genre="ceo_brief"]     .vd-chapter-eyebrow::before { content: counter(chapter, decimal-leading-zero) " "; }
+[data-genre="ceo_brief"]     .vd-chapter { page-break-before: auto; padding-top: 0; }
+
+/* === Title page (multi-author) === */
+.vd-title-page {
+  page-break-before: always; page-break-after: always;
+  display: flex; flex-direction: column; padding-top: 1.0in;
+}
+.vd-contributors {
+  display: flex; flex-direction: column; flex-wrap: wrap;
+  gap: 14pt 0.4in; padding-top: 18pt; padding-bottom: 18pt;
+}
+.vd-contributors.vd-contributors-multi { flex-direction: row; } /* >=4 authors */
+.vd-contributor      { flex: 0 0 calc(50% - 0.2in); }
+.vd-contributor-name { font-family: 'Inter', sans-serif; font-size: 11pt; font-weight: 600; color: var(--vd-ink); }
+.vd-contributor-affil { font-family: 'Inter', sans-serif; font-size: 9.5pt; color: var(--vd-muted); padding-top: 2pt; }
+.vd-contributor-orcid { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-size: 8.5pt; color: var(--vd-muted); padding-top: 2pt; }
+.vd-acknowledgments,
+.vd-funding {
+  font-family: 'Inter', sans-serif; font-style: italic;
+  font-size: 9.5pt; line-height: 1.5; color: var(--vd-ink);
+  /* Vertical rhythm via padding (not margin) to avoid WeasyPrint margin-collapse. */
+  padding-top: 26pt; border-top: 0.5pt solid var(--vd-rule-paper);
+}
+.vd-funding { padding-top: 16pt; }
+/* Suggested citation gets its own vertical rhythm via wrapper padding;
+ * the rule's own padding is the boxed inset. */
+.vd-suggested-citation-wrap { padding-top: 18pt; }
+.vd-suggested-citation {
+  border: 1pt solid var(--vd-rule-paper); padding: 0.4in 0.6in;
+  font-family: 'Inter', sans-serif; font-size: 9.5pt; line-height: 1.5;
+  color: var(--vd-ink);
+}
+.vd-suggested-citation .vd-cite-string {
+  display: block; padding-top: 6pt;
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-size: 9pt;
+}
+
+/* === Body type rhythm === */
+.vd-paper p {
+  line-height: var(--vd-wp-body-line-height);
+  padding-bottom: var(--vd-wp-body-para);
+}
+.vd-paper h2 {
+  font-family: 'Lato', 'Inter', sans-serif; font-weight: 700;
+  font-size: 18pt; line-height: 1.22; letter-spacing: -0.01em; color: var(--vd-ink);
+  padding-top: 14pt; padding-bottom: 8pt; page-break-after: avoid;
+}
+.vd-paper h3 {
+  font-family: 'Lato', 'Inter', sans-serif; font-weight: 700;
+  font-size: 14pt; line-height: 1.25; color: var(--vd-ink);
+  padding-top: 10pt; padding-bottom: 6pt; page-break-after: avoid;
+}
+
+/* === Figures (body, distinct from cover figures) === */
+.vd-paper { counter-reset: figure table equation chapter; }
+.vd-paper .vd-figure {
+  padding-top: var(--vd-wp-fig-above-min);
+  padding-bottom: var(--vd-wp-fig-below-min);
+  page-break-inside: avoid;
+}
+.vd-paper .vd-figure-label::before { counter-increment: figure; content: "Figure " counter(figure) ". "; }
+[data-genre="lab_tradition"] .vd-chapter { counter-reset: figure table equation; }
+[data-genre="lab_tradition"] .vd-figure-label::before { content: "Figure " counter(chapter) "." counter(figure) ". "; }
+
+/* === Tables === */
+/* Table sits inside a wrapper for vertical rhythm because table elements
+ * cannot reliably take padding for spacing in WeasyPrint (margin-collapse + table-layout).
+ * Authors should wrap a .vd-table in a <div class="vd-table-wrap">. */
+.vd-table-wrap { padding-top: 14pt; padding-bottom: 14pt; }
+.vd-table {
+  width: 100%; border-collapse: collapse;
+  border-top: 0.5pt solid var(--vd-rule-paper);
+  border-bottom: 0.5pt solid var(--vd-rule-paper);
+  page-break-inside: auto;
+}
+.vd-table thead { display: table-header-group; } /* repeat header on page-break */
+.vd-table thead th {
+  font-family: 'Lato', 'Inter', sans-serif; font-weight: 600; font-size: 9.5pt;
+  text-align: left; color: var(--vd-ink);
+  padding: var(--vd-wp-table-pad-y-min) var(--vd-wp-table-pad-x-min);
+  border-bottom: 0.5pt solid var(--vd-rule-paper);
+}
+.vd-table td,
+.vd-table tbody th {
+  font-family: 'Inter', sans-serif; font-size: 9.5pt; line-height: 1.45; color: var(--vd-ink);
+  padding: var(--vd-wp-table-pad-y-min) var(--vd-wp-table-pad-x-min); vertical-align: top;
+}
+.vd-table caption {
+  font-family: 'Lato', 'Inter', sans-serif; font-size: 8.5pt; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--vd-teal);
+  text-align: left; caption-side: top; padding-bottom: 6pt;
+}
+.vd-table caption::before { counter-increment: table; content: "Table " counter(table) ". "; }
+[data-genre="lab_tradition"] .vd-table caption::before { content: "Table " counter(chapter) "." counter(table) ". "; }
+[data-genre="ceo_brief"] .vd-table tbody tr:nth-child(even) { background: rgba(0, 0, 0, 0.025); }
+
+/* === Equations === */
+.vd-equation {
+  display: block; text-align: center; position: relative;
+  padding-top: var(--vd-wp-eq-vert-min); padding-bottom: var(--vd-wp-eq-vert-min);
+  page-break-inside: avoid;
+  font-family: 'Inter', sans-serif; font-size: 11pt; color: var(--vd-ink);
+  counter-increment: equation;
+}
+.vd-equation-num {
+  float: right;
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 10pt; color: var(--vd-muted);
+}
+.vd-equation-num::before { content: "(" counter(equation) ")"; }
+[data-genre="lab_tradition"] .vd-equation-num::before { content: "(" counter(chapter) "." counter(equation) ")"; }
+
+/* === Pull-quotes === */
+/* Extends .vd-thesis (cover.css) -- teal left rule, no fill, oversized type. */
+.vd-pullquote {
+  /* Vertical rhythm via padding (margin-collapse safe); side indent via padding-left. */
+  padding: var(--vd-wp-pq-vert-min) 0 var(--vd-wp-pq-vert-min) calc(var(--vd-wp-pq-side-min) + 16pt);
+  margin-right: var(--vd-wp-pq-side-min); /* right indent has no rhythm sibling, margin OK */
+  border-left: 3pt solid var(--vd-teal);
+  font-family: 'Lato', 'Inter', sans-serif; font-weight: 700;
+  font-size: 16pt; line-height: 1.3; color: var(--vd-ink);
+  page-break-inside: avoid;
+}
+.vd-pullquote cite {
+  display: block; padding-top: 8pt;
+  font-family: 'Inter', sans-serif; font-style: normal; font-weight: 400;
+  font-size: 10pt; color: var(--vd-muted);
+}
+
+/* === Callouts (methods, warning, caveat) === */
+/* .vd-methods is owned by cover.css; do not redefine. */
+.vd-callout {
+  padding: 12pt 12pt 12pt 12pt; /* margins collapse in WeasyPrint; rhythm via padding only */
+  border-left: 3pt solid var(--vd-muted);
+  font-family: 'Inter', sans-serif; font-size: 10pt; line-height: 1.55; color: var(--vd-ink);
+  page-break-inside: avoid;
+}
+/* Wrap .vd-callout in a sibling rhythm container if surrounding flow needs space. */
+.vd-callout-warning { border-left-color: var(--vd-conf-customer); background: var(--vd-wp-callout-warning-bg); }
+.vd-callout-caveat  { border-left-color: var(--vd-muted); background: var(--vd-wp-callout-caveat-bg); }
+/* Lab tradition: warning/caveat callouts read as marketing register; suppress. */
+[data-genre="lab_tradition"] .vd-callout-warning,
+[data-genre="lab_tradition"] .vd-callout-caveat { display: none; }
+
+/* === Citations: footnote markers, endnote anchors, hyperlinks === */
+/* sup is defined in cover.css; .vd-cite mirrors it for explicit markup. */
+.vd-cite { font-size: 0.7em; vertical-align: super; line-height: 0; }
+.vd-cite-letter {
+  font-size: 0.7em; vertical-align: super; line-height: 0;
+  font-style: italic; color: var(--vd-teal);
+}
+[data-genre="ceo_brief"] .vd-paper a {
+  color: var(--vd-teal); text-decoration: underline; text-underline-offset: 2px;
+}
+.vd-references {
+  padding-top: 32pt; /* combined rhythm; WeasyPrint margin-collapse safe */
+  border-top: 0.5pt solid var(--vd-rule-paper);
+  font-family: 'Inter', sans-serif; font-size: 9pt; line-height: 1.45; color: var(--vd-ink);
+}
+.vd-references h2,
+.vd-references h3 {
+  font-family: 'Lato', 'Inter', sans-serif; font-size: 8.5pt; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--vd-muted);
+  padding-bottom: 8pt;
+}
+.vd-ref-entry {
+  text-indent: -1.2em; padding-left: 1.2em;
+  padding-bottom: var(--vd-wp-ref-gap-min);
+  break-inside: avoid;
+}

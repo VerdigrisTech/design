@@ -3379,6 +3379,233 @@ composition:
     weasyprint_notes: "Use named @page (not :first), Flex column (not Grid), padding-top (not margin-top) for vertical rhythm. See build/print/cover.css and categories/whitepapers/cover.md for working stylesheet and known WeasyPrint issue references."
 
   # ---------------------------------------------------------------------------
+  # PERSUADE x WHITEPAPER BODY -- inside pages (page 2+) for whitepapers
+  # ---------------------------------------------------------------------------
+  persuade_whitepaper_body:
+    id: "composition.persuade-whitepaper-body"
+    type: "reference"
+    maturity: "experimental"
+    description: "Inside-pages spec for whitepapers/briefings. Sister cell to whitepaper-cover; inherits the same three genres. See categories/whitepapers/body.md."
+    applies_to_examples: []
+    modes:
+      lab_tradition:
+        description: "TBD -- see body.md"
+      policy_brief:
+        description: "TBD -- see body.md"
+      ceo_brief:
+        description: "TBD -- see body.md"
+    inherits_from_sales_collateral:
+      - "composition.persuade-slide-deck.confidentiality-marking"
+    rules:
+      - id: "composition.persuade-whitepaper-body.toc-required-by-length"
+        description: "Table of contents (.vd-toc) is required by length per genre. lab_tradition: required at any length. policy_brief: required at >=12pp. ceo_brief: required at >=9pp. The TOC orients reviewers; long documents without one collapse the lab/policy register immediately."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          structural:
+            toc_present:
+              css_selector: "nav.vd-toc, .vd-toc"
+              count_min: 1
+              applies_when: "data-genre=lab_tradition (any length); data-genre=policy_brief and body length >= 12 pages; data-genre=ceo_brief and body length >= 9 pages"
+              failure_message: "Body of declared length and genre requires a .vd-toc block. None found."
+          llm_eval: "Is this whitepaper body of a length that requires a TOC for its declared genre (lab_tradition any length, policy_brief >=12pp, ceo_brief >=9pp), AND missing a table of contents? Answer YES if a required TOC is missing, NO if either the document is shorter than the threshold or a .vd-toc is present."
+        anti_examples:
+          - "Lab-tradition report with 60pp body and no TOC (reviewers can't navigate; the lab register collapses immediately and the document reads as a long blog post)"
+          - "Policy brief at 18pp without a TOC (reader cannot triage which section to read first; policy briefs at this length lose their think-tank register without orientation)"
+
+      - id: "composition.persuade-whitepaper-body.toc-dot-leaders-lab-only"
+        description: "TOC dot leaders are required for lab_tradition (academic/government convention). policy_brief and ceo_brief MUST NOT use dot leaders -- the visual texture is too lab-coded for a think-tank or operator brief."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          llm_eval: "Does the TOC use visible dot leaders (rows of dots between section title and page number) on a non-lab_tradition document, OR omit dot leaders on a lab_tradition document? Answer YES if there is a genre/leader mismatch (leaders on policy_brief or ceo_brief, OR no leaders on lab_tradition), NO if the leader treatment matches the genre."
+        anti_examples:
+          - "CEO brief TOC with full dot-leader rows between each entry and its page number (visual texture is academic/government; collapses the operator register the brief is supposed to occupy)"
+          - "Lab-tradition LBNL-style report TOC with no dot leaders, just title + right-aligned page number (the absence reads as a missing convention; reviewers expect the lab leader pattern)"
+
+      - id: "composition.persuade-whitepaper-body.chapter-page-break-by-genre"
+        description: "Chapter break behavior differs by genre. lab_tradition: every .vd-chapter MUST page-break-before: always (chapters are physical sheets). policy_brief: section headings inline at <15pp; page break required at >=15pp. ceo_brief: NO page breaks between chapters; chapters flow with monospace teal numbering (Verdigris deviation). Mismatched break behavior signals the wrong genre."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          llm_eval: "Does this body's chapter-break behavior match its genre? lab_tradition expects every .vd-chapter to start on a fresh page; ceo_brief expects chapters to flow continuously without page breaks; policy_brief expects breaks only at >=15pp. Answer YES if there is a mismatch (e.g., a CEO brief page-breaks every chapter, or a lab report runs chapters together), NO if break behavior matches the genre."
+        anti_examples:
+          - "CEO brief at 6pp with hard page breaks between each of 4 chapters (forces 4 thinly-populated sheets; collapses the operator-letter feel; reads as a stretched-out lab report)"
+          - "Lab-tradition 60pp report with chapters running inline without page breaks (no chapter-as-sheet rhythm; the running header gets confusing because chapter context bleeds across page turns)"
+
+      - id: "composition.persuade-whitepaper-body.multi-author-block-by-genre"
+        description: "lab_tradition REQUIRES a .vd-title-page (separate sheet) carrying .vd-contributors (each with name, affiliation, ORCID), .vd-suggested-citation, .vd-acknowledgments, and .vd-funding. policy_brief: lighter (1-3 author byline; suggested-citation conventional but not required). ceo_brief: author byline only on the cover; no formal title page; optional closing thanks line."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition"]
+        test:
+          structural:
+            title_page_present:
+              css_selector: ".vd-title-page"
+              count_min: 1
+              failure_message: "lab_tradition body must include a .vd-title-page block."
+            contributors_present:
+              css_selector: ".vd-title-page .vd-contributors"
+              count_min: 1
+              failure_message: "lab_tradition .vd-title-page must include .vd-contributors."
+            suggested_citation_present:
+              css_selector: ".vd-title-page .vd-suggested-citation"
+              count_min: 1
+              failure_message: "lab_tradition .vd-title-page must include .vd-suggested-citation."
+            funding_present:
+              css_selector: ".vd-title-page .vd-funding"
+              count_min: 1
+              failure_message: "lab_tradition .vd-title-page must include .vd-funding."
+          llm_eval: "Is this lab_tradition body missing any of: a .vd-title-page sheet, a .vd-contributors block listing each author with affiliation and ORCID, a .vd-suggested-citation, or a .vd-funding statement? Answer YES if any required element is missing, NO if all four are present."
+        anti_examples:
+          - "Lab-tradition LBNL report with author names only on the cover and no separate title page, no ORCIDs, no suggested citation, no funding statement (fails the institutional-research convention; reviewers cite the work incorrectly)"
+          - "Lab-tradition report with title page that lists author names but omits funding/contract acknowledgment (DOE-funded work without funding statement is a contractual reporting gap, not just a stylistic one)"
+
+      - id: "composition.persuade-whitepaper-body.citation-system-consistent"
+        description: "Exactly ONE citation system per document. lab_tradition uses author-date inline (e.g., '(Smith et al., 2024)'). policy_brief and ceo_brief use numbered superscripts. Mixing both systems in the same body confuses the reader about which is canonical and which is decorative."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          structural:
+            mixed_citation_systems:
+              regex_match: "\\([A-Z][\\w'\\-]*(?:\\s+(?:&|and|et\\s+al\\.?|van|de|der|von|du)\\s+[A-Z]?[\\w'\\-]*)*,\\s+\\d{4}\\)"
+              also_present_selector: "p sup, li sup"
+              failure_message: "Body contains both author-date '(Author, YYYY)' inline citations AND numeric <sup> citation markers. Pick one system."
+          llm_eval: "Does this body mix author-date inline citations like '(Smith et al., 2024)' AND numbered superscript citations in the same prose? Answer YES if both systems coexist, NO if exactly one system is in use throughout."
+        anti_examples:
+          - "Policy brief that uses '(Shehabi et al., 2024)' in the introduction and switches to '<sup>3</sup>' starting in section 2 (reader doesn't know which is canonical; bibliography ordering becomes ambiguous)"
+          - "CEO brief at 10pp using both inline hyperlinks and <sup> numbered footnotes (reader doesn't know which is canonical; print loses hyperlinks and the document degrades silently)"
+
+      - id: "composition.persuade-whitepaper-body.table-caption-above"
+        description: "Every .vd-table MUST have a <caption> element as its first child (caption-side: top, universal across all three genres). Captions below tables are a presentation convention; whitepapers and lab reports place captions above so the reader sees what they are about to scan before scanning."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          structural:
+            table_caption_first_child:
+              css_selector: "table.vd-table"
+              child_first_must_be: "caption"
+              failure_message: "Every <table class=\"vd-table\"> must have a <caption> as its first child element."
+          llm_eval: "Does any table in this body lack a caption, OR place the caption visually below the table rather than above? Answer YES if any .vd-table is missing a <caption> first child or rendered with caption-side: bottom, NO if every table has a top-positioned caption."
+        anti_examples:
+          - "Results table with no caption, just a <thead>/<tbody> (reader has to read 3 rows before figuring out what the table is about)"
+          - "Table with caption rendered below the table via caption-side: bottom (reader scans the data first, then is told what they were looking at; backwards)"
+
+      - id: "composition.persuade-whitepaper-body.figure-numbering-by-chapter-break"
+        description: "Figure numbering format follows chapter-break behavior. lab_tradition (chapters page-break) uses per-chapter numbering 'Figure {chapter}.{figure}' (Fig 2.1, Fig 2.2, Fig 3.1). policy_brief and ceo_brief (chapters flow) use continuous numbering 'Figure {n}' (Fig 1, Fig 2, Fig 3). Mismatch breaks cross-references from the body to the figures."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          llm_eval: "Does the figure numbering format match the chapter-break behavior? lab_tradition expects 'Figure 2.1' style (per-chapter); policy_brief and ceo_brief expect 'Figure 1' style (continuous). Answer YES if the figure numbering does not match the genre's chapter-break convention, NO if numbering matches."
+        anti_examples:
+          - "Lab-tradition report with continuous figure numbering 'Figure 1' through 'Figure 23' across page-broken chapters (cross-references like 'see Fig 12 in Chapter 4' force the reader to navigate without locality cues)"
+          - "CEO brief at 5pp with figures numbered 'Figure 1.1, Figure 2.1' (per-chapter format on chapters that don't page-break; reads as a stretched-out lab report and the chapter prefixes carry no information)"
+
+      - id: "composition.persuade-whitepaper-body.pull-quote-frequency-by-genre"
+        description: "Pull-quote (.vd-pullquote) frequency varies by genre. lab_tradition: 0-1 total (rare; lab register treats pull-quotes as marketing intrusion). policy_brief: 0-3 total (occasional). ceo_brief: roughly one per 1-3 pages, floor of >=1 at >=9pp (frequent; pull-quotes are a CEO-letter convention)."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          structural:
+            pullquote_count:
+              css_selector: ".vd-pullquote, blockquote.vd-pullquote"
+              max_for_lab_tradition: 1
+              max_for_policy_brief: 3
+              min_for_ceo_brief_at_9pp: 1
+              failure_message: "Pull-quote count out of range for declared genre."
+          llm_eval: "Does the pull-quote count match the genre's expected range (lab_tradition <=1; policy_brief <=3; ceo_brief >=1 at >=9pp)? Answer YES if the count is out of range, NO if the count fits the genre."
+        anti_examples:
+          - "Lab-tradition report with 6 pull-quotes scattered through chapters (reads as marketing collateral, not institutional research; the lab register collapses)"
+          - "CEO brief at 11pp with zero pull-quotes (misses a CEO-letter convention; the prose reads as undifferentiated text wall when the genre expects rhythmic punctuation)"
+
+      - id: "composition.persuade-whitepaper-body.callout-warning-not-in-lab"
+        description: "lab_tradition MUST NOT use .vd-callout-warning or .vd-callout-caveat blocks. Warning/caveat callouts read as marketing-collateral defensive copy; the lab register addresses caveats in prose within the methodology or limitations section. .vd-callout-methods is permitted across all genres."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition"]
+        test:
+          structural:
+            warning_callouts_in_lab:
+              css_selector: ".vd-callout-warning, .vd-callout-caveat"
+              count_max: 0
+              applies_when: "data-genre=lab_tradition"
+              failure_message: "lab_tradition body must not contain .vd-callout-warning or .vd-callout-caveat blocks. Move caveats into the limitations or methodology prose."
+          llm_eval: "Does this lab_tradition body contain any .vd-callout-warning or .vd-callout-caveat blocks? Answer YES if any are present, NO if caveats are addressed in prose within methodology/limitations sections instead."
+        anti_examples:
+          - "Lab-tradition report with a yellow .vd-callout-warning box reading 'Important: this assumes steady-state grid conditions' (defensive marketing register; the same caveat in a Limitations subsection would read as honest scoping)"
+          - "Lab-tradition methodology chapter with a .vd-callout-caveat at the top of the section (the caveat is methodological -- it belongs as a paragraph in the methods discussion, not a coloured box)"
+
+      - id: "composition.persuade-whitepaper-body.running-header-suppressed-on-chapter-open"
+        description: "Running headers MUST be suppressed on chapter-opening pages. Implementation: .vd-chapter declares 'page: chapter-open' which selects the @page chapter-open rule with @top-left/@top-right set to none. Otherwise the running header collides with the chapter title and creates two competing top-of-page identities. ceo_brief at 4-8pp has NO header at all; ceo_brief 9-12pp shows minimal title-only header; lab and policy show paper title + chapter title elsewhere."
+        severity: "warning"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          llm_eval: "On any chapter-opening page in this body, does a running header appear above the chapter title? Answer YES if a running header is rendered on the same page where a chapter starts, NO if chapter-opening pages suppress the header so the chapter title is the topmost element."
+        anti_examples:
+          - "Lab-tradition chapter-opening page showing 'Higher-Frequency Grid Telemetry / Chapter 2: Methodology' running header above the '2. Methodology' chapter title (two stacked identities competing for the eye; the chapter title loses)"
+          - "CEO brief at 6pp with a running header on every page (the brief is short enough that the cover serves as the title surface; running headers add noise without helping navigation)"
+
+      - id: "composition.persuade-whitepaper-body.references-list-required-when-cited"
+        description: "If the body contains any citation marker (numeric <sup> or author-date parenthetical), it MUST close with a .vd-references block listing every cited source. Citations without a references list leave the reader unable to verify or follow up; treats the citation as decoration."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          structural:
+            references_present_when_cited:
+              if_any_match_selector: "p sup, li sup, td sup"
+              must_have_selector: ".vd-references"
+              count_min: 1
+              failure_message: "Body contains citation markers but no .vd-references block. Add a closing references list."
+          llm_eval: "Does this body contain citation markers (numeric <sup> footnote anchors or author-date parentheticals like '(Smith, 2024)') AND lack a closing .vd-references block listing the cited sources? Answer YES if citations exist without a references list, NO if either no citations are used or a references block is present."
+        anti_examples:
+          - "Policy brief with 12 numbered <sup> footnote markers in the body and no closing references section (reader cannot resolve any citation; markers degrade to decoration)"
+          - "CEO brief with author-date inline citations in 4 paragraphs and no References block at the end (reader has full attribution but no full title or URL to follow up)"
+
+      - id: "composition.persuade-whitepaper-body.confidentiality-marking-inheritance"
+        description: "The body inherits the confidentiality marking convention from sales-collateral (composition.persuade-slide-deck.confidentiality-marking). When data-confidentiality on <body> is anything other than 'public', the body MUST carry the same marking treatment in the running footer (or running header for ceo_brief 9-12pp). A cover marked 'customer' followed by an unmarked body silently leaks classification."
+        severity: "error"
+        type: "constraint"
+        maturity: "experimental"
+        linear_issue: "Z2O-1347"
+        modes: ["lab_tradition", "policy_brief", "ceo_brief"]
+        test:
+          llm_eval: "Is the body's data-confidentiality value anything other than 'public', AND is the corresponding confidentiality marking absent from the running footer/header on body pages? Answer YES if a non-public marking on the cover is not echoed on body pages, NO if either the document is public or the marking is consistently shown on body pages."
+        anti_examples:
+          - "Cover marked 'CUSTOMER -- DO NOT REDISTRIBUTE' followed by 30 body pages with no marking in the footer (any printed/emailed body page silently loses its classification context)"
+          - "Lab-tradition report with cover marked 'INTERNAL' but body running footer showing only page number and institution (a screenshot of any inside page no longer carries its handling instruction)"
+
+  # ---------------------------------------------------------------------------
   # PERSUADE x ONE-PAGER -- single-page leave-behinds
   # ---------------------------------------------------------------------------
   persuade_one_pager:

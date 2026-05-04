@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sub-Cycle Telemetry for Dynamic Load Model Validation &mdash; Verdigris Lab-Tradition Report</title>
+<!--
+  Reference example for the persuade-whitepaper-body cell, lab_tradition genre.
+  ~3-4 simulated pages of body content (representative slice of a 25-80pp report).
+  Conventions exercised:
+    - Plain white cover with multi-author byline + contract number
+    - Separate .vd-title-page (multi-author roster, ORCIDs, suggested citation,
+      acknowledgments, funding)
+    - .vd-toc with dot leaders, 2-level entries, page numbers
+    - .vd-chapter blocks page-break (Arabic numbered "1.")
+    - Per-chapter figure numbering (Figure 1.1, Figure 2.1)
+    - Author-date inline citations (Smith et al., 2024); no superscripts
+    - Tables with caption above
+    - .vd-references closing block
+    - No .vd-callout-warning / .vd-callout-caveat (lab register)
+    - .vd-methods permitted; .vd-equation block included
+
+  Content is illustrative; uses institutional placeholders (LBNL, NREL, DOE).
+  No real customer names.
+-->
+<link rel="stylesheet" href="../../../build/print/cover.css">
+<link rel="stylesheet" href="../../../build/print/whitepaper-body.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+</style>
+</head>
+<body data-genre="lab_tradition" data-confidentiality="public">
+
+<!-- ============================================================
+     PAGE 1 - COVER (lab-tradition: white background, multi-author byline)
+     ============================================================ -->
+<section class="vd-cover vd-cover-light">
+
+  <header class="vd-cover-top">
+    <img src="logo.svg" alt="Verdigris" class="vd-logo">
+  </header>
+
+  <div class="vd-cover-center">
+    <div class="vd-cover-eyebrow vd-cover-eyebrow-dark">
+      <span class="vd-dot"></span>TECHNICAL REPORT<span class="vd-sep"></span>VRG-TR-2026-014
+    </div>
+    <h1 class="vd-cover-headline vd-cover-headline-dark">
+      Sub-Cycle Telemetry for<br>
+      Dynamic Load Model <span class="vd-accent">Validation</span>
+    </h1>
+    <p class="vd-cover-deck vd-cover-deck-dark">
+      Field characterization of AI-campus load behavior at 8 kHz across fourteen sites,
+      with implications for FERC dynamic-load-model standards.
+    </p>
+  </div>
+
+  <div class="vd-cover-quiet"></div>
+
+  <footer>
+    <div class="vd-cover-byline vd-cover-byline-light">
+      <div>
+        <span class="vd-name">S. Chen, J. Patel, M. Okafor, T. Chung</span>
+        <span class="vd-affil">Verdigris Technologies / Lawrence Berkeley National Laboratory / National Renewable Energy Laboratory</span>
+      </div>
+      <div class="vd-date">
+        May 2026
+        <div class="vd-meta">Contract DE-AC02-05CH11231</div>
+      </div>
+    </div>
+  </footer>
+
+</section>
+
+<!-- ============================================================
+     TITLE PAGE (separate sheet)
+     ============================================================ -->
+<section class="vd-title-page">
+  <h1>Sub-Cycle Telemetry for Dynamic Load Model Validation</h1>
+  <h2>Field characterization of AI-campus load behavior at 8 kHz across fourteen sites</h2>
+
+  <div class="vd-contributors">
+    <div class="vd-contributor">
+      <span class="vd-contributor-name">Sarah Chen,<sup>1,2</sup></span>
+      <span class="vd-contributor-affil">Lawrence Berkeley National Laboratory, Berkeley CA; Verdigris Technologies, Los Altos CA</span>
+      <span class="vd-contributor-orcid">https://orcid.org/0000-0000-0000-0000</span>
+    </div>
+    <div class="vd-contributor">
+      <span class="vd-contributor-name">Jay Patel,<sup>3</sup></span>
+      <span class="vd-contributor-affil">National Renewable Energy Laboratory, Golden CO</span>
+      <span class="vd-contributor-orcid">https://orcid.org/0000-0000-0000-0001</span>
+    </div>
+    <div class="vd-contributor">
+      <span class="vd-contributor-name">Maya Okafor,<sup>1</sup></span>
+      <span class="vd-contributor-affil">Lawrence Berkeley National Laboratory, Berkeley CA</span>
+      <span class="vd-contributor-orcid">https://orcid.org/0000-0000-0000-0002</span>
+    </div>
+    <div class="vd-contributor">
+      <span class="vd-contributor-name">Thomas Chung,<sup>2</sup></span>
+      <span class="vd-contributor-affil">Verdigris Technologies, Los Altos CA</span>
+      <span class="vd-contributor-orcid">https://orcid.org/0000-0000-0000-0003</span>
+    </div>
+  </div>
+
+  <div class="vd-suggested-citation">
+    <strong>Suggested citation:</strong> Chen, S., Patel, J., Okafor, M., &amp; Chung, T. (2026). <em>Sub-Cycle Telemetry for Dynamic Load Model Validation: Field characterization of AI-campus load behavior at 8 kHz across fourteen sites</em>. VRG-TR-2026-014. Lawrence Berkeley National Laboratory.
+  </div>
+
+  <div class="vd-acknowledgments">
+    <h3>Acknowledgments</h3>
+    <p>The authors thank the LBNL Grid Integration Group and the NREL Power Systems Engineering Center for review and discussion. Field instrumentation was supported by the participating site operators, who consented to anonymized waveform capture under MNDA. Two anonymous reviewers from the FERC dynamic-load-model docket comment process provided substantive feedback that improved Sections 2 and 3.</p>
+  </div>
+
+  <div class="vd-funding">
+    <h3>Funding</h3>
+    <p>This work was supported by the U.S. Department of Energy under Contract No. DE-AC02-05CH11231 with Lawrence Berkeley National Laboratory, with co-funding from the DOE Office of Electricity (Grid Modernization Initiative, Award DE-EE0009XXXX). Verdigris Technologies provided in-kind instrumentation and field-engineering support; no direct DOE funds flowed to Verdigris.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     TABLE OF CONTENTS (lab convention: dot leaders, page numbers)
+     ============================================================ -->
+<nav class="vd-toc">
+  <h2>Contents</h2>
+  <a class="vd-toc-entry vd-toc-h2" href="#ch-1">
+    <span class="vd-toc-title">1. Introduction</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">3</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h3" href="#ch-1-1">
+    <span class="vd-toc-title">1.1 Background</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">3</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h3" href="#ch-1-2">
+    <span class="vd-toc-title">1.2 Scope and contributions</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">5</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h2" href="#ch-2">
+    <span class="vd-toc-title">2. Methodology</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">7</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h3" href="#ch-2-1">
+    <span class="vd-toc-title">2.1 Site selection</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">7</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h3" href="#ch-2-2">
+    <span class="vd-toc-title">2.2 Instrumentation</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">9</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h3" href="#ch-2-3">
+    <span class="vd-toc-title">2.3 Statistical model</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">11</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h2" href="#ch-3">
+    <span class="vd-toc-title">3. Results</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">14</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h3" href="#ch-3-1">
+    <span class="vd-toc-title">3.1 Headroom characterization</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">14</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h3" href="#ch-3-2">
+    <span class="vd-toc-title">3.2 Sub-synchronous oscillation envelope</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">17</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h2" href="#ch-4">
+    <span class="vd-toc-title">4. Implications for dynamic load model standards</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">22</span>
+  </a>
+  <a class="vd-toc-entry vd-toc-h2" href="#references">
+    <span class="vd-toc-title">References</span>
+    <span class="vd-toc-leader"></span>
+    <span class="vd-toc-page">28</span>
+  </a>
+</nav>
+
+<!-- ============================================================
+     CHAPTERS (each starts on a new page in print; flow inline here)
+     ============================================================ -->
+<article class="vd-paper">
+
+  <section class="vd-chapter" id="ch-1">
+    <span class="vd-chapter-eyebrow"></span>
+    <h2 class="vd-chapter-title">Introduction</h2>
+
+    <h3 id="ch-1-1">1.1 Background</h3>
+    <p class="vd-body">The growth of large language model training as a load class on the U.S. bulk electric system has revealed gaps in dynamic load modeling that pre-AI load classes did not surface. Recent literature documents wide-area sub-synchronous oscillations attributable to large-scale GPU training (Khaledian et al., 2025), harmonic content extending beyond the 50th order from switched-mode power supplies (Li et al., 2025), and aggregate utilization-vs-nameplate gaps in the 70&ndash;85% range across hyperscale and colocation campuses (Shehabi et al., 2024).</p>
+
+    <p class="vd-body">The instrumentation question those findings raise has not been systematically addressed. Existing field measurement programs at the bulk-system level rely on RMS metering at 1-second to 15-minute cadence (NERC, 2024), which destroys the sub-cycle envelope where the documented phenomena live. Existing instrumentation at the facility level (BMS-class metering) is similarly RMS-based and serves operations rather than grid-coordination purposes.</p>
+
+    <p class="vd-body">This report describes a field measurement campaign conducted at <em>n</em> = 14 AI-campus sites across the PJM, ERCOT, and CAISO footprints in calendar year 2025, instrumented with 8 kHz waveform capture at the substation feeder level. The campaign was designed to provide an empirical foundation for the dynamic load model standards currently in draft at FERC (FERC, 2026).</p>
+
+    <h3 id="ch-1-2">1.2 Scope and contributions</h3>
+    <p class="vd-body">This report contributes (i) a characterization of the headroom-vs-nameplate gap at sub-cycle resolution, (ii) an empirical envelope of sub-synchronous oscillation behavior under training-step synchronization, and (iii) implications for the schema and cadence floors that FERC&rsquo;s draft dynamic load model standard should adopt. The instrumentation, anonymization, and statistical methodology are described in Section 2; results are in Section 3; implications are in Section 4.</p>
+
+    <figure class="vd-figure">
+      <svg viewBox="0 0 480 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Geographic distribution of fourteen study sites across PJM, ERCOT, and CAISO footprints">
+        <rect x="0" y="0" width="480" height="180" fill="#fafafa"/>
+        <g fill="#5b6577" font-family="Inter, sans-serif" font-size="9">
+          <text x="80" y="30" text-anchor="middle">CAISO</text>
+          <text x="240" y="30" text-anchor="middle">ERCOT</text>
+          <text x="400" y="30" text-anchor="middle">PJM</text>
+        </g>
+        <g fill="#0fc8c3">
+          <circle cx="60"  cy="90"  r="6"/>
+          <circle cx="80"  cy="110" r="6"/>
+          <circle cx="100" cy="80"  r="6"/>
+          <circle cx="220" cy="100" r="6"/>
+          <circle cx="240" cy="120" r="6"/>
+          <circle cx="260" cy="90"  r="6"/>
+          <circle cx="280" cy="110" r="6"/>
+          <circle cx="300" cy="80"  r="6"/>
+          <circle cx="380" cy="100" r="6"/>
+          <circle cx="400" cy="120" r="6"/>
+          <circle cx="420" cy="90"  r="6"/>
+          <circle cx="440" cy="110" r="6"/>
+          <circle cx="370" cy="130" r="6"/>
+          <circle cx="410" cy="70"  r="6"/>
+        </g>
+      </svg>
+      <figcaption class="vd-figure-caption">
+        <span class="vd-figure-label">Figure 1.1.</span>
+        Geographic distribution of <em>n</em> = 14 study sites across the CAISO (3 sites), ERCOT (5 sites), and PJM (6 sites) footprints. Site identities anonymized per Section 2.1; positions illustrative.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="vd-chapter" id="ch-2">
+    <span class="vd-chapter-eyebrow"></span>
+    <h2 class="vd-chapter-title">Methodology</h2>
+
+    <h3 id="ch-2-1">2.1 Site selection</h3>
+    <p class="vd-body">Sites were selected to span (a) operator type (hyperscale, colocation, enterprise on-premise), (b) ISO footprint (PJM, ERCOT, CAISO), and (c) load class (training-dominant, inference-dominant, mixed). Recruitment proceeded through the Verdigris field deployment program; participating operators consented to anonymized waveform capture under mutual non-disclosure agreement. The site set is not a random sample of U.S. AI campuses; it is a convenience sample biased toward operators willing to participate in standards-relevant measurement (Shehabi et al., 2024 discusses similar sampling considerations).</p>
+
+    <h3 id="ch-2-2">2.2 Instrumentation</h3>
+    <p class="vd-body">Each site was instrumented with one or more Verdigris waveform capture units at the substation feeder level, sampling all three phases at 8 kHz with 16-bit resolution. Time synchronization was provided by GPS-disciplined PTP at each site; cross-site time alignment was within &plusmn;2 ms. Data were continuously captured for the observation window (2025-Q1 through 2026-Q1) with a duty cycle exceeding 99.4% across the panel.</p>
+
+    <aside class="vd-methods">
+      <strong>Methods note.</strong> The 8 kHz sampling cadence was chosen to capture phenomena up to the 67th harmonic of 60 Hz fundamental, exceeding the IEEE 519 50th-harmonic recommendation. Higher cadences (16, 32 kHz) were evaluated in pilot but rejected on storage and data-handling grounds; the 8 kHz floor preserves all documented load phenomena in the cited literature with margin.
+    </aside>
+
+    <h3 id="ch-2-3">2.3 Statistical model</h3>
+    <p class="vd-body">Headroom-vs-nameplate is reported as the per-site ratio of measured peak utilization to declared nameplate capacity, aggregated across the panel as the inter-site mean with 95% confidence interval computed by site-level bootstrap (10,000 resamples). The statistical model assumes site-level independence, which is approximately satisfied given the geographic and operator-type spread (Section 2.1) but is not formally tested. Sub-synchronous oscillation envelopes are reported as 99th-percentile spectral magnitudes within the 0.1&ndash;5 Hz band, computed with Welch&rsquo;s method on overlapping 60-second windows.</p>
+
+    <div class="vd-equation">
+      <span>U<sub>i</sub> = P<sub>peak,i</sub> / P<sub>nameplate,i</sub></span>
+      <span class="vd-equation-num">(2.1)</span>
+    </div>
+
+    <p class="vd-body">where U<sub>i</sub> is the utilization ratio for site <em>i</em>, P<sub>peak,i</sub> is the measured peak active power over the observation window, and P<sub>nameplate,i</sub> is the declared nameplate capacity reported by the site operator. The inter-site mean is reported as in Equation 2.2.</p>
+
+    <div class="vd-equation">
+      <span>U&#772; = (1 / n) &sum;<sub>i=1</sub><sup>n</sup> U<sub>i</sub></span>
+      <span class="vd-equation-num">(2.2)</span>
+    </div>
+  </section>
+
+  <section class="vd-chapter" id="ch-3">
+    <span class="vd-chapter-eyebrow"></span>
+    <h2 class="vd-chapter-title">Results</h2>
+
+    <h3 id="ch-3-1">3.1 Headroom characterization</h3>
+    <p class="vd-body">Across the <em>n</em> = 14 site panel, mean utilization was 14.3% (95% CI [11.3%, 18.7%]) of declared nameplate over the observation window. The result is consistent with prior literature reporting 12&ndash;18% utilization at AI campuses (Shehabi et al., 2024) and supports the hypothesis that the gap is structural to the contract under which operators report nameplate, rather than to any particular operator&rsquo;s discipline.</p>
+
+    <div class="vd-table-wrap">
+    <table class="vd-table">
+      <caption>Per-site utilization against declared nameplate, observation window 2025-Q1 to 2026-Q1.</caption>
+      <thead>
+        <tr>
+          <th>Site class</th>
+          <th>Sites</th>
+          <th style="text-align:right">Mean utilization (%)</th>
+          <th style="text-align:right">95% CI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Hyperscale training</td><td>5</td><td style="text-align:right">12.8</td><td style="text-align:right">[10.4, 15.6]</td></tr>
+        <tr><td>Colocation mixed</td><td>6</td><td style="text-align:right">15.1</td><td style="text-align:right">[12.2, 18.9]</td></tr>
+        <tr><td>Enterprise on-premise</td><td>3</td><td style="text-align:right">14.7</td><td style="text-align:right">[11.0, 19.4]</td></tr>
+        <tr><td><strong>Panel mean</strong></td><td><strong>14</strong></td><td style="text-align:right"><strong>14.3</strong></td><td style="text-align:right"><strong>[11.3, 18.7]</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p class="vd-body">The narrow inter-class spread (12.8&ndash;15.1%) is the most operationally important finding in this section. Operator type is not a useful predictor of utilization within the AI-campus load class; the contract under which nameplate is declared dominates the variance.</p>
+
+    <h3 id="ch-3-2">3.2 Sub-synchronous oscillation envelope</h3>
+    <p class="vd-body">Sub-synchronous oscillation activity was observed at all 14 sites, concentrated in the 0.5&ndash;1.3 Hz band and consistent with training-step synchronization across thousands of GPUs (Khaledian et al., 2025). Peak spectral magnitude in the band exceeded the IEEE Std 1547-2018 grid-edge guidance threshold at 9 of 14 sites during at least 4% of the observation window.</p>
+  </section>
+
+  <section class="vd-chapter" id="ch-4">
+    <span class="vd-chapter-eyebrow"></span>
+    <h2 class="vd-chapter-title">Implications for dynamic load model standards</h2>
+
+    <p class="vd-body">FERC&rsquo;s draft dynamic load model rule (FERC, 2026) sets a sampling-cadence floor at the 1 Hz level. The results in Section 3 suggest this floor is insufficient to characterize the AI-campus load class: the documented sub-synchronous oscillation envelope (Section 3.2) and the harmonic content (cited in Li et al., 2025) both live below the 1 Hz aliasing limit and would be invisible to a 1 Hz instrumentation contract.</p>
+
+    <p class="vd-body">A revised cadence floor at the kHz class (specifically 8 kHz, matching the instrumentation in Section 2.2) would preserve both phenomena with margin. The revised floor is consistent with the schema work currently underway in IEEE PES Working Group P2030.10 (IEEE PES, 2026).</p>
+  </section>
+
+  <section class="vd-references" id="references">
+    <h3>References</h3>
+    <p class="vd-ref-entry">FERC. (2026). <em>Notice of Proposed Rulemaking: Dynamic Load Model Standards for Large Loads</em>. Docket No. RM26-XXX-000. Federal Energy Regulatory Commission. https://www.ferc.gov/</p>
+    <p class="vd-ref-entry">IEEE PES. (2026). <em>Working Group P2030.10: AI-Ready Grid Telemetry Schemas, Draft Standard</em>. Institute of Electrical and Electronics Engineers, Power &amp; Energy Society. https://standards.ieee.org/</p>
+    <p class="vd-ref-entry">Khaledian, P., Sun, J., &amp; Wang, L. (2025). Wide-area power system oscillations from large-scale AI workloads. <em>arXiv preprint</em>, arXiv:2508.16457. https://arxiv.org/abs/2508.16457</p>
+    <p class="vd-ref-entry">Li, R., Zhao, Y., &amp; Tan, F. (2025). AI load dynamics: a power electronics perspective. <em>arXiv preprint</em>, arXiv:2502.01647. https://arxiv.org/abs/2502.01647</p>
+    <p class="vd-ref-entry">NERC. (2024). <em>Reliability Guideline: Bulk Electric System Telemetry Practices</em>. North American Electric Reliability Corporation. https://www.nerc.com/</p>
+    <p class="vd-ref-entry">Shehabi, A., Smith, S. J., &amp; Masanet, E. (2024). <em>2024 United States Data Center Energy Usage Report</em>. LBNL-2001637. Lawrence Berkeley National Laboratory. https://eta-publications.lbl.gov/</p>
+  </section>
+
+</article>
+
+</body>
+</html>

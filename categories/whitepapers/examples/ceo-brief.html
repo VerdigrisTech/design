@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Telemetry as Contract, Not Feature &mdash; Verdigris CEO Brief</title>
+<!--
+  Reference example for the persuade-whitepaper-body cell, ceo_brief genre.
+  ~5 simulated pages of body content following the body conventions:
+    - No page break between chapters; monospace teal eyebrow numbering (01/02)
+    - Continuous figure numbering (Figure 1, Figure 2)
+    - Pull-quotes appear roughly once per 1-3 pages
+    - Numbered <sup> citation markers
+    - Closing .vd-references block with methods note
+    - Bottom-line section as final chapter; closing caveat callout permitted
+
+  Content is illustrative; do not treat as a real Verdigris position paper.
+  Image references re-use logo.svg already in this folder.
+-->
+<link rel="stylesheet" href="../../../build/print/cover.css">
+<link rel="stylesheet" href="../../../build/print/whitepaper-body.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+</style>
+</head>
+<body data-genre="ceo_brief" data-confidentiality="public">
+
+<!-- ============================================================
+     PAGE 1 - COVER
+     ============================================================ -->
+<section class="vd-cover">
+
+  <header class="vd-cover-top">
+    <img src="logo.svg" alt="Verdigris" class="vd-logo">
+  </header>
+
+  <div class="vd-cover-center">
+    <div class="vd-cover-eyebrow">
+      <span class="vd-dot"></span>CEO BRIEF<span class="vd-sep"></span>RESEARCH &amp; POLICY AUDIENCE
+    </div>
+    <h1 class="vd-cover-headline">
+      Telemetry as <span class="vd-accent">Contract</span>,<br>
+      Not Feature
+    </h1>
+    <p class="vd-cover-deck">
+      Behind-the-meter visibility is the load-bearing primitive for an AI-factory grid.
+      Treating it as a procurement line item is how the next decade gets stranded.
+    </p>
+  </div>
+
+  <div class="vd-cover-quiet"></div>
+
+  <footer>
+    <div class="vd-cover-byline">
+      <div>
+        <span class="vd-name">Mark Chung</span>
+        <span class="vd-affil">CEO, Verdigris Technologies, Los Altos CA</span>
+      </div>
+      <div class="vd-date">May 2026</div>
+    </div>
+    <div class="vd-cover-disclosure">
+      <strong>Disclosure.</strong> The author is CEO of Verdigris Technologies, which develops the telemetry products discussed. Views are the author&rsquo;s.
+    </div>
+  </footer>
+
+</section>
+
+<!-- ============================================================
+     BODY (chapters flow continuously; no page-break between chapters)
+     ============================================================ -->
+<article class="vd-paper">
+
+  <section class="vd-chapter">
+    <span class="vd-chapter-eyebrow">01</span>
+    <h2 class="vd-chapter-title">The argument</h2>
+
+    <p class="vd-body">For thirty years, behind-the-meter telemetry has been sold to facility operators the way analytics dashboards are sold to product teams: a feature on a contract, a line item next to switchgear and BMS hardware. That framing made sense when the load was a cold-storage warehouse and the question was whether the chiller cycle had drifted. It does not survive contact with an AI training cluster whose load profile changes character three times before the meter completes a 15-minute integration window.</p>
+
+    <p class="vd-body">The thesis of this brief is narrow and load-bearing. Behind-the-meter telemetry is no longer a feature. It is a contract between the facility and the grid. The contract specifies a sampling cadence, a schema, an availability window, and a recipient. Without that contract, every layer above it (forecasts, dynamic load models, dispatch agents, capacity-market clearing) operates on a stale, lossy abstraction of the load it is trying to coordinate with.</p>
+
+    <blockquote class="vd-pullquote">
+      Telemetry stops being a feature the moment another system depends on its cadence to be safe.
+      <cite>&mdash; Author</cite>
+    </blockquote>
+
+    <p class="vd-body">The shift is not philosophical. It is observable in the field. Three things changed between 2022 and 2026: the rise of GW-scale single-tenant campuses, the FERC dynamic-load-model docket<sup>1</sup>, and the arrival of grid-side autonomous-agent dispatch trials at two ISOs<sup>2</sup>. Each of those three depends on a telemetry contract the existing procurement model does not produce.</p>
+  </section>
+
+  <section class="vd-chapter">
+    <span class="vd-chapter-eyebrow">02</span>
+    <h2 class="vd-chapter-title">Evidence</h2>
+
+    <p class="vd-body">What does it cost to keep treating telemetry as a feature? Field instrumentation across <em>n</em> = 14 hyperscale and colo sites in 2025 surfaces a consistent gap between what operators believe their headroom is and what sub-cycle waveform capture actually shows<sup class="vd-cite-letter">m</sup>. The shape of that gap is shown in Figure 1.</p>
+
+    <figure class="vd-figure">
+      <svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart of declared vs measured headroom across 14 sites">
+        <rect x="0" y="0" width="480" height="200" fill="#fafafa"/>
+        <line x1="40" y1="170" x2="470" y2="170" stroke="#5b6577" stroke-width="0.5"/>
+        <line x1="40" y1="20" x2="40" y2="170" stroke="#5b6577" stroke-width="0.5"/>
+        <g fill="#5b6577" font-family="Inter, sans-serif" font-size="9">
+          <text x="36" y="173" text-anchor="end">0</text>
+          <text x="36" y="98" text-anchor="end">50</text>
+          <text x="36" y="25" text-anchor="end">100</text>
+          <text x="255" y="190" text-anchor="middle">Site index (1&ndash;14)</text>
+        </g>
+        <g>
+          <rect x="50"  y="40"  width="22" height="130" fill="#cfd5dd"/>
+          <rect x="80"  y="50"  width="22" height="120" fill="#cfd5dd"/>
+          <rect x="110" y="45"  width="22" height="125" fill="#cfd5dd"/>
+          <rect x="140" y="55"  width="22" height="115" fill="#cfd5dd"/>
+          <rect x="170" y="42"  width="22" height="128" fill="#cfd5dd"/>
+          <rect x="200" y="48"  width="22" height="122" fill="#cfd5dd"/>
+          <rect x="230" y="38"  width="22" height="132" fill="#cfd5dd"/>
+          <rect x="260" y="52"  width="22" height="118" fill="#cfd5dd"/>
+          <rect x="290" y="46"  width="22" height="124" fill="#cfd5dd"/>
+          <rect x="320" y="58"  width="22" height="112" fill="#cfd5dd"/>
+          <rect x="350" y="50"  width="22" height="120" fill="#cfd5dd"/>
+          <rect x="380" y="44"  width="22" height="126" fill="#cfd5dd"/>
+          <rect x="410" y="48"  width="22" height="122" fill="#cfd5dd"/>
+          <rect x="440" y="40"  width="22" height="130" fill="#cfd5dd"/>
+        </g>
+        <g>
+          <rect x="56"  y="138" width="10" height="32" fill="#0fc8c3"/>
+          <rect x="86"  y="142" width="10" height="28" fill="#0fc8c3"/>
+          <rect x="116" y="135" width="10" height="35" fill="#0fc8c3"/>
+          <rect x="146" y="148" width="10" height="22" fill="#0fc8c3"/>
+          <rect x="176" y="140" width="10" height="30" fill="#0fc8c3"/>
+          <rect x="206" y="146" width="10" height="24" fill="#0fc8c3"/>
+          <rect x="236" y="132" width="10" height="38" fill="#0fc8c3"/>
+          <rect x="266" y="150" width="10" height="20" fill="#0fc8c3"/>
+          <rect x="296" y="144" width="10" height="26" fill="#0fc8c3"/>
+          <rect x="326" y="152" width="10" height="18" fill="#0fc8c3"/>
+          <rect x="356" y="146" width="10" height="24" fill="#0fc8c3"/>
+          <rect x="386" y="140" width="10" height="30" fill="#0fc8c3"/>
+          <rect x="416" y="144" width="10" height="26" fill="#0fc8c3"/>
+          <rect x="446" y="138" width="10" height="32" fill="#0fc8c3"/>
+        </g>
+      </svg>
+      <figcaption class="vd-figure-caption">
+        <span class="vd-figure-label">Figure 1.</span>
+        Declared nameplate headroom (grey) vs measured peak utilization (teal) across <em>n</em> = 14 AI-campus sites, Q1 2026. Mean declared headroom 82%; mean measured utilization 14%. The gap is not waste; it is conservative provisioning against a sawtooth the operator cannot see in real time.
+        <span class="vd-figure-credit">Source: Verdigris field data, n=14 sites, 8 kHz sampling, Q1 2026.</span>
+      </figcaption>
+    </figure>
+
+    <p class="vd-body">The pattern is uniform across operator types: hyperscaler, colo, and enterprise on-prem all converge near the same 12&ndash;18% mean utilization. That is not a story about any one operator&rsquo;s discipline. It is a story about what the contract permits the operator to know.</p>
+
+    <div class="vd-table-wrap">
+    <table class="vd-table">
+      <caption>Forecast vs measured load behavior, three load classes, 2025 sample.</caption>
+      <thead>
+        <tr>
+          <th>Load class</th>
+          <th>Sites</th>
+          <th style="text-align:right">Forecast (MW)</th>
+          <th style="text-align:right">Measured peak (MW)</th>
+          <th style="text-align:right">Gap (%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Hyperscale training</td><td>5</td><td style="text-align:right">240</td><td style="text-align:right">42</td><td style="text-align:right">82.5</td></tr>
+        <tr><td>Colo mixed AI/web</td><td>6</td><td style="text-align:right">160</td><td style="text-align:right">28</td><td style="text-align:right">82.5</td></tr>
+        <tr><td>Enterprise on-prem</td><td>3</td><td style="text-align:right">75</td><td style="text-align:right">14</td><td style="text-align:right">81.3</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p class="vd-body">The gap is symmetric across operator type because it is a contract gap, not an operator gap. A different telemetry contract produces a different number; the same telemetry contract produces the same number regardless of who is operating the site.</p>
+
+    <blockquote class="vd-pullquote">
+      The same telemetry contract produces the same gap regardless of who is operating the site. That is what makes it a contract problem, not a discipline problem.
+      <cite>&mdash; Author</cite>
+    </blockquote>
+  </section>
+
+  <section class="vd-chapter">
+    <span class="vd-chapter-eyebrow">03</span>
+    <h2 class="vd-chapter-title">Methodology<sup class="vd-cite-letter">m</sup></h2>
+
+    <aside class="vd-methods">
+      <strong>Methods (m).</strong> Field measurements drawn from a panel of <em>n</em> = 14 sites across PJM, ERCOT, and CAISO footprints, instrumented with 8 kHz waveform capture at the substation feeder level. Observation window: 2025-Q1 to 2026-Q1. Utilization-vs-nameplate range (12&ndash;18%) is the inter-site mean with 95% CI [11.3%, 18.7%]. Site identities anonymized; aggregated dataset available on request under MNDA.
+    </aside>
+
+    <p class="vd-body">The instrumentation choice matters. RMS metering at 1-second cadence misses the transient envelope entirely; the gap between &ldquo;forecast&rdquo; and &ldquo;measured peak&rdquo; in Table 1 cannot be observed at 1 Hz, only inferred. At 8 kHz, the envelope is directly visible, and the inference becomes a measurement<sup>3</sup>.</p>
+
+    <p class="vd-body">Anonymization is per-site; no site, operator, or geography is identifiable from any cited statistic. This is consistent with the methodology used in [CUSTOMER A] and [CUSTOMER B] published case studies, where the same anonymization protocol applies.</p>
+  </section>
+
+  <section class="vd-chapter">
+    <span class="vd-chapter-eyebrow">04</span>
+    <h2 class="vd-chapter-title">Implications</h2>
+
+    <p class="vd-body">If telemetry is a contract rather than a feature, three things change about how the next decade of grid-edge investment should be structured.</p>
+
+    <p class="vd-body"><strong>One:</strong> the contract becomes a precondition for interconnection, not a deliverable of the project. Today, an interconnection request gets approved against a declared nameplate. Tomorrow, the request gets approved against a declared telemetry contract that says &ldquo;this load will be observable to the operator at this cadence, in this schema, with this latency, available to these recipients.&rdquo; FERC&rsquo;s draft dynamic-load-model rule moves in this direction<sup>1</sup>.</p>
+
+    <blockquote class="vd-pullquote">
+      Approve the interconnection against a telemetry contract, not a nameplate. Everything else follows.
+      <cite>&mdash; Author</cite>
+    </blockquote>
+
+    <p class="vd-body"><strong>Two:</strong> the contract becomes legible to autonomous-agent dispatch. If a system at the ISO needs to coordinate sub-second across 200 facilities, it cannot do so against 200 different telemetry definitions. The contract has to be standardized at the schema level (not just the cadence level) so that a dispatch agent can read it without per-site adapters<sup>4</sup>.</p>
+
+    <p class="vd-body"><strong>Three:</strong> the contract creates a property right the operator can trade. Once the load is legible at the contract level, the operator can sell elasticity into capacity markets at a granularity the markets do not currently support. PJM and ERCOT are both drafting this in 2026<sup>5</sup>.</p>
+  </section>
+
+  <section class="vd-chapter">
+    <span class="vd-chapter-eyebrow">05</span>
+    <h2 class="vd-chapter-title">Bottom line</h2>
+
+    <p class="vd-body">If you are working on AI-grid policy, AI-factory siting, or interconnection-queue reform, three concrete actions that operate on AI-race timescales:</p>
+
+    <ol>
+      <li><strong>Treat telemetry as the interconnection contract,</strong> not as a project deliverable. Sub-cycle cadence (kHz-class) and machine-readable schema are the technical floor.</li>
+      <li><strong>Standardize the schema before the cadence.</strong> A 1-second telemetry feed in a standard schema is more useful to a dispatch agent than an 8 kHz feed in a per-site format.</li>
+      <li><strong>Make the contract a property right.</strong> Operators that meet the contract should be able to monetize their elasticity. Operators that do not meet it should pay the system cost their illegibility creates.</li>
+    </ol>
+
+    <aside class="vd-callout vd-callout-caveat">
+      <strong>Important.</strong> This recommendation assumes the regulator can verify the telemetry contract. Without third-party measurement and verification of the cadence and schema, the contract degrades into self-attestation, which has the same observability properties as the nameplate it replaces.
+    </aside>
+  </section>
+
+  <section class="vd-references">
+    <h3>References</h3>
+    <ol class="vd-ref-list">
+      <li id="ref-1">FERC, &ldquo;Dynamic Load Model Notice of Proposed Rulemaking,&rdquo; Docket No. RM26-XXX-000 (2026). https://www.ferc.gov/</li>
+      <li id="ref-2">PJM Interconnection, &ldquo;Autonomous Dispatch Pilot, Phase 1 Results,&rdquo; PJM Markets Report (2026). https://www.pjm.com/</li>
+      <li id="ref-3">Khaledian et al., &ldquo;Wide-Area Power System Oscillations from Large-Scale AI Workloads,&rdquo; arXiv:2508.16457 (2025). https://arxiv.org/abs/2508.16457</li>
+      <li id="ref-4">IEEE PES, &ldquo;Working Group P2030.10 on AI-Ready Grid Telemetry Schemas,&rdquo; IEEE Standards Activity (2026). https://standards.ieee.org/</li>
+      <li id="ref-5">PJM &amp; ERCOT joint white paper, &ldquo;Granular Elasticity in Capacity Markets,&rdquo; (2026). https://www.pjm.com/</li>
+    </ol>
+    <p class="vd-methods">
+      <sup class="vd-cite-letter">m</sup> <strong>Methods.</strong> Verdigris field measurements draw from a panel of <em>n</em> = 14 AI-campus sites across PJM, ERCOT, and CAISO footprints, instrumented with 8 kHz waveform capture at the substation feeder level. Observation window: 2025-Q1 to 2026-Q1. Utilization-vs-nameplate range (12&ndash;18%) is the inter-site mean with 95% CI [11.3%, 18.7%]. Site identities anonymized; aggregated dataset available on request under MNDA.
+    </p>
+  </section>
+
+</article>
+
+</body>
+</html>
