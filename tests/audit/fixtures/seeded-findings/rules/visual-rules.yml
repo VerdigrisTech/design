@@ -1,0 +1,8 @@
+brand_rejections:
+  - id: "test.fixture.placeholder"
+    severity: "error"
+    type: "constraint"
+    description: "Fixture-only rule. References an undocumented genre to trigger genre-decision-tree dimension."
+    modes: ["nonexistent_genre", "another_missing_one"]
+    test:
+      llm_eval: "Answer YES if violation; NO otherwise."

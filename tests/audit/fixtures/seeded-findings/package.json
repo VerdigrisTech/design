@@ -1,0 +1,12 @@
+{
+  "name": "cohesion-audit-fixture",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./build/dist/index.js"
+  },
+  "scripts": {
+    "build": "echo build"
+  }
+}

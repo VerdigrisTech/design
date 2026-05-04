@@ -1,0 +1,30 @@
+/* Test fixture CSS for cohesion audit self-test.
+   Seeds:
+     - Hardcoded color literal (#ff00ff is not in any palette).
+     - Orphan class .vd-test-orphan defined here but used in no HTML.
+     - Verdigris-prefixed class to trigger prefix drift alongside vd-* class.
+     - Hardcoded font-size literals to populate cell histogram.
+*/
+
+.vd-test-orphan {
+  color: #ff00ff;
+  background: #fafafa;
+  padding: 8px;
+}
+
+.vd-cover {
+  font-size: 11px;
+}
+
+.vd-headline {
+  font-size: 24px;
+  color: #14181f;
+}
+
+.vd-deck {
+  font-size: 18px;
+}
+
+.verdigris-test-class {
+  font-size: 12px;
+}

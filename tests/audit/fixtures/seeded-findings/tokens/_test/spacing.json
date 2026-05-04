@@ -1,0 +1,24 @@
+{
+  "$description": "Test fixture for token namespace cohesion. Seeds mixed-units-within-a-group: frame-side in inches, frame-padding in pt within the same frame group.",
+  "spacing": {
+    "_test": {
+      "frame": {
+        "side": {
+          "$value": "0.85in",
+          "$type": "dimension",
+          "$description": "Side margin in inches"
+        },
+        "padding": {
+          "$value": "12pt",
+          "$type": "dimension",
+          "$description": "Padding in points (mixed unit, fixture seed)"
+        },
+        "gutter": {
+          "$value": "0.25in",
+          "$type": "dimension",
+          "$description": "Gutter in inches"
+        }
+      }
+    }
+  }
+}

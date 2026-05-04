@@ -16,4 +16,7 @@ _site/
 Gemfile.lock
 .bundle/
 vendor/bundle/
-.claude/
+# .claude/ holds transient session files; carve out skills/ which ships.
+.claude/*
+!.claude/skills/
+tests/audit/fixtures/seeded-findings/audits/
