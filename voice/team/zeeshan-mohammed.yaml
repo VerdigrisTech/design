@@ -1,0 +1,278 @@
+# Voice Profile: Zeeshan Mohammed
+# Sources: 40+ Slack messages across team-implementations, customer-account
+#          channels (multiple), support-bot, pro-waveform-alerts, team
+#          coordination, and industry-reading channels.
+# Profiled: 2026-05-04 (Wave 2)
+# Note: Display name "Zeeshan Mohammed", title "Principal Problem Solver".
+#       Verdigris solutions / implementations engineer; field-deployment
+#       and customer-IT bridge.
+# Redaction note (Loop 5 PII discipline applied at authoring time):
+#       customer-identifying details (account names on the corp denylist,
+#       equipment IDs matching [A-Z]{3}\d{6,10}, vendor names, customer
+#       hidden-network credentials, customer site nicknames) genericized
+#       below. Original quotes preserved in repo-internal context; the
+#       published profile uses generic operational descriptors that capture
+#       the same voice dimensions without exposing customer reconnaissance
+#       data.
+
+name: Zeeshan Mohammed
+slack_id: U05M6KLP4BC
+role: Principal Problem Solver — implementations, customer IT bridge, field deployment
+voice_summary: |
+  Zeeshan writes from the install. His longest, most-referenced messages
+  are field-status updates structured the same way every time:
+  "What went well" with checkmarks, "What did not go well" with warnings,
+  "Issues / Blockers" enumerated, then root-cause hypotheses and an ask
+  with cc'd owners. The structure is repeatable because a deployment is
+  a repeatable kind of event, and his voice respects that.
+
+  His signature quality is structured field reporting. He pulls from
+  the actual install — sensor counts ("Chain 1: 16 CTs (confirmed via
+  install + EDG detection); Chain 2: 6 CTs"), connectivity readings
+  ("LTE signal quality is poor (fluctuating ~5–30%)"), and the device's
+  own state ("EDG successfully came online (red → orange → green
+  progression)"). Then he flags the gap: "EDG internally detects
+  correct count (16 + 6 = 22 CTs)" but "Console showing incorrect CT
+  count" — which is the bug, named precisely.
+
+  When he escalates, he escalates with evidence. His ask to engineering
+  for a `?event_id=` query parameter included the captured HAR, the
+  worst-case payload size (~2.88 MB), the burst density (~57 events ×
+  ~50 KB in a 2-second window), and the user-visible failure ("freezes
+  the page for minutes; on customer-facing builds it never visibly
+  recovers"). The ask comes after the evidence, never before.
+
+  Zeeshan is also the voice that talks to customer IT. He translates
+  between the enterprise wifi password regime and the device's
+  actual network requirements without flattening either side. His
+  question to a colleague — "Do you think this network maybe requires
+  a captive portal or browser-based login? Kinda like airport or hotel
+  wifi access?" — is the working register: hypothesis offered with a
+  comparable everyone has experienced, then he goes and tests it.
+
+strongest_ingredients:
+  - technical_precision: 9
+    evidence_evidence_chain: |
+      "On normal panels this returns 1 event (~50 KB). On a panel in a
+      fault burst, the same 2-second window can contain dozens of
+      events. That's ~57 events × ~50 KB each in a 2-second window. The
+      browser downloads + parses the multi-MB response before the
+      dashboard's client-side filter runs, freezing the page for
+      minutes."
+    evidence_state_diagnosis: |
+      "fleet management page correctly shows 16 CTs on Chain 1 and 6
+      CTs on Chain 2, but admin console shows incorrect number of
+      circuits on chain 1."
+    evidence_signal_chain: |
+      "LTE signal quality is poor (fluctuating ~5–30%). No Ethernet
+      connection available on-site. Likely root cause of delayed/partial
+      system sync."
+  - operator_empathy: 8
+    evidence_field_install: |
+      "Mobile app was not usable: LTE option did not appear,
+      configuration screen kept spinning. Installer abandoned app flow.
+      Had to switch to browser-based setup."
+    evidence_followup: |
+      "Got it, I'll add it to the list. We owe them replacement units
+      from another site visits as well."
+    note: |
+      Zeeshan empathizes with the installer in the room. When the app
+      flow fails, he doesn't blame the installer — he names the
+      concrete failure ("LTE option did not appear") and the workaround
+      ("switched to browser-based setup at v.co"). His escalations to
+      engineering are written from the installer's POV.
+  - self_honesty: 7
+    evidence_unknown: |
+      "For you? I haven't dealt with warranty letters on any of my
+      projects and I thought our warranty only covers 1 year of
+      hardware."
+    evidence_workaround_constraint: |
+      "No client fix is planned right now (it'd be a workaround that
+      hides the problem)."
+    evidence_attribution: |
+      "Update from JoshBot... Likely due to incomplete data ingestion
+      or delayed sync." (names probable cause as probable, not
+      definite)
+  - personal_connection: 5
+    evidence_brief_ack: '"<@jimit> back" / "Friday works for me"'
+    evidence_courtesy: |
+      "thanks. Since this is tied to the proposal/contract, I think it
+      makes sense for you to respond directly to [name] on the warranty
+      terms."
+    note: |
+      Zeeshan's connection register is brief and operational. He's
+      respectful and prompt; he's not effusive. The connection happens
+      through the work, not around it.
+  - mission_gravity: 4
+    note: |
+      Zeeshan rarely writes in a strategic register; his work
+      expression is tactical. When mission appears it's implicit in
+      his quality bar — refusing client-side workarounds, asking for
+      the right API change at the source, coordinating warranty
+      letters off the actual contract terms.
+  - warmth_and_humor: 3
+    note: |
+      Almost no humor in the corpus — closest is the lunch deflection
+      "Having lunch, need a few minutes." Zeeshan's voice is
+      consistently in the working register; the warmth is reliability.
+
+unique_contribution: |
+  Field-credible solutions engineering at the customer IT seam. Zeeshan
+  is the voice that says "I was at the install, here's what the device
+  did, here's what the app did, here's what the network did, here's
+  what the customer's IT person said, here's the gap, here's the ask."
+  The combination of physical-install presence + customer-IT diplomacy
+  + engineering-grade technical detail is rare; most voices have one
+  or two of these three.
+
+  His other unique quality is repeatable structure. His install reports
+  share a template (went-well → did-not-go-well → blockers → ask) that
+  makes them comparable across deployments. This is the voice that
+  builds field-evidence corpus over time, not just one-off site reports.
+  It's also the voice that other engineers (Jon, Hong-Bin, Josh) can
+  read fast and act on, because the shape is predictable.
+
+registers:
+  field_status_update: |
+    Templated. Checkmark / warning / construction emoji sections.
+    Sensor counts, signal readings, device state, root-cause
+    hypothesis, ask with cc'd owners. The canonical Zeeshan artifact.
+  engineering_escalation: |
+    Evidence-first. Numbered asks in priority order. Captured payloads
+    or specific identifiers. "Asks (priority order): 1. An ?event_id=
+    or ?limit=1 query parameter on /waveforms... 2. (Out of band) once
+    [colleague]'s firmware fix lands... 3. Documentation note on
+    /waveforms's worst-case behavior."
+  customer_it_bridge: |
+    Plain English hypothesis offered with a recognizable analogy. "Do
+    you think this network maybe requires a captive portal or
+    browser-based login? Kinda like airport or hotel wifi access?"
+  warranty_or_commercial_check: |
+    Cautious, defers to contract owner. "Since the request is for a
+    2-year warranty, can you confirm what was agreed commercially? I
+    want to make sure we align with the contract before sending this
+    out."
+  brief_coordination: |
+    "Friday works for me" / "<@jimit> back" / "Got it, I'll add it to
+    the list."
+
+best_for:
+  - recipe: technical_blog
+    role: supporting
+    why: |
+      For deployment-and-troubleshooting blog posts, Zeeshan's
+      structured field-report register is the right voice for the
+      "what happened in the room" section. Jon remains primary on
+      engineering blogs; Zeeshan supports on the deployment-reality
+      sections that need installer-POV credibility.
+    target_feeling: respect
+  - recipe: pilot_kickoff_deck
+    role: supporting
+    why: |
+      The "what installation actually looks like" slides need
+      Zeeshan's voice. He has the field experience to describe the
+      install honestly without sales overlay — what works, what
+      doesn't, what the customer's IT team needs to prepare.
+    target_feeling: confidence
+  - recipe: case_study
+    role: accent
+    why: |
+      Use Zeeshan's voice on the methodology/install-process accent
+      paragraphs of a case study. His structured field-report style
+      reads as evidence rather than narrative; primary remains Seren
+      (customer perspective) or Prashanth (relationship arc).
+    target_feeling: confidence
+  - recipe: support_documentation
+    role: primary
+    why: |
+      Zeeshan writes installer-facing and customer-IT-facing material
+      naturally. His "hypothesis with relatable analogy → test → name
+      the result" structure is the canonical support voice. (If
+      `support_documentation` is not yet a named recipe, this profile
+      argues it should be, with Zeeshan as primary.)
+    target_feeling: relief
+
+verbal_fingerprints:
+  - "What went well: ... What did not go well: ... Issues / Blockers:"
+  - "Likely root cause of..."
+  - ":white_check_mark: ... :warning: ... :construction:"
+  - "Ask: Can one of you help: 1. ..., 2. ..., 3. ..."
+  - "I'll add it to the list"
+  - "Kinda like airport or hotel wifi access?"
+  - "Got it, I'll..."
+  - "I want to make sure we align with the contract before..."
+  - '"Update:" / "Context:"'
+  - "Do you think this network maybe requires..."
+
+voice_sample_field_report: |
+  Project: [partner site]
+  EDG: [redacted]
+
+  Installation Status Update
+  :white_check_mark: What went well:
+  - Electrician completed physical installation of CTs and wiring.
+  - CT chain verified on-site:
+    - Chain 1: 16 CTs (confirmed via install + EDG detection)
+    - Chain 2: 6 CTs
+  - Sensor detection at EDG level is correct.
+  - EDG successfully came online (red → orange → green progression).
+  - LTE modem detected and registered on network.
+
+  :warning: What did not go well:
+  - Mobile app was not usable: LTE option did not appear, configuration
+    screen kept spinning. Installer abandoned app flow.
+  - Had to switch to browser-based setup.
+  - LTE signal quality is poor (fluctuating ~5–30%).
+
+  :construction: Issues / Blockers:
+  1. Connectivity instability — weak LTE signal, no Ethernet on-site.
+     Likely root cause of delayed/partial system sync.
+  2. Admin console CT mismatch — console shows incorrect count, EDG
+     internally detects correct count. Likely due to incomplete data
+     ingestion or delayed sync.
+  3. No data transmission yet — potentially due to incorrect admin
+     console configuration.
+
+  cc <@josh> <@hong-bin> <@jon>
+  Any idea on how to fix Admin Console CT mismatch?
+
+voice_sample_engineering_escalation: |
+  Follow-up to this thread. While building out the dashboard's
+  per-event waveform inspection, I hit an edge case caused by the same
+  bursty-trigger behavior we already discussed.
+
+  What's happening:
+  - The dashboard's waveform analysis view fetches one event at a time
+    via the per-panel waveforms endpoint with a ±1s window around the
+    event timestamp.
+  - On normal panels this returns 1 event (~50 KB). On a panel in a
+    fault burst, the same 2-second window can contain dozens of events.
+
+  Concrete numbers from a HAR I captured today: ~2.88 MB, 100 seconds
+  for a single 2-second window. ~57 events × ~50 KB each. The browser
+  downloads + parses the multi-MB response before the dashboard's
+  client-side filter runs, freezing the page for minutes; on
+  customer-facing builds it never visibly recovers.
+
+  Asks (priority order):
+  1. An ?event_id= or ?limit=1 query parameter on /waveforms. This
+     lets the client request exactly one event regardless of burst
+     density.
+  2. (Out of band) once the firmware fix lands — the trigger-suppression
+     proposal in this thread — the burst case largely disappears at
+     the source, and the API change above stops being load-bearing.
+  3. Documentation note on /waveforms's worst-case behavior so future
+     integrations don't trip on this.
+
+  No client fix is planned right now (it'd be a workaround that hides
+  the problem).
+
+voice_sample_warranty_check: |
+  I've drafted the warranty letter using our standard template
+  (1-year coverage).
+
+  Since the request is for a 2-year warranty, can you confirm what was
+  agreed commercially? I want to make sure we align with the contract
+  before sending this out.
+
+  Once confirmed, I can finalize and send it over.

@@ -34,6 +34,15 @@ Case studies have six required sections, in this order:
 
 (Quote technically sits inside or after Outcome; the six "required sections" frame is Executive summary, Problem, Approach, Outcome, Quote, Replicate per the rule block.)
 
+## Decision framework: where to land in the bounds
+
+| Boundary | Floor (small) | Default | Ceiling (large) |
+|---|---|---|---|
+| **Executive summary length (4-6 sentences)** | **4 sentences** when the engagement reduces cleanly to problem + approach + outcome + invitation, and the customer is named (the named-customer signal does work the prose otherwise has to do). | **5 sentences** for a typical case study: problem, scale, approach, outcome with anchor metric, replication invitation. | **6 sentences** when the customer is redacted (the redaction removes one trust signal that prose now has to recover) or the engagement spans a regulatory + operational outcome that needs both surfaced. Above 6 the executive summary stops being scannable and the rest of the case study becomes redundant. |
+| **Anchor metric (1, fixed)** | **One bolded outcome metric per case study.** Floor and ceiling are the same — this is the load-bearing rule. Two competing bolded metrics dilute the proof. Pick the number that defines the engagement; let the others support in surrounding prose. See the section below for the full discipline. |
+
+If you cannot reduce the engagement to one bolded anchor and a 4-6 sentence summary, the artifact may need to be a brief or a short whitepaper rather than a case study. Case studies that try to cover two engagements at once consistently land as marketing rather than evidence.
+
 ## The anchor metric
 
 **One bolded outcome metric per case study.** This is the load-bearing rule.
@@ -48,6 +57,18 @@ Examples of legitimate single anchors (illustrative; numbers should be re-verifi
 - **`Zero penalties`** — LL97 compliance outcome (claim type: count; pair with the regulatory window in surrounding prose)
 
 Per-instance qualifiers ("per facility", "per rack", "per circuit") are silent metric multipliers and require explicit context. A `$3M per facility` anchor without stating fleet size N silently multiplies the canonical claim by an unknown N. See `LEARNINGS.md` for the per-instance qualifier discipline (Z2O-1310 in the consuming `verdigris` repo).
+
+## Template vs. produced
+
+Case studies are the highest-stakes surface for the rendering-layer-never-invents-facts principle: a fabricated quote, a guessed customer name, or a plausible-sounding metric ships as evidence and erodes trust on first comparison. The template-vs-produced contract is concrete here.
+
+| Slot | Template stage | Produced stage |
+|---|---|---|
+| Customer name (header byline) | `<span class="vd-template">[FIELD: customer name OR redaction, e.g. "Fortune 50 Telecom"]</span>` | `Fortune 50 Telecom` |
+| Anchor metric | `<span class="vd-template">[FIELD: single bolded outcome, source-cited, e.g. "$1.3M-$3M"]</span>` with caption `<span class="vd-template">[FIELD: scope window, e.g. "CapEx deferral over a 3-year horizon"]</span>` | `$1.3M-$3M` with caption `CapEx deferral over a 3-year horizon` |
+| Quote | `"<span class="vd-template">[FIELD: verbatim quote, e.g. "Verdigris flagged the failure 14 days before our maintenance window."]</span>" — <span class="vd-template">[FIELD: name OR role, e.g. "VP of Operations"]</span>, <span class="vd-template">[FIELD: organization OR explicit redaction]</span>` | `"Verdigris flagged the failure 14 days before our maintenance window." — VP of Operations, Fortune 50 Telecom` |
+
+The template stage is what an agent generates from the spec; the produced stage is what a human (or evidence-grounded agent) fills in. Never ship the produced stage without source evidence for every filled placeholder — quotes require a recorded interview or written attribution; anchor metrics require an EVD canonical claim ID; customer names require co-marketing approval (or explicit redaction). A case study with a plausible-sounding placeholder still in production form is the failure mode the dual-target parity rule cannot catch — only the hand-off note can.
 
 ## Quote attribution
 
@@ -156,7 +177,7 @@ The **web/PDF parity** rule reflects how case studies actually circulate: a pros
 
 ## See also
 
-- [`workflows/sales-collateral`](../../workflows/sales-collateral) — production guide spanning all collateral types
+- [`workflows/sales-collateral`](../../workflows/sales-collateral) — production guide spanning all collateral types; see the [versioning-vs-refresh section](../../workflows/sales-collateral#versioning-vs-refresh) for when to bump the version vs. edit in place
 - [`categories/slides/`](../slides/) — sister cell; sales-collateral universals (logomark, roles, dates) inherited here
 - [`categories/whitepapers/cover`](../whitepapers/cover) — sister cell; print-rendering patterns + citation discipline inherited
 - [`categories/one-pagers/guide`](../one-pagers/guide) — sister cell; CTA-strip pattern inherited

@@ -39,7 +39,7 @@ If the situation doesn't fall out of this tree, do NOT improvise a fifth genre o
 
 Independent of genre, every Verdigris slide deck shares:
 
-- **Logomark in footer band, every slide.** Position fixed (left), size fixed at 20pt. Title slide additionally uses the full lockup (44-60pt). Variant by mode (pilot kickoff + customer 101 + partner enablement = full lockup; internal team = wordmark only).
+- **Logomark in footer band, every slide.** Position fixed (left), size fixed at 20pt. Title slide additionally uses the full lockup (44-60pt). Variant by genre (pilot kickoff + customer 101 + partner enablement = full lockup; internal team = wordmark only).
 - **Confidentiality marking in footer band, every slide.** Tier varies by genre default; presence is mandatory.
 - **Page number in footer band.** Always.
 - **Role labels in templates, names only in produced decks.** Templates use "Pilot Sponsor"; the produced artifact says "Pilot Sponsor: Mark Chung, CEO".
@@ -47,7 +47,7 @@ Independent of genre, every Verdigris slide deck shares:
 - **PDF-exportable.** No animation; render via Chrome `--print-to-pdf` or WeasyPrint.
 - **Tables ≤ 6 columns and ≤ 8 rows per slide.** Above that, split or appendix.
 - **Figures from the `.vd-figure` pattern.** Caption + credit line; never split across slides.
-- **Naming convention.** `{type}-{audience}-{topic}-{YYYYMMDD}-v{N}.{ext}` per the [sales-collateral production guide](../../workflows/sales-collateral).
+- **Naming convention.** `{type}-{audience}-{topic}-{YYYYMMDD}-v{N}.{ext}` per the [sales-collateral production guide](../../workflows/sales-collateral). See [`workflows/sales-collateral#versioning-vs-refresh`](../../workflows/sales-collateral#versioning-vs-refresh) for when to bump the version vs. edit in place.
 
 ## What varies across genres
 
@@ -63,6 +63,19 @@ The four genres differ on six axes. The full matrix lives in [pilot-kickoff.md](
 | Confidentiality default | CUSTOMER-CONFIDENTIAL | INTERNAL ONLY | PUBLIC | PARTNER-CONFIDENTIAL |
 | Date format | absolute | week-N OK | absolute | absolute |
 | Logomark variant | full lockup | wordmark | full lockup | full lockup |
+
+## Decision framework: where to land in length bounds
+
+The matrix above gives a length range per genre. Each cell guide carries a per-boundary decision framework; this is the cross-cell summary.
+
+| Genre | Floor | Default | Ceiling |
+|---|---|---|---|
+| Pilot kickoff (12-20) | 12 — small audience, single site, repeat engagement | 15-16 — typical first pilot, single segment | 20 — multi-site, broad audience, complex install/data flow |
+| Internal team (8-15) | 8 — routine weekly status | 10-12 — pre-meeting prep, mid-engagement review | 15 — post-mortem or multi-function board prep |
+| Customer 101 (15-25) | 15 — single technical evaluator, 30-min meeting | 18-20 — typical first meeting, mainstream segment | 25 — broad audience, novel segment, pricing on agenda |
+| Partner enablement (20-30) | 20 — partner already co-sells adjacents | 25 — typical net-new partner | 30 — regulated or unfamiliar segment, deeper FAQ |
+
+Default to the middle column. Push to the floor when audience or argument complexity is low; push to the ceiling when audience breadth, segment novelty, or coordination complexity is high. If three or more boundaries push to the ceiling, reconsider whether you have one artifact or a series.
 
 ## Reference stylesheet + tokens
 

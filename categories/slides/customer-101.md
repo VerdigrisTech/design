@@ -53,6 +53,15 @@ Slides marked **(required)** appear in every customer 101 deck. Slides marked **
 - Role labels in templates ("Verdigris CEO" not "Mark Chung"; produced deck adds the name alongside)
 - Table dims, figures, PDF-exportable
 
+## Decision framework: where to land in the bounds
+
+| Boundary | Floor (small) | Default | Ceiling (large) |
+|---|---|---|---|
+| **Slide count (15-25)** | **15 slides** when the prospect is a single technical evaluator, the meeting is short (30 min), or the wedge is well-defined for a familiar segment. | **18-20 slides** for a typical first meeting: 1-3 evaluators, 45-60 min, mainstream segment. | **25 slides** when the prospect's audience is broad (sponsor + technical + procurement), the segment is novel and needs more "where we fit" framing, or pricing/pilot mechanics are already on the agenda. |
+| **Evidence slides (2-4)** | **2 evidence slides** when the prospect has already seen one Verdigris case study or has a strong analog in their network. | **3 evidence slides** for a typical first meeting: one anchor case study + one segment-adjacent reference + one outcome-summary slide. | **4 evidence slides** when the segment is novel to Verdigris's published case-study set and you need an extra slide to translate analogs from neighboring segments. Above 4 the deck stops feeling like an introduction and starts feeling like a sales binder. |
+
+If the meeting expects pricing detail or a pilot-scoping conversation, that is a signal the deck is no longer a customer 101 — escalate to a draft pilot kickoff or a pricing brief and re-pick the genre.
+
 ## Diction adjustments specific to customer 101
 
 The Z2O-1321 diction rule applies: avoid internal jargon. Customer 101 has additional adjustments because the audience is brand new:
@@ -62,6 +71,18 @@ The Z2O-1321 diction rule applies: avoid internal jargon. Customer 101 has addit
 - "**EVD atom / canonical claim**" — never use; substitute "evidence" or the underlying number with a citation.
 - "**Pilot**" — fine to use; this audience expects this word from a B2B technical product.
 - "**Customer**" — first-person inclusive ("we'd want to validate X with you"); never third-person ("customers see Y").
+
+## Template vs. produced
+
+Customer 101 decks are heavier on prospect-facing framing and lighter on calendar-anchored details, so the placeholders cluster around the prospect's name, segment, and the next-meeting CTA.
+
+| Slot | Template stage | Produced stage |
+|---|---|---|
+| Title slide eyebrow | `Verdigris for <span class="vd-template">[FIELD: prospect industry / use case, e.g. "AI data centers"]</span>` | `Verdigris for AI data centers` |
+| Team slide | `Verdigris CEO: <span class="vd-template">[FIELD: name + title, e.g. "Mark Chung, Founder & CEO"]</span>` | `Verdigris CEO: Mark Chung, Founder & CEO` |
+| Close: next meeting | `Next meeting: <span class="vd-template">[FIELD: absolute date + agenda, e.g. "2026-05-29 — pilot scoping"]</span>` | `Next meeting: 2026-05-29 — pilot scoping for the West Region buildings` |
+
+The template stage is what an agent generates from the spec; the produced stage is what a human (or evidence-grounded agent) fills in. Never ship the produced stage without source evidence for every filled placeholder — the prospect industry is from the discovery notes; the next-meeting date is from the calendar invite already sent.
 
 ## Voice recipe
 

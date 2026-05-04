@@ -60,6 +60,14 @@ The pilot-kickoff structure has 18 canonical slides. Internal team decks typical
 | 17. Appendix: assumptions | optional |
 | 18. Close: decision date | required |
 
+## Decision framework: where to land in the bounds
+
+| Boundary | Floor (small) | Default | Ceiling (large) |
+|---|---|---|---|
+| **Slide count (8-15)** | **8 slides** for routine weekly status: title, why-we-here, success criteria, week-N checkpoint, risks, decisions we owe, anchor metric, close. | **10-12 slides** for a typical pre-meeting prep deck or mid-engagement review where extra context (data flow status, hardware install diagnostics) earns its slide. | **15 slides** for post-mortems or board-prep where multiple Verdigris functions (eng, GTM, finance) need their own status surface in the same deck. Above 15, the audience is no longer a single internal team and the deck should be split. |
+
+Internal decks bias toward the floor. The audience already shares context; padding the deck wastes their time. If the same internal deck recurs weekly, the producer should be cutting slides over time, not adding them.
+
 ## Voice at a glance
 
 Internal-team decks are heterogeneous: engineers need technical precision, operators need empathy, GTM needs market context. A single-voice recipe brittles. The `internal_team_deck` recipe runs four voices, each carrying a slice. Pulled directly from the recipe and the linked profile YAMLs.
@@ -88,6 +96,18 @@ Carries: data-flow status, hardware-install diagnostics, scope-and-coordination 
 
 Carries: occasional market-context slides when the engagement intersects strategy. Stays out of routine status decks.
 
+## Template vs. produced
+
+Internal decks are heterogeneous and often name people by design (a weekly engagement review will say "Mike will follow up"). The template-vs-produced contract still holds for the *template* artifact in `categories/slides/examples/`; one-off produced decks fill names alongside roles.
+
+| Slot | Template stage | Produced stage |
+|---|---|---|
+| Title slide | `Weekly engagement review: <span class="vd-template">[FIELD: customer + week, e.g. "Acme Life Sciences — Week 3"]</span>` | `Weekly engagement review: Acme Life Sciences — Week 3` |
+| Decisions we owe | `Pilot Lead: <span class="vd-template">[FIELD: name, e.g. "Mike Mahedy"]</span> to confirm install schedule by <span class="vd-template">[FIELD: absolute date]</span>` | `Pilot Lead: Mike Mahedy to confirm install schedule by 2026-06-08` |
+| Risks slide | `Risk: <span class="vd-template">[FIELD: one-line risk]</span> — Mitigation: <span class="vd-template">[FIELD: one-line mitigation owned by named individual]</span>` | `Risk: customer firewall blocks data egress — Mitigation: Jon Chu to coordinate with customer IT by 2026-06-15` |
+
+The template stage is what an agent generates from the spec; the produced stage is what a human (or evidence-grounded agent) fills in. Never ship the produced stage without source evidence for every filled placeholder — internal does not relax this discipline, even though the audience is Verdigris-only. A "Mike will do X by 2026-06-08" claim must trace to a real Mike commitment.
+
 ## Diction adjustments specific to internal decks
 
 The diction rules for external genres (Z2O-1321, e.g., "exit criteria" → "expansion criteria") **do not apply** to internal-team decks. Internal jargon is fine — and faster — when the audience is Verdigris-only.
@@ -98,19 +118,19 @@ What still applies:
 - Absolute dates for any decision the team is committing to
 - Week-N notation only for tracking the engagement timeline, not for decision dates
 
-## Why this is a genre and not a mode flag on pilot kickoff
+## Why this is a genre and not a flag on pilot kickoff
 
-A reasonable challenge: if internal team is "deltas-only against pilot kickoff," is it really a genre, or is it a `mode: internal` toggle that could apply to any genre?
+A reasonable challenge: if internal team is "deltas-only against pilot kickoff," is it really a genre, or is it a `modes: [internal]` toggle (the YAML field) that could apply to any genre?
 
 Verdict: it's a genre, defensibly, on five structural grounds:
 
 1. **Voice mix changes from three voices to a different three voices**, with Thomas as primary instead of Mike. The voice center of gravity shifts because the audience is internal — operational clarity beats field credibility.
 2. **Logomark variant changes** (full lockup → wordmark only). This signals "internal context, not customer-facing" pre-consciously to readers; a wordmark-only customer deck would feel cheap, a full-lockup internal deck feels misplaced.
 3. **Confidentiality tier marking color changes** to red (INTERNAL ONLY), distinct from the customer/partner/public yellow/purple/grey palette.
-4. **Date format relaxes** to permit week-N notation when the engagement timeline is the running thread (per the absolute-dates rule's mode list excluding internal_team).
+4. **Date format relaxes** to permit week-N notation when the engagement timeline is the running thread (per the absolute-dates rule's `modes:` list excluding internal_team).
 5. **Diction rules NOT applied** — the audience-fit-diction guidance ("exit criteria" → "expansion criteria", etc.) doesn't apply because internal jargon is faster than translation when the audience is Verdigris-only.
 
-If we collapsed internal_team to a `mode: internal` toggle on pilot_kickoff, every rule that distinguishes the genres would need conditional logic on the toggle. That's complexity without simplification. Treating internal_team as a genre keeps each genre's spec self-contained and locally readable.
+If we collapsed internal_team to a `modes: [internal]` toggle on pilot_kickoff, every rule that distinguishes the genres would need conditional logic on the toggle. That's complexity without simplification. Treating internal_team as a genre keeps each genre's spec self-contained and locally readable.
 
 The genre stays a genre. If a sixth structural delta accumulates against another existing genre and a new "post-mortem" or "retrospective" sub-genre earns its own spec, this defense is what to point at — same five-axis test.
 

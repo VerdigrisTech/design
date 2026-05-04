@@ -39,6 +39,17 @@ import { hexColors } from '@verdigristech/design-tokens';
 // hexColors['color.brand.verdigris'] → '#0fc8c3'
 ```
 
+### Other JS exports
+```js
+import { typography, spacing, elevation, radius, viz, durations, easings } from '@verdigristech/design-tokens';
+// typography['fontSize.h1'] → '4rem'
+// spacing['spacing.4']      → '1rem'
+// elevation['shadow.md']    → '0 4px 6px -1px rgb(0 0 0 / 0.1), ...'
+// radius['radius.base']     → '0.625rem'
+```
+
+For the full integration guide (Tailwind, raw JSON, CSS imports, voice recipes, rules YAML, versioning), see [CONSUMERS.md](CONSUMERS.md).
+
 ## What's Inside
 
 ```

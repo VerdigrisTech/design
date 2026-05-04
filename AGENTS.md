@@ -1,3 +1,8 @@
+---
+layout: default
+title: AI Agent Instructions
+---
+
 # AI Agent Instructions — Verdigris Design System
 
 This file provides context for AI coding agents generating on-brand Verdigris visuals.

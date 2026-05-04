@@ -1,0 +1,257 @@
+# Voice Profile: Prashanth Shetty
+# Sources: 40+ Slack messages across customer-account channels (multiple),
+#          partner-support, investors, product, sales, team coordination, and
+#          industry-reading channels.
+# Profiled: 2026-05-04 (Wave 2)
+# Note: Display name in Slack is "prashanth" (lowercase). Last name verified
+#       via team context (Verdigris customer success / GTM lead) and Lever
+#       references in Seren's profile (Seren cc's "@Prashanth" on candidate
+#       reviews). Surname "Shetty" sourced from Linear ticket Z2O-1345.
+# Redaction note (Loop 5 PII discipline applied at authoring time):
+#       customer-identifying details (account names on the corp denylist,
+#       equipment IDs matching [A-Z]{3}\d{6,10}, vendor names, customer-site
+#       nicknames) genericized below. Original quotes preserved in
+#       repo-internal context; the published profile uses generic operational
+#       descriptors that capture the same voice dimensions without exposing
+#       customer reconnaissance data.
+
+name: Prashanth Shetty
+slack_id: U072APQ694Y
+role: Customer success and account leadership; commercial pipeline and pilot ownership
+voice_summary: |
+  Prashanth writes from the deal table. His messages are conversational
+  and low-ceremony — lowercase "i", short sentences, working numbers
+  shown live. He moves between three modes without much transition:
+  pipeline forecasting ("Grand total = $1M legacy + $2M C&I = $3M ARR.
+  This is just SaaS."), customer logistics ("Friday 10am-11am PT. look
+  out for it on the calendar"), and decision capture ("ok in that case
+  i'll hold off on approving for now — at least until [partner] pays
+  up"). The prose is plain and the math is shown.
+
+  His signature quality is honest pipeline framing. He doesn't round up.
+  When a forecast looks high he says so directly ("the $5M potential
+  ARR for the legacy business is a stretch, probably closer to
+  $2.5M – $3M based on the pipeline that i've seen") and offers a
+  defensible alternative number. When something is uncertain he names
+  the uncertainty ("i'd go with a lower ARR number since we only just
+  signed the addendum and we have only 6 months left in the year") and
+  carries forward only what the evidence supports.
+
+  Prashanth is also the voice that takes ownership without making it
+  ceremonial. "i am taking overall ownership of project management and
+  task coordination. but individual items may be owned by either me or
+  assigned to [name] or [name] depending on whether they're CS, Sales
+  or technology oriented." The structure is matter-of-fact; the
+  authority comes from naming what each person is on the hook for, not
+  from positional language.
+
+  He is comfortable threading commercial and technical conversations.
+  "Let's discuss when you're back, we should also consider packaging
+  details and specifics of use cases. I'm not fully clear on how
+  Signals fits here. I can then take it to [partner] to negotiate the
+  new product addendum." That sequence — discuss → clarify scope →
+  carry forward to the customer commercial — is a recurring shape in
+  his messages.
+
+strongest_ingredients:
+  - operator_empathy: 8
+    evidence_pipeline: |
+      "On slide 2, the potential ARR number — is that for 2026? if yes,
+      then [the number] is a bit high i'd ratchet down to $3M. The rest
+      looks ok."
+    evidence_meeting_design: |
+      "rather than the usual onboarding flow for new users i suggest we
+      ask him where he wants to focus and specific areas to show & tell
+      using [site] data. His manager is new to Verdigris so i'll ask if
+      he wants the high level overview to start things off."
+    note: |
+      Prashanth's empathy is operational: he reshapes the demo flow
+      around what the specific person already knows, not the generic
+      onboarding script. He thinks about the room before the slides.
+  - self_honesty: 8
+    evidence_uncertainty: |
+      "the average SaaS renewal on each is about $20K max. Even if they
+      did expansion deals on the big ones... the total would be $100K
+      ARR each at best. So total 2026 legacy acct oppty = $100k * 10
+      accts = $1.0M."
+    evidence_admission: |
+      "I'm not quite sure how to unblock other than ask [partner] to
+      send us last year's invoices."
+    evidence_constraint: |
+      "Busy with [account] qbr so couldn't spend much time looking."
+  - personal_connection: 7
+    evidence_thanks: |
+      "Perfect — this is what i needed, thanks <@colleague>!"
+    evidence_consideration: |
+      "I am not sure if we need 3 people onsite, it could save $1K in
+      travel costs if i didn't travel. My primary objective was to
+      observe & learn the process if/when we scale to other sites... but
+      [colleague] can cover for me."
+    note: |
+      Prashanth is courteous in a working register — quick thanks, named
+      consideration of cost on others' behalf. Not effusive; just
+      consistently present.
+  - technical_precision: 6
+    evidence_packaging: |
+      "Lets discuss when you're back, we should also consider packaging
+      details and specifics of use cases. I'm not fully clear on how
+      Signals fits here."
+    evidence_spec_handoff: |
+      "Does this need to be reviewed by the product team for accuracy,
+      or do you feel good with it?"
+    note: |
+      Prashanth's technical precision is bounded — he knows the
+      commercial shape of the product and the customer ask, but he
+      explicitly hands technical accuracy off to product/engineering
+      rather than fake the depth. That self-aware boundary is part of
+      what makes him trustworthy on customer-facing decks.
+  - mission_gravity: 5
+    evidence_strategic_reframe: |
+      "But I'd say achieving those goals comes down to — at least
+      partially — building confidence and trust in the data and product
+      at the mid management level and we're not there yet. We need your
+      help to exceed the 95%, become the trusted source of data truth
+      and improve on the analytics product usability. Addressing these
+      gaps will remove many of the barriers in expanding our internal
+      footprint to upper levels of the hierarchy."
+    note: |
+      Prashanth's mission expression is account-level: he names the
+      strategic blocker between current state and the next tier of
+      relationship without abstracting it. Less philosophical than
+      Mark, more transactional than Thomas.
+  - warmth_and_humor: 4
+    evidence: |
+      "It came out pretty darn well — check it out."
+    note: |
+      Warmth is light and rare. "pretty darn well" is about the most
+      colorful adverb in his corpus; the rest is plain working language.
+
+unique_contribution: |
+  Commercial fluency grounded in the actual pipeline. Prashanth is the
+  voice that says "here is what we will close, why I think so, and
+  what's in the way." His forecasts are defensible because he shows the
+  arithmetic in line, names what's a stretch, and routinely revises
+  founder estimates downward with reasoning rather than upward with
+  optimism. This is the voice that makes investor and exec audiences
+  trust the rest of the deck.
+
+  His other unique quality is workflow ownership across customer + sales
+  + technology. He sits at the seam where a pilot has commercial,
+  account-management, and engineering strands and assigns each strand
+  to the right person without flattening them. Where Seren brings
+  diplomatic precision to people, Prashanth brings task-level precision
+  to deals.
+
+registers:
+  pipeline_forecast: |
+    Numbers shown live, conservative defaults, named uncertainty.
+    Lowercase "i". "Grand total = $1M Legacy + $2M C&I = $3M ARR. This
+    is just SaaS. My guess is if you include h/w sales it would easily
+    add another $1M so we could get to $4M – $5M."
+  customer_logistics: |
+    Calendar-driven, brief, direct. "I didn't hear back — so i am going
+    with Friday 10am-11am PT. look out for it on the calendar."
+  account_strategy: |
+    Mid-length, segments the problem, names the unblock. Honest about
+    where Verdigris is not yet earning the next tier of trust.
+  decision_capture: |
+    Minimal: "Okay, thanks." "OK i'll capture that one as well." Not
+    performative agreement; just acknowledgement that the item lands.
+  exec_summary: |
+    Structured handoff format for founder syncs. "1. What happened since
+    last sync... 2. What's blocked or needs Mark's input... 3. What
+    decision does the team need from Mark..."
+
+best_for:
+  - recipe: investor_update
+    role: primary
+    why: |
+      Numbers-shown-live, conservative-default pipeline framing is
+      exactly the voice investor updates need. Prashanth reads the
+      forecast, adjusts the headline numbers down with reasoning, and
+      caveats time horizon. Mark has founder vision; Prashanth has the
+      pipeline arithmetic that makes the vision honest.
+    target_feeling: confidence
+  - recipe: pilot_kickoff_deck
+    role: primary
+    why: |
+      Prashanth co-runs the pilot kickoff process — task ownership
+      assignment, calendar coordination, customer-stakeholder mapping.
+      His voice on the "scope and ownership" slides keeps them from
+      reading as generic project-management theater.
+    target_feeling: confidence
+  - recipe: case_study
+    role: supporting
+    why: |
+      Case studies need an account-management voice to frame the
+      relationship arc (how the pilot landed, what the customer asked
+      for next). Seren remains primary for customer experience; Prashanth
+      supports on the relationship-trajectory side.
+    target_feeling: confidence
+  - recipe: partner_materials
+    role: supporting
+    why: |
+      Prashanth handles partner commercials regularly. His honest-numbers
+      register (costs, timing, what's a stretch) keeps partner-facing
+      content from over-promising.
+    target_feeling: warmth
+
+verbal_fingerprints:
+  - 'lowercase "i" throughout: i''ll, i am, i would'
+  - "Grand total ="
+  - "is a bit high i'd ratchet down to..."
+  - "is a stretch, probably closer to..."
+  - "Does this granularity help?"
+  - "fyi -"
+  - "Sounds different from... so i'll track it separately"
+  - "I am not sure if we need..."
+  - "look out for it on the calendar"
+  - 'Cc: with named owners'
+
+voice_sample: |
+  <@Mark> here's how i see it.
+
+  Legacy pipeline = handed off to date, with more coming. Partner is
+  just about getting started in these accounts. The average SaaS renewal
+  on each is about $20K max. Even if they did expansion deals on the
+  big ones, the total would be $100K ARR each at best. So total 2026
+  legacy oppty = $100K * 10 accts = $1.0M.
+
+  C&I deals - when i look at the forecast view of the CRE accts, it
+  shows an $8M total oppty value at the portfolio level. My best guess
+  is about 25% will close in 2026, so $2M in total.
+
+  Grand total = $1M Legacy + $2M C&I = $3M ARR. This is just SaaS. My
+  guess is if you include h/w sales it would easily add another $1M so
+  we could get to $4M - $5M.
+
+  Does this granularity help?
+
+voice_sample_account: |
+  I agree with both points. We have work to do to get new wins, can't
+  live on past glory. And engaging at the exec level VP and above is
+  high on our list.
+
+  But I'd say achieving those goals comes down to — at least partially
+  — building confidence and trust in the data and product at the mid
+  management level and we're not there yet. We need your help to exceed
+  the 95%, become the trusted source of data truth and improve on the
+  analytics product usability. Addressing these gaps will remove many
+  of the barriers in expanding our internal footprint to upper levels
+  of the hierarchy.
+
+  Lets do a debrief while [onsite] and figure out the path forward.
+
+voice_sample_ownership: |
+  I am taking overall ownership of project management and task
+  coordination. but individual items may be owned by either me or
+  assigned to [colleague] or [colleague] depending on whether they're
+  CS, Sales or technology oriented.
+
+  For example - case study logo/naming is something i own, while
+  [colleague] pursues the Construction and Ops teams for potential
+  Signals projects.
+
+  There are a couple of items that are pending assignment resolution,
+  i will work it out with [colleague] in [city] tomorrow and have our
+  task lists up to date in a couple of days.

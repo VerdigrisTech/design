@@ -67,6 +67,13 @@ Numbered list on the left (5/12 cols), thesis block on the right (4/12 cols).
 
 The thesis block is what makes the comparative genre work. Without it, a numbered list is just a checklist; with it, the page argues something and the reader has a reason to keep it.
 
+## Decision framework: where to land in the bounds
+
+| Boundary | Floor (small) | Default | Ceiling (large) |
+|---|---|---|---|
+| **Numbered list count, comparative genre (5-12)** | **5 items** when the argument is simple and the audience is senior. The thesis carries the weight; the items are illustrative. | **7 items** for a typical comparative one-pager: mixed audience, standard argument complexity, scannable in 60 seconds. This is the default. | **12 items** only when the spec is an exhaustive checklist where omission is itself a failure mode (e.g., the "7 Ways" page would land at 12 only if the underlying audit framework genuinely has 12 distinct items, not because more felt comprehensive). Above 12 the page reads as a wall of text and the thesis-block discipline collapses. |
+| **Callout count, solution-overview genre (3, fixed)** | **3 callouts is the floor and the ceiling.** Two callouts read as half-empty (the 3-column grid leaves visible white space and the page looks like a draft). Four callouts crowd the grid, force the type smaller, and make the three anchor metrics compete for attention. The fixed count is rigid because the load-bearing claim is "one capability, three concrete proof points" — change the count and the rhetorical structure changes. | If you genuinely have 4-6 capabilities to convey, the artifact is a solution brief or a short whitepaper, not a one-pager. | If you have only 2 strong proof points, defer the page until the third is real; a 2-callout page with a placeholder reads as marketing rather than evidence. |
+
 ## Spacing rhythm
 
 All values from `tokens/spacing/print.json` (frame primitives) and the one-pager-specific values in `build/print/one-pager.css`. Floor + ceiling for every gap.
@@ -100,6 +107,19 @@ All values from `tokens/spacing/print.json` (frame primitives) and the one-pager
 ### Why fixed point sizes (not ranges)
 
 Print artifacts assume a constant reading distance — roughly 18 inches for a one-pager held at a desk or pinned to a board. Fixed point sizes lock the visual hierarchy at that distance: every printed copy renders identically, every PDF held by every prospect reads at the same scale. The slide cells use ranges (32-44pt headlines, 18-22pt deck) because projection distance varies — a boardroom monitor at 8 feet versus an auditorium screen at 30 feet calls for different sizes, calibrated per venue. Don't borrow the slide-cell range pattern back into one-pagers; the read-distance assumption is different and the page should look the same on every desk it lands on.
+
+## Template vs. produced
+
+One-pager templates clone across surfaces. The placeholders cluster around the eyebrow (which segment), the anchor metric per callout, and the CTA action.
+
+| Slot | Template stage | Produced stage |
+|---|---|---|
+| Eyebrow (solution overview) | `· <span class="vd-template">[FIELD: segment / capability, e.g. "Signals for AI data centers"]</span>` | `· Signals for AI data centers` |
+| Callout anchor metric | `<span class="vd-template">[FIELD: metric, e.g. "21 days"]</span>` with caption `<span class="vd-template">[FIELD: claim, e.g. "advance warning on rectifier-class faults"]</span>` | `21 days` with caption `advance warning on rectifier-class faults` |
+| CTA action | `→ <span class="vd-template">[FIELD: terse action, e.g. "Schedule a 30-minute walkthrough"]</span>` | `→ Schedule a 30-minute walkthrough` |
+| Comparative thesis | `Verdigris's view: <span class="vd-template">[FIELD: 2-3 sentence thesis tied to one source claim]</span>` | `Verdigris's view: open APIs and exportable data are the two architectural choices that prevent vendor lock-in over a 5-year horizon. The other five items in this list are downstream consequences of those two.` |
+
+The template stage is what an agent generates from the spec; the produced stage is what a human (or evidence-grounded agent) fills in. Never ship the produced stage without source evidence for every filled placeholder — anchor metrics are from the EVD canonical claim set; the comparative thesis is from a documented Verdigris position, not invented for the page.
 
 ## CTA strip
 
@@ -208,7 +228,7 @@ The genre framework was synthesized via the [adversarial-review workflow](../../
 
 ## See also
 
-- [`workflows/sales-collateral`](../../workflows/sales-collateral) — production guide spanning all collateral types
+- [`workflows/sales-collateral`](../../workflows/sales-collateral) — production guide spanning all collateral types; see the [versioning-vs-refresh section](../../workflows/sales-collateral#versioning-vs-refresh) for when to bump the version vs. edit in place
 - [`categories/slides/`](../slides/) — sister cell; sales-collateral universals (logomark, confidentiality, roles, dates) inherited here
 - [`categories/whitepapers/cover`](../whitepapers/cover) — sister cell; print-rendering patterns inherited via cover.css
 - [`build/print/one-pager.css`](../../build/print/one-pager.css) — reference stylesheet

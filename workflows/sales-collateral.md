@@ -172,7 +172,40 @@ Each artifact has a canonical home. Sharing means linking to the canonical path,
 
 When sharing, prefer the public URL if the tier is PUBLIC. When the tier is CUSTOMER-CONFIDENTIAL or PARTNER-CONFIDENTIAL, share the Drive link with explicit permissions. Never paste the artifact body inline in Slack/email — link to the canonical version.
 
-## Versioning + sunset
+## Versioning vs. refresh
+
+Producers diverge when a doc says only "increment the version" without saying *when*. This section defines the three change classes. Pick one for every edit; never skip the choice.
+
+| Change class | When to use | Version action | File action |
+|---|---|---|---|
+| **In-place edit** | Typo, broken link, formatting fix, clarification that does not change meaning | No version bump | Edit in place; tracked in commit history only |
+| **Refresh** (patch bump, v1 -> v1.1) | Same recipient and same core argument, but a metric updated, an exemplar swapped, a date refreshed | Patch bump (`v1` -> `v1.1`) | Save as new file in the type's Drive folder; previous version moves to `archive/` |
+| **New version** (minor or major bump, v1 -> v2) | New anchor metric, new customer name, new timeline scope, fundamental scope change, or new recipient class | Minor or major bump (`v1` -> `v2`) per the existing release rules in `CLAUDE.md` | Save as new file; previous version moves to `archive/` and gains the `-superseded-by-v{N+1}` suffix |
+
+If you cannot decide between two classes, pick the higher one. A spurious version bump costs a Drive entry; a missing version bump costs a stale link in someone's inbox.
+
+### Examples drawn from current Verdigris collateral
+
+- **In-place edit.** "Architectural Advantages" one-pager footer URL updated from `verdigris.co/about` to `verdigris.co/architecture`. Same argument, same numbers, no version change. Commit message documents the link fix.
+- **Refresh (patch bump).** Fortune 50 Telecom CapEx case study updates the deferred-CapEx range from `$1.3M-$3M` to `$1.5M-$3.4M` after Q1 2026 fleet projection re-run. Same engagement, same anchor, refreshed numbers. Bump `v2` to `v2.1`. Old PDF to `archive/`.
+- **Refresh (patch bump).** "Signals for AI Data Centers" one-pager swaps the OCP exemplar callout from a 2024 reference to a 2026 reference. Same callout slot, refreshed exemplar. Bump `v3` to `v3.1`.
+- **New version (minor bump).** Pilot kickoff deck for Acme Life Sciences moves from a 5-building scope to a 12-building scope. New timeline, new success-criteria thresholds, same customer. `pilot-kickoff-acme-life-sciences-20260415-v1.pdf` becomes `pilot-kickoff-acme-life-sciences-20260520-v2.pdf` with a fresh `YYYYMMDD` segment.
+- **New version (minor bump).** "7 Ways to Avoid Vendor Lock-In" one-pager grows to "9 Ways..." after two new comparative items earn callouts from a customer-objection review. New thesis, new item count. Bump `v3` to `v4`.
+- **New version (major bump, rare).** Whitepaper "Power Intelligence Architecture" replaces its anchor metric (`8 kHz sample rate`) with a new architecture story (`waveform-class observability`) after a product reframe. Different argument, different audience framing. `v1` becomes `v2.0` and the old version stays in `archive/` for citation purposes.
+
+### File-naming convention interaction
+
+The naming convention `{type}-{audience}-{topic}-{YYYYMMDD}-v{N}.{ext}` carries the change class implicitly:
+
+- **In-place edit** does not change the filename. Same `YYYYMMDD`, same `v{N}`. The commit log is the audit trail.
+- **Refresh (patch bump)** keeps the existing `v{N}` in the filename and adds a sub-version: `pilot-kickoff-abcam-life-sciences-20260502-v1.1.pdf`. The `YYYYMMDD` segment is the **original** publish date; the `.1` reflects the in-cycle refresh.
+- **New version (minor or major bump)** rolls forward both the `YYYYMMDD` and the `v{N}`: `pilot-kickoff-abcam-life-sciences-20260520-v2.pdf`. The fresh date marks the new publish moment.
+
+Ambiguity is the failure mode. The 2025-Q4 "what's the canonical version of the operations one-pager?" thread cost ~3 hours of cleanup because a half-dozen Drive copies all carried distinct dates with no version markers and no archive discipline. The classes above prevent that by making the choice explicit and the filename literal.
+
+When in doubt, ask in the engagement Slack thread before bumping. Cell guides cross-reference this section: `categories/slides/*.md`, `categories/one-pagers/guide.md`, `categories/case-studies/guide.md`, and `categories/whitepapers/cover.md` all defer to "see workflows/sales-collateral.md#versioning-vs-refresh for when to bump."
+
+## Sunset
 
 - An artifact is **active** when its version is the latest in its Drive folder AND the Notion link points to it.
 - An artifact is **superseded** when a newer version exists; old version moves to `archive/` subfolder, Notion link updates atomically.
