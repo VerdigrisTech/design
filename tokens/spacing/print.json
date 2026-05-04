@@ -98,6 +98,146 @@
           "$value": "6pt",
           "$type": "dimension"
         }
+      },
+      "whitepaper": {
+        "body": {
+          "$description": "Inside-pages spec for whitepapers. Sister to cover. Genre-conditional (lab_tradition uses dot-leader TOC + per-chapter numbering + chapter page breaks; policy_brief and ceo_brief simpler). All values floor + ceiling per project rule.",
+          "running-header-height-min": {
+            "$value": "0.4in",
+            "$type": "dimension",
+            "$description": "Floor for the per-page running header band. Below 0.4in, the header crowds the body type and loses its function as orientation. Genre-conditional (lab + policy use; CEO brief often suppresses)."
+          },
+          "running-header-height-max": {
+            "$value": "0.6in",
+            "$type": "dimension",
+            "$description": "Ceiling for the running header. Above 0.6in, the header eats into the body block and the page reads top-heavy."
+          },
+          "running-footer-height-min": {
+            "$value": "0.4in",
+            "$type": "dimension",
+            "$description": "Floor for the running footer band (page number, confidentiality marking). Below 0.4in, the footer touches the last line of body."
+          },
+          "running-footer-height-max": {
+            "$value": "0.6in",
+            "$type": "dimension",
+            "$description": "Ceiling for the running footer. Above 0.6in, the footer claims more page than it earns."
+          },
+          "chapter-break-top-padding-min": {
+            "$value": "1.2in",
+            "$type": "dimension",
+            "$description": "Floor for chapter title top padding. Lab convention drops the chapter title into the upper-third of the page; below 1.2in the title fails to read as a fresh chapter."
+          },
+          "chapter-break-top-padding-max": {
+            "$value": "2.0in",
+            "$type": "dimension",
+            "$description": "Ceiling for chapter title top padding. Above 2.0in the title floats too low and wastes a full page."
+          },
+          "toc-entry-gap-min": {
+            "$value": "6pt",
+            "$type": "dimension",
+            "$description": "Floor for vertical gap between TOC entries. Below 6pt, entries crowd and lose scannability."
+          },
+          "toc-entry-gap-max": {
+            "$value": "12pt",
+            "$type": "dimension",
+            "$description": "Ceiling for TOC entry gap. Above 12pt, the TOC sprawls over multiple pages without earning the space."
+          },
+          "toc-indent-per-level": {
+            "$value": "0.25in",
+            "$type": "dimension",
+            "$description": "Indent applied per heading level (h2 -- 0; h3 -- 1x indent; h4 -- 2x indent). Single fixed value; hierarchy reads at 0.25in steps."
+          },
+          "figure-gap-above-min": {
+            "$value": "18pt",
+            "$type": "dimension",
+            "$description": "Floor for the gap above a body figure. Below 18pt the figure fuses with the preceding paragraph."
+          },
+          "figure-gap-above-max": {
+            "$value": "28pt",
+            "$type": "dimension",
+            "$description": "Ceiling for the gap above a body figure. Above 28pt the figure floats away from the prose that introduces it."
+          },
+          "figure-gap-below-min": {
+            "$value": "12pt",
+            "$type": "dimension",
+            "$description": "Floor for the gap below a figure caption. Smaller than the gap above because the caption already separates the figure from following prose."
+          },
+          "figure-gap-below-max": {
+            "$value": "22pt",
+            "$type": "dimension",
+            "$description": "Ceiling for the gap below a figure caption. Above 22pt the next paragraph reads as a fresh section, not a continuation."
+          },
+          "pullquote-side-margin-min": {
+            "$value": "0.5in",
+            "$type": "dimension",
+            "$description": "Floor for pull-quote side indent from the text column. Below 0.5in the pull-quote does not visually detach from body prose."
+          },
+          "pullquote-side-margin-max": {
+            "$value": "1.0in",
+            "$type": "dimension",
+            "$description": "Ceiling for pull-quote side indent. Above 1.0in the pull-quote becomes a thin column and loses oversized-type weight."
+          },
+          "body-text-line-height": {
+            "$value": 1.55,
+            "$type": "number",
+            "$description": "Body paragraph leading. 1.55 matches cover.css body and reads comfortably at 10.5pt over a 7in measure."
+          },
+          "body-paragraph-spacing": {
+            "$value": "8pt",
+            "$type": "dimension",
+            "$description": "Paragraph-to-paragraph vertical spacing in body prose. Smaller than section spacing so paragraphs read as continuous argument."
+          },
+          "pullquote-vertical-spacing-min": {
+            "$value": "18pt",
+            "$type": "dimension",
+            "$description": "Floor for the gap above and below a pull-quote in surrounding flow. Below 18pt the pull-quote does not read as a discrete block."
+          },
+          "pullquote-vertical-spacing-max": {
+            "$value": "32pt",
+            "$type": "dimension",
+            "$description": "Ceiling for pull-quote vertical spacing. Above 32pt the pull-quote isolates itself from the argument that earned it."
+          },
+          "table-cell-padding-y-min": {
+            "$value": "4pt",
+            "$type": "dimension",
+            "$description": "Floor for table cell vertical padding. Below 4pt, rows crush; tabular comparison fails."
+          },
+          "table-cell-padding-y-max": {
+            "$value": "8pt",
+            "$type": "dimension",
+            "$description": "Ceiling for table cell vertical padding. Above 8pt, the table reads as cards, not a comparison grid."
+          },
+          "table-cell-padding-x-min": {
+            "$value": "8pt",
+            "$type": "dimension",
+            "$description": "Floor for table cell horizontal padding. Below 8pt, columns abut and become hard to scan."
+          },
+          "table-cell-padding-x-max": {
+            "$value": "14pt",
+            "$type": "dimension",
+            "$description": "Ceiling for table cell horizontal padding. Above 14pt, narrow columns wrap unnecessarily."
+          },
+          "equation-vertical-spacing-min": {
+            "$value": "14pt",
+            "$type": "dimension",
+            "$description": "Floor for vertical air above and below a display equation. Below 14pt the equation collides with surrounding prose."
+          },
+          "equation-vertical-spacing-max": {
+            "$value": "24pt",
+            "$type": "dimension",
+            "$description": "Ceiling for equation vertical air. Above 24pt the equation feels like a figure rather than an inline mathematical step."
+          },
+          "references-entry-gap-min": {
+            "$value": "6pt",
+            "$type": "dimension",
+            "$description": "Floor for vertical gap between bibliography entries. Below 6pt, entries fuse and the reference list fails to scan."
+          },
+          "references-entry-gap-max": {
+            "$value": "10pt",
+            "$type": "dimension",
+            "$description": "Ceiling for reference entry gap. Above 10pt, the bibliography over-claims pages without improving readability."
+          }
+        }
       }
     }
   }
