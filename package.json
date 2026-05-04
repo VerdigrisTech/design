@@ -58,6 +58,8 @@
     "test:package": "tsx build/test-package.ts",
     "test:browser": "playwright test",
     "test:browser:install": "playwright install --with-deps",
+    "audit:cohesion": "tsx build/audit/cohesion.ts",
+    "test:audit": "tsx build/audit/test-cohesion.ts",
     "clean": "rm -rf build/dist _site test-results playwright-report"
   },
   "devDependencies": {

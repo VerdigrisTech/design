@@ -1,0 +1,19 @@
+{
+  "$description": "Minimal typography scale for the cohesion-audit fixture.",
+  "typography": {
+    "scale": {
+      "body": {
+        "$value": "16px",
+        "$type": "dimension"
+      },
+      "headline": {
+        "$value": "32px",
+        "$type": "dimension"
+      },
+      "deck": {
+        "$value": "20px",
+        "$type": "dimension"
+      }
+    }
+  }
+}

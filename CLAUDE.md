@@ -25,6 +25,8 @@ npm run validate:all        # Run both validators
 npm run build               # Generate build/dist/ outputs from token source
 npm run test:browser        # Cross-browser smoke tests (Playwright, chromium/webkit/firefox)
 npm run test:browser:install # Install Playwright browser binaries (one-time setup)
+npm run audit:cohesion      # Cross-cell brand + design cohesion audit
+npm run test:audit          # Self-test the auditor against fixtures
 ```
 
 ## Cross-browser testing
@@ -64,6 +66,12 @@ Before every commit that changes content (foundations, specimens, examples):
 2. `npm run validate:rules` -- checks sidebar coverage for new pages
 3. Check for AI writing artifacts (emdashes, jargon, overexplaining)
 4. Verify cross-file consistency (values in rules must match foundations and specimens)
+
+Before adding a NEW CELL or making MAJOR cross-cell changes:
+1. `/cohesion-audit` -- check the system still hangs together
+2. Address all `critical` findings before merge
+3. File `should-fix` findings under the active epic
+4. Note `note` findings for next quarterly review
 
 ## Release Process
 
@@ -120,6 +128,7 @@ fix(rules): correct heading weight constraint from 600 to 700
 
 - **Genre** is the human-facing noun for the artifact-type-within-a-cell distinction (e.g., the slides cell has four genres: pilot kickoff, customer 101, partner enablement, internal team; the whitepaper cell has three: lab_tradition, policy_brief, ceo_brief). Use "genre" in all prose.
 - **`modes:`** is the YAML field on rules in `rules/visual-rules.yml` that lists which genres a rule applies to. The two terms refer to the same concept; "modes" is the technical contract on disk, and "genre" is the producer-facing word. Only say "mode" when explicitly referencing the YAML field (e.g., "the `modes:` field accepts a list of genres").
+- **cohesion-audit** is a Claude Code skill at `.claude/skills/cohesion-audit/` that prosecutes the design system for cross-cell drift. Read-only. Writes reports to `audits/cohesion/`. Companion to `npm run validate:all`: validators check each file is well-formed; cohesion-audit checks the system as a whole hangs together. See `SKILL.md` for invocation, `README.md` for maintenance, `DESIGN.md` for rationale.
 
 ## File Structure Rules
 

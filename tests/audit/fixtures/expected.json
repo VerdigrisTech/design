@@ -1,0 +1,65 @@
+{
+  "description": "Expected findings the cohesion-audit must surface against the seeded fixture. Pass bar: recall >= 80%, precision >= 80%.",
+  "expected": [
+    {
+      "dimension": "color-expression",
+      "severity": "should-fix",
+      "citationPattern": "build/print/_test\\.css:",
+      "summaryPattern": "ff00ff"
+    },
+    {
+      "dimension": "token-namespace",
+      "severity": "should-fix",
+      "citationPattern": "tokens/_test/spacing\\.json:",
+      "summaryPattern": "Mixed units"
+    },
+    {
+      "dimension": "hierarchy-translation",
+      "severity": "should-fix",
+      "citationPattern": "categories/zzcell-",
+      "summaryPattern": "eyebrow.*kicker|kicker.*eyebrow"
+    },
+    {
+      "dimension": "class-name-namespace",
+      "severity": "should-fix",
+      "citationPattern": "build/print/_test\\.css:",
+      "summaryPattern": "prefix"
+    },
+    {
+      "dimension": "class-name-namespace",
+      "severity": "note",
+      "citationPattern": "build/print/_test\\.css:",
+      "summaryPattern": "vd-test-orphan"
+    },
+    {
+      "dimension": "class-name-namespace",
+      "severity": "note",
+      "citationPattern": "build/print/_test\\.css:",
+      "summaryPattern": "verdigris-test-class"
+    },
+    {
+      "dimension": "class-name-namespace",
+      "severity": "note",
+      "citationPattern": "categories/zzcell-b/specimen\\.html:",
+      "summaryPattern": "vd-test-ghost"
+    },
+    {
+      "dimension": "genre-decision-tree",
+      "severity": "should-fix",
+      "citationPattern": "rules/visual-rules\\.yml:",
+      "summaryPattern": "nonexistent_genre"
+    },
+    {
+      "dimension": "genre-decision-tree",
+      "severity": "should-fix",
+      "citationPattern": "rules/visual-rules\\.yml:",
+      "summaryPattern": "another_missing_one"
+    },
+    {
+      "dimension": "system-doc-consistency",
+      "severity": "should-fix",
+      "citationPattern": "tokens/.*\\.json",
+      "summaryPattern": "build/dist.*older|rebuild needed"
+    }
+  ]
+}
