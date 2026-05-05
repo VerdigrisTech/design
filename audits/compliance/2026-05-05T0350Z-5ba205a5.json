@@ -1,0 +1,862 @@
+{
+  "blockingCount": 40,
+  "advisoryCount": 28,
+  "skippedCount": 0,
+  "passedCount": 36,
+  "totalCostUsd": 0,
+  "budgetUsd": 40,
+  "blockingMode": "blocking",
+  "results": [
+    {
+      "artifact": {
+        "path": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+        "type": "slides",
+        "genre": "pilot_kickoff",
+        "confidentiality": "CUSTOMER-CONFIDENTIAL",
+        "html": "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"utf-8\">\r\n  <title>Acme Life Sciences Pilot Kickoff — Verdigris</title>\r\n  <meta name=\"description\" content=\"Pilot kickoff deck example, pilot-kickoff genre. Demonstrates all 6 sales-collateral rules from the pilot kickoff review.\">\r\n\r\n  <!-- Inter + Lato + JetBrains Mono per the font-loading requirement.\r\n       display=block forces the renderer to wait for the font before pagination\r\n       (otherwise pages paginate against fallback metrics, inflating page counts). -->\r\n  <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=block\" rel=\"stylesheet\">\r\n\r\n  <!-- cover.css must load BEFORE slides.css; slides extends cover. -->\r\n  <link rel=\"stylesheet\" href=\"../../../build/print/cover.css\">\r\n  <link rel=\"stylesheet\" href=\"../../../build/print/slides.css\">\r\n\r\n  <style>\r\n    /* Example-only typography on body — slides.css handles slide content. */\r\n    body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; }\r\n  </style>\r\n</head>\r\n<body class=\"vd-slide-deck\" data-genre=\"pilot-kickoff\" data-confidentiality=\"CUSTOMER-CONFIDENTIAL\">\r\n\r\n  <!-- ============================================================\r\n       SLIDE 1 — TITLE\r\n       Full lockup top-left (Z2O-1318), explicit byline, customer name\r\n       in eyebrow, absolute date.\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-title\">\r\n    <div class=\"vd-slide-title-top\">\r\n      <img class=\"vd-slide-logomark-large\" src=\"../../../assets/logos/lockup-white.svg\" alt=\"Verdigris\">\r\n    </div>\r\n\r\n    <div>\r\n      <p class=\"vd-slide-eyebrow\">Pilot Kickoff · Acme Life Sciences · 5 Sites</p>\r\n      <h1>Validating the <span class=\"vd-accent\">power-intelligence wedge</span> across four R&amp;D campuses.</h1>\r\n      <p class=\"vd-slide-deck\">A 90-day pilot to quantify rectifier-health visibility, baseline electrical waste, and identify the expansion criteria for fleet rollout.</p>\r\n    </div>\r\n\r\n    <div class=\"vd-slide-byline\">\r\n      <div>\r\n        <span class=\"vd-name\">Mark Chung</span>\r\n        <span class=\"vd-affil\">Verdigris CEO · Pilot Sponsor</span>\r\n      </div>\r\n      <div class=\"vd-date\">\r\n        June 15, 2026\r\n        <span class=\"vd-meta\">v1 · pilot-kickoff-abcam-life-sciences-20260615-v1</span>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 2 — WHY WE'RE HERE\r\n       Customer's own framing of the problem, in their language.\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">02</span>Why we're here</div>\r\n    <h2 class=\"vd-slide-headline\">Acme Life Sciences's R&amp;D campuses run <span class=\"vd-accent\">cleanrooms 24/7</span>, but rectifier failures still surprise the team.</h2>\r\n    <p class=\"vd-slide-deck-line\">From the November 2025 site assessment with your facilities and reliability leads.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <p>Three findings from the assessment carried into this pilot:</p>\r\n      <ul>\r\n        <li><strong>Rectifier failures arrive without warning.</strong> Three unplanned outages in the last 12 months, two of them weekend-only events that took 6+ hours to recover.</li>\r\n        <li><strong>BMS dashboards don't see electrical-waveform structure.</strong> Power factor and harmonic distortion show up only after a fault, never as a leading indicator.</li>\r\n        <li><strong>Energy spend is an opaque budget line.</strong> ~$2.4M/year across the four campuses; no visibility into <em>which</em> circuits drive the bill.</li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">02 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 3 — WHAT WE AGREED TO\r\n       Pilot scope. Table demonstrates Z2O-1323 formatting (under 6 cols, under 8 rows,\r\n       canonical header treatment, consistent padding).\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">03</span>What we agreed to</div>\r\n    <h2 class=\"vd-slide-headline\">Pilot scope, locked at signature.</h2>\r\n    <p class=\"vd-slide-deck-line\">From the Master Services Agreement, Schedule 1.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <table class=\"vd-slide-table\">\r\n        <thead>\r\n          <tr>\r\n            <th>Domain</th>\r\n            <th>Scope</th>\r\n            <th>Customer-side owner</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr>\r\n            <td>Sites</td>\r\n            <td>Four R&amp;D campuses (Cambridge UK, Burlingame CA, Cambridge MA, Waltham MA)</td>\r\n            <td>Facilities Director</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Hardware</td>\r\n            <td>Verdigris meters on 24 critical rectifier circuits, 6 per site</td>\r\n            <td>Site Engineering Lead</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Data</td>\r\n            <td>8 kHz waveform stream → Verdigris Cloud · 30-day retention</td>\r\n            <td>IT / Network Lead</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Software</td>\r\n            <td>Signals dashboard access for 8 named operators</td>\r\n            <td>Reliability Lead</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Window</td>\r\n            <td>90 days from hardware-online date</td>\r\n            <td>Pilot Sponsor</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">03 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 4 — SUCCESS CRITERIA (a.k.a. \"expansion criteria\" per Z2O-1321 diction)\r\n       Note: NOT \"exit criteria\". The diction rule applies.\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">04</span>Expansion criteria</div>\r\n    <h2 class=\"vd-slide-headline\">Three measurable outcomes that earn the path to fleet deployment.</h2>\r\n    <p class=\"vd-slide-deck-line\">Same wording as the contract. If we hit all three, we move to fleet rollout.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <ul>\r\n        <li><strong>Rectifier-health visibility.</strong> Signals identifies the precursor to at least one rectifier-class fault during the 90-day window, with at least 14 days of advance warning.</li>\r\n        <li><strong>Baseline electrical waste.</strong> Quantify the 4-campus waste floor across power factor, harmonic distortion, and circuit imbalance, expressed in $/year against the current $2.4M baseline.</li>\r\n        <li><strong>Operator adoption.</strong> At least 6 of 8 named operators access Signals weekly across the second half of the pilot (post-day-45), unprompted.</li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">04 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 5 — TEAMS\r\n       Role labels FIRST, names alongside (Z2O-1320). The TEMPLATE\r\n       version of this slide has only the role labels; this is the\r\n       PRODUCED version with names filled in.\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">05</span>Pilot teams</div>\r\n    <h2 class=\"vd-slide-headline\">Who you call when.</h2>\r\n    <p class=\"vd-slide-deck-line\">Role labels first; names alongside for the duration of this engagement.</p>\r\n    <div class=\"vd-slide-body-content vd-cols-2\">\r\n      <div>\r\n        <p style=\"font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;\">Verdigris</p>\r\n        <ul>\r\n          <li><strong>Pilot Sponsor</strong> — Mark Chung, CEO</li>\r\n          <li><strong>Working Lead</strong> — Thomas Chung, VP Operations</li>\r\n          <li><strong>Field Engineering</strong> — Mike Mahedy, Senior Field Engineer</li>\r\n          <li><strong>Data &amp; Analytics</strong> — Jon Ramos, Engineering Lead</li>\r\n        </ul>\r\n      </div>\r\n      <div>\r\n        <p style=\"font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;\">Acme Life Sciences</p>\r\n        <ul>\r\n          <li><strong>Pilot Sponsor</strong> — <span class=\"vd-template\">[NAME]</span>, VP Facilities</li>\r\n          <li><strong>Pilot Lead</strong> — <span class=\"vd-template\">[NAME]</span>, Director of Reliability</li>\r\n          <li><strong>Site Engineering Lead</strong> — <span class=\"vd-template\">[NAME]</span></li>\r\n          <li><strong>IT / Network Lead</strong> — <span class=\"vd-template\">[NAME]</span></li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">05 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 6 — TIMELINE (absolute dates, Z2O-1322)\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">06</span>90-day timeline</div>\r\n    <h2 class=\"vd-slide-headline\">From signature to expansion decision.</h2>\r\n    <p class=\"vd-slide-deck-line\">All dates absolute; this calendar is the canonical reference for the engagement.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <table class=\"vd-slide-table\">\r\n        <thead>\r\n          <tr>\r\n            <th>Milestone</th>\r\n            <th>Date</th>\r\n            <th>Owner</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr>\r\n            <td>Hardware staging + install (5 sites)</td>\r\n            <td>2026-06-22 to 2026-07-17</td>\r\n            <td>Verdigris Field Engineering + Site Engineering</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Data ingestion live</td>\r\n            <td>2026-07-22</td>\r\n            <td>Jon Chu (Verdigris) + IT lead</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Day-30 + Day-60 reviews</td>\r\n            <td>2026-08-21 / 2026-09-21</td>\r\n            <td>Working Leads</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Expansion decision</td>\r\n            <td>2026-10-21</td>\r\n            <td>Pilot Sponsors</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">06 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 7 — ANCHOR METRIC\r\n       Single bolded outcome. Multiple metrics compete for attention.\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">07</span>The anchor</div>\r\n    <h2 class=\"vd-slide-headline\">If we get one thing right, this is it.</h2>\r\n    <div class=\"vd-slide-body-content\">\r\n      <div class=\"vd-slide-callout\">\r\n        <div class=\"vd-callout-label\">Anchor outcome</div>\r\n        <span class=\"vd-callout-metric\">14+ days</span>\r\n        <p class=\"vd-callout-body\">of <strong>advance warning</strong> on at least one rectifier-class fault during the 90-day window, sufficient for Acme Life Sciences to schedule a planned maintenance window rather than absorb an unplanned outage.</p>\r\n      </div>\r\n      <p style=\"padding-top:32pt;\">Everything else in the pilot — baseline waste quantification, operator adoption, fleet-rollout math — is in service of validating that this anchor outcome is repeatable across Acme Life Sciences's R&amp;D footprint.</p>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">07 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 8 — CLOSE\r\n       Restated anchor + decision date for expansion + \"what to do next.\"\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-close\">\r\n    <p class=\"vd-slide-eyebrow\">Decision: 2026-10-21</p>\r\n    <h2><span class=\"vd-accent\">14+ days</span> of advance warning earns the path to fleet deployment.</h2>\r\n    <p class=\"vd-slide-cta\">Next step: Day-30 checkpoint on <strong>2026-08-21</strong>. Calendar invites going out this week to both Pilot Sponsors and both Working Leads. Signals access for the 8 named operators activates 2026-07-22, day of data-ingestion live.</p>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-white.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">08 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n</body>\r\n</html>\r\n"
+      },
+      "findings": [
+        {
+          "ruleId": "color.brand-teal.decorative-only-light",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern color:\\s*oklch\\(0\\.75\\s+0\\.1286|color:\\s*#0fc8c3|color:\\s*var\\(--brand-verdigris\\) not found"
+        },
+        {
+          "ruleId": "typography.weight.headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.subheadings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.body",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.navigation",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.buttons",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.emphasis",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.large-headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "expected value \"-0.02em\" not found"
+        },
+        {
+          "ruleId": "typography.letter-spacing.small-headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.body",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.uppercase",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "expected value \"0.05em\" not found"
+        },
+        {
+          "ruleId": "motion.patterns.logo-marquee",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern animation:\\s*marquee|@keyframes\\s+marquee not found"
+        },
+        {
+          "ruleId": "motion.hover-gate",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern hover:\\s*hover.*pointer:\\s*fine.*prefers-reduced-motion:\\s*no-preference not found"
+        },
+        {
+          "ruleId": "components.focus.no-outline-none",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern outline:\\s*none not found"
+        },
+        {
+          "ruleId": "components.buttons.ghost-on-dark",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern border-white\\/60|border-color:\\s*oklch\\(1\\s+0\\s+0\\s*\\/\\s*0?\\.?6 not found"
+        },
+        {
+          "ruleId": "components.forms.error-text.aria",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern aria-describedby not found"
+        },
+        {
+          "ruleId": "components.dark-mode.no-pure-black",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern \\.dark[^}]*background[^;]*#000000|background[^;]*#000(?:;|\\s) not found"
+        },
+        {
+          "ruleId": "components.cta-link",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern cta-link|font-medium[^;]*hover:.*underline not found"
+        },
+        {
+          "ruleId": "components.cta-arrow-link",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern gap.*transition|transition.*gap not found"
+        },
+        {
+          "ruleId": "breakpoints.mobile-first",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern max-width:\\s*\\d+px not found"
+        },
+        {
+          "ruleId": "elevation.z-index.no-custom",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "accessibility.alt-text",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern <img(?![^>]*alt=) not found"
+        },
+        {
+          "ruleId": "composition.canvas-text.aria-label",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern role=['\"]img['\"].*aria-label|aria-label.*role=['\"]img['\"] not found"
+        },
+        {
+          "ruleId": "composition.assist-chat.flat-layout",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern chat-bubble|message-bubble|bubble-|rounded-full.*message not found"
+        },
+        {
+          "ruleId": "composition.assist-embedded.visual-marker",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern border-l-2|border-left.*2px|ai-marker|provenance|data-ai-generated not found"
+        },
+        {
+          "ruleId": "composition.assist-embedded.provenance",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/abcam-kickoff-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern data-ai-provenance|data-ai-source|ai-provenance|content-credentials|c2pa|data-generated-by not found"
+        }
+      ],
+      "costUsd": 0,
+      "startedAt": "2026-05-05T03:50:57.240Z",
+      "finishedAt": "2026-05-05T03:50:57.252Z"
+    },
+    {
+      "artifact": {
+        "path": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+        "type": "slides",
+        "genre": "pilot_kickoff",
+        "confidentiality": "CUSTOMER-CONFIDENTIAL",
+        "html": "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"utf-8\">\r\n  <title>Apex Trading Systems Pilot Kickoff — Verdigris</title>\r\n  <meta name=\"description\" content=\"Pilot kickoff deck example, pilot-kickoff genre. Demonstrates all 6 sales-collateral rules. Lightfield-derived from a real upcoming engagement, anonymized per LEARNINGS.md PII discipline.\">\r\n\r\n  <!--\r\n    DRAFT: Lightfield-derived example, prepared 2026-05-03.\r\n    Anonymization applied per LEARNINGS.md PII discipline (PR #43, Loop 5).\r\n    PENDING GTM REVIEW before public exposure.\r\n    Source engagement: new-prospect / data-center-strategy / kickoff-window-7-days.\r\n    Customer name, contact names, site identifiers, and dollar amounts are all\r\n    fictional substitutes that preserve the ENGAGEMENT SHAPE (industry, scope,\r\n    anchor pattern, role assignments) without exposing reconnaissance data.\r\n    Do not publish until GTM has confirmed customer permission OR confirmed\r\n    permanent fictionalization is sufficient.\r\n  -->\r\n\r\n  <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=block\" rel=\"stylesheet\">\r\n\r\n  <link rel=\"stylesheet\" href=\"../../../build/print/cover.css\">\r\n  <link rel=\"stylesheet\" href=\"../../../build/print/slides.css\">\r\n\r\n  <style>\r\n    body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; }\r\n  </style>\r\n</head>\r\n<body class=\"vd-slide-deck\" data-genre=\"pilot-kickoff\" data-confidentiality=\"CUSTOMER-CONFIDENTIAL\">\r\n\r\n  <!-- ============================================================\r\n       SLIDE 1 — TITLE\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-title\">\r\n    <div class=\"vd-slide-title-top\">\r\n      <img class=\"vd-slide-logomark-large\" src=\"../../../assets/logos/lockup-white.svg\" alt=\"Verdigris\">\r\n    </div>\r\n\r\n    <div>\r\n      <p class=\"vd-slide-eyebrow\">Pilot Kickoff · Apex Trading Systems · 3 Colocation Halls</p>\r\n      <h1>Putting <span class=\"vd-accent\">power-quality eyes</span> on the racks that carry the trade tape.</h1>\r\n      <p class=\"vd-slide-deck\">A 90-day pilot to quantify rack-level power-quality margin, baseline thermal-derate risk on the trading-engine rows, and define the criteria for site-fleet expansion.</p>\r\n    </div>\r\n\r\n    <div class=\"vd-slide-byline\">\r\n      <div>\r\n        <span class=\"vd-name\">Mark Chung</span>\r\n        <span class=\"vd-affil\">Verdigris CEO · Pilot Sponsor</span>\r\n      </div>\r\n      <div class=\"vd-date\">\r\n        May 12, 2026\r\n        <span class=\"vd-meta\">v1 · pilot-kickoff-apex-trading-20260512-v1</span>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 2 — WHY WE'RE HERE\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">02</span>Why we're here</div>\r\n    <h2 class=\"vd-slide-headline\">Trading-engine racks run at <span class=\"vd-accent\">90%+ of nameplate</span>, but power-quality margin is currently invisible.</h2>\r\n    <p class=\"vd-slide-deck-line\">From the April 2026 introductory call with the Apex Data Center Strategy team.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <p>Three findings carried forward from the call:</p>\r\n      <ul>\r\n        <li><strong>Density is the constraint, not floor space.</strong> The trading-engine rows are pushed close to PDU thermal envelope to keep latency-critical workloads on copper distance; any unexpected derate event takes revenue-bearing capacity offline.</li>\r\n        <li><strong>BMS dashboards stop at the PDU.</strong> Per-rack waveform structure, transient events, and harmonic distortion are not visible to the existing monitoring stack. Faults surface as alarms, never as leading indicators.</li>\r\n        <li><strong>The infra team owns uptime but doesn't own the diagnostic data.</strong> When a rack misbehaves, root-cause investigation depends on vendor logs that arrive days later, in formats that don't cross-correlate with what the trading floor saw.</li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">02 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 3 — WHAT WE AGREED TO\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">03</span>What we agreed to</div>\r\n    <h2 class=\"vd-slide-headline\">Pilot scope, locked at signature.</h2>\r\n    <p class=\"vd-slide-deck-line\">From the Master Services Agreement, Schedule 1.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <table class=\"vd-slide-table\">\r\n        <thead>\r\n          <tr>\r\n            <th>Domain</th>\r\n            <th>Scope</th>\r\n            <th>Customer-side owner</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr>\r\n            <td>Sites</td>\r\n            <td>Three colocation halls (one each: East Coast, Central, West Coast)</td>\r\n            <td>Director, Data Center Strategy</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Hardware</td>\r\n            <td>Verdigris meters on 18 trading-engine PDU branch circuits, 6 per hall</td>\r\n            <td>Site Infrastructure Lead</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Data</td>\r\n            <td>8 kHz waveform stream &rarr; Verdigris Cloud · 30-day retention</td>\r\n            <td>Network &amp; Security Lead</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Software</td>\r\n            <td>Signals dashboard access for 6 named operators across infra + trading-platform engineering</td>\r\n            <td>Trading Platform Reliability Lead</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Window</td>\r\n            <td>90 days from hardware-online date</td>\r\n            <td>Pilot Sponsor</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">03 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 4 — EXPANSION CRITERIA (Z2O-1321 diction)\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">04</span>Expansion criteria</div>\r\n    <h2 class=\"vd-slide-headline\">Three measurable outcomes that earn the path to multi-hall rollout.</h2>\r\n    <p class=\"vd-slide-deck-line\">Same wording as the contract. If we hit all three, we move to fleet rollout.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <ul>\r\n        <li><strong>Power-quality margin visibility.</strong> Signals identifies the precursor to at least one PDU-class derate event during the 90-day window, with at least 7 days of advance warning.</li>\r\n        <li><strong>Density-headroom quantification.</strong> Quantify the safe per-rack density headroom across the three halls, expressed as %-of-nameplate the racks can sustain without entering the harmonic regime that triggered the original concern.</li>\r\n        <li><strong>Operator adoption.</strong> At least 4 of 6 named operators access Signals weekly across the second half of the pilot (post-day-45), unprompted, and reference its data in at least one root-cause investigation.</li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">04 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 5 — TEAMS\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">05</span>Pilot teams</div>\r\n    <h2 class=\"vd-slide-headline\">Who you call when.</h2>\r\n    <p class=\"vd-slide-deck-line\">Role labels first; names alongside for the duration of this engagement.</p>\r\n    <div class=\"vd-slide-body-content vd-cols-2\">\r\n      <div>\r\n        <p style=\"font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;\">Verdigris</p>\r\n        <ul>\r\n          <li><strong>Pilot Sponsor</strong> &mdash; Mark Chung, CEO</li>\r\n          <li><strong>Working Lead</strong> &mdash; Thomas Chung, VP Operations</li>\r\n          <li><strong>Field Engineering</strong> &mdash; Mike Mahedy, Senior Field Engineer</li>\r\n          <li><strong>Data &amp; Analytics</strong> &mdash; Jon Chu, Engineering Lead</li>\r\n        </ul>\r\n      </div>\r\n      <div>\r\n        <p style=\"font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;\">Apex Trading Systems</p>\r\n        <ul>\r\n          <li><strong>Pilot Sponsor</strong> &mdash; <span class=\"vd-template\">[NAME]</span>, VP Infrastructure</li>\r\n          <li><strong>Pilot Lead</strong> &mdash; <span class=\"vd-template\">[NAME]</span>, Director of Data Center Strategy</li>\r\n          <li><strong>Site Infrastructure Lead</strong> &mdash; <span class=\"vd-template\">[NAME]</span></li>\r\n          <li><strong>Trading Platform Reliability Lead</strong> &mdash; <span class=\"vd-template\">[NAME]</span></li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">05 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 6 — TIMELINE (Z2O-1322 absolute dates)\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">06</span>90-day timeline</div>\r\n    <h2 class=\"vd-slide-headline\">From signature to expansion decision.</h2>\r\n    <p class=\"vd-slide-deck-line\">All dates absolute; this calendar is the canonical reference for the engagement.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <table class=\"vd-slide-table\">\r\n        <thead>\r\n          <tr>\r\n            <th>Milestone</th>\r\n            <th>Date</th>\r\n            <th>Owner</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr>\r\n            <td>Hardware staging + install (3 halls)</td>\r\n            <td>2026-05-19 to 2026-06-09</td>\r\n            <td>Verdigris Field Engineering + Site Infrastructure</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Data ingestion live</td>\r\n            <td>2026-06-12</td>\r\n            <td>Jon Chu (Verdigris) + Network &amp; Security Lead</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Day-30 + Day-60 reviews</td>\r\n            <td>2026-07-13 / 2026-08-12</td>\r\n            <td>Working Leads</td>\r\n          </tr>\r\n          <tr>\r\n            <td>Expansion decision</td>\r\n            <td>2026-09-11</td>\r\n            <td>Pilot Sponsors</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">06 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 7 — ANCHOR METRIC\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">07</span>The anchor</div>\r\n    <h2 class=\"vd-slide-headline\">If we get one thing right, this is it.</h2>\r\n    <div class=\"vd-slide-body-content\">\r\n      <div class=\"vd-slide-callout\">\r\n        <div class=\"vd-callout-label\">Anchor outcome</div>\r\n        <span class=\"vd-callout-metric\">7+ days</span>\r\n        <p class=\"vd-callout-body\">of <strong>advance warning</strong> on at least one PDU-class derate event during the 90-day window, sufficient for Apex Trading to schedule a planned migration window rather than absorb an unplanned trading-engine outage during market hours.</p>\r\n      </div>\r\n      <p style=\"padding-top:32pt;\">Everything else in the pilot &mdash; density-headroom quantification, operator adoption, multi-hall rollout math &mdash; is in service of validating that this anchor outcome is repeatable across Apex Trading's colocation footprint.</p>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">07 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- ============================================================\r\n       SLIDE 8 — CLOSE\r\n       ============================================================ -->\r\n  <section class=\"vd-slide vd-slide-close\">\r\n    <p class=\"vd-slide-eyebrow\">Decision: 2026-09-11</p>\r\n    <h2><span class=\"vd-accent\">7+ days</span> of advance warning on a PDU-class derate event earns the path to multi-hall rollout.</h2>\r\n    <p class=\"vd-slide-cta\">Next step: Day-30 checkpoint on <strong>2026-07-13</strong>. Calendar invites going out this week to both Pilot Sponsors and both Working Leads. Signals access for the 6 named operators activates 2026-06-12, day of data-ingestion live.</p>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-white.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">08 / 08</span>\r\n      <span class=\"vd-conf-marking vd-conf-customer\">Customer-Confidential</span>\r\n    </div>\r\n  </section>\r\n\r\n</body>\r\n</html>\r\n"
+      },
+      "findings": [
+        {
+          "ruleId": "color.brand-teal.decorative-only-light",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern color:\\s*oklch\\(0\\.75\\s+0\\.1286|color:\\s*#0fc8c3|color:\\s*var\\(--brand-verdigris\\) not found"
+        },
+        {
+          "ruleId": "typography.weight.headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.subheadings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.body",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.navigation",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.buttons",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.emphasis",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.large-headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "expected value \"-0.02em\" not found"
+        },
+        {
+          "ruleId": "typography.letter-spacing.small-headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.body",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.uppercase",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "expected value \"0.05em\" not found"
+        },
+        {
+          "ruleId": "motion.patterns.logo-marquee",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern animation:\\s*marquee|@keyframes\\s+marquee not found"
+        },
+        {
+          "ruleId": "motion.hover-gate",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern hover:\\s*hover.*pointer:\\s*fine.*prefers-reduced-motion:\\s*no-preference not found"
+        },
+        {
+          "ruleId": "components.focus.no-outline-none",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern outline:\\s*none not found"
+        },
+        {
+          "ruleId": "components.buttons.ghost-on-dark",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern border-white\\/60|border-color:\\s*oklch\\(1\\s+0\\s+0\\s*\\/\\s*0?\\.?6 not found"
+        },
+        {
+          "ruleId": "components.forms.error-text.aria",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern aria-describedby not found"
+        },
+        {
+          "ruleId": "components.dark-mode.no-pure-black",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern \\.dark[^}]*background[^;]*#000000|background[^;]*#000(?:;|\\s) not found"
+        },
+        {
+          "ruleId": "components.cta-link",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern cta-link|font-medium[^;]*hover:.*underline not found"
+        },
+        {
+          "ruleId": "components.cta-arrow-link",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern gap.*transition|transition.*gap not found"
+        },
+        {
+          "ruleId": "breakpoints.mobile-first",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern max-width:\\s*\\d+px not found"
+        },
+        {
+          "ruleId": "elevation.z-index.no-custom",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "accessibility.alt-text",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern <img(?![^>]*alt=) not found"
+        },
+        {
+          "ruleId": "composition.canvas-text.aria-label",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern role=['\"]img['\"].*aria-label|aria-label.*role=['\"]img['\"] not found"
+        },
+        {
+          "ruleId": "composition.assist-chat.flat-layout",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern chat-bubble|message-bubble|bubble-|rounded-full.*message not found"
+        },
+        {
+          "ruleId": "composition.assist-embedded.visual-marker",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern border-l-2|border-left.*2px|ai-marker|provenance|data-ai-generated not found"
+        },
+        {
+          "ruleId": "composition.assist-embedded.provenance",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/apex-trading-pilot-kickoff-from-lightfield.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern data-ai-provenance|data-ai-source|ai-provenance|content-credentials|c2pa|data-generated-by not found"
+        }
+      ],
+      "costUsd": 0,
+      "startedAt": "2026-05-05T03:50:57.252Z",
+      "finishedAt": "2026-05-05T03:50:57.266Z"
+    },
+    {
+      "artifact": {
+        "path": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+        "type": "slides",
+        "genre": "customer_101",
+        "confidentiality": "PUBLIC",
+        "html": "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"utf-8\">\r\n  <title>Verdigris 101 — First Meeting Deck</title>\r\n  <meta name=\"description\" content=\"Customer 101 deck example. Demonstrates the customer-101 genre deltas against pilot-kickoff: PUBLIC tier, full lockup, story-led mark+jon voice, 'next meeting' CTA.\">\r\n\r\n  <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400&display=block\" rel=\"stylesheet\">\r\n  <link rel=\"stylesheet\" href=\"../../../build/print/cover.css\">\r\n  <link rel=\"stylesheet\" href=\"../../../build/print/slides.css\">\r\n  <style>body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; }</style>\r\n</head>\r\n<body class=\"vd-slide-deck\" data-genre=\"customer-101\" data-confidentiality=\"PUBLIC\">\r\n\r\n  <!-- SLIDE 1 — TITLE -->\r\n  <section class=\"vd-slide vd-slide-title\">\r\n    <div class=\"vd-slide-title-top\">\r\n      <img class=\"vd-slide-logomark-large\" src=\"../../../assets/logos/lockup-white.svg\" alt=\"Verdigris\">\r\n    </div>\r\n    <div>\r\n      <p class=\"vd-slide-eyebrow\">First meeting · Data center reliability · 25 minutes</p>\r\n      <h1>Verdigris is the <span class=\"vd-accent\">power-intelligence layer</span> your data center doesn't have yet.</h1>\r\n      <p class=\"vd-slide-deck\">An introduction for operators who already trust their BMS and know it isn't enough.</p>\r\n    </div>\r\n    <div class=\"vd-slide-byline\">\r\n      <div>\r\n        <span class=\"vd-name\">Mark Chung</span>\r\n        <span class=\"vd-affil\">Verdigris CEO</span>\r\n      </div>\r\n      <div class=\"vd-date\">\r\n        2026-05-10\r\n        <span class=\"vd-meta\">customer-101 · v3</span>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- SLIDE 2 — THE WEDGE -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">02</span>The wedge</div>\r\n    <h2 class=\"vd-slide-headline\">BMS sees that a rectifier <span class=\"vd-accent\">failed</span>. We see it <em>failing</em>.</h2>\r\n    <p class=\"vd-slide-deck-line\">8 kHz waveform telemetry on every monitored circuit, 24/7, for the life of the asset.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <p>Most data center reliability tools sample at 1 Hz or below. Faults precipitate in milliseconds. The math doesn't add up; the precursor signal is there, but the resolution to see it isn't.</p>\r\n      <p>Verdigris meters sample at 8 kHz — fine enough to read harmonic structure, capacitor aging, and circuit-imbalance trends weeks before they become outages. We've validated this across <strong>800+ rectifiers</strong> in production at four named customers.</p>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">02 / 06</span>\r\n      <span class=\"vd-conf-marking vd-conf-public\">Public</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- SLIDE 3 — EVIDENCE (anchor metric, public case) -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">03</span>Evidence</div>\r\n    <h2 class=\"vd-slide-headline\">Fortune 50 telecom. <span class=\"vd-accent\">$1.3M to $3M</span> recovered in deferred CapEx.</h2>\r\n    <p class=\"vd-slide-deck-line\">Three-year fleet projection across 800+ rectifiers. Anonymized; full case study at verdigris.co/resources/case-studies.</p>\r\n    <div class=\"vd-slide-body-content\">\r\n      <div class=\"vd-slide-callout\">\r\n        <div class=\"vd-callout-label\">Outcome</div>\r\n        <p class=\"vd-callout-body\">Verdigris identified rectifier-aging precursors across the fleet, allowing the customer to defer ~$1.3M-$3M of CapEx-style replacements over a three-year horizon by extending the useful life of equipment whose health was previously assumed-failing rather than measured.</p>\r\n      </div>\r\n      <p style=\"padding-top:24pt;font-style:italic;color:var(--vd-muted);\">\"Verdigris turned what looked like a refresh budget into a maintenance budget. Our finance team had to rebuild the model.\" — VP Operations, Fortune 50 Telecom</p>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">03 / 06</span>\r\n      <span class=\"vd-conf-marking vd-conf-public\">Public</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- SLIDE 4 — WHERE WE FIT -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">04</span>Where we fit</div>\r\n    <h2 class=\"vd-slide-headline\">Below the BMS. Above the multimeter.</h2>\r\n    <p class=\"vd-slide-deck-line\">Verdigris doesn't replace your existing reliability tooling. It adds the layer that's missing.</p>\r\n    <div class=\"vd-slide-body-content vd-cols-3\">\r\n      <div>\r\n        <p style=\"font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;\">BMS</p>\r\n        <p>Knows the room is too hot. Knows the door is open. Sees electrical faults <em>after</em> they trip a breaker.</p>\r\n      </div>\r\n      <div>\r\n        <p style=\"font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;\">Verdigris</p>\r\n        <p>Reads waveform structure 24/7. Catches the precursor signal weeks before the breaker trip.</p>\r\n      </div>\r\n      <div>\r\n        <p style=\"font-family:'Lato',sans-serif;font-size:14pt;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--vd-teal);padding-bottom:14pt;\">Field tools</p>\r\n        <p>Multimeters, IR cameras, thermal probes. Used reactively when something is wrong. Useful, but local in time and space.</p>\r\n      </div>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">04 / 06</span>\r\n      <span class=\"vd-conf-marking vd-conf-public\">Public</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- SLIDE 5 — WHY NOW -->\r\n  <section class=\"vd-slide vd-slide-body vd-slide-light\">\r\n    <div class=\"vd-slide-eyebrow\"><span class=\"vd-num\">05</span>Why now</div>\r\n    <h2 class=\"vd-slide-headline\">AI workloads are breaking the assumptions <span class=\"vd-accent\">power systems were sized against</span>.</h2>\r\n    <div class=\"vd-slide-body-content\">\r\n      <ul>\r\n        <li><strong>Load swings are faster and larger.</strong> A GPU training run can pull 600 kW one second and 120 kW the next; rectifiers sized against steady-state 1990s assumptions degrade in ways their nameplates can't predict.</li>\r\n        <li><strong>Capacity is the constraint, not capital.</strong> Hyperscaler-class operators routinely strand 20-40% of nameplate capacity to derating margins, because the alternative — operating closer to the limit — requires visibility nobody has.</li>\r\n        <li><strong>The reliability gap is asymmetric.</strong> A 30-second outage in an AI training cluster costs more than a 30-day window in a data warehouse. The risk profile changed; the tooling didn't.</li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">05 / 06</span>\r\n      <span class=\"vd-conf-marking vd-conf-public\">Public</span>\r\n    </div>\r\n  </section>\r\n\r\n  <!-- SLIDE 6 — CLOSE: NEXT MEETING + AGENDA -->\r\n  <section class=\"vd-slide vd-slide-close\">\r\n    <p class=\"vd-slide-eyebrow\">Next step</p>\r\n    <h2>A <span class=\"vd-accent\">90-minute deep dive</span> with your reliability and facilities leads.</h2>\r\n    <p class=\"vd-slide-cta\">Agenda: walk one of your existing rectifier-failure incidents through what Verdigris would have shown you. We bring the analysis; you bring the post-mortem and one of your engineers. If it lands, we draft a pilot scope on the spot. <strong>Proposed: week of 2026-05-19.</strong></p>\r\n    <div class=\"vd-slide-footer\">\r\n      <img class=\"vd-slide-logomark-footer\" src=\"../../../assets/logos/lockup-white.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-slide-page-num\">06 / 06</span>\r\n      <span class=\"vd-conf-marking vd-conf-public\">Public</span>\r\n    </div>\r\n  </section>\r\n\r\n</body>\r\n</html>\r\n"
+      },
+      "findings": [
+        {
+          "ruleId": "color.brand-teal.decorative-only-light",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern color:\\s*oklch\\(0\\.75\\s+0\\.1286|color:\\s*#0fc8c3|color:\\s*var\\(--brand-verdigris\\) not found"
+        },
+        {
+          "ruleId": "typography.weight.headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.subheadings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.body",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.navigation",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.buttons",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.emphasis",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.large-headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "expected value \"-0.02em\" not found"
+        },
+        {
+          "ruleId": "typography.letter-spacing.small-headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.body",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.uppercase",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "expected value \"0.05em\" not found"
+        },
+        {
+          "ruleId": "motion.patterns.logo-marquee",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern animation:\\s*marquee|@keyframes\\s+marquee not found"
+        },
+        {
+          "ruleId": "motion.hover-gate",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern hover:\\s*hover.*pointer:\\s*fine.*prefers-reduced-motion:\\s*no-preference not found"
+        },
+        {
+          "ruleId": "components.focus.no-outline-none",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern outline:\\s*none not found"
+        },
+        {
+          "ruleId": "components.buttons.ghost-on-dark",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern border-white\\/60|border-color:\\s*oklch\\(1\\s+0\\s+0\\s*\\/\\s*0?\\.?6 not found"
+        },
+        {
+          "ruleId": "components.forms.error-text.aria",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern aria-describedby not found"
+        },
+        {
+          "ruleId": "components.dark-mode.no-pure-black",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern \\.dark[^}]*background[^;]*#000000|background[^;]*#000(?:;|\\s) not found"
+        },
+        {
+          "ruleId": "components.cta-link",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern cta-link|font-medium[^;]*hover:.*underline not found"
+        },
+        {
+          "ruleId": "components.cta-arrow-link",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern gap.*transition|transition.*gap not found"
+        },
+        {
+          "ruleId": "breakpoints.mobile-first",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern max-width:\\s*\\d+px not found"
+        },
+        {
+          "ruleId": "elevation.z-index.no-custom",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "accessibility.alt-text",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern <img(?![^>]*alt=) not found"
+        },
+        {
+          "ruleId": "composition.canvas-text.aria-label",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern role=['\"]img['\"].*aria-label|aria-label.*role=['\"]img['\"] not found"
+        },
+        {
+          "ruleId": "composition.assist-chat.flat-layout",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern chat-bubble|message-bubble|bubble-|rounded-full.*message not found"
+        },
+        {
+          "ruleId": "composition.assist-embedded.visual-marker",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern border-l-2|border-left.*2px|ai-marker|provenance|data-ai-generated not found"
+        },
+        {
+          "ruleId": "composition.assist-embedded.provenance",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/slides/examples/verdigris-101-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern data-ai-provenance|data-ai-source|ai-provenance|content-credentials|c2pa|data-generated-by not found"
+        }
+      ],
+      "costUsd": 0,
+      "startedAt": "2026-05-05T03:50:57.266Z",
+      "finishedAt": "2026-05-05T03:50:57.268Z"
+    },
+    {
+      "artifact": {
+        "path": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+        "type": "one-pagers",
+        "genre": "comparative",
+        "html": "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"utf-8\">\r\n  <title>Architectural Advantages — Verdigris One-Pager</title>\r\n  <meta name=\"description\" content=\"Comparative-genre one-pager example. Demonstrates numbered list + thesis block + CTA strip pattern.\">\r\n\r\n  <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700&family=JetBrains+Mono:wght@400;700&display=block\" rel=\"stylesheet\">\r\n  <link rel=\"stylesheet\" href=\"../../../build/print/cover.css\">\r\n  <link rel=\"stylesheet\" href=\"../../../build/print/one-pager.css\">\r\n  <style>body { margin: 0; }</style>\r\n</head>\r\n<body data-genre=\"comparative\">\r\n\r\n  <article class=\"vd-onepager\">\r\n\r\n    <!-- TOP BAR: logomark + eyebrow -->\r\n    <div class=\"vd-onepager-top\">\r\n      <img class=\"vd-onepager-logo\" src=\"../../../assets/logos/lockup-dark.svg\" alt=\"Verdigris\">\r\n      <span class=\"vd-onepager-eyebrow\">\r\n        <span class=\"vd-dot\"></span>Architectural advantages · Decision aid\r\n      </span>\r\n    </div>\r\n\r\n    <!-- HEADLINE + DECK -->\r\n    <h1 class=\"vd-onepager-headline\">\r\n      Seven decisions that determine whether your <span class=\"vd-accent\">power-intelligence layer</span> compounds — or stalls.\r\n    </h1>\r\n    <p class=\"vd-onepager-deck\">For data-center operators evaluating the next decade of electrical observability and orchestration.</p>\r\n\r\n    <!-- BODY: numbered list (left) + thesis block (right) -->\r\n    <div class=\"vd-onepager-body\">\r\n\r\n      <ol class=\"vd-onepager-numlist\">\r\n        <li><strong>Choose vendors with open APIs.</strong> Closed integrations create switching costs that exceed the software bill.</li>\r\n        <li><strong>Insist on raw waveform telemetry.</strong> 1 Hz averages discard the precursors that cause the failures you care about.</li>\r\n        <li><strong>Separate BMS from the diagnostic layer.</strong> A vendor doing both optimizes one at the expense of the other.</li>\r\n        <li><strong>Meter where load matters, not where access is convenient.</strong> Critical-circuit telemetry beats fleet averages.</li>\r\n        <li><strong>Cellular-redundant ingest.</strong> Network outages don't pause electrical events.</li>\r\n        <li><strong>Validate derate margins against measured load.</strong> Conservative derating strands 20-40% of existing capacity.</li>\r\n        <li><strong>Make diagnostics a contract, not a feature.</strong> Reliability obligations need their own SLA.</li>\r\n      </ol>\r\n\r\n      <aside class=\"vd-onepager-thesis\">\r\n        <div class=\"vd-thesis-label\">The argument</div>\r\n        <p>The next decade of reliability isn't about adding redundancy. It's about <strong>seeing the precursors</strong> today's monitoring stack flattens away — and orchestrating against them.</p>\r\n        <p>Verdigris is the layer between BMS and physical asset that captures the high-resolution signal. We don't replace your stack; we turn the rest of it into evidence.</p>\r\n      </aside>\r\n\r\n    </div>\r\n\r\n    <!-- CTA STRIP -->\r\n    <div class=\"vd-onepager-cta\">\r\n      <span class=\"vd-cta-text\">See what 8 kHz telemetry shows that <span class=\"vd-accent\">your current stack misses</span>.</span>\r\n      <span class=\"vd-cta-action\">Schedule a 30-minute architecture review</span>\r\n    </div>\r\n\r\n    <!-- FOOTER -->\r\n    <div class=\"vd-onepager-footer\">\r\n      <span class=\"vd-onepager-tagline\">Continuous Electrical Intelligence</span>\r\n      <span class=\"vd-conf-marking vd-conf-public\">Public · v1 · 2026-05-02</span>\r\n      <span class=\"vd-onepager-url\">verdigris.co/resources/one-pagers/architectural-advantages</span>\r\n    </div>\r\n\r\n  </article>\r\n\r\n</body>\r\n</html>\r\n"
+      },
+      "findings": [
+        {
+          "ruleId": "color.brand-teal.decorative-only-light",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern color:\\s*oklch\\(0\\.75\\s+0\\.1286|color:\\s*#0fc8c3|color:\\s*var\\(--brand-verdigris\\) not found"
+        },
+        {
+          "ruleId": "typography.weight.headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.subheadings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.body",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.navigation",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.buttons",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.weight.emphasis",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.large-headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "expected value \"-0.02em\" not found"
+        },
+        {
+          "ruleId": "typography.letter-spacing.small-headings",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.body",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "typography.letter-spacing.uppercase",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "expected value \"0.05em\" not found"
+        },
+        {
+          "ruleId": "motion.patterns.logo-marquee",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern animation:\\s*marquee|@keyframes\\s+marquee not found"
+        },
+        {
+          "ruleId": "motion.hover-gate",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern hover:\\s*hover.*pointer:\\s*fine.*prefers-reduced-motion:\\s*no-preference not found"
+        },
+        {
+          "ruleId": "components.focus.no-outline-none",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern outline:\\s*none not found"
+        },
+        {
+          "ruleId": "components.buttons.ghost-on-dark",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern border-white\\/60|border-color:\\s*oklch\\(1\\s+0\\s+0\\s*\\/\\s*0?\\.?6 not found"
+        },
+        {
+          "ruleId": "components.forms.error-text.aria",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern aria-describedby not found"
+        },
+        {
+          "ruleId": "components.dark-mode.no-pure-black",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern \\.dark[^}]*background[^;]*#000000|background[^;]*#000(?:;|\\s) not found"
+        },
+        {
+          "ruleId": "components.cta-link",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern cta-link|font-medium[^;]*hover:.*underline not found"
+        },
+        {
+          "ruleId": "components.cta-arrow-link",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern gap.*transition|transition.*gap not found"
+        },
+        {
+          "ruleId": "breakpoints.mobile-first",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern max-width:\\s*\\d+px not found"
+        },
+        {
+          "ruleId": "elevation.z-index.no-custom",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "pass"
+        },
+        {
+          "ruleId": "accessibility.alt-text",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern <img(?![^>]*alt=) not found"
+        },
+        {
+          "ruleId": "composition.canvas-text.aria-label",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern role=['\"]img['\"].*aria-label|aria-label.*role=['\"]img['\"] not found"
+        },
+        {
+          "ruleId": "composition.assist-chat.flat-layout",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "warning",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern chat-bubble|message-bubble|bubble-|rounded-full.*message not found"
+        },
+        {
+          "ruleId": "composition.assist-embedded.visual-marker",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern border-l-2|border-left.*2px|ai-marker|provenance|data-ai-generated not found"
+        },
+        {
+          "ruleId": "composition.assist-embedded.provenance",
+          "artifactPath": "C:/Users/isjav/VERDIGRIS_z2o/design/categories/one-pagers/examples/architectural-advantages-redux.html",
+          "severity": "error",
+          "maturity": "rule",
+          "status": "fail",
+          "message": "pattern data-ai-provenance|data-ai-source|ai-provenance|content-credentials|c2pa|data-generated-by not found"
+        }
+      ],
+      "costUsd": 0,
+      "startedAt": "2026-05-05T03:50:57.268Z",
+      "finishedAt": "2026-05-05T03:50:57.270Z"
+    }
+  ]
+}

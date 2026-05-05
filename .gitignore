@@ -20,3 +20,16 @@ vendor/bundle/
 .claude/*
 !.claude/skills/
 tests/audit/fixtures/seeded-findings/audits/
+.cache/compliance-audit/
+# Secrets — never commit
+.env
+**/.env
+!.env.example
+**/.env.example
+# Scratch / logs
+example_gen/excalidraw.log
+example_gen/logs/
+test_output.txt
+# Superpowers session state (per-clone, not shared)
+.superpowers/
+**/.superpowers/

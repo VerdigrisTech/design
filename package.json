@@ -60,12 +60,21 @@
     "test:browser:install": "playwright install --with-deps",
     "audit:cohesion": "tsx build/audit/cohesion.ts",
     "test:audit": "tsx build/audit/test-cohesion.ts",
+    "audit:compliance": "tsx example_gen/compliance/cli.ts",
+    "audit:compliance:smoke": "tsx example_gen/compliance/cli.ts --smoke",
+    "test:compliance": "tsx example_gen/compliance/test-compliance.ts",
+    "test:compliance:unit": "tsx example_gen/compliance/cache.test.ts && tsx example_gen/compliance/classify.test.ts && tsx example_gen/compliance/cost-tracker.test.ts && tsx example_gen/compliance/evaluator-deterministic.test.ts && tsx example_gen/compliance/evaluator-prose.test.ts && tsx example_gen/compliance/evaluator-prose.e2e.test.ts && tsx example_gen/compliance/load-rules.test.ts && tsx example_gen/compliance/sanitize.test.ts && tsx example_gen/compliance/suppression.test.ts && tsx example_gen/compliance/synthesize.test.ts",
     "clean": "rm -rf build/dist _site test-results playwright-report"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
+    "@types/cheerio": "^0.22.35",
+    "cheerio": "^1.2.0",
+    "fast-glob": "^3.3.3",
     "http-server": "^14.1.1",
+    "openai": "^6.36.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "yaml": "^2.8.4"
   }
 }

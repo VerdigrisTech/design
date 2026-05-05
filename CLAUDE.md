@@ -26,6 +26,9 @@ npm run build               # Generate build/dist/ outputs from token source
 npm run test:browser        # Cross-browser smoke tests (Playwright, chromium/webkit/firefox)
 npm run test:browser:install # Install Playwright browser binaries (one-time setup)
 npm run audit:cohesion      # Cross-cell brand + design cohesion audit
+npm run audit:compliance         # Per-artifact compliance audit (live LLM, requires OPENAI_API_KEY)
+npm run audit:compliance:smoke   # Full live pipeline against one fixture
+npm run test:compliance          # Fixture self-test (no live calls)
 npm run test:audit          # Self-test the auditor against fixtures
 ```
 

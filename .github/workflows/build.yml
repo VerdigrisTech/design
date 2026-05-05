@@ -6,17 +6,45 @@ on:
   pull_request:
     branches: [main]
 
+# Drop the default permissions to the minimum the workflow actually needs.
+# Without this, GITHUB_TOKEN gets `contents: write` by default, which is
+# unnecessary for CI checks and broadens the blast radius of any compromised
+# step. Sticky-PR-comment needs pull-requests + issues write only.
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Single source of truth for the advisory toggle. Both the compliance step
+    # (which stamps `blockingMode` on the JSON summary) and the render step
+    # (which picks the comment header) read from this. Hoisted to job env so
+    # the two cannot drift.
+    env:
+      COMPLIANCE_AUDIT_BLOCKING: "false"
+      # Hoisted so step-level `if:` can read env.OPENAI_API_KEY directly.
+      # `secrets` context is NOT available in step-level `if:`, so we must
+      # surface the secret as job-level env to gate the Playwright install
+      # and downstream LLM steps.
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Need full history so `git diff origin/main...HEAD` resolves the
+          # merge base. Default fetch-depth: 1 leaves the diff empty, which
+          # silently skips compliance-audit on every PR.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - run: npm install
+      # --ignore-scripts blocks postinstall exfiltration from fork PRs
+      # (which still inherit a scoped GITHUB_TOKEN). Trusted install-time
+      # scripts must be invoked explicitly in a later step.
+      - run: npm ci --ignore-scripts
 
       - uses: actions/setup-python@v5
         with:
@@ -43,6 +71,157 @@ jobs:
       - name: Lint external-facing content
         run: npm run lint:external
 
+      - name: Audit cohesion
+        id: cohesion
+        run: |
+          set -e
+          npm run audit:cohesion || true
+          # The cohesion auditor writes audits/cohesion/{ts}-{sha}.json. Find the latest and copy it.
+          LATEST=$(ls -t audits/cohesion/*.json 2>/dev/null | head -n1 || true)
+          if [ -n "$LATEST" ]; then
+            cp "$LATEST" cohesion-summary.json
+            CRIT=$(jq -r '[.findings[]? | select(.severity == "critical")] | length' "$LATEST" 2>/dev/null || echo 0)
+          else
+            echo '{}' > cohesion-summary.json
+            CRIT=0
+          fi
+          echo "critical=$CRIT" >> "$GITHUB_OUTPUT"
+
+      - name: Install Playwright (chromium only)
+        # OPENAI_API_KEY is hoisted to job-level env (above) so this
+        # condition resolves at step-eval time. `secrets` context is not
+        # available in step-level `if:`.
+        if: ${{ env.OPENAI_API_KEY != '' }}
+        run: npx playwright install --with-deps chromium
+
+      - name: Audit compliance
+        id: compliance
+        env:
+          # OPENAI_API_KEY comes from job-level env (hoisted from secrets).
+          COMPLIANCE_AUDIT_BUDGET_USD: "40"
+          # COMPLIANCE_AUDIT_BLOCKING comes from job-level env; do not redeclare here.
+          # To enable as a merge gate: (1) add OPENAI_API_KEY repo secret,
+          # (2) flip the job-level COMPLIANCE_AUDIT_BLOCKING value to "true",
+          # (3) add `compliance-audit` to branch protection on main. See
+          # audits/compliance/BASELINE-NOTES.md for current blocking-finding inventory.
+          CI: "true"
+        run: |
+          set -e
+          EMPTY_SUMMARY='{"results":[],"blockingCount":0,"advisoryCount":0,"skippedCount":0,"passedCount":0,"naCount":0,"totalCostUsd":0,"budgetUsd":40}'
+
+          # Default skipped-reason so downstream rendering never sees an
+          # undefined value (unset on success path → renders "undefined").
+          echo "skipped-reason=" >> "$GITHUB_OUTPUT"
+
+          # No-op without an API key. Lets the workflow stay green on PRs from
+          # forks (no secret access) and before the secret is configured.
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "compliance-audit: OPENAI_API_KEY not set; skipping LLM run. Configure the secret to enable."
+            echo "$EMPTY_SUMMARY" > compliance-summary.json
+            echo "blocking-count=0" >> "$GITHUB_OUTPUT"
+            echo "exit-status=0" >> "$GITHUB_OUTPUT"
+            echo "skipped-reason=no-api-key" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Determine changed files to decide what compliance-audit should evaluate.
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref || 'main' }}...HEAD")
+          echo "Changed files:"; echo "$CHANGED"
+          if echo "$CHANGED" | grep -qE '^(categories/(slides|one-pagers)/examples/|rules/visual-rules\.yml$)'; then
+            # Snapshot pre-existing audit outputs so we don't accidentally
+            # adopt a stale baseline file as "this run's summary" if the
+            # audit fails before writing its own JSON.
+            BEFORE=$(ls -t audits/compliance/*.json 2>/dev/null | head -n1 || echo "")
+
+            # Only the audit invocation is allowed to fail; surrounding
+            # plumbing (jq, file copy) must still error loudly.
+            set +e
+            npm run audit:compliance
+            STATUS=$?
+            set -e
+
+            LATEST=$(ls -t audits/compliance/*.json 2>/dev/null | head -n1 || echo "")
+            if [ -n "$LATEST" ] && [ "$LATEST" != "$BEFORE" ]; then
+              cp "$LATEST" compliance-summary.json
+            else
+              # Audit didn't produce a fresh artifact (e.g., crashed before
+              # writing). Fall back to the empty summary instead of silently
+              # rendering yesterday's numbers as today's result.
+              echo "compliance-audit: no fresh summary produced (status=$STATUS); using empty summary." >&2
+              echo "$EMPTY_SUMMARY" > compliance-summary.json
+              if [ "$STATUS" = "0" ]; then STATUS=3; fi
+              echo "skipped-reason=audit-produced-no-summary" >> "$GITHUB_OUTPUT"
+            fi
+            echo "blocking-count=$(jq -r '.blockingCount' compliance-summary.json)" >> "$GITHUB_OUTPUT"
+            echo "exit-status=$STATUS" >> "$GITHUB_OUTPUT"
+          else
+            echo "No in-scope files changed; skipping compliance-audit."
+            echo "$EMPTY_SUMMARY" > compliance-summary.json
+            echo "blocking-count=0" >> "$GITHUB_OUTPUT"
+            echo "exit-status=0" >> "$GITHUB_OUTPUT"
+            echo "skipped-reason=no-in-scope-changes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Render PR comment body
+        # always(): if the audit step failed, we still want users to see the
+        # explanatory comment instead of just a red check with no context.
+        if: ${{ always() && github.event_name == 'pull_request' }}
+        env:
+          COMPLIANCE_AUDIT_SKIPPED_REASON: ${{ steps.compliance.outputs.skipped-reason }}
+        run: |
+          set +e
+          # Atomic write: render to a tmp file and only swap into place on
+          # success. A crashed renderer must not leave a half-written body
+          # for the sticky-comment step to post verbatim.
+          npx tsx .github/scripts/render-pr-comment.ts > pr-comment.md.tmp
+          if [ $? -eq 0 ]; then
+            mv pr-comment.md.tmp pr-comment.md
+          else
+            rm -f pr-comment.md.tmp
+            cat <<'EOF' > pr-comment.md
+          <!-- design-system-ci:sticky -->
+          **Design System CI** -- comment renderer failed; check the workflow logs.
+          EOF
+          fi
+
+      - name: Post sticky PR comment
+        if: ${{ always() && github.event_name == 'pull_request' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: design-system-ci
+          path: pr-comment.md
+
+      - name: Fail if blocking
+        run: |
+          BLOCKING="${{ steps.compliance.outputs.blocking-count }}"
+          STATUS="${{ steps.compliance.outputs.exit-status }}"
+          SKIPPED="${{ steps.compliance.outputs.skipped-reason }}"
+          MODE="$COMPLIANCE_AUDIT_BLOCKING"
+
+          if [ "$MODE" = "true" ]; then
+            # Blocking mode: a non-zero auditor exit (crash, budget overflow,
+            # missing summary) must fail the build. With EMPTY_SUMMARY the
+            # blocking-count is 0, so the previous gate masked these crashes.
+            if [ -n "$STATUS" ] && [ "$STATUS" != "0" ]; then
+              echo "compliance-audit step exited non-zero (status=$STATUS, skipped-reason=$SKIPPED) under COMPLIANCE_AUDIT_BLOCKING=true."
+              exit 1
+            fi
+            if [ -n "$BLOCKING" ] && [ "$BLOCKING" != "0" ]; then
+              echo "compliance-audit reported $BLOCKING blocking findings."
+              exit 1
+            fi
+          else
+            if [ -n "$BLOCKING" ] && [ "$BLOCKING" != "0" ]; then
+              echo "compliance-audit reported $BLOCKING blocking findings (advisory in v0.1; not failing build)."
+            fi
+          fi
+
+          if [ "${{ steps.cohesion.outputs.critical }}" != "0" ] && [ "${{ steps.cohesion.outputs.critical }}" != "" ]; then
+            echo "audit:cohesion reported critical findings."
+            exit 1
+          fi
+          echo "All gates green."
+
   cross-browser-smoke:
     runs-on: ubuntu-latest
     needs: build
@@ -53,7 +232,9 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm install
+      # Same defense-in-depth as the build job: pinned lockfile + no
+      # postinstall scripts blocks fork-PR exfiltration paths.
+      - run: npm ci --ignore-scripts
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
