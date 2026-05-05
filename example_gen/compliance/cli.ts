@@ -136,9 +136,14 @@ async function main() {
 
   let files: string[];
   if (smoke) {
-    files = await fg("tests/compliance/fixtures/passing/slides/*.html", { cwd: repoRoot, absolute: true });
-    if (files.length === 0) throw new Error("smoke fixture missing");
-    files = files.slice(0, 1);
+    // Pin the smoke fixture by name. Without this, `fg(...).slice(0, 1)`
+    // returned the alphabetically-first fixture; adding any new fixture
+    // earlier in sort order would silently change what --smoke tests.
+    const smokeFixture = path.join(repoRoot, "tests/compliance/fixtures/passing/slides/abcam-kickoff.html");
+    if (!existsSync(smokeFixture)) {
+      throw new Error(`smoke fixture missing at ${smokeFixture}`);
+    }
+    files = [smokeFixture];
   } else if (positional.length > 0) {
     // Distinguish literal paths from globs. A literal that doesn't exist is
     // a typo; fail loud. A glob that matches nothing is acceptable (the
