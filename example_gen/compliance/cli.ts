@@ -141,7 +141,7 @@ async function main() {
     // earlier in sort order would silently change what --smoke tests.
     const smokeFixture = path.join(repoRoot, "tests/compliance/fixtures/passing/slides/abcam-kickoff.html");
     if (!existsSync(smokeFixture)) {
-      throw new Error(`smoke fixture missing at ${smokeFixture}`);
+      throw new Error(`smoke fixture missing at ${path.relative(repoRoot, smokeFixture).replaceAll("\\", "/")}`);
     }
     files = [smokeFixture];
   } else if (positional.length > 0) {
