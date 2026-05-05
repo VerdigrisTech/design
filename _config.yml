@@ -36,6 +36,9 @@ exclude:
   - playwright-report/
   - test-results/
   - vendor/
+  - example_gen/
+  - audits/
+  - explorations/
 
 # Default front matter
 defaults:

@@ -40,6 +40,13 @@ const SKIP_DIRS = new Set([
   ".claude",
   "node_modules",
   "build",
+  // Internal working dirs: AI generation pipeline source + audit report outputs.
+  // Must mirror the Jekyll `exclude:` list in _config.yml.
+  "example_gen",
+  "audits",
+  "tests",
+  "explorations",
+  "vendor",
 ]);
 
 /** Patterns that indicate internal-only content */
