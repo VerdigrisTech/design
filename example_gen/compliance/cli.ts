@@ -109,13 +109,13 @@ async function main() {
     "--no-llm", "--smoke", "--baseline", "--quiet", "--help", "-h",
   ]);
   for (const a of args) {
-    if (a.startsWith("--") && !knownFlags.has(a) && !a.startsWith("--budget=")) {
+    if (a.startsWith("-") && !knownFlags.has(a) && !a.startsWith("--budget=")) {
       console.error(`compliance-audit: unknown flag "${a}". See --help.`);
       process.exit(2);
     }
   }
 
-  const positional = args.filter((a) => !a.startsWith("--") && a !== "-h");
+  const positional = args.filter((a) => !a.startsWith("-"));
   const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
   let files: string[];
@@ -173,10 +173,12 @@ async function main() {
   const summary = await run({ repoRoot, files, budgetUsd, noLlm });
   const sha = (() => {
     try {
+      // stderr is captured (pipe) so the catch handler can surface the
+      // actual git error message instead of just the generic execSync throw.
       return execSync("git rev-parse HEAD", {
         cwd: repoRoot,
         timeout: 5_000,
-        stdio: ["ignore", "pipe", "ignore"],
+        stdio: ["ignore", "pipe", "pipe"],
       }).toString().trim();
     } catch (e) {
       console.warn(`compliance-audit: could not resolve git SHA (${(e as Error).message}); using placeholder`);
