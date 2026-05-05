@@ -15,13 +15,16 @@ export function writeReports(repoRoot: string, summary: RunSummary, sha: string)
   return { md, json };
 }
 
+// Per CLAUDE.md "Content Guidelines": strip emdashes from any user-visible
+// surface. PR comments and the audits/*.md report are user-visible content,
+// so we stay on plain ASCII separators (": " and "--") instead of " — ".
 export function renderMarkdown(s: RunSummary): string {
   const lines: string[] = [];
   lines.push(`# compliance-audit report`);
   lines.push("");
   lines.push(`- mode: **${s.blockingMode}**`);
   lines.push(`- artifacts evaluated: ${s.results.length}`);
-  lines.push(`- findings: ${s.blockingCount} blocking, ${s.advisoryCount} advisory, ${s.skippedCount} skipped, ${s.passedCount} passed`);
+  lines.push(`- findings: ${s.blockingCount} blocking, ${s.advisoryCount} advisory, ${s.skippedCount} skipped, ${s.naCount} n/a, ${s.passedCount} passed`);
   lines.push(`- spend: $${s.totalCostUsd.toFixed(2)} / $${s.budgetUsd.toFixed(2)}`);
   lines.push("");
   for (const r of s.results) {
@@ -30,19 +33,23 @@ export function renderMarkdown(s: RunSummary): string {
     lines.push(`- type: ${r.artifact.type}, genre: ${r.artifact.genre}`);
     if (syn.blocking.length) {
       lines.push(`### Blocking (${syn.blocking.length})`);
-      for (const f of syn.blocking) lines.push(`- **${f.ruleId}** — ${f.message ?? ""}`);
+      for (const f of syn.blocking) lines.push(`- **${f.ruleId}**: ${f.message ?? ""}`);
     }
     if (syn.advisory.length) {
       lines.push(`### Advisory (${syn.advisory.length})`);
-      for (const f of syn.advisory) lines.push(`- ${f.ruleId} (${f.severity}/${f.maturity}) — ${f.message ?? ""}`);
+      for (const f of syn.advisory) lines.push(`- ${f.ruleId} (${f.severity}/${f.maturity}): ${f.message ?? ""}`);
     }
     if (syn.skipped.length) {
       lines.push(`### Skipped (${syn.skipped.length})`);
-      for (const f of syn.skipped) lines.push(`- ${f.ruleId} — ${f.skipReason}: ${f.message ?? ""}`);
+      for (const f of syn.skipped) lines.push(`- ${f.ruleId}: ${f.skipReason}: ${f.message ?? ""}`);
+    }
+    if (syn.na.length) {
+      lines.push(`### N/A (${syn.na.length})`);
+      for (const f of syn.na) lines.push(`- ${f.ruleId}: ${f.message ?? ""}`);
     }
     if (syn.suppressed.length) {
       lines.push(`### Suppressed (${syn.suppressed.length})`);
-      for (const f of syn.suppressed) lines.push(`- ${f.ruleId} — ${f.suppression?.linear} (${f.suppression?.reason})`);
+      for (const f of syn.suppressed) lines.push(`- ${f.ruleId}: ${f.suppression?.linear} (${f.suppression?.reason})`);
     }
     lines.push("");
   }
@@ -51,12 +58,13 @@ export function renderMarkdown(s: RunSummary): string {
 
 export function renderPrCommentSection(s: RunSummary): string {
   const lines: string[] = [];
-  lines.push("── compliance-audit ────────────────────────────────────────");
-  lines.push(`evaluated ${s.results.length} examples • ${s.blockingCount === 0 ? "pass" : "fail"} • $${s.totalCostUsd.toFixed(2)} / $${s.budgetUsd.toFixed(2)}`);
+  lines.push("-- compliance-audit ----------------------------------------");
+  lines.push(`evaluated ${s.results.length} examples / ${s.blockingCount === 0 ? "pass" : "fail"} / $${s.totalCostUsd.toFixed(2)} of $${s.budgetUsd.toFixed(2)}`);
   lines.push("");
-  lines.push(`  Failures (block merge)         — ${s.blockingCount}`);
-  lines.push(`  Advisory findings              — ${s.advisoryCount}`);
-  lines.push(`  Skipped (budget / errors)      — ${s.skippedCount}`);
-  lines.push(`  Passed                         — ${s.passedCount}`);
+  lines.push(`  Failures (block merge)         : ${s.blockingCount}`);
+  lines.push(`  Advisory findings              : ${s.advisoryCount}`);
+  lines.push(`  Skipped (budget / errors)      : ${s.skippedCount}`);
+  lines.push(`  N/A (artifact lacked content)  : ${s.naCount}`);
+  lines.push(`  Passed                         : ${s.passedCount}`);
   return lines.join("\n");
 }

@@ -4,10 +4,36 @@ Per-artifact compliance evaluator. Runs in CI via `npm run audit:compliance` and
 
 ## Quick reference
 
-- `npm run audit:compliance -- categories/slides/examples/foo.html` — local single-file run
-- `npm run audit:compliance:smoke` — full live pipeline against one fixture (uses real LLM budget)
-- `npm run test:compliance` — fixture self-test using recorded cassettes (no live LLM calls)
-- `OPENAI_RECORD=1 npm run test:compliance` — re-record cassettes (requires `OPENAI_API_KEY`)
+- `npm run audit:compliance -- categories/slides/examples/foo.html` -- local single-file run
+- `npm run audit:compliance -- --no-llm <path>` -- deterministic-only, fast (no API key required)
+- `npm run audit:compliance:smoke` -- full live pipeline against one fixture (uses real LLM budget)
+- `npm run test:compliance` -- fixture self-test, deterministic-only (no live LLM calls)
+- `npm run test:compliance:unit` -- module unit tests
+- `OPENAI_RECORD=1 npm run test:compliance` -- re-record cassettes (requires `OPENAI_API_KEY`)
+
+## Cassettes
+
+Live LLM responses are persisted under `tests/compliance/cassettes/` so the
+self-test can replay them without paying for a live call. Cassette behavior:
+
+- `OPENAI_RECORD` unset (default): cassette hits are replayed; cassette misses
+  hit the live API only if `OPENAI_API_KEY` is set, otherwise the call fails.
+- `OPENAI_RECORD=1`: every live call is written back to the cassette dir,
+  overwriting prior entries with the same key. Use this to refresh cassettes
+  after a model change or rule edit. Requires `OPENAI_API_KEY`.
+
+Cassette keys are derived from a stable hash of the request payload (sorted
+keys, namespaced by `CACHE_NAMESPACE_VERSION` in `cache.ts`); refactors that
+re-order request fields do NOT invalidate the cassette, but bumping the
+namespace version does.
+
+## CLI flags
+
+- `--no-llm`            Deterministic-only run; skips visual + prose evaluators.
+- `--smoke`             Run the live pipeline against one fixture (canary).
+- `--baseline`          Run audit but exit zero regardless of blocking findings (used to capture day-one inventory).
+- `--budget=N`          Override budget in USD. Ignored in CI; CI uses `COMPLIANCE_AUDIT_BUDGET_USD` (default 40). Strict positive number; `--budget=0`, `--budget=` and non-numeric values fail with exit code 2.
+- positional path/glob   File(s) to audit. Defaults to `categories/{slides,one-pagers}/examples/*.html`. Glob characters in PowerShell may need quoting.
 
 ## Output
 

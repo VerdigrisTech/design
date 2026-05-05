@@ -68,16 +68,23 @@ export class OpenAIClient {
       return { ...result, fromCache: "cassette" };
     }
 
-    const estCost = this.cost.estimate({ inputTokens: estIn, maxOutputTokens: maxOut });
-    if (!this.cost.canAfford(estCost)) {
-      throw new BudgetExceededError(
-        `would exceed budget: estimated $${estCost.toFixed(3)}, spent $${this.cost.spent().toFixed(3)}`,
-      );
-    }
+    const checkBudget = () => {
+      const estCost = this.cost.estimate({ inputTokens: estIn, maxOutputTokens: maxOut });
+      if (!this.cost.canAfford(estCost)) {
+        throw new BudgetExceededError(
+          `would exceed budget: estimated $${estCost.toFixed(3)}, spent $${this.cost.spent().toFixed(3)}`,
+        );
+      }
+    };
+    checkBudget();
 
     let attempt = 0;
     while (true) {
       try {
+        // Re-check budget on retry. A first-attempt 5xx/429 still cost zero,
+        // but if a parallel call recorded actual usage between attempts, the
+        // budget may now be exhausted; fail fast instead of retrying past it.
+        if (attempt > 0) checkBudget();
         const resp = await this.live(req, kind);
         const inputTokens = resp.usage?.prompt_tokens ?? 0;
         const outputTokens = resp.usage?.completion_tokens ?? 0;

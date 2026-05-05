@@ -10,11 +10,36 @@ async function main() {
   const noLlm = args.includes("--no-llm");
   const smoke = args.includes("--smoke");
   const baseline = args.includes("--baseline");
+  // Strict positive-number validation. `Number("")` and `Number("abc")` both
+  // fail isFinite + > 0, so empty / malformed inputs are rejected loudly
+  // instead of silently disabling the gate (Number("") === 0; Number("abc")
+  // === NaN; both are unsafe defaults).
+  const isValidBudget = (n: number): boolean => Number.isFinite(n) && n > 0;
+
   const budgetFlag = args.find((a) => a.startsWith("--budget="));
-  const budgetCli = budgetFlag ? Number(budgetFlag.split("=")[1]) : NaN;
-  const ciBudget = Number(process.env.COMPLIANCE_AUDIT_BUDGET_USD ?? "40");
+  const budgetCliRaw = budgetFlag ? budgetFlag.split("=")[1] ?? "" : "";
+  const budgetCli = budgetCliRaw === "" ? NaN : Number(budgetCliRaw);
+  if (budgetFlag && !isValidBudget(budgetCli)) {
+    console.error(`compliance-audit: --budget must be a positive number; got "${budgetCliRaw}".`);
+    process.exit(2);
+  }
+
+  const ciBudgetRaw = process.env.COMPLIANCE_AUDIT_BUDGET_USD ?? "40";
+  const ciBudget = Number(ciBudgetRaw);
+  if (!isValidBudget(ciBudget)) {
+    console.error(`compliance-audit: COMPLIANCE_AUDIT_BUDGET_USD must be a positive number; got "${ciBudgetRaw}".`);
+    process.exit(2);
+  }
+
   const isCI = process.env.CI === "true";
-  const budgetUsd = isCI ? ciBudget : Number.isFinite(budgetCli) ? Math.min(budgetCli, ciBudget) : ciBudget;
+  if (isCI && isValidBudget(budgetCli)) {
+    console.warn("compliance-audit: --budget flag ignored in CI; using COMPLIANCE_AUDIT_BUDGET_USD.");
+  }
+  const budgetUsd = isCI
+    ? ciBudget
+    : isValidBudget(budgetCli)
+      ? budgetCli
+      : ciBudget;
 
   const positional = args.filter((a) => !a.startsWith("--"));
   const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");

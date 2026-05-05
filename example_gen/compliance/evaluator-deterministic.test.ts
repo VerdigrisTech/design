@@ -6,7 +6,10 @@ const a: Artifact = {
   path: "foo.html",
   type: "slides",
   genre: "pilot_kickoff",
-  html: `<style>.x{color:#ff0000;}.y{color:#0fc8c3;}</style><div data-grid="3">...</div>`,
+  html: `<style>.x{color:#ff0000;}.y{color:#0fc8c3;}</style>
+    <div data-grid="3">first</div>
+    <div data-grid="6">ok</div>
+    <div data-grid="20">too big</div>`,
 };
 
 const rules: Rule[] = [
@@ -46,16 +49,23 @@ const f = runDeterministic(a, rules);
 assert.equal(
   f.find((x) => x.ruleId === "color.brand.no-red")?.status,
   "fail",
-  "no-red rule should fail (forbidden pattern found)"
+  "no-red rule should fail (forbidden pattern found)",
 );
 assert.equal(
   f.find((x) => x.ruleId === "color.brand.teal-required")?.status,
   "pass",
-  "teal-required rule should pass (#0fc8c3 present)"
+  "teal-required rule should pass (#0fc8c3 present)",
 );
-assert.equal(
-  f.find((x) => x.ruleId === "spacing.grid.cols")?.status,
-  "fail",
-  "data-grid=3 below min=4"
-);
+const grid = f.find((x) => x.ruleId === "spacing.grid.cols")!;
+assert.equal(grid.status, "fail", "data-grid out of bounds");
+// Both 3 and 20 should be aggregated into the message; the previous
+// implementation reported only the first violation.
+assert.match(grid.message ?? "", /3 < min 4/, "first violation reported");
+assert.match(grid.message ?? "", /20 > max 12/, "second violation also reported");
+
+// /g lastIndex bug: a forbidden-pattern test should give the same result on
+// repeat calls. The old code shared regex state via the /g flag.
+const repeat = runDeterministic(a, [rules[0]!]);
+assert.equal(repeat[0]?.status, "fail", "repeat call still detects forbidden pattern");
+
 console.log("PASS: deterministic eval");

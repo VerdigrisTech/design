@@ -56,44 +56,103 @@ function isRuleNode(v: unknown): v is { id: string; test: RuleTest; type?: strin
   );
 }
 
-function* walkRules(node: unknown): Generator<{ id: string; raw: any }> {
+function isCellNode(v: unknown): v is { id: string; inherits_from_sales_collateral?: unknown } & Record<string, unknown> {
+  return (
+    !!v &&
+    typeof v === "object" &&
+    typeof (v as any).id === "string" &&
+    /^composition\.[a-z0-9-]+$/.test((v as any).id) &&
+    (v as any).type === "reference"
+  );
+}
+
+type WalkEvent =
+  | { kind: "rule"; id: string; raw: any }
+  | { kind: "inheritance"; cellId: string; sourceIds: string[] };
+
+function* walk(node: unknown): Generator<WalkEvent> {
   if (node === null || typeof node !== "object") return;
   if (Array.isArray(node)) {
-    for (const item of node) yield* walkRules(item);
+    for (const item of node) yield* walk(item);
     return;
   }
   if (isRuleNode(node)) {
-    yield { id: (node as any).id, raw: node };
+    yield { kind: "rule", id: (node as any).id, raw: node };
     // Don't recurse into rule fields — rules are leaves.
     return;
   }
-  for (const v of Object.values(node as Record<string, unknown>)) {
-    yield* walkRules(v);
+  if (isCellNode(node)) {
+    const inh = (node as any).inherits_from_sales_collateral;
+    if (Array.isArray(inh) && inh.length > 0) {
+      yield { kind: "inheritance", cellId: (node as any).id, sourceIds: inh.filter((s) => typeof s === "string") };
+    }
   }
+  for (const v of Object.values(node as Record<string, unknown>)) {
+    yield* walk(v);
+  }
+}
+
+function buildRule(id: string, namespace: string, raw: any): Rule {
+  const test: RuleTest = raw.test;
+  return {
+    id,
+    namespace,
+    description: raw.description ?? "",
+    severity: raw.severity,
+    type: raw.type,
+    maturity: (raw.maturity as Maturity) ?? "rule",
+    modes: Array.isArray(raw.modes) ? raw.modes.map(normalizeMode) : undefined,
+    evaluator: raw.evaluator,
+    test,
+    evaluatorClass: classify(id, namespace, test),
+  };
+}
+
+function lastSegment(id: string): string {
+  const i = id.lastIndexOf(".");
+  return i === -1 ? id : id.slice(i + 1);
 }
 
 export function loadRules(rulesPath: string): Rule[] {
   const raw = parseYaml(readFileSync(rulesPath, "utf8"));
   const out: Rule[] = [];
   const seen = new Set<string>();
-  for (const { id, raw: r } of walkRules(raw)) {
-    if (!id || !r.test) continue;
-    if (seen.has(id)) continue;
-    seen.add(id);
-    const namespace = id.split(".")[0]!;
-    const test: RuleTest = r.test;
-    out.push({
-      id,
-      namespace,
-      description: r.description ?? "",
-      severity: r.severity,
-      type: r.type,
-      maturity: (r.maturity as Maturity) ?? "rule",
-      modes: Array.isArray(r.modes) ? r.modes.map(normalizeMode) : undefined,
-      evaluator: r.evaluator,
-      test,
-      evaluatorClass: classify(id, namespace, test),
-    });
+  const sourceIndex = new Map<string, any>();
+  const inheritances: { cellId: string; sourceIds: string[] }[] = [];
+
+  for (const ev of walk(raw)) {
+    if (ev.kind === "rule") {
+      if (!ev.id || !ev.raw.test) continue;
+      sourceIndex.set(ev.id, ev.raw);
+      if (seen.has(ev.id)) continue;
+      seen.add(ev.id);
+      const namespace = ev.id.split(".")[0]!;
+      out.push(buildRule(ev.id, namespace, ev.raw));
+    } else {
+      inheritances.push({ cellId: ev.cellId, sourceIds: ev.sourceIds });
+    }
+  }
+
+  // Expand inherits_from_sales_collateral. The semantics in CLAUDE.md: a derived
+  // cell (one-pager, case-study, whitepaper-body) inherits selected slide-deck
+  // rules so that, e.g., logomark-consistency applies to one-pagers without a
+  // copy-paste duplicate in the YAML. We materialize the inheritance here by
+  // cloning the source rule under the destination cell prefix and preserving
+  // its last segment, so applicableRules' cell-prefix scoping naturally picks
+  // it up. Without this step, the derived cells silently miss those rules.
+  for (const { cellId, sourceIds } of inheritances) {
+    for (const sourceId of sourceIds) {
+      const sourceRaw = sourceIndex.get(sourceId);
+      if (!sourceRaw) {
+        console.warn(`[load-rules] inherits_from_sales_collateral references unknown rule "${sourceId}" from cell "${cellId}"`);
+        continue;
+      }
+      const newId = `${cellId}.${lastSegment(sourceId)}`;
+      if (seen.has(newId)) continue;
+      seen.add(newId);
+      const namespace = newId.split(".")[0]!;
+      out.push(buildRule(newId, namespace, sourceRaw));
+    }
   }
   return out;
 }

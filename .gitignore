@@ -30,3 +30,6 @@ tests/audit/fixtures/seeded-findings/audits/
 example_gen/excalidraw.log
 example_gen/logs/
 test_output.txt
+# Superpowers session state (per-clone, not shared)
+.superpowers/
+**/.superpowers/
