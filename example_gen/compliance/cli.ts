@@ -33,10 +33,13 @@ Environment:
   OPENAI_API_KEY                    Required for LLM evaluators. Without
                                     it the run is deterministic-only.
   COMPLIANCE_AUDIT_BUDGET_USD       CI budget cap (default 40).
-  COMPLIANCE_AUDIT_BLOCKING         "true" to fail the build on blocking
-                                    findings or budget exhaustion or refused
-                                    invariant suppressions. Default false
-                                    (advisory).
+  COMPLIANCE_AUDIT_BLOCKING         Anything other than "false" makes
+                                    blocking findings, budget exhaustion,
+                                    or refused invariant suppressions fail
+                                    the build. Default blocking; CI sets
+                                    "false" for advisory mode.
+  COMPLIANCE_AUDIT_PR_LABEL         Set to "advisory" to mark a single PR
+                                    as advisory even when blocking is on.
   COMPLIANCE_AUDIT_MODEL            Override the LLM model (default gpt-4o).
   COMPLIANCE_AUDIT_RETAIN           Number of audit reports to keep
                                     (default 20).
@@ -70,7 +73,12 @@ async function main() {
 
   const noLlm = args.includes("--no-llm");
   const smoke = args.includes("--smoke");
-  const baseline = args.includes("--baseline");
+  // --smoke is a wiring test (does the auditor run end-to-end?), not a
+  // content test. The "passing" fixture may have non-zero blocking
+  // findings as part of its baseline, which would flag a non-zero exit
+  // under default blocking mode. Auto-imply --baseline so smoke always
+  // exits 0 when the auditor itself ran cleanly.
+  const baseline = args.includes("--baseline") || smoke;
   const quiet = args.includes("--quiet");
 
   // Strict positive-number validation. `Number("")` and `Number("abc")` both
@@ -116,6 +124,10 @@ async function main() {
   }
 
   const positional = args.filter((a) => !a.startsWith("-"));
+  if (smoke && positional.length > 0) {
+    console.error(`compliance-audit: --smoke takes no positional paths (got: ${positional.join(", ")}).`);
+    process.exit(2);
+  }
   const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
   let files: string[];
@@ -153,9 +165,21 @@ async function main() {
       for (const p of badLiterals) console.error(`  ${p}`);
       process.exit(2);
     }
-    files = (await fg([...literals, ...globs], { cwd: repoRoot, absolute: true })).filter((f) => f.endsWith(".html"));
+    // Skip fast-glob for literal paths: fg interprets `[...]`, `{...}`, `*`
+    // and `?` as glob syntax even in literal mode, so a real file like
+    // `categories/slides/examples/[draft].html` would silently miss. Resolve
+    // literals directly; only run fg over actual globs.
+    const literalAbs = literals.map((p) => path.isAbsolute(p) ? p : path.resolve(repoRoot, p));
+    const globMatches = globs.length > 0
+      ? await fg(globs, { cwd: repoRoot, absolute: true })
+      : [];
+    files = [...literalAbs, ...globMatches].filter((f) => f.endsWith(".html"));
+    // De-duplicate (a literal could also match a glob) so the same artifact
+    // isn't audited twice.
+    files = [...new Set(files)];
     // Constrain glob expansions to the allowed roots. Prevents a stray
-    // `**/*.html` from scanning files outside the audit's scope.
+    // `**/*.html` from scanning files outside the audit's scope. Literals
+    // were already validated above.
     const outOfScope = files.filter((f) => !isPathInScope(repoRoot, f));
     if (outOfScope.length > 0) {
       console.error(`compliance-audit: paths outside the allowed roots (${ALLOWED_PATH_PREFIXES.join(", ")}):`);
