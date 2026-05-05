@@ -7,7 +7,7 @@ description: |
 when_to_use: |
   Invoke when a producer asks "does this slide deck / one-pager comply with the design
   system?" or when reviewing a PR with compliance-audit findings. Run after `npm run
-  validate:all` passes. Deterministic-only mode is fast; live LLM runs ~$5–$12 per
+  validate:all` passes. Deterministic-only mode is fast; live LLM runs ~$5 to $12 per
   PR depending on artifact count.
 allowed-tools:
   - Bash(npm run audit:compliance*)
@@ -23,13 +23,13 @@ arguments:
     description: Glob pattern matching artifacts to audit (e.g., categories/slides/examples/*.html)
     required: false
   - name: mode
-    description: One of 'live' (LLM-assisted, ~$5–$12), 'deterministic' (fast, visual+prose skipped), 'test' (cassettes, no live calls)
+    description: One of 'live' (LLM-assisted, ~$5 to $12), 'deterministic' (fast, visual+prose skipped), 'test' (cassettes, no live calls)
     required: false
 ---
 
 # compliance-audit skill
 
-This skill runs the per-artifact compliance evaluator against `rules/visual-rules.yml` and triages findings. It is one of three CI gates: `validate:rules` (rule-file shape), `compliance-audit` (this — per-artifact), and `audit:cohesion` (cross-cell drift).
+This skill runs the per-artifact compliance evaluator against `rules/visual-rules.yml` and triages findings. It is one of three CI gates: `validate:rules` (rule-file shape), `compliance-audit` (this -- per-artifact), and `audit:cohesion` (cross-cell drift).
 
 ## When to invoke
 
@@ -41,20 +41,30 @@ This skill runs the per-artifact compliance evaluator against `rules/visual-rule
 ## Run
 
 ```bash
-npm run audit:compliance -- <file-or-glob>          # default: live LLM (~$5–$12 / PR)
+npm run audit:compliance -- <file-or-glob>          # default: live LLM (~$5-$12 / PR)
 npm run audit:compliance -- --no-llm <file-or-glob> # deterministic-only, fast
-npm run test:compliance                              # fixture self-test (no live calls)
-npm run audit:compliance:smoke                       # one-fixture live smoke
+npm run test:compliance                             # fixture self-test (deterministic-only)
+npm run test:compliance:unit                        # module unit tests (no live calls)
+npm run audit:compliance:smoke                      # one-fixture live smoke
 ```
 
-The latest report lives at `audits/compliance/{ts}-{sha}.md` (markdown) and `.json` (machine-readable). The runner exits non-zero on blocking findings unless `COMPLIANCE_AUDIT_BLOCKING=false`.
+Flags:
+- `--no-llm`     Deterministic-only run; skips visual + prose evaluators.
+- `--smoke`      One-fixture live canary.
+- `--baseline`   Run audit but exit zero regardless of blocking findings.
+- `--budget=N`   Override USD budget. NOTE: ignored in CI; CI uses the
+                 `COMPLIANCE_AUDIT_BUDGET_USD` env var (default 40). Locally
+                 the flag accepts strict positive numbers; empty / non-numeric
+                 / zero / negative values fail with exit code 2.
+
+The latest report lives at `audits/compliance/{ts}-{sha}.md` (markdown) and `.json` (machine-readable). The runner exits non-zero on blocking findings unless `COMPLIANCE_AUDIT_BLOCKING=false` (the v0.1 default).
 
 ## Triage protocol
 
 For each blocking finding, classify it as:
 
 1. **Real violation.** Fix the artifact. Re-run to confirm.
-2. **False positive (LLM misjudgment).** Inspect `findings[].llmAnswer` in the JSON report — that's the model's verbatim answer. If misjudged, file a Linear ticket. If a single rule generates >2 false positives in a 7-day window, propose downgrading its `maturity` to `experimental` until the prompt is improved.
+2. **False positive (LLM misjudgment).** Inspect `findings[].llmAnswer` in the JSON report -- that's the model's verbatim answer. If misjudged, file a Linear ticket. If a single rule generates >2 false positives in a 7-day window, propose downgrading its `maturity` to `experimental` until the prompt is improved.
 3. **Approved deviation.** Add an inline suppression to the artifact:
    ```html
    <!-- compliance-audit:ignore <rule-id> reason="<10+ chars>" linear="Z2O-NNNN" -->
@@ -77,7 +87,7 @@ Document the decision in the flipping PR and file a Linear cleanup ticket. Flip 
 
 ## What this skill does NOT do
 
-- It does not validate the rules file's shape — that's `validate:rules`.
-- It does not check cross-cell drift — that's `audit:cohesion`.
-- It does not validate generated AI assets in `example_gen/` — those have separate evaluator specs.
-- It does not enforce PII scrubbing — that's `workflows/pii-review.md`.
+- It does not validate the rules file's shape -- that's `validate:rules`.
+- It does not check cross-cell drift -- that's `audit:cohesion`.
+- It does not validate generated AI assets in `example_gen/` -- those have separate evaluator specs.
+- It does not enforce PII scrubbing -- that's `workflows/pii-review.md`.

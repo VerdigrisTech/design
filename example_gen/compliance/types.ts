@@ -58,7 +58,7 @@ export interface Finding {
   maturity: Maturity;
   message?: string;              // populated on fail
   llmAnswer?: string;            // verbatim model response on llm_eval rules
-  skipReason?: "budget" | "render" | "llm-error" | "render-failure";
+  skipReason?: "budget" | "render" | "llm-error" | "render-failure" | "config-error";
   suppression?: Suppression;
   costUsd?: number;              // share of batch cost attributed to this rule
 }
@@ -66,7 +66,9 @@ export interface Finding {
 export interface EvalResult {
   artifact: Artifact;
   findings: Finding[];
-  totalCostUsd: number;
+  // Per-artifact LLM spend (delta of CostTracker.spent() across this run).
+  // Distinct from RunSummary.totalCostUsd, which is the cumulative total.
+  costUsd: number;
   startedAt: string;             // ISO
   finishedAt: string;
 }
@@ -76,6 +78,7 @@ export interface RunSummary {
   advisoryCount: number;
   skippedCount: number;
   passedCount: number;
+  naCount: number;
   totalCostUsd: number;
   budgetUsd: number;
   blockingMode: "blocking" | "advisory-repo" | "advisory-pr";

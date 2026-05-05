@@ -19,9 +19,11 @@ function evalOne(a: Artifact, r: Rule): Finding {
 
   const t = r.test;
 
-  // pattern: forbidden pattern detection (should NOT match)
+  // pattern: forbidden pattern detection (should NOT match). No /g flag —
+  // RegExp.test on a /g-flagged regex carries lastIndex state and is a footgun
+  // even when the regex object is freshly constructed.
   if (t.pattern) {
-    const re = new RegExp(t.pattern, "g");
+    const re = new RegExp(t.pattern);
     return re.test(a.html)
       ? {
           ...base,
@@ -31,7 +33,9 @@ function evalOne(a: Artifact, r: Rule): Finding {
       : { ...base, status: "pass" };
   }
 
-  // regex with min/max: numeric bounds check
+  // regex with min/max: numeric bounds check. Aggregate every out-of-range
+  // value before returning so producers see the full picture in one pass
+  // rather than fixing the first failure and discovering a second next run.
   if (t.regex && (t.min !== undefined || t.max !== undefined)) {
     const re = new RegExp(t.regex, "g");
     const matches = [...a.html.matchAll(re)];
@@ -44,36 +48,34 @@ function evalOne(a: Artifact, r: Rule): Finding {
       };
     }
 
+    const violations: string[] = [];
     for (const m of matches) {
       const captured = Number(m[1] ?? m[0]);
       if (Number.isNaN(captured)) {
-        return {
-          ...base,
-          status: "fail",
-          message: `regex ${t.regex} captured non-numeric value: ${m[0]}`,
-        };
+        violations.push(`non-numeric "${m[0]}"`);
+        continue;
       }
       if (t.min !== undefined && captured < t.min) {
-        return {
-          ...base,
-          status: "fail",
-          message: `value ${captured} below min ${t.min}`,
-        };
+        violations.push(`${captured} < min ${t.min}`);
+        continue;
       }
       if (t.max !== undefined && captured > t.max) {
-        return {
-          ...base,
-          status: "fail",
-          message: `value ${captured} above max ${t.max}`,
-        };
+        violations.push(`${captured} > max ${t.max}`);
       }
+    }
+    if (violations.length > 0) {
+      return {
+        ...base,
+        status: "fail",
+        message: `${violations.length} value(s) out of range: ${violations.join("; ")}`,
+      };
     }
     return { ...base, status: "pass" };
   }
 
-  // regex alone: presence check (should match)
+  // regex alone: presence check (should match). No /g flag, see note above.
   if (t.regex) {
-    const re = new RegExp(t.regex, "g");
+    const re = new RegExp(t.regex);
     return re.test(a.html)
       ? { ...base, status: "pass" }
       : {
@@ -110,7 +112,7 @@ function evalOne(a: Artifact, r: Rule): Finding {
   return {
     ...base,
     status: "skipped",
-    skipReason: "llm-error",
+    skipReason: "config-error",
     message: "deterministic test had no recognized form",
   };
 }

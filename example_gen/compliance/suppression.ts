@@ -2,8 +2,13 @@ import type { Suppression } from "./types.js";
 
 const COMMENT_RE = /<!--\s*compliance-audit:ignore\s+([^\s]+)([^>]*?)-->/g;
 
+// Field extractor uses a simple "key=value" pattern. Limitations: backslash
+// escaping inside quoted values is not supported, and values containing a
+// literal " will mis-parse. Suppression text in practice is short prose with
+// a Linear ID, so this is acceptable; upgrade to a real attribute parser if
+// authors start needing escapes.
 function extractField(body: string, key: string): string | undefined {
-  const re = new RegExp(`${key}="([^"]*)"`);
+  const re = new RegExp(`${key}="([^"\\n]*)"`);
   const m = body.match(re);
   return m ? m[1] : undefined;
 }

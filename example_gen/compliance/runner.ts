@@ -35,10 +35,17 @@ export async function run(opts: RunOptions): Promise<RunSummary> {
   const results: EvalResult[] = [];
   for (const file of opts.files) {
     const startedAt = new Date().toISOString();
+    const costBefore = cost.spent();
     const html = readFileSync(file, "utf8");
     const artifact = classifyArtifact(file, html);
     const suppressions = parseSuppressions(file, html);
     const applicable = applicableRules(rules, artifact);
+    const knownIds = new Set(applicable.map((r) => r.id));
+    for (const s of suppressions) {
+      if (!knownIds.has(s.ruleId)) {
+        console.warn(`warn: ${file}: suppression for "${s.ruleId}" matches no applicable rule (typo or stale id?)`);
+      }
+    }
 
     let findings: Finding[] = [];
     findings.push(...runDeterministic(artifact, applicable));
@@ -50,7 +57,7 @@ export async function run(opts: RunOptions): Promise<RunSummary> {
     results.push({
       artifact,
       findings,
-      totalCostUsd: 0,
+      costUsd: cost.spent() - costBefore,
       startedAt,
       finishedAt: new Date().toISOString(),
     });
@@ -69,6 +76,7 @@ export async function run(opts: RunOptions): Promise<RunSummary> {
     advisoryCount: syn.advisory.length,
     skippedCount: syn.skipped.length,
     passedCount: syn.passed.length,
+    naCount: syn.na.length,
     totalCostUsd: cost.spent(),
     budgetUsd: opts.budgetUsd,
     blockingMode,
