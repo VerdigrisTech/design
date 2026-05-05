@@ -10,10 +10,32 @@ Catch design system violations in committed example artifacts (`categories/*/exa
 
 This is a **QA tool**, not adversarial review. It checks that artifacts obey the spec. It does not stress-test whether the spec is right.
 
+## CI integration: three checks, not one
+
+Compliance-audit is the third leg of a three-check CI gate. The other two already exist; this spec adds the missing leg and wires all three into `.github/workflows/build.yml` so every PR runs all three.
+
+| Check | What it validates | Scope | Day-one gate |
+|---|---|---|---|
+| `npm run validate:rules` (existing) | The rules file itself is well-formed (YAML shape, `test:` blocks present, conventions, no emdashes) | `rules/visual-rules.yml` only | Blocks on any error (already does) |
+| `npm run audit:compliance` (this spec, new) | Per-artifact compliance: a given example artifact obeys applicable rules | `categories/{slides,one-pagers}/examples/*.html` | Blocks on `severity: error` + `maturity: rule | invariant`. Advisory for `experimental | convention | warning` |
+| `npm run audit:cohesion` (PR #47, existing) | Cross-cell drift: shared infrastructure stays consistent (token/CSS sync, hardcoded colors across layouts, orphan/ghost classes, genre tree) | Runs wide: `_layouts/`, `tokens/`, `build/print/`, `categories/`, `rules/visual-rules.yml` | Blocks only on `critical` findings. `should-fix` and `note` are advisory in PR comment |
+
+**Per-artifact validator alone misses drift in shared infrastructure** — that's why cohesion-audit runs alongside, not instead. Both surface failures via the same sticky PR comment infrastructure (separate sections), so reviewers get one comment with both gates' results.
+
+Re-run triggers:
+
+- Changes to `rules/visual-rules.yml` → re-run compliance-audit against every example matching applicable `modes:` (per existing trigger logic) AND re-run cohesion-audit (rules file is in cohesion's scope already).
+- Changes to `tokens/**/*.json` → re-run cohesion-audit (token-CSS sync is a cohesion dimension).
+- Changes to `categories/{slides,one-pagers}/examples/*.html` → re-run compliance-audit on changed files.
+- All three checks always run on every PR regardless of changed-files set; the trigger logic above just narrows what each check evaluates.
+
+**Day-one posture for cohesion-audit:** gate only on `critical` findings. PR #47's first live run produced 94 findings of which 0 were critical, so this gate is safe at launch. The 94 findings are surfaced as advisory and triaged in a follow-up wave.
+
 ## Non-goals (v0.1)
 
 - Generated assets in `example_gen/` (raster output, AI generations) — covered by the existing `example_gen/` evaluator specs.
 - Live consumer surfaces (`www`, Patina). Those repos can adopt this tool later as a published action.
+- Replacing or restructuring `audit:cohesion` or `validate:rules`. This spec adds compliance-audit as a third sibling and wires all three into the same workflow; it does not modify the other two.
 - Demo videos, interactive sandboxes, and any artifact without a stable HTML representation.
 - Replacing `workflows/pii-review.md` or `workflows/adversarial-review.md`. Compliance-audit runs alongside, not instead of, those.
 - A `.ignore.yaml` repo-wide suppression file (deferred to v0.2 — see "Suppression").
@@ -52,15 +74,16 @@ A rule that should run as both visual and prose (rare) declares `evaluator: ["vi
 
 Unknown namespaces (added after v0.1 ships) emit a warning at startup and default to Visual LLM. The validator (`build/validate-rules.ts`) gains a check that every namespace is in the partition above and fails CI if not.
 
-## Trigger
+## Trigger (compliance-audit only)
 
-GitHub Actions workflow runs on:
+The compliance-audit job runs on every PR, but its evaluation set is filtered:
 
-1. PRs whose changed-files set includes any path matching `categories/{slides,one-pagers}/examples/*.html` — evaluates only the changed examples.
-2. PRs that touch `rules/visual-rules.yml` — for each rule whose `modes:` field changes (or whose `test:` block changes), evaluates every example whose `data-genre` (normalized) matches that rule's modes. Universal-rule changes evaluate all in-scope examples.
-3. Manual dispatch with a file glob argument, for local-equivalent reruns.
+1. If the changed-files set includes paths matching `categories/{slides,one-pagers}/examples/*.html`, evaluate those changed examples.
+2. If `rules/visual-rules.yml` is in the changed-files set, for each rule whose `modes:` field changes (or whose `test:` block changes), additionally evaluate every example whose `data-genre` (normalized) matches that rule's modes. Universal-rule changes evaluate all in-scope examples.
+3. If neither (1) nor (2), the job exits early as a no-op and posts no comment for compliance-audit's section.
+4. Manual dispatch with a file-glob argument supports local-equivalent reruns.
 
-A PR that only touches docs / tokens / build is not triggered.
+`audit:cohesion` and `validate:rules` always run regardless of changed-files (their cost is bounded; cohesion-audit is ~0.32s per PR #47).
 
 ## Inputs
 
@@ -141,21 +164,40 @@ v0.2 may add a `.ignore.yaml` for batch-level suppressions if a real need emerge
 
 ## PR comment format
 
-Sticky (one comment per PR, edited on each run, identified by a hidden marker `<!-- compliance-audit:sticky -->`). Sections:
+A single sticky comment per PR (hidden marker `<!-- design-system-ci:sticky -->`) carries results for all three checks. Each check owns a section; only sections with content are rendered.
 
 ```
-{🚫 BLOCKING | 📝 ADVISORY ({reason})}  •  evaluated {N} examples  •  {pass|fail}  •  ${cost} / $40  •  updated {timestamp}
+Design System CI  •  updated {timestamp}  •  {🚫 BLOCKING | 📝 ADVISORY (reason)}
 
-Failures (block merge)         — N
-Advisory findings              — N (collapsed)
-Skipped (budget / errors)      — N (collapsed)
-Passed                         — N (collapsed)
+── validate:rules ──────────────────────────────────────────
+{pass|fail}  •  N errors
 
-Run locally: npm run audit:compliance -- {file-glob}
-Full report: audits/compliance/{ts}-{sha}.md
+── compliance-audit ────────────────────────────────────────
+evaluated {N} examples  •  {pass|fail}  •  ${cost} / $40
+  Failures (block merge)         — N
+  Advisory findings              — N (collapsed)
+  Skipped (budget / errors)      — N (collapsed)
+  Passed                         — N (collapsed)
+  Active suppressions            — N (collapsed)
+
+── audit:cohesion ──────────────────────────────────────────
+{pass|fail}  •  {duration}
+  Critical (block merge)         — N
+  Should-fix                     — N (collapsed, advisory)
+  Note                           — N (collapsed, advisory)
+
+Run locally:
+  npm run validate:rules
+  npm run audit:compliance -- {file-glob}
+  npm run audit:cohesion
+Full reports:
+  audits/compliance/{ts}-{sha}.md
+  audits/cohesion/{ts}-{sha}.md
 ```
 
-The header timestamp + cost line tells reviewers the comment was just updated. The `Skipped` section is non-empty only when the budget gate fired or LLM calls errored; it explicitly enumerates which rules did NOT run, so reviewers know the state.
+The header timestamp tells reviewers the comment was just updated. Each `Skipped` section is non-empty only when something didn't run, so reviewers know the coverage state.
+
+The composite GitHub status check (`design-system-ci`) goes red iff any check has a blocking finding under its respective gate. Each check also has its own status check (`validate:rules`, `compliance-audit`, `audit:cohesion`) so branch protection can require them individually.
 
 ## Local parity
 
@@ -179,7 +221,8 @@ example_gen/compliance/
   cli.ts                        – npm-script entry point
 
 .github/workflows/
-  compliance-audit.yml          – PR trigger, env wiring, gh comment + status check
+  build.yml                     – existing; ADD jobs for compliance-audit and audit:cohesion alongside validate:rules
+                                  ADD a final composite job that aggregates outputs into the single sticky PR comment
 
 .claude/skills/compliance-audit/
   SKILL.md, README.md, DESIGN.md   – Claude Code skill for human-driven runs
@@ -251,3 +294,4 @@ None blocking implementation. Linear tickets to file as part of v0.1 ship:
 - Genre string convention alignment (rule modes vs. HTML data-genre — pick one).
 - First-week triage of pre-existing violations surfaced on initial run.
 - Whitepaper + case-study rule coverage gap.
+- Triage of the 94 existing cohesion-audit `should-fix`/`note` findings into a Wave-N cleanup epic (now that cohesion runs on every PR, the advisory list is visible to every reviewer).
