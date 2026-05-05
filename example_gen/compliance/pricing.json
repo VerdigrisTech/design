@@ -1,0 +1,6 @@
+{
+  "model": "gpt-4o",
+  "input_per_1m_usd": 2.50,
+  "output_per_1m_usd": 10.00,
+  "_note": "Update when OpenAI price list changes. Images are billed as input tokens (counted in usage.prompt_tokens) so no separate per-image rate is needed."
+}

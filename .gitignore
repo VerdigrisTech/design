@@ -20,3 +20,4 @@ vendor/bundle/
 .claude/*
 !.claude/skills/
 tests/audit/fixtures/seeded-findings/audits/
+.cache/compliance-audit/
