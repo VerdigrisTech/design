@@ -43,6 +43,93 @@ jobs:
       - name: Lint external-facing content
         run: npm run lint:external
 
+      - name: Audit cohesion
+        id: cohesion
+        run: |
+          set -e
+          npm run audit:cohesion || true
+          # The cohesion auditor writes audits/cohesion/{ts}-{sha}.json. Find the latest and copy it.
+          LATEST=$(ls -t audits/cohesion/*.json 2>/dev/null | head -n1 || true)
+          if [ -n "$LATEST" ]; then
+            cp "$LATEST" cohesion-summary.json
+            CRIT=$(jq -r '[.findings[]? | select(.severity == "critical")] | length' "$LATEST" 2>/dev/null || echo 0)
+          else
+            echo '{}' > cohesion-summary.json
+            CRIT=0
+          fi
+          echo "critical=$CRIT" >> "$GITHUB_OUTPUT"
+
+      - name: Install Playwright (chromium only)
+        run: npx playwright install --with-deps chromium
+
+      - name: Audit compliance
+        id: compliance
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          COMPLIANCE_AUDIT_BUDGET_USD: "40"
+          COMPLIANCE_AUDIT_BLOCKING: ${{ vars.COMPLIANCE_AUDIT_BLOCKING || 'true' }}
+          COMPLIANCE_AUDIT_PR_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'compliance-audit:advisory') && 'advisory' || '' }}
+          CI: "true"
+        run: |
+          set +e
+          # Determine changed files to decide what compliance-audit should evaluate.
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref || 'main' }}...HEAD" || true)
+          echo "Changed files:"; echo "$CHANGED"
+          if echo "$CHANGED" | grep -qE '^(categories/(slides|one-pagers)/examples/|rules/visual-rules\.yml$)'; then
+            npm run audit:compliance
+            STATUS=$?
+            LATEST=$(ls -t audits/compliance/*.json 2>/dev/null | head -n1 || true)
+            if [ -n "$LATEST" ]; then
+              cp "$LATEST" compliance-summary.json
+            else
+              echo '{"results":[],"blockingCount":0,"advisoryCount":0,"skippedCount":0,"passedCount":0,"totalCostUsd":0,"budgetUsd":40}' > compliance-summary.json
+            fi
+            echo "blocking-count=$(jq -r '.blockingCount' compliance-summary.json)" >> "$GITHUB_OUTPUT"
+            echo "exit-status=$STATUS" >> "$GITHUB_OUTPUT"
+          else
+            echo "No in-scope files changed; skipping compliance-audit."
+            echo '{"results":[],"blockingCount":0,"advisoryCount":0,"skippedCount":0,"passedCount":0,"totalCostUsd":0,"budgetUsd":40}' > compliance-summary.json
+            echo "blocking-count=0" >> "$GITHUB_OUTPUT"
+            echo "exit-status=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Render PR comment body
+        if: github.event_name == 'pull_request'
+        env:
+          COMPLIANCE_AUDIT_BLOCKING: ${{ vars.COMPLIANCE_AUDIT_BLOCKING || 'true' }}
+          COMPLIANCE_AUDIT_PR_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'compliance-audit:advisory') && 'advisory' || '' }}
+        run: npx tsx .github/scripts/render-pr-comment.ts > pr-comment.md
+
+      - name: Post sticky PR comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: design-system-ci
+          path: pr-comment.md
+
+      - name: Fail if blocking
+        env:
+          COMPLIANCE_AUDIT_BLOCKING: ${{ vars.COMPLIANCE_AUDIT_BLOCKING || 'true' }}
+          COMPLIANCE_AUDIT_PR_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'compliance-audit:advisory') && 'advisory' || '' }}
+        run: |
+          if [ "$COMPLIANCE_AUDIT_BLOCKING" = "false" ]; then
+            echo "Repo kill-switch active; not blocking."
+            exit 0
+          fi
+          if [ "$COMPLIANCE_AUDIT_PR_LABEL" = "advisory" ]; then
+            echo "Per-PR advisory label active; not blocking."
+            exit 0
+          fi
+          if [ "${{ steps.compliance.outputs.blocking-count }}" != "0" ] && [ "${{ steps.compliance.outputs.blocking-count }}" != "" ]; then
+            echo "compliance-audit reported blocking findings."
+            exit 1
+          fi
+          if [ "${{ steps.cohesion.outputs.critical }}" != "0" ] && [ "${{ steps.cohesion.outputs.critical }}" != "" ]; then
+            echo "audit:cohesion reported critical findings."
+            exit 1
+          fi
+          echo "All gates green."
+
   cross-browser-smoke:
     runs-on: ubuntu-latest
     needs: build
