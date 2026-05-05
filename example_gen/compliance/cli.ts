@@ -20,6 +20,8 @@ Paths (optional):
 Flags:
   --no-llm              Skip visual + prose evaluators (deterministic only).
   --smoke               Audit a single passing fixture (CI smoke check).
+                        Implies --no-llm and --baseline; smoke is a wiring
+                        test, not a content/evaluator test.
   --baseline            Run as normal but always exit 0 (used for capturing
                         a day-one baseline of pre-existing failures).
   --budget=<usd>        Cost ceiling for live LLM calls. Default: 40 (or
@@ -71,13 +73,15 @@ async function main() {
     return;
   }
 
-  const noLlm = args.includes("--no-llm");
   const smoke = args.includes("--smoke");
-  // --smoke is a wiring test (does the auditor run end-to-end?), not a
-  // content test. The "passing" fixture may have non-zero blocking
-  // findings as part of its baseline, which would flag a non-zero exit
-  // under default blocking mode. Auto-imply --baseline so smoke always
-  // exits 0 when the auditor itself ran cleanly.
+  // --smoke is a wiring test: does the auditor run end-to-end against a
+  // known fixture? It is not an evaluator test, so:
+  //   - imply --no-llm: there's no point burning $5+ of vision calls (or
+  //     spinning up Playwright) when all we're checking is the runner.
+  //   - imply --baseline: the "passing" fixture has expected non-zero
+  //     deterministic blocking findings (8 today); under blocking mode
+  //     the smoke would fail-exit-1 even when the auditor itself is fine.
+  const noLlm = args.includes("--no-llm") || smoke;
   const baseline = args.includes("--baseline") || smoke;
   const quiet = args.includes("--quiet");
 
