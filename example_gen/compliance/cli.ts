@@ -252,7 +252,7 @@ async function main() {
     if (summary.budgetExhausted) reasons.push("budget exhausted (audit incomplete)");
     if (summary.refusedSuppressionCount > 0) reasons.push(`${summary.refusedSuppressionCount} attempted invariant-bypass suppressions`);
     if (reasons.length > 0) {
-      console.error(`compliance-audit: failing under COMPLIANCE_AUDIT_BLOCKING=true -- ${reasons.join("; ")}`);
+      console.error(`compliance-audit: failing in blocking mode (set COMPLIANCE_AUDIT_BLOCKING=false for advisory) -- ${reasons.join("; ")}`);
       process.exit(1);
     }
   }
