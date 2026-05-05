@@ -177,11 +177,14 @@ jobs:
           if [ $? -eq 0 ]; then
             mv pr-comment.md.tmp pr-comment.md
           else
+            # Heredoc terminator must be at column 0; previous attempts indented
+            # `EOF` and produced a malformed/empty fallback file. printf is
+            # immune to that class of bug.
             rm -f pr-comment.md.tmp
-            cat <<'EOF' > pr-comment.md
-          <!-- design-system-ci:sticky -->
-          **Design System CI** -- comment renderer failed; check the workflow logs.
-          EOF
+            printf '%s\n%s\n' \
+              '<!-- design-system-ci:sticky -->' \
+              '**Design System CI** -- comment renderer failed; check the workflow logs.' \
+              > pr-comment.md
           fi
 
       - name: Post sticky PR comment
@@ -202,7 +205,13 @@ jobs:
             # Blocking mode: a non-zero auditor exit (crash, budget overflow,
             # missing summary) must fail the build. With EMPTY_SUMMARY the
             # blocking-count is 0, so the previous gate masked these crashes.
-            if [ -n "$STATUS" ] && [ "$STATUS" != "0" ]; then
+            # Empty STATUS means the compliance step crashed before any output
+            # was written -- treat as failure (fail-closed), not as success.
+            if [ -z "$STATUS" ]; then
+              echo "compliance-audit step did not emit exit-status under COMPLIANCE_AUDIT_BLOCKING=true (likely crashed before writing outputs)."
+              exit 1
+            fi
+            if [ "$STATUS" != "0" ]; then
               echo "compliance-audit step exited non-zero (status=$STATUS, skipped-reason=$SKIPPED) under COMPLIANCE_AUDIT_BLOCKING=true."
               exit 1
             fi

@@ -140,6 +140,47 @@ export function loadRules(rulesPath: string): Rule[] {
   // cloning the source rule under the destination cell prefix and preserving
   // its last segment, so applicableRules' cell-prefix scoping naturally picks
   // it up. Without this step, the derived cells silently miss those rules.
+  expandInheritances(inheritances, sourceIndex, seen, out);
+  return out;
+}
+
+function expandInheritances(
+  inheritances: { cellId: string; sourceIds: string[] }[],
+  sourceIndex: Map<string, any>,
+  seen: Set<string>,
+  out: Rule[],
+): void {
+  // Cycle detection. If a future cell inherits from a cell that itself
+  // inherits, the walker would otherwise loop forever or silently drop a
+  // level. Build a directed inheritance graph keyed by source rule prefix
+  // (the originating cellId) and refuse to expand a cycle.
+  const inheritsByCell = new Map<string, Set<string>>();
+  for (const { cellId, sourceIds } of inheritances) {
+    const sourceCells = new Set<string>();
+    for (const sid of sourceIds) {
+      const sourceCell = sid.split(".").slice(0, 2).join(".");
+      if (sourceCell) sourceCells.add(sourceCell);
+    }
+    inheritsByCell.set(cellId, sourceCells);
+  }
+  for (const cellId of inheritsByCell.keys()) {
+    const visited = new Set<string>();
+    const stack = [cellId];
+    while (stack.length) {
+      const cur = stack.pop()!;
+      if (visited.has(cur)) {
+        // Throw, not return: a cycle is a configuration bug that must halt
+        // the audit. Returning early left a partially-expanded rule set in
+        // place, which is exactly the kind of silent-bypass condition the
+        // gate is supposed to prevent.
+        throw new Error(`[load-rules] inheritance cycle detected at "${cur}" (from "${cellId}"); fix rules/visual-rules.yml`);
+      }
+      visited.add(cur);
+      const next = inheritsByCell.get(cur);
+      if (next) for (const n of next) if (n !== cur) stack.push(n);
+    }
+  }
+
   for (const { cellId, sourceIds } of inheritances) {
     for (const sourceId of sourceIds) {
       const sourceRaw = sourceIndex.get(sourceId);
@@ -151,8 +192,16 @@ export function loadRules(rulesPath: string): Rule[] {
       if (seen.has(newId)) continue;
       seen.add(newId);
       const namespace = newId.split(".")[0]!;
-      out.push(buildRule(newId, namespace, sourceRaw));
+      // Strip `modes:` on inheritance. The source rule's modes list is a set
+      // of slide-deck genres (pilot_kickoff, customer_101, ...) which do not
+      // exist in the destination cell. Inheriting them verbatim makes the
+      // expanded rule a silent no-op for every genre in that destination
+      // cell. The CLAUDE.md inheritance contract is for universals (logomark,
+      // confidentiality, dates) that should apply across all genres.
+      const cleanedRaw = (sourceRaw.modes !== undefined)
+        ? { ...sourceRaw, modes: undefined }
+        : sourceRaw;
+      out.push(buildRule(newId, namespace, cleanedRaw));
     }
   }
-  return out;
 }

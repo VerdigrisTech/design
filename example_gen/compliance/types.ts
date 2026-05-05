@@ -73,14 +73,36 @@ export interface EvalResult {
   finishedAt: string;
 }
 
+export interface SuppressionRecord {
+  ruleId: string;
+  artifactPath: string;
+  linear: string;
+  reason: string;
+  line: number;
+  // status="applied" -> the suppression downgraded a fail to suppressed.
+  // status="refused-invariant" -> the suppression matched but was rejected
+  //   because invariant rules cannot be overridden.
+  // status="no-match" -> the suppression matched no failing finding.
+  status: "applied" | "refused-invariant" | "no-match";
+}
+
 export interface RunSummary {
   blockingCount: number;
   advisoryCount: number;
   skippedCount: number;
   passedCount: number;
   naCount: number;
+  suppressedCount: number;          // count of `applied` suppressions
+  refusedSuppressionCount: number;  // count of `refused-invariant` suppressions
   totalCostUsd: number;
   budgetUsd: number;
+  // True iff any finding was skipped with reason="budget". Lets the renderer
+  // distinguish "all clean, a few skipped renders" from "budget blew mid-run,
+  // half the audit didn't run."
+  budgetExhausted: boolean;
   blockingMode: "blocking" | "advisory-repo" | "advisory-pr";
   results: EvalResult[];
+  // Every suppression seen in the diff: applied, refused, or unmatched. Goes
+  // into the JSON audit + PR comment so reviewers can see what was bypassed.
+  suppressions: SuppressionRecord[];
 }
