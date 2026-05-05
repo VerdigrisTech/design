@@ -60,6 +60,9 @@ jobs:
           echo "critical=$CRIT" >> "$GITHUB_OUTPUT"
 
       - name: Install Playwright (chromium only)
+        if: ${{ env.OPENAI_API_KEY != '' }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: npx playwright install --with-deps chromium
 
       - name: Audit compliance
@@ -68,12 +71,27 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           COMPLIANCE_AUDIT_BUDGET_USD: "40"
           # v0.1: hardcoded advisory while compliance-audit is in development.
-          # Flip to "true" (and use a repo variable) once the cleanup epic clears
-          # the day-one baseline. See audits/compliance/BASELINE-NOTES.md.
+          # To enable as a merge gate: (1) add OPENAI_API_KEY repo secret,
+          # (2) flip the value below to "true", (3) add `compliance-audit` to
+          # branch protection on main. See audits/compliance/BASELINE-NOTES.md
+          # for current blocking-finding inventory before flipping.
           COMPLIANCE_AUDIT_BLOCKING: "false"
           CI: "true"
         run: |
           set +e
+          EMPTY_SUMMARY='{"results":[],"blockingCount":0,"advisoryCount":0,"skippedCount":0,"passedCount":0,"totalCostUsd":0,"budgetUsd":40}'
+
+          # No-op without an API key. Lets the workflow stay green on PRs from
+          # forks (no secret access) and before the secret is configured.
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "compliance-audit: OPENAI_API_KEY not set; skipping LLM run. Configure the secret to enable."
+            echo "$EMPTY_SUMMARY" > compliance-summary.json
+            echo "blocking-count=0" >> "$GITHUB_OUTPUT"
+            echo "exit-status=0" >> "$GITHUB_OUTPUT"
+            echo "skipped-reason=no-api-key" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           # Determine changed files to decide what compliance-audit should evaluate.
           CHANGED=$(git diff --name-only "origin/${{ github.base_ref || 'main' }}...HEAD" || true)
           echo "Changed files:"; echo "$CHANGED"
@@ -84,13 +102,13 @@ jobs:
             if [ -n "$LATEST" ]; then
               cp "$LATEST" compliance-summary.json
             else
-              echo '{"results":[],"blockingCount":0,"advisoryCount":0,"skippedCount":0,"passedCount":0,"totalCostUsd":0,"budgetUsd":40}' > compliance-summary.json
+              echo "$EMPTY_SUMMARY" > compliance-summary.json
             fi
             echo "blocking-count=$(jq -r '.blockingCount' compliance-summary.json)" >> "$GITHUB_OUTPUT"
             echo "exit-status=$STATUS" >> "$GITHUB_OUTPUT"
           else
             echo "No in-scope files changed; skipping compliance-audit."
-            echo '{"results":[],"blockingCount":0,"advisoryCount":0,"skippedCount":0,"passedCount":0,"totalCostUsd":0,"budgetUsd":40}' > compliance-summary.json
+            echo "$EMPTY_SUMMARY" > compliance-summary.json
             echo "blocking-count=0" >> "$GITHUB_OUTPUT"
             echo "exit-status=0" >> "$GITHUB_OUTPUT"
           fi
@@ -99,9 +117,8 @@ jobs:
         if: github.event_name == 'pull_request'
         env:
           # v0.1: hardcoded advisory while compliance-audit is in development.
-          # Flip to "true" (and use a repo variable) once the cleanup epic clears
-          # the day-one baseline. See audits/compliance/BASELINE-NOTES.md.
           COMPLIANCE_AUDIT_BLOCKING: "false"
+          COMPLIANCE_AUDIT_SKIPPED_REASON: ${{ steps.compliance.outputs.skipped-reason }}
         run: npx tsx .github/scripts/render-pr-comment.ts > pr-comment.md
 
       - name: Post sticky PR comment
