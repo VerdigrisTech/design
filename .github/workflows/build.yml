@@ -24,6 +24,11 @@ jobs:
     # the two cannot drift.
     env:
       COMPLIANCE_AUDIT_BLOCKING: "false"
+      # Hoisted so step-level `if:` can read env.OPENAI_API_KEY directly.
+      # `secrets` context is NOT available in step-level `if:`, so we must
+      # surface the secret as job-level env to gate the Playwright install
+      # and downstream LLM steps.
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -83,18 +88,16 @@ jobs:
           echo "critical=$CRIT" >> "$GITHUB_OUTPUT"
 
       - name: Install Playwright (chromium only)
-        # Boolean-coerce the secret in the if. The previous
-        # `env.OPENAI_API_KEY != ''` check evaluated BEFORE the step's own
-        # `env:` block was applied, so it always read empty and Playwright
-        # never installed. Don't pass the secret into this step (install
-        # doesn't need it; reduces blast radius).
-        if: ${{ secrets.OPENAI_API_KEY }}
+        # OPENAI_API_KEY is hoisted to job-level env (above) so this
+        # condition resolves at step-eval time. `secrets` context is not
+        # available in step-level `if:`.
+        if: ${{ env.OPENAI_API_KEY != '' }}
         run: npx playwright install --with-deps chromium
 
       - name: Audit compliance
         id: compliance
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # OPENAI_API_KEY comes from job-level env (hoisted from secrets).
           COMPLIANCE_AUDIT_BUDGET_USD: "40"
           # COMPLIANCE_AUDIT_BLOCKING comes from job-level env; do not redeclare here.
           # To enable as a merge gate: (1) add OPENAI_API_KEY repo secret,
