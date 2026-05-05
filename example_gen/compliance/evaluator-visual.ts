@@ -191,7 +191,7 @@ async function screenshotFullPage(page: Page, label: string): Promise<Screenshot
   if (fullHeight > MAX_HEIGHT_LOGICAL_PX) {
     await page.setViewportSize({ width: VIEWPORT_WIDTH, height: MAX_HEIGHT_LOGICAL_PX });
   }
-  const png = await page.screenshot({ fullPage: true, type: "png" });
+  const png = await page.screenshot({ fullPage: fullHeight <= MAX_HEIGHT_LOGICAL_PX, type: "png" });
   return {
     png,
     widthPx: VIEWPORT_WIDTH * DPR,

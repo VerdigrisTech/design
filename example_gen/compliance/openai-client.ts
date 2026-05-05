@@ -129,6 +129,7 @@ export class OpenAIClient {
     return this.getClient().chat.completions.create({
       model: MODEL,
       max_tokens: req.maxOutputTokens,
+      temperature: 0,
       messages,
     });
   }

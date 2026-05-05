@@ -28,7 +28,6 @@ export function extractProse(html: string): string {
   const altText = $("img[alt]").map((_, el) => $(el).attr("alt")).get().join(" ");
   const bodyText = $("body").text();
   const combined = `${bodyText} ${altText}`
-    .replaceAll(/ |&nbsp;/g, " ")
     .replaceAll(/\s+/g, " ")
     .trim();
   return combined.slice(0, MAX_PROSE_CHARS);

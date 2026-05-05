@@ -14,7 +14,7 @@ async function main() {
       repoRoot,
       files: [path.join(repoRoot, relPath)],
       budgetUsd: 1,
-      noLlm: true,                  // self-test exercises deterministic + cassette-only LLM in v0.1
+      noLlm: true,                  // v0.1: deterministic-only self-test; cassettes not yet recorded
       cassetteDir: path.join(repoRoot, "tests/compliance/cassettes"),
     });
     const detBlocking = summary.results
