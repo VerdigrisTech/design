@@ -1,0 +1,8 @@
+{
+  "tests/compliance/fixtures/passing/slides/abcam-kickoff.html": {
+    "deterministic_blocking_max": 30
+  },
+  "tests/compliance/fixtures/seeded-failures/slides/seed-1.html": {
+    "deterministic_blocking_min": 1
+  }
+}

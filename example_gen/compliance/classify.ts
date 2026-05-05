@@ -8,7 +8,13 @@ const TYPE_NAMESPACES: Record<Artifact["type"], string[]> = {
 
 function deriveType(filePath: string): Artifact["type"] {
   const norm = filePath.replaceAll("\\", "/");
-  if (norm.includes("categories/slides/examples/")) return "slides";
+  if (norm.includes("categories/slides/examples/") || norm.includes("tests/compliance/fixtures/") && norm.endsWith(".html")) {
+    // For test fixtures in tests/compliance/fixtures/, detect type from filename or parent dir
+    if (norm.includes("/slides/")) return "slides";
+    if (norm.includes("/one-pagers/")) return "one-pagers";
+    // Default to slides for fixtures without explicit type dir
+    return "slides";
+  }
   if (norm.includes("categories/one-pagers/examples/")) return "one-pagers";
   throw new Error(`unsupported path for v0.1: ${filePath}`);
 }
