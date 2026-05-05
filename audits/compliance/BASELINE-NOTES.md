@@ -27,10 +27,6 @@ git commit -m "chore(compliance-audit): full-LLM baseline"
 2. File a Linear cleanup epic to triage the 40 baseline findings.
 3. Once baseline is ≤5 findings, flip `COMPLIANCE_AUDIT_BLOCKING=true` and protect `main` with the `compliance-audit` status check.
 
-## Known classifier issue (v0.2 backlog)
+## Classifier coverage (resolved)
 
-121 rules are skipped with `llm-error: deterministic test had no recognized form`. These are rules whose `test:` block contains `min` or `max` fields but no `regex` for value extraction. The current loader marks them as deterministic (because `min`/`max` are deterministic markers in the schema) but the deterministic evaluator can't extract values without a regex.
-
-Fix path for v0.2: in `load-rules.ts`, only classify as `deterministic` when at least one of `regex`, `pattern`, `value`, `values` is present. Rules with only `min`/`max` should fall through to `visual-llm` (or have a dedicated computed-style evaluator added).
-
-These rules currently fail open (skipped, not blocking), so the misclassification is not a v0.1 launch blocker — it's a coverage gap.
+Earlier baseline runs surfaced 121 rules skipped with `llm-error: deterministic test had no recognized form`. Root cause: the loader treated bare `min`/`max` (no `regex`/`value`/`values`/`pattern`) as deterministic, but the deterministic evaluator has no extractor for unanchored numeric bounds against raw HTML. Fixed in `example_gen/compliance/load-rules.ts`: rules with `llm_eval` OR without an extractor now fall through to `visual-llm`. Post-fix counts: 198 total / 168 visual / 4 prose / 26 deterministic. Re-run the baseline once `OPENAI_API_KEY` is available to capture the LLM-classified rules' actual findings.

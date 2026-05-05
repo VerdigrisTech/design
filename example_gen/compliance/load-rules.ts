@@ -3,20 +3,32 @@ import { parse as parseYaml } from "yaml";
 import type { Rule, Maturity, EvaluatorClass, RuleTest } from "./types.js";
 
 const PROSE_ID_TOKENS = [".voice.", ".diction.", ".tone.", ".audience-fit."];
+// Top-level segments observed in rules/visual-rules.yml. Anything here routes to
+// visual-LLM unless an earlier check (deterministic, prose-id-token, voice prefix)
+// claims it. New namespaces added to the rules file should be added here too;
+// unknown namespaces still default to visual-LLM with a one-time warning.
 const VISUAL_NAMESPACES = new Set([
-  "brand_rejections", "color", "typography", "spacing", "motion",
+  "brand", "brand_rejections",
+  "color", "typography", "spacing", "motion",
   "components", "breakpoints", "elevation", "accessibility",
-  "device_accessibility", "video", "visualizations", "three_d_composition",
+  "device", "device_accessibility",
+  "video", "visualizations", "viz",
+  "three-d", "three_d_composition",
+  "mdx", "composition",
 ]);
 
 function isDeterministic(test: RuleTest): boolean {
+  // A rule is deterministic only if it carries an extractor: a regex (capture or
+  // presence), a forbidden pattern, or a literal value/values match. Bare min/max
+  // without a regex has no way to extract a number from raw HTML, so those rules
+  // must fall through to the visual-LLM evaluator. The presence of llm_eval also
+  // forces LLM routing even if min/max are present (rubric semantics).
+  if (test.llm_eval !== undefined) return false;
   return (
     test.regex !== undefined ||
+    test.pattern !== undefined ||
     test.value !== undefined ||
-    test.values !== undefined ||
-    test.min !== undefined ||
-    test.max !== undefined ||
-    test.pattern !== undefined
+    test.values !== undefined
   );
 }
 

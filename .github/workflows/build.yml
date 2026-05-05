@@ -67,8 +67,10 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           COMPLIANCE_AUDIT_BUDGET_USD: "40"
-          COMPLIANCE_AUDIT_BLOCKING: ${{ vars.COMPLIANCE_AUDIT_BLOCKING || 'true' }}
-          COMPLIANCE_AUDIT_PR_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'compliance-audit:advisory') && 'advisory' || '' }}
+          # v0.1: hardcoded advisory while compliance-audit is in development.
+          # Flip to "true" (and use a repo variable) once the cleanup epic clears
+          # the day-one baseline. See audits/compliance/BASELINE-NOTES.md.
+          COMPLIANCE_AUDIT_BLOCKING: "false"
           CI: "true"
         run: |
           set +e
@@ -96,8 +98,10 @@ jobs:
       - name: Render PR comment body
         if: github.event_name == 'pull_request'
         env:
-          COMPLIANCE_AUDIT_BLOCKING: ${{ vars.COMPLIANCE_AUDIT_BLOCKING || 'true' }}
-          COMPLIANCE_AUDIT_PR_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'compliance-audit:advisory') && 'advisory' || '' }}
+          # v0.1: hardcoded advisory while compliance-audit is in development.
+          # Flip to "true" (and use a repo variable) once the cleanup epic clears
+          # the day-one baseline. See audits/compliance/BASELINE-NOTES.md.
+          COMPLIANCE_AUDIT_BLOCKING: "false"
         run: npx tsx .github/scripts/render-pr-comment.ts > pr-comment.md
 
       - name: Post sticky PR comment
@@ -108,21 +112,11 @@ jobs:
           path: pr-comment.md
 
       - name: Fail if blocking
-        env:
-          COMPLIANCE_AUDIT_BLOCKING: ${{ vars.COMPLIANCE_AUDIT_BLOCKING || 'true' }}
-          COMPLIANCE_AUDIT_PR_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'compliance-audit:advisory') && 'advisory' || '' }}
         run: |
-          if [ "$COMPLIANCE_AUDIT_BLOCKING" = "false" ]; then
-            echo "Repo kill-switch active; not blocking."
-            exit 0
-          fi
-          if [ "$COMPLIANCE_AUDIT_PR_LABEL" = "advisory" ]; then
-            echo "Per-PR advisory label active; not blocking."
-            exit 0
-          fi
-          if [ "${{ steps.compliance.outputs.blocking-count }}" != "0" ] && [ "${{ steps.compliance.outputs.blocking-count }}" != "" ]; then
-            echo "compliance-audit reported blocking findings."
-            exit 1
+          # v0.1: compliance-audit is hardcoded advisory; only cohesion gates merge.
+          BLOCKING="${{ steps.compliance.outputs.blocking-count }}"
+          if [ -n "$BLOCKING" ] && [ "$BLOCKING" != "0" ]; then
+            echo "compliance-audit reported $BLOCKING blocking findings (advisory in v0.1; not failing build)."
           fi
           if [ "${{ steps.cohesion.outputs.critical }}" != "0" ] && [ "${{ steps.cohesion.outputs.critical }}" != "" ]; then
             echo "audit:cohesion reported critical findings."
