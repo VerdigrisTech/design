@@ -158,8 +158,7 @@ function expandInheritances(
   for (const { cellId, sourceIds } of inheritances) {
     const sourceCells = new Set<string>();
     for (const sid of sourceIds) {
-      const dot = sid.indexOf(".examples.") >= 0 ? sid : sid;
-      const sourceCell = dot.split(".").slice(0, 2).join(".");
+      const sourceCell = sid.split(".").slice(0, 2).join(".");
       if (sourceCell) sourceCells.add(sourceCell);
     }
     inheritsByCell.set(cellId, sourceCells);
@@ -170,8 +169,11 @@ function expandInheritances(
     while (stack.length) {
       const cur = stack.pop()!;
       if (visited.has(cur)) {
-        console.error(`[load-rules] inheritance cycle detected at "${cur}" (from "${cellId}"); refusing to expand`);
-        return;
+        // Throw, not return: a cycle is a configuration bug that must halt
+        // the audit. Returning early left a partially-expanded rule set in
+        // place, which is exactly the kind of silent-bypass condition the
+        // gate is supposed to prevent.
+        throw new Error(`[load-rules] inheritance cycle detected at "${cur}" (from "${cellId}"); fix rules/visual-rules.yml`);
       }
       visited.add(cur);
       const next = inheritsByCell.get(cur);

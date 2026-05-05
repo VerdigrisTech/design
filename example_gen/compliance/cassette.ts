@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync } from "node:fs";
 import path from "node:path";
-import { Cache } from "./cache.js";
+import { Cache, stableStringify } from "./cache.js";
 
 export interface CassetteEntry {
   request: unknown;
@@ -45,12 +45,6 @@ export class Cassette {
   isRecording(): boolean { return this.recording; }
 }
 
-function stableStringify(value: unknown): string {
-  if (value === null || typeof value !== "object") return JSON.stringify(value);
-  if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
-  const keys = Object.keys(value as Record<string, unknown>).sort();
-  return `{${keys.map((k) => `${JSON.stringify(k)}:${stableStringify((value as any)[k])}`).join(",")}}`;
-}
 
 export function defaultCassette(testCassetteDir: string): Cassette {
   return new Cassette(testCassetteDir, process.env.OPENAI_RECORD === "1");

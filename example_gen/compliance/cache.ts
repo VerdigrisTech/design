@@ -9,7 +9,7 @@ import { createHash } from "node:crypto";
 //   gpt-4o judgments are not served as gpt-4o-mini after a model swap.
 const CACHE_NAMESPACE_VERSION = "v2";
 
-function stableStringify(value: unknown): string {
+export function stableStringify(value: unknown): string {
   // JSON.stringify is order-sensitive on object keys, which makes the cache
   // hash silently change when an unrelated property-order refactor lands.
   // Walk the value, sorting object keys at every level, before stringifying.

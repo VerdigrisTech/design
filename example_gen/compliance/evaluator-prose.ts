@@ -39,6 +39,13 @@ export function extractProse(html: string): string {
   return [altText, bodyText].filter(Boolean).join(" ").trim();
 }
 
+const _warnedVoiceDirs = new Set<string>();
+function warnVoiceDirOnce(dir: string, msg: string): void {
+  if (_warnedVoiceDirs.has(dir)) return;
+  _warnedVoiceDirs.add(dir);
+  console.warn(`[evaluator-prose] failed to read ${dir}: ${msg} (degrading without voice profiles)`);
+}
+
 // Whitelist the recipe fields that get forwarded into the model prompt as
 // voice context. The recipes.yaml file may grow free-form fields like notes,
 // examples, or rationale that contain prose; forwarding the whole object
@@ -75,9 +82,11 @@ export function loadVoiceContext(repoRoot: string, genre: string): string {
       if (file) profiles.push(`# ${name}\n${readFileSync(path.join(teamDir, file), "utf8")}`);
     }
   } catch (e) {
-    // Dir may not exist; degrade gracefully but log once so a missing
-    // voice/team directory does not silently strip all profile context.
-    console.warn(`[evaluator-prose] failed to read ${teamDir}: ${(e as Error).message}`);
+    // Dir may not exist; degrade gracefully but log once per process so a
+    // missing voice/team directory does not silently strip all profile
+    // context. loadVoiceContext is called once per artifact, so naive
+    // logging would emit per-artifact spam in multi-file runs.
+    warnVoiceDirOnce(teamDir, (e as Error).message);
   }
   const raw = [
     `# Recipe: ${match.id ?? match.genre}`,
