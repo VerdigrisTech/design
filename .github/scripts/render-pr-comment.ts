@@ -41,12 +41,32 @@ if (existsSync(compliancePath)) {
     } else if (skipReason !== "") {
       sections.push(`skipped: ${skipReason}`);
     } else {
-      sections.push(`evaluated ${s.results?.length ?? 0} examples / ${(s.blockingCount ?? 0) === 0 ? "pass" : "fail"} / $${(s.totalCostUsd ?? 0).toFixed(2)} of $${(s.budgetUsd ?? 0).toFixed(2)}`);
+      const headline = s.budgetExhausted
+        ? "BUDGET EXHAUSTED -- audit incomplete"
+        : ((s.blockingCount ?? 0) === 0 ? "pass" : "fail");
+      sections.push(`evaluated ${s.results?.length ?? 0} examples / ${headline} / $${(s.totalCostUsd ?? 0).toFixed(2)} of $${(s.budgetUsd ?? 0).toFixed(2)}`);
       sections.push(`  Failures (advisory in v0.1)    : ${s.blockingCount ?? 0}`);
       sections.push(`  Advisory findings              : ${s.advisoryCount ?? 0}`);
       sections.push(`  Skipped                        : ${s.skippedCount ?? 0}`);
       sections.push(`  N/A (artifact lacked content)  : ${s.naCount ?? 0}`);
       sections.push(`  Passed                         : ${s.passedCount ?? 0}`);
+      const sups = Array.isArray(s.suppressions) ? s.suppressions : [];
+      if (sups.length > 0) {
+        const applied = sups.filter((r: any) => r.status === "applied").length;
+        const refused = sups.filter((r: any) => r.status === "refused-invariant").length;
+        const noMatch = sups.filter((r: any) => r.status === "no-match").length;
+        sections.push(`  Suppressions applied           : ${applied}`);
+        if (refused > 0) sections.push(`  Suppressions REFUSED (invariant): ${refused}`);
+        if (noMatch > 0) sections.push(`  Suppressions w/ no match       : ${noMatch}`);
+        sections.push("");
+        sections.push("Suppressions in this PR:");
+        for (const r of sups) {
+          const tag = r.status === "applied" ? "applied"
+            : r.status === "refused-invariant" ? "REFUSED"
+            : "no-match";
+          sections.push(`  [${tag}] ${r.ruleId} (${r.linear}) ${r.artifactPath}:${r.line} -- ${r.reason}`);
+        }
+      }
     }
     sections.push("");
   } catch (e) {

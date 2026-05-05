@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { loadRules } from "./load-rules.js";
-import { classifyArtifact, applicableRules } from "./classify.js";
+import { classifyArtifact, applicableRules, auditCellList } from "./classify.js";
 import { parseSuppressions } from "./suppression.js";
 import { runDeterministic } from "./evaluator-deterministic.js";
 import { runVisual } from "./evaluator-visual.js";
@@ -11,7 +11,7 @@ import { CostTracker } from "./cost-tracker.js";
 import { Cache } from "./cache.js";
 import { Cassette } from "./cassette.js";
 import { OpenAIClient } from "./openai-client.js";
-import type { EvalResult, RunSummary, Finding } from "./types.js";
+import type { EvalResult, RunSummary, Finding, SuppressionRecord, Suppression } from "./types.js";
 
 export interface RunOptions {
   repoRoot: string;
@@ -24,6 +24,7 @@ export interface RunOptions {
 export async function run(opts: RunOptions): Promise<RunSummary> {
   const rulesPath = path.join(opts.repoRoot, "rules/visual-rules.yml");
   const rules = loadRules(rulesPath);
+  auditCellList(rules);
   const cache = new Cache(path.join(opts.repoRoot, ".cache/compliance-audit"));
   const cassette = new Cassette(
     opts.cassetteDir ?? path.join(opts.repoRoot, "tests/compliance/cassettes"),
@@ -33,6 +34,7 @@ export async function run(opts: RunOptions): Promise<RunSummary> {
   const client = new OpenAIClient(cache, cassette, cost);
 
   const results: EvalResult[] = [];
+  const suppressionRecords: SuppressionRecord[] = [];
   for (const file of opts.files) {
     const startedAt = new Date().toISOString();
     const costBefore = cost.spent();
@@ -54,6 +56,15 @@ export async function run(opts: RunOptions): Promise<RunSummary> {
       findings.push(...(await runProse(artifact, applicable, opts.repoRoot, client)));
     }
     findings = applySuppressions(findings, suppressions);
+
+    // Build per-file suppression records for the run summary. Each parsed
+    // suppression resolves to one of: applied (downgraded a fail), refused
+    // (invariant rule, kept as fail), or no-match (typo/stale). Surfacing
+    // these in the JSON audit + PR comment removes the "silent bypass" risk.
+    for (const s of suppressions) {
+      suppressionRecords.push(classifySuppression(s, findings, file));
+    }
+
     results.push({
       artifact,
       findings,
@@ -77,9 +88,32 @@ export async function run(opts: RunOptions): Promise<RunSummary> {
     skippedCount: syn.skipped.length,
     passedCount: syn.passed.length,
     naCount: syn.na.length,
+    suppressedCount: suppressionRecords.filter((r) => r.status === "applied").length,
+    refusedSuppressionCount: suppressionRecords.filter((r) => r.status === "refused-invariant").length,
     totalCostUsd: cost.spent(),
     budgetUsd: opts.budgetUsd,
+    // Any per-rule "skipReason: budget" anywhere in the run means we hit the
+    // ceiling mid-evaluation and at least one rule did not run.
+    budgetExhausted: all.some((f) => f.skipReason === "budget"),
     blockingMode,
     results,
+    suppressions: suppressionRecords,
+  };
+}
+
+function classifySuppression(s: Suppression, findings: Finding[], file: string): SuppressionRecord {
+  const match = findings.find((f) => f.artifactPath === file && f.ruleId === s.ruleId);
+  let status: SuppressionRecord["status"];
+  if (!match) status = "no-match";
+  else if (match.status === "suppressed") status = "applied";
+  else if (match.status === "fail" && match.maturity === "invariant") status = "refused-invariant";
+  else status = "no-match";
+  return {
+    ruleId: s.ruleId,
+    artifactPath: file,
+    linear: s.linear,
+    reason: s.reason,
+    line: s.line,
+    status,
   };
 }

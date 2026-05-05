@@ -84,3 +84,32 @@ export function applicableRules(rules: Rule[], a: Artifact): Rule[] {
     return true;
   });
 }
+
+// Composition cells that are intentionally cross-cutting and apply to every
+// artifact regardless of medium (matrix, visual-signature, canvas text, site-
+// level patterns, etc.). Listed explicitly so the cell-drift auditor below
+// does not warn on them.
+const CROSS_CUTTING_CELLS = new Set([
+  "composition.matrix",
+  "composition.visual-signature",
+  "composition.canvas-text",
+  "composition.site-level",
+]);
+
+// Surface drift between the YAML cell list and ARTIFACT_BOUND_CELLS. Called
+// once at runner startup -- a missing cell prefix here means rules in a new
+// composition cell are silently treated as cross-cutting (apply to every
+// artifact). Warns rather than throws because the YAML may legitimately add a
+// cell before this constant is updated; the warning is the call to action.
+export function auditCellList(rules: Rule[]): void {
+  const seen = new Set<string>();
+  for (const r of rules) {
+    const m = /^(composition\.[a-z0-9-]+)\./.exec(r.id);
+    if (m) seen.add(m[1]!);
+  }
+  for (const cell of seen) {
+    if (ARTIFACT_BOUND_CELLS.includes(cell)) continue;
+    if (CROSS_CUTTING_CELLS.has(cell)) continue;
+    console.warn(`[classify] composition cell "${cell}" found in rules YAML but missing from both ARTIFACT_BOUND_CELLS and CROSS_CUTTING_CELLS in classify.ts; rules under it will apply to every artifact (add to one of those lists)`);
+  }
+}

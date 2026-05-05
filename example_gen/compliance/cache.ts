@@ -5,7 +5,9 @@ import { createHash } from "node:crypto";
 // Bump when the cache key formula or the entry shape changes so old entries
 // don't get served as fresh hits. Entries written under one version are
 // invisible to readers running another version.
-const CACHE_NAMESPACE_VERSION = "v1";
+//   v1 -> v2 (2026-05): keyOf inputs now include MODEL via openai-client so
+//   gpt-4o judgments are not served as gpt-4o-mini after a model swap.
+const CACHE_NAMESPACE_VERSION = "v2";
 
 function stableStringify(value: unknown): string {
   // JSON.stringify is order-sensitive on object keys, which makes the cache

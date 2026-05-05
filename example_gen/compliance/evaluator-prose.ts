@@ -22,16 +22,33 @@ The user message contains three fenced sections: <voice_context>...</voice_conte
 
 For each numbered yes/no question inside <questions>, answer ONLY with that number followed by YES or NO and a brief justification. Format: "1. YES <12-word reason>". YES = violation. NO = compliant.`;
 
+// Reserve a slice of the prose budget for alt text. Long body copy used to
+// starve alt text out by exceeding MAX_PROSE_CHARS before alt text was
+// concatenated -- which silently dropped exactly the surface where prompt-
+// injection attacks would land. Allocate alt text first, then fill from body.
+const ALT_TEXT_BUDGET_CHARS = 4_000;
+
 export function extractProse(html: string): string {
   const $ = loadHtml(html);
   $("script,style,noscript").remove();
-  const altText = $("img[alt]").map((_, el) => $(el).attr("alt")).get().join(" ");
-  const bodyText = $("body").text();
-  const combined = `${bodyText} ${altText}`
-    .replaceAll(/\s+/g, " ")
-    .trim();
-  return combined.slice(0, MAX_PROSE_CHARS);
+  const altRaw = $("img[alt]").map((_, el) => $(el).attr("alt")).get().join(" ");
+  const bodyRaw = $("body").text();
+  const altText = altRaw.replaceAll(/\s+/g, " ").trim().slice(0, ALT_TEXT_BUDGET_CHARS);
+  const remaining = Math.max(0, MAX_PROSE_CHARS - altText.length - 1); // -1 for the joining space
+  const bodyText = bodyRaw.replaceAll(/\s+/g, " ").trim().slice(0, remaining);
+  return [altText, bodyText].filter(Boolean).join(" ").trim();
 }
+
+// Whitelist the recipe fields that get forwarded into the model prompt as
+// voice context. The recipes.yaml file may grow free-form fields like notes,
+// examples, or rationale that contain prose; forwarding the whole object
+// would inject that prose into every prompt. List exactly what the model
+// needs.
+const RECIPE_WHITELIST_KEYS = [
+  "id", "genre", "voice_sources", "voices",
+  "tone", "posture", "register", "vocabulary", "rhythm",
+  "do", "dont", "do_not",
+];
 
 export function loadVoiceContext(repoRoot: string, genre: string): string {
   const recipesPath = path.join(repoRoot, "voice/recipes.yaml");
@@ -40,6 +57,10 @@ export function loadVoiceContext(repoRoot: string, genre: string): string {
   const list: any[] = Array.isArray(recipes) ? recipes : Object.entries(recipes).map(([k, v]) => ({ id: k, ...(v as object) }));
   const match = list.find((r: any) => r.genre === genre || r.id === genre);
   if (!match) return "";
+  const safeRecipe: Record<string, unknown> = {};
+  for (const k of RECIPE_WHITELIST_KEYS) {
+    if (k in match) safeRecipe[k] = match[k];
+  }
   const profileNames: string[] = match.voice_sources ?? match.voices ?? [];
   const teamDir = path.join(repoRoot, "voice/team");
   const profiles: string[] = [];
@@ -53,10 +74,14 @@ export function loadVoiceContext(repoRoot: string, genre: string): string {
       });
       if (file) profiles.push(`# ${name}\n${readFileSync(path.join(teamDir, file), "utf8")}`);
     }
-  } catch { /* dir may not exist; degrade gracefully */ }
+  } catch (e) {
+    // Dir may not exist; degrade gracefully but log once so a missing
+    // voice/team directory does not silently strip all profile context.
+    console.warn(`[evaluator-prose] failed to read ${teamDir}: ${(e as Error).message}`);
+  }
   const raw = [
     `# Recipe: ${match.id ?? match.genre}`,
-    JSON.stringify(match, null, 2),
+    JSON.stringify(safeRecipe, null, 2),
     "",
     "# Voice profiles",
     ...profiles,
@@ -88,7 +113,8 @@ export async function runProse(
       try {
         validatedQuestions.push({ idx: i, text: validateRulePrompt(batch[i]!.id, promptOf(batch[i]!)) });
       } catch (e) {
-        findings.push(skip(a, batch[i]!, "llm-error", `prompt validation: ${(e as Error).message}`));
+        // Prompt validation is a YAML/config issue, not an LLM failure.
+        findings.push(skip(a, batch[i]!, "config-error", `prompt validation: ${(e as Error).message}`));
       }
     }
     if (validatedQuestions.length === 0) continue;
@@ -142,7 +168,7 @@ function toFinding(a: Artifact, r: Rule, ans: "YES" | "NO" | null): Finding {
   if (ans === "YES") return { ...base, status: "fail", llmAnswer: ans, message: r.description };
   return { ...base, status: "pass", llmAnswer: ans };
 }
-function skip(a: Artifact, r: Rule, reason: "budget" | "render" | "llm-error", message: string): Finding {
+function skip(a: Artifact, r: Rule, reason: "budget" | "render" | "llm-error" | "config-error", message: string): Finding {
   return { ruleId: r.id, artifactPath: a.path, severity: r.severity, maturity: r.maturity, status: "skipped", skipReason: reason, message };
 }
 function chunk<T>(xs: T[], n: number): T[][] {

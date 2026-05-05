@@ -43,11 +43,17 @@ export class OpenAIClient {
     return this.client;
   }
 
+  // MODEL is part of every key. Without this, switching gpt-4o -> gpt-4o-mini
+  // via env var would serve cached gpt-4o judgments under the cheaper model.
+  // Bumped CACHE_NAMESPACE_VERSION to v2 in lockstep so old v1 hits are not
+  // visible after this change lands.
+  private keyFor(req: unknown): string { return Cache.keyOf({ model: MODEL, req }); }
+
   async callVision(req: VisionRequest): Promise<CallResult> {
-    return this.dispatch(Cache.keyOf(req), req, "vision", req.estimatedInputTokens, req.maxOutputTokens);
+    return this.dispatch(this.keyFor(req), req, "vision", req.estimatedInputTokens, req.maxOutputTokens);
   }
   async callText(req: TextRequest): Promise<CallResult> {
-    return this.dispatch(Cache.keyOf(req), req, "text", req.estimatedInputTokens, req.maxOutputTokens);
+    return this.dispatch(this.keyFor(req), req, "text", req.estimatedInputTokens, req.maxOutputTokens);
   }
 
   private async dispatch(
@@ -60,8 +66,12 @@ export class OpenAIClient {
     const cached = this.cache.get<CallResult>(cacheKey);
     if (cached) return { ...cached, fromCache: "cache" };
 
-    const cassetteKey = this.cassette.key(req);
+    const cassetteKey = this.cassette.key(MODEL, req);
     if (this.cassette.has(cassetteKey) && !this.cassette.isRecording()) {
+      // Defence-in-depth: cassette key already encodes (model, req), but also
+      // verify the persisted request payload matches the current one. A
+      // mismatch surfaces stale cassettes loudly instead of serving them.
+      this.cassette.assertRequestMatches(cassetteKey, req);
       const entry = this.cassette.read(cassetteKey);
       const result = entry.response as CallResult;
       this.cache.set(cacheKey, result);
@@ -102,7 +112,14 @@ export class OpenAIClient {
         if (attempt >= 2) throw e;
         const status = e?.status ?? 0;
         if (status >= 500 || status === 429) {
-          await new Promise((r) => setTimeout(r, 500 * attempt));
+          // Honor Retry-After when the server provides it; OpenAI returns
+          // seconds for 429s. Fall back to linear 500ms*attempt backoff.
+          const retryAfterRaw = e?.headers?.["retry-after"] ?? e?.response?.headers?.["retry-after"];
+          const retryAfterSec = typeof retryAfterRaw === "string" ? parseFloat(retryAfterRaw) : NaN;
+          const delayMs = Number.isFinite(retryAfterSec) && retryAfterSec > 0
+            ? Math.min(retryAfterSec * 1000, 30_000)
+            : 500 * attempt;
+          await new Promise((r) => setTimeout(r, delayMs));
           continue;
         }
         throw e;

@@ -84,7 +84,7 @@ async function main() {
   const badFindings = await runProse(artifact, badRules, repoRoot, client);
   assert.equal(badFindings.length, 1);
   assert.equal(badFindings[0]!.status, "skipped");
-  assert.equal(badFindings[0]!.skipReason, "llm-error");
+  assert.equal(badFindings[0]!.skipReason, "config-error");
   assert.match(badFindings[0]!.message ?? "", /prompt validation/);
 
   // Empty-prose artifact -> all rules return n/a, never call the model.
