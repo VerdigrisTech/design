@@ -8,12 +8,12 @@
 
 **Tech Stack:**
 - TypeScript via `tsx` (matches root `package.json` script convention)
-- `@anthropic-ai/sdk` — vision + text via `claude-opus-4-7`
+- `openai` SDK — vision + text via `gpt-4o`
 - `playwright` — already in repo; full-page HTML rendering
 - `cheerio` — HTML parsing for `<body data-genre>` + suppression-comment scanning
 - `yaml` — already used by `build/validate-rules.ts`; reuse the loader
 - Self-test pattern: tsx runner with fixtures dir + `expected.json`, mirrors `build/audit/test-cohesion.ts`
-- LLM cassettes: minimal homegrown recorder/player at `example_gen/compliance/cassette.ts`. `ANTHROPIC_RECORD=1` records to JSON; default plays back.
+- LLM cassettes: minimal homegrown recorder/player at `example_gen/compliance/cassette.ts`. `OPENAI_RECORD=1` records to JSON; default plays back.
 
 **Spec:** `example_gen/docs/superpowers/specs/2026-05-04-compliance-audit-design.md`
 
@@ -32,15 +32,15 @@
 | `evaluator-deterministic.ts` | Regex / value / values / min-max / pattern checks against HTML source |
 | `cost-tracker.ts` | Token counting, cost estimation, accumulator; pricing.json sidecar; budget gate |
 | `cache.ts` | Filesystem cache at `.cache/compliance-audit/`; sha256 keys |
-| `cassette.ts` | Anthropic SDK call recorder/player for tests |
-| `anthropic-client.ts` | Thin wrapper exposing `callVision()` and `callText()` with retry + cost recording + cache + cassette |
+| `cassette.ts` | OpenAI SDK call recorder/player for tests |
+| `openai-client.ts` | Thin wrapper exposing `callVision()` and `callText()` with retry + cost recording + cache + cassette |
 | `evaluator-visual.ts` | Playwright render; batched vision calls (≤8 yes/no per call); maps yes/no responses to findings |
 | `evaluator-prose.ts` | Prose extraction from HTML; voice-context loader; batched text calls |
 | `synthesize.ts` | Group findings by severity + maturity; compute blocking vs. advisory subsets per spec gate |
 | `reporter.ts` | Render `audits/compliance/{ts}-{sha}.{md,json}` + the compliance-audit section of the sticky PR comment |
 | `runner.ts` | Top-level orchestrator: walk pipeline, return `EvalResult` per file, write outputs |
 | `cli.ts` | Argument parsing; entry point for `npm run audit:compliance` |
-| `pricing.json` | `{ "input_per_1m": 15, "output_per_1m": 75, "image_per_unit": 0.0048 }` (claude-opus-4-7 list price; update on rate changes) |
+| `pricing.json` | `{ "input_per_1m_usd": 2.50, "output_per_1m_usd": 10.00 }` (gpt-4o list price; images are billed via input tokens, not a separate per-unit fee) |
 | `test-compliance.ts` | Self-test runner: invokes pipeline against fixtures, asserts findings match `expected.json` |
 | `README.md` | Operator notes |
 
@@ -63,7 +63,7 @@
 
 | File | Change |
 |---|---|
-| `package.json` | Add `audit:compliance`, `audit:compliance:smoke`, `test:compliance` scripts; add deps `@anthropic-ai/sdk`, `cheerio`, `yaml` |
+| `package.json` | Add `audit:compliance`, `audit:compliance:smoke`, `test:compliance` scripts; add deps `openai`, `cheerio`, `yaml`, `fast-glob` |
 | `.gitignore` | Add `.cache/compliance-audit/` |
 | `_layouts/default.html` | Sidebar entry for `audits/compliance/` (mirrors cohesion-audit sidebar entry) |
 | `CLAUDE.md` | Add `audit:compliance` + `test:compliance` to Development Commands |
@@ -90,7 +90,7 @@ Spec lives on branch `feat/compliance-audit-spec`. Implementation continues on t
 - [ ] **Step 1: Install runtime deps**
 
 ```bash
-npm install --save-dev @anthropic-ai/sdk cheerio yaml @types/cheerio fast-glob
+npm install --save-dev openai cheerio yaml @types/cheerio fast-glob
 ```
 
 - [ ] **Step 2: Add scripts to `package.json`**
@@ -115,11 +115,10 @@ Append:
 
 ```json
 {
-  "model": "claude-opus-4-7",
-  "input_per_1m_usd": 15.00,
-  "output_per_1m_usd": 75.00,
-  "image_per_unit_usd": 0.0048,
-  "_note": "Update when Anthropic price list changes. Image rate is per ~1.15M-pixel image at standard resolution."
+  "model": "gpt-4o",
+  "input_per_1m_usd": 2.50,
+  "output_per_1m_usd": 10.00,
+  "_note": "Update when OpenAI price list changes. Images are billed as input tokens (counted in usage.prompt_tokens) so no separate per-image rate is needed."
 }
 ```
 
@@ -139,7 +138,7 @@ Per-artifact compliance evaluator. Runs in CI via `npm run audit:compliance` and
 - `npm run audit:compliance -- categories/slides/examples/foo.html` — local single-file run
 - `npm run audit:compliance:smoke` — full live pipeline against one fixture (uses real LLM budget)
 - `npm run test:compliance` — fixture self-test using recorded cassettes (no live LLM calls)
-- `ANTHROPIC_RECORD=1 npm run test:compliance` — re-record cassettes (requires `ANTHROPIC_API_KEY`)
+- `OPENAI_RECORD=1 npm run test:compliance` — re-record cassettes (requires `OPENAI_API_KEY`)
 
 ## Output
 
@@ -749,12 +748,12 @@ import { CostTracker } from "./cost-tracker.js";
 import { strict as assert } from "node:assert";
 
 const t = new CostTracker(40);
-const est1 = t.estimate({ inputTokens: 5000, maxOutputTokens: 200, images: 1 });
+const est1 = t.estimate({ inputTokens: 5000, maxOutputTokens: 200 });
 assert.ok(est1 > 0 && est1 < 1, `estimate should be small for 1 call: got ${est1}`);
 assert.ok(t.canAfford(est1), "budget should accommodate first call");
-t.record({ inputTokens: 5000, outputTokens: 150, images: 1 });
+t.record({ inputTokens: 5000, outputTokens: 150 });
 assert.ok(t.spent() > 0);
-const huge = t.estimate({ inputTokens: 10_000_000, maxOutputTokens: 1000, images: 0 });
+const huge = t.estimate({ inputTokens: 10_000_000, maxOutputTokens: 1000 });
 assert.ok(!t.canAfford(huge), "should reject batch beyond budget");
 console.log("PASS: cost tracker");
 ```
@@ -770,14 +769,13 @@ import { fileURLToPath } from "node:url";
 interface Pricing {
   input_per_1m_usd: number;
   output_per_1m_usd: number;
-  image_per_unit_usd: number;
 }
 
 const PRICING_PATH = path.join(path.dirname(fileURLToPath(import.meta.url)), "pricing.json");
 const PRICING: Pricing = JSON.parse(readFileSync(PRICING_PATH, "utf8"));
 
-interface UsageEstimate { inputTokens: number; maxOutputTokens: number; images?: number; }
-interface UsageActual { inputTokens: number; outputTokens: number; images?: number; }
+interface UsageEstimate { inputTokens: number; maxOutputTokens: number; }
+interface UsageActual { inputTokens: number; outputTokens: number; }
 
 export class CostTracker {
   private accumulated = 0;
@@ -786,15 +784,13 @@ export class CostTracker {
   estimate(u: UsageEstimate): number {
     return (
       (u.inputTokens / 1_000_000) * PRICING.input_per_1m_usd +
-      (u.maxOutputTokens / 1_000_000) * PRICING.output_per_1m_usd +
-      (u.images ?? 0) * PRICING.image_per_unit_usd
+      (u.maxOutputTokens / 1_000_000) * PRICING.output_per_1m_usd
     );
   }
   record(u: UsageActual): number {
     const cost =
       (u.inputTokens / 1_000_000) * PRICING.input_per_1m_usd +
-      (u.outputTokens / 1_000_000) * PRICING.output_per_1m_usd +
-      (u.images ?? 0) * PRICING.image_per_unit_usd;
+      (u.outputTokens / 1_000_000) * PRICING.output_per_1m_usd;
     this.accumulated += cost;
     return cost;
   }
@@ -899,7 +895,7 @@ export class Cassette {
 }
 
 export function defaultCassette(testCassetteDir: string): Cassette {
-  return new Cassette(testCassetteDir, process.env.ANTHROPIC_RECORD === "1");
+  return new Cassette(testCassetteDir, process.env.OPENAI_RECORD === "1");
 }
 ```
 
@@ -913,21 +909,21 @@ git commit -m "feat(compliance-audit): cache and cassette infrastructure"
 
 ---
 
-### Task 9: Anthropic client wrapper
+### Task 9: OpenAI client wrapper
 
 **Files:**
-- Create: `example_gen/compliance/anthropic-client.ts`
+- Create: `example_gen/compliance/openai-client.ts`
 
 - [ ] **Step 1: Implement (no separate test — exercised through evaluators with cassettes)**
 
 ```typescript
-// example_gen/compliance/anthropic-client.ts
-import Anthropic from "@anthropic-ai/sdk";
+// example_gen/compliance/openai-client.ts
+import OpenAI from "openai";
+import { Cache } from "./cache.js";
 import type { Cassette } from "./cassette.js";
-import type { Cache } from "./cache.js";
 import type { CostTracker } from "./cost-tracker.js";
 
-const MODEL = process.env.COMPLIANCE_AUDIT_MODEL ?? "claude-opus-4-7";
+const MODEL = process.env.COMPLIANCE_AUDIT_MODEL ?? "gpt-4o";
 
 export interface VisionRequest {
   imagePngBase64: string;
@@ -948,37 +944,37 @@ export interface CallResult {
   fromCache: "live" | "cassette" | "cache";
 }
 
-export class AnthropicClient {
-  private client: Anthropic | null = null;
+export class BudgetExceededError extends Error {}
+
+export class OpenAIClient {
+  private client: OpenAI | null = null;
   constructor(
     private readonly cache: Cache,
     private readonly cassette: Cassette,
     private readonly cost: CostTracker,
   ) {}
 
-  private getClient(): Anthropic {
+  private getClient(): OpenAI {
     if (!this.client) {
-      const apiKey = process.env.ANTHROPIC_API_KEY;
-      if (!apiKey) throw new Error("ANTHROPIC_API_KEY required for live calls");
-      this.client = new Anthropic({ apiKey });
+      const apiKey = process.env.OPENAI_API_KEY;
+      if (!apiKey) throw new Error("OPENAI_API_KEY required for live calls");
+      this.client = new OpenAI({ apiKey });
     }
     return this.client;
   }
 
   async callVision(req: VisionRequest): Promise<CallResult> {
-    const { Cache } = await import("./cache.js");
-    return this.dispatch(Cache.keyOf(req), req, "vision", req.estimatedInputTokens, req.maxOutputTokens, 1);
+    return this.dispatch(Cache.keyOf(req), req, "vision", req.estimatedInputTokens, req.maxOutputTokens);
   }
   async callText(req: TextRequest): Promise<CallResult> {
-    const { Cache } = await import("./cache.js");
-    return this.dispatch(Cache.keyOf(req), req, "text", req.estimatedInputTokens, req.maxOutputTokens, 0);
+    return this.dispatch(Cache.keyOf(req), req, "text", req.estimatedInputTokens, req.maxOutputTokens);
   }
 
   private async dispatch(
     cacheKey: string,
     req: VisionRequest | TextRequest,
     kind: "vision" | "text",
-    estIn: number, maxOut: number, images: number,
+    estIn: number, maxOut: number,
   ): Promise<CallResult> {
     const cached = this.cache.get<CallResult>(cacheKey);
     if (cached) return { ...cached, fromCache: "cache" };
@@ -991,7 +987,7 @@ export class AnthropicClient {
       return { ...result, fromCache: "cassette" };
     }
 
-    const estCost = this.cost.estimate({ inputTokens: estIn, maxOutputTokens: maxOut, images });
+    const estCost = this.cost.estimate({ inputTokens: estIn, maxOutputTokens: maxOut });
     if (!this.cost.canAfford(estCost)) {
       throw new BudgetExceededError(`would exceed budget: estimated $${estCost.toFixed(3)}, spent $${this.cost.spent().toFixed(3)}`);
     }
@@ -1000,10 +996,12 @@ export class AnthropicClient {
     while (true) {
       try {
         const resp = await this.live(req, kind);
-        this.cost.record({ inputTokens: resp.usage.input_tokens, outputTokens: resp.usage.output_tokens, images });
+        const inputTokens = resp.usage?.prompt_tokens ?? 0;
+        const outputTokens = resp.usage?.completion_tokens ?? 0;
+        this.cost.record({ inputTokens, outputTokens });
         const result: CallResult = {
-          text: resp.content.map((c: any) => c.type === "text" ? c.text : "").join(""),
-          usage: { inputTokens: resp.usage.input_tokens, outputTokens: resp.usage.output_tokens },
+          text: resp.choices[0]?.message?.content ?? "",
+          usage: { inputTokens, outputTokens },
           fromCache: "live",
         };
         if (this.cassette.isRecording()) this.cassette.write(cassetteKey, { request: req, response: result });
@@ -1022,43 +1020,42 @@ export class AnthropicClient {
     }
   }
 
-  private async live(req: VisionRequest | TextRequest, kind: "vision" | "text"): Promise<any> {
-    const messages: Anthropic.Messages.MessageParam[] = [];
+  private async live(req: VisionRequest | TextRequest, kind: "vision" | "text") {
+    const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
+      { role: "system", content: req.systemPrompt },
+    ];
     if (kind === "vision") {
       const v = req as VisionRequest;
       messages.push({
         role: "user",
         content: [
-          { type: "image", source: { type: "base64", media_type: "image/png", data: v.imagePngBase64 } },
           { type: "text", text: v.userPrompt },
+          { type: "image_url", image_url: { url: `data:image/png;base64,${v.imagePngBase64}`, detail: "high" } },
         ],
       });
     } else {
       messages.push({ role: "user", content: req.userPrompt });
     }
-    return this.getClient().messages.create({
+    return this.getClient().chat.completions.create({
       model: MODEL,
       max_tokens: req.maxOutputTokens,
-      system: req.systemPrompt,
       messages,
     });
   }
 }
-
-export class BudgetExceededError extends Error {}
 ```
 
 - [ ] **Step 2: Type-check**
 
 ```bash
-npx tsc --noEmit example_gen/compliance/anthropic-client.ts
+npx tsc --noEmit example_gen/compliance/openai-client.ts
 ```
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add example_gen/compliance/anthropic-client.ts
-git commit -m "feat(compliance-audit): anthropic client with cassette+cache+retry+budget"
+git add example_gen/compliance/openai-client.ts
+git commit -m "feat(compliance-audit): openai client with cassette+cache+retry+budget"
 ```
 
 ---
@@ -1076,15 +1073,15 @@ git commit -m "feat(compliance-audit): anthropic client with cassette+cache+retr
 // example_gen/compliance/evaluator-visual.ts
 import { chromium, type Browser } from "playwright";
 import type { Artifact, Finding, Rule } from "./types.js";
-import type { AnthropicClient } from "./anthropic-client.js";
-import { BudgetExceededError } from "./anthropic-client.js";
+import type { OpenAIClient } from "./openai-client.js";
+import { BudgetExceededError } from "./openai-client.js";
 
 const BATCH_SIZE = 8;
 const MAX_HEIGHT_PX = 8000;
 
 const SYSTEM = `You are a strict design-system auditor. For each numbered yes/no question about the supplied screenshot, answer ONLY with that number followed by YES or NO and a brief justification. Format: "1. YES — <12-word reason>". Convention: YES = violation found (rule fails). NO = condition met (rule passes). Do not hedge.`;
 
-export async function runVisual(a: Artifact, rules: Rule[], client: AnthropicClient): Promise<Finding[]> {
+export async function runVisual(a: Artifact, rules: Rule[], client: OpenAIClient): Promise<Finding[]> {
   const visual = rules.filter((r) => r.evaluatorClass === "visual-llm");
   if (visual.length === 0) return [];
 
@@ -1217,8 +1214,8 @@ import { readFileSync, readdirSync } from "node:fs";
 import { parse as parseYaml } from "yaml";
 import path from "node:path";
 import type { Artifact, Finding, Rule } from "./types.js";
-import type { AnthropicClient } from "./anthropic-client.js";
-import { BudgetExceededError } from "./anthropic-client.js";
+import type { OpenAIClient } from "./openai-client.js";
+import { BudgetExceededError } from "./openai-client.js";
 
 const BATCH_SIZE = 8;
 const MIN_PROSE_CHARS = 50;
@@ -1260,7 +1257,7 @@ export function loadVoiceContext(repoRoot: string, genre: string): string {
 }
 
 export async function runProse(
-  a: Artifact, rules: Rule[], repoRoot: string, client: AnthropicClient,
+  a: Artifact, rules: Rule[], repoRoot: string, client: OpenAIClient,
 ): Promise<Finding[]> {
   const prose = extractProse(a.html);
   const proseRules = rules.filter((r) => r.evaluatorClass === "prose-llm");
@@ -1529,7 +1526,7 @@ import { applySuppressions, synthesize } from "./synthesize.js";
 import { CostTracker } from "./cost-tracker.js";
 import { Cache } from "./cache.js";
 import { Cassette } from "./cassette.js";
-import { AnthropicClient } from "./anthropic-client.js";
+import { OpenAIClient } from "./openai-client.js";
 import type { EvalResult, RunSummary, Finding } from "./types.js";
 
 export interface RunOptions {
@@ -1544,9 +1541,9 @@ export async function run(opts: RunOptions): Promise<RunSummary> {
   const rulesPath = path.join(opts.repoRoot, "rules/visual-rules.yml");
   const rules = loadRules(rulesPath);
   const cache = new Cache(path.join(opts.repoRoot, ".cache/compliance-audit"));
-  const cassette = new Cassette(opts.cassetteDir ?? path.join(opts.repoRoot, "tests/compliance/cassettes"), process.env.ANTHROPIC_RECORD === "1");
+  const cassette = new Cassette(opts.cassetteDir ?? path.join(opts.repoRoot, "tests/compliance/cassettes"), process.env.OPENAI_RECORD === "1");
   const cost = new CostTracker(opts.budgetUsd);
-  const client = new AnthropicClient(cache, cassette, cost);
+  const client = new OpenAIClient(cache, cassette, cost);
 
   const results: EvalResult[] = [];
   for (const file of opts.files) {
@@ -1851,7 +1848,7 @@ In the `build` job, after `npm run validate:rules`, add:
       - name: Audit compliance
         id: compliance
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           COMPLIANCE_AUDIT_BUDGET_USD: "40"
           COMPLIANCE_AUDIT_BLOCKING: "true"
         run: |
@@ -1936,7 +1933,7 @@ For every PR with findings, either fix in the same PR or file a tracked ticket. 
 
 1. **False positive on a visual rule.** Inspect the JSON report — `findings[].llmAnswer` shows the model's verbatim answer. If misjudged, file a Linear ticket; if persistent across runs, propose downgrading the rule's `maturity` to `experimental` until the prompt is improved.
 2. **Skipped rules ("budget" or "render").** Re-run locally with `npm run audit:compliance -- <file>` and inspect. Render failures usually mean the HTML references missing assets — fix the artifact.
-3. **Cassette drift.** If `npm run test:compliance` fails after a rule prompt change, re-record: `ANTHROPIC_RECORD=1 npm run test:compliance`.
+3. **Cassette drift.** If `npm run test:compliance` fails after a rule prompt change, re-record: `OPENAI_RECORD=1 npm run test:compliance`.
 
 ## Updating model pricing
 
@@ -1960,9 +1957,9 @@ Edit `example_gen/compliance/pricing.json`. Cost-tracker reads it at startup.
 
 cohesion-audit (PR #47) validates the design system itself for cross-cell drift; it is fully deterministic. compliance-audit validates a *committed example artifact* against rules and is LLM-first by necessity (115 of 196 rules use `llm_eval`). Different problem, different abstraction. compliance-audit reuses cohesion-audit's reporting+skill conventions but forks the runner.
 
-## Why claude-opus-4-7 (single model)
+## Why gpt-4o (single model)
 
-The repo already runs on Claude Code; reusing the same vendor avoids a second auth surface. claude-opus-4-7 handles both the vision and prose paths. If costs balloon or a cheaper model handles a subset cleanly, route by `evaluatorClass` to a smaller model in v0.2.
+A single multimodal model handles both visual and prose evaluation paths, keeping the auth surface and cost model simple. If costs balloon or a cheaper model handles a subset cleanly, route by `evaluatorClass` to a smaller model in v0.2.
 
 ## v0.2 backlog
 
@@ -1991,7 +1988,7 @@ git commit -m "feat(compliance-audit): claude code skill files"
 - [ ] **Step 1: Run baseline**
 
 ```bash
-ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY npm run audit:compliance -- --baseline
+OPENAI_API_KEY=$OPENAI_API_KEY npm run audit:compliance -- --baseline
 ```
 
 Expected: produces a JSON+MD pair under `audits/compliance/`. Rename the JSON output:
@@ -2067,7 +2064,7 @@ The PR is mergeable when:
 
 1. `npm run validate:rules` — green
 2. `npm run audit:cohesion` — 0 critical
-3. `npm run audit:compliance` (with `ANTHROPIC_API_KEY`) — runs to completion under $40 budget; blocking count 0 on the in-scope examples (or the team has explicitly decided to launch advisory-mode and `COMPLIANCE_AUDIT_BLOCKING=false`)
+3. `npm run audit:compliance` (with `OPENAI_API_KEY`) — runs to completion under $40 budget; blocking count 0 on the in-scope examples (or the team has explicitly decided to launch advisory-mode and `COMPLIANCE_AUDIT_BLOCKING=false`)
 4. `npm run test:compliance` — fixtures pass
 5. `npm run audit:compliance:smoke` — one fixture passes live
 6. Branch protection on `main` requires `compliance-audit`, `audit:cohesion`, and `validate:rules` status checks (configure in repo settings after first green run on PR)

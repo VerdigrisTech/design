@@ -119,7 +119,7 @@ The rules file uses underscore form (`pilot_kickoff`); HTML uses hyphen form (`p
 
 Each step is a separate function in a single TS module. No agent fan-out, no per-rule subprocess.
 
-**Models:** Anthropic `claude-opus-4-7` for vision (visual-LLM batches) and text (prose-LLM batches). Single SDK (`@anthropic-ai/sdk`). The repo already runs on Claude Code; no second-vendor account or budget needed. Model id is configurable via env var `COMPLIANCE_AUDIT_MODEL`.
+**Models:** OpenAI `gpt-4o` for vision (visual-LLM batches) and text (prose-LLM batches). Single SDK (`openai`). Model id is configurable via env var `COMPLIANCE_AUDIT_MODEL`. API key from env var `OPENAI_API_KEY`.
 
 **LLM-call retry policy:** on transient error (5xx, rate limit) retry once with exponential backoff. On second failure, mark the batch's rules as "skipped — LLM error" and continue. Do not retry indefinitely — silent budget burn is worse than incomplete coverage.
 
@@ -131,7 +131,7 @@ Each step is a separate function in a single TS module. No agent fan-out, no per
 
 - Hard cap: $40/PR (env var `COMPLIANCE_AUDIT_BUDGET_USD`, configurable in CI workflow).
 - Realistic spend per PR (1–3 examples, ~80 applicable rules): $5–$12.
-- Estimated-cost formula per batch: `(input_tokens × input_rate_per_token) + (max_output_tokens × output_rate_per_token)`. Token counts are computed from the actual prompt + screenshot (vision) or prompt + prose (text) before each call. Rates are read from a small `pricing.json` next to the runner; updates are a manual edit when Anthropic prices change.
+- Estimated-cost formula per batch: `(input_tokens × input_rate_per_token) + (max_output_tokens × output_rate_per_token)`. Token counts are computed from the actual prompt + screenshot (vision) or prompt + prose (text) before each call. Rates are read from a small `pricing.json` next to the runner; updates are a manual edit when OpenAI prices change.
 - Cache key: `sha256(html_file_sha || rule_id || normalized_test_block || voice_recipe_id)`. The `voice_recipe_id` is the recipe name resolved from the artifact's `data-genre` (one recipe per genre via `voice/recipes.yaml`); the recipe's referenced team profile contents are folded into `normalized_test_block`. Cache hits cost $0. Hit rate is admitted to be low (15–25%) — cache exists for retry/rerun cases, not as a primary cost lever. Cache backend: filesystem at `.cache/compliance-audit/`, gitignored.
 - **Local `--budget` overrides do not affect CI.** The CI workflow always uses `COMPLIANCE_AUDIT_BUDGET_USD`; the local CLI flag exists for cost-controlled local exploration only and cannot lower the CI gate's effective coverage. CI logs show the budget value used.
 
