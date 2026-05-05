@@ -36,13 +36,21 @@ All rules in `rules/visual-rules.yml` whose applicability filter resolves to the
 
 ### Rule classes by evaluator path
 
-| Class | How identified | Evaluator |
-|---|---|---|
-| Deterministic | `test.regex`, `test.value`, `test.values`, `test.min`/`max`, `test.pattern` | Inline TS — no LLM |
-| Visual LLM | `test.llm_eval` AND rule namespace ∈ `{brand, color, typography, components, elevation, accessibility, video, visualizations, three_d_composition}` | Vision model on rendered HTML screenshot |
-| Prose LLM | `test.llm_eval` AND rule namespace ∈ `{voice, brand_rejections.voice, composition.*.voice}` OR rule prompt references diction/tone/audience-fit | Text model with extracted prose + relevant `voice/team/*.yaml` profiles loaded as context |
+Rules come from a single source: `rules/visual-rules.yml`. The `voice/recipes.yaml` and `voice/team/*.yaml` files are **evaluation context**, not rule sources.
 
-The classifier is a deterministic dispatch — not LLM triage. Each rule's class is computed once at startup from its id namespace and prompt text. A rule with both visual and prose elements is run twice and both must pass.
+Every top-level namespace in `rules/visual-rules.yml` routes to exactly one default class. The complete partition for v0.1:
+
+| Default class | Top-level namespaces |
+|---|---|
+| Visual LLM | `brand_rejections` (visual subkeys), `color`, `typography`, `spacing`, `motion`, `components`, `breakpoints`, `elevation`, `accessibility`, `device_accessibility`, `video`, `visualizations`, `three_d_composition` |
+| Prose LLM | `composition` (when rule id contains `.voice.`, `.diction.`, `.tone.`, or `.audience-fit.`); `brand_rejections.voice` subtree |
+| Deterministic | Any rule whose `test:` block uses `regex`, `value`, `values`, `min`/`max`, or `pattern` (independent of namespace) |
+
+Resolution order at startup: (a) if `test:` is deterministic, classify as Deterministic; (b) else if rule id matches the prose substring set above, classify as Prose LLM; (c) else classify as Visual LLM. The substring set is the only "soft" signal in the classifier and is enumerated explicitly above — no free-form prompt-text inspection.
+
+A rule that should run as both visual and prose (rare) declares `evaluator: ["visual", "prose"]` as a peer of `test:`. The runner runs both and both must pass. v0.1 does not require this field on any existing rule; it's a forward-compat hook.
+
+Unknown namespaces (added after v0.1 ships) emit a warning at startup and default to Visual LLM. The validator (`build/validate-rules.ts`) gains a check that every namespace is in the partition above and fails CI if not.
 
 ## Trigger
 
@@ -61,7 +69,12 @@ A PR that only touches docs / tokens / build is not triggered.
 - `voice/recipes.yaml` and `voice/team/*.yaml` at HEAD (for prose evaluator).
 - Repo metadata (PR number, head SHA, base SHA).
 
-The HTML is parsed for `<body>` attributes — `data-genre`, `data-confidentiality`, optional `data-type` — to determine applicable rules. **No YAML frontmatter is parsed; examples don't use it.**
+The HTML is parsed for `<body>` attributes — `data-genre`, `data-confidentiality` — to determine applicable rules. **No YAML frontmatter is parsed; examples don't use it.** The artifact's *type* is derived from its file path (`categories/<type>/examples/*.html`), not from a DOM attribute. This file-path → type mapping is the single source for type-scoped rule routing:
+
+| Path prefix | Type | Type-scoped rule namespaces |
+|---|---|---|
+| `categories/slides/examples/` | `slides` | `composition.persuade-pitch`, `composition.slides` |
+| `categories/one-pagers/examples/` | `one-pagers` | `composition.one-pager` |
 
 ## Genre normalization
 
@@ -70,24 +83,34 @@ The rules file uses underscore form (`pilot_kickoff`); HTML uses hyphen form (`p
 ## Pipeline
 
 ```
-1. classify       – read HTML, extract data-genre, dispatch rules into deterministic / visual-LLM / prose-LLM buckets
+1. classify       – read HTML, extract data-genre, derive type from path, dispatch rules into deterministic / visual-LLM / prose-LLM buckets
 2. det-eval       – run deterministic rules inline; collect findings
-3. visual-batch   – render the HTML to a screenshot (Playwright headless, full-page, 2x DPR), batch ≤8 yes/no rules per vision call, collect findings
-4. prose-batch    – extract prose from HTML (text content of body, ignoring code/style/script), load voice context, batch ≤8 yes/no rules per text call, collect findings
-5. cost-gate      – before each LLM batch, check accumulated cost vs. $40 cap; if remaining < estimated batch cost, stop LLM evaluation, mark remaining rules as "skipped — budget exceeded", continue to synthesize
-6. synthesize     – group findings by severity + maturity; compute blocking vs. advisory subsets
-7. report         – write audits/compliance/{ts}-{sha}.{md,json}; render markdown for PR comment
-8. publish        – post or update sticky PR comment via gh CLI; set GitHub status check to red/green/neutral per blocking-mode
+3. render         – Playwright headless, viewport 1440×900, deviceScaleFactor 2, full-page screenshot capped at 8000px height. Render timeout 60s. On timeout/error: mark all visual-LLM rules as "skipped — render failed", continue.
+4. visual-batch   – batch ≤8 yes/no rules per vision call, collect findings
+5. prose-batch    – extract prose (HTML text nodes minus <script>,<style>; entities decoded; whitespace collapsed; alt-text preserved; output capped at 32k chars); if extraction yields <50 chars, mark all prose rules as "not applicable — no text content"; otherwise load voice context, batch ≤8 yes/no rules per text call
+6. cost-gate      – evaluated before EACH LLM call (visual or prose). Estimated cost = (input_tokens × input_rate) + (max_output_tokens × output_rate). If accumulated_cost + estimated_next > budget, skip remaining LLM calls, mark rules "skipped — budget exceeded"
+7. synthesize     – group findings by severity + maturity; compute blocking vs. advisory subsets
+8. report         – write audits/compliance/{ts}-{sha}.{md,json}; render markdown for PR comment
+9. publish        – post or update sticky PR comment via gh CLI; set GitHub status check to red/green/neutral per blocking-mode
 ```
 
-Each step is a separate function in a single TS module. No agent fan-out, no per-rule subprocess. The "team of agents" framing is wrong for this workload — the rules are atomic, the LLM calls are batched, the synthesis is straightforward grouping.
+Each step is a separate function in a single TS module. No agent fan-out, no per-rule subprocess.
+
+**Models:** Anthropic `claude-opus-4-7` for vision (visual-LLM batches) and text (prose-LLM batches). Single SDK (`@anthropic-ai/sdk`). The repo already runs on Claude Code; no second-vendor account or budget needed. Model id is configurable via env var `COMPLIANCE_AUDIT_MODEL`.
+
+**LLM-call retry policy:** on transient error (5xx, rate limit) retry once with exponential backoff. On second failure, mark the batch's rules as "skipped — LLM error" and continue. Do not retry indefinitely — silent budget burn is worse than incomplete coverage.
+
+**Skipped rules and the gate:** skipped rules (any reason — budget, render failure, LLM error) never block. The blocking gate only fires on rules that completed and produced a finding. The PR comment header explicitly counts skipped rules so reviewers can see coverage.
+
+**Maturity default:** rules without an explicit `maturity` field are treated as `rule` (per `CLAUDE.md` Glossary), and therefore are eligible to block.
 
 ## Cost model
 
-- Hard cap: $40/PR (configurable via env var).
+- Hard cap: $40/PR (env var `COMPLIANCE_AUDIT_BUDGET_USD`, configurable in CI workflow).
 - Realistic spend per PR (1–3 examples, ~80 applicable rules): $5–$12.
-- Cache key: `sha256(html_content + rule_id + rule_test_block + voice_profile_set)`. Cache hits cost $0. Real-world hit rate likely 15–25% (low; cache is for retry/rerun cases, not a primary cost lever).
-- If estimated cost of next batch would exceed remaining budget, the runner skips remaining LLM rules, reports those as "skipped — budget exceeded," and writes a banner in the PR comment. **Skipped rules do not contribute to pass/fail.** A skipped error-severity rule does NOT block.
+- Estimated-cost formula per batch: `(input_tokens × input_rate_per_token) + (max_output_tokens × output_rate_per_token)`. Token counts are computed from the actual prompt + screenshot (vision) or prompt + prose (text) before each call. Rates are read from a small `pricing.json` next to the runner; updates are a manual edit when Anthropic prices change.
+- Cache key: `sha256(html_file_sha || rule_id || normalized_test_block || voice_recipe_id)`. The `voice_recipe_id` is the recipe name resolved from the artifact's `data-genre` (one recipe per genre via `voice/recipes.yaml`); the recipe's referenced team profile contents are folded into `normalized_test_block`. Cache hits cost $0. Hit rate is admitted to be low (15–25%) — cache exists for retry/rerun cases, not as a primary cost lever. Cache backend: filesystem at `.cache/compliance-audit/`, gitignored.
+- **Local `--budget` overrides do not affect CI.** The CI workflow always uses `COMPLIANCE_AUDIT_BUDGET_USD`; the local CLI flag exists for cost-controlled local exploration only and cannot lower the CI gate's effective coverage. CI logs show the budget value used.
 
 ## Blocking gate
 
@@ -110,7 +133,11 @@ Single mechanism: inline HTML comment in the artifact.
 <!-- compliance-audit:ignore brand.visual.no-generic-imagery reason="approved by Mark for Apex pilot" linear="Z2O-1402" -->
 ```
 
-Required fields: `<rule-id>`, `reason="<text>"`, `linear="<ticket>"`. The `linear:` field is **mandatory** — no Linear ticket, no suppression. Each suppression is logged in the audit report (file, rule, reason, ticket, PR that introduced it). v0.2 may add a `.ignore.yaml` for batch-level suppressions if a real need emerges; v0.1 ships only the inline form to keep the suppression set auditable.
+Required fields: `<rule-id>`, `reason="<text>"` (≥10 chars), `linear="<ticket>"` matching `^Z2O-\d+$`. The runner enforces these as **syntax** only — it does not call the Linear API to verify the ticket exists, is open, or is in the right project. v0.2 may add a Linear-API verifier; v0.1 trades semantic enforcement for zero external dependency at runtime.
+
+Each suppression is logged in the audit JSON report (file, rule, reason, ticket, PR that introduced it). The PR comment lists active suppressions in a dedicated section so reviewers can challenge them in code review. A future cleanup audit can prosecute `linear=` references against actual Linear state.
+
+v0.2 may add a `.ignore.yaml` for batch-level suppressions if a real need emerges; v0.1 ships only the inline form to keep the suppression set auditable.
 
 ## PR comment format
 
@@ -172,9 +199,39 @@ tests/compliance/fixtures/         – seeded passing + failing examples for sel
 - **Steal from `build/validate-rules.ts`:** rule-file loader and YAML parser. Do not reimplement YAML parsing.
 - **Fork the runner.** cohesion-audit's `cohesion.ts` is a deterministic walker. Compliance-audit's runner is an LLM-batching pipeline with cost accounting. Different abstraction; reusing the cohesion shape would compromise both.
 
+## Day-one bootstrap
+
+Before the workflow is enabled on real PRs, the runner is invoked once over all in-scope examples (`npm run audit:compliance -- "categories/{slides,one-pagers}/examples/*.html" --baseline`). This produces `audits/compliance/baseline-{sha}.json`, an inventory of pre-existing violations. The baseline is committed to the repo in the same PR that enables the workflow.
+
+The baseline is **diagnostic**, not exonerating: it does NOT auto-suppress any rule. Its purpose is to make the day-one violation set visible before the workflow ships, so the team can decide whether to (a) fix the worst offenders in the same PR, (b) launch with `COMPLIANCE_AUDIT_BLOCKING=false` for a defined grace period, or (c) bulk-add suppressions with mandatory linear tickets.
+
+The grace-period decision and how long it lasts is a launch decision recorded in the enabling PR's description, not part of this spec.
+
+## Operational signal for flipping the kill-switch
+
+The repo-wide kill-switch (`COMPLIANCE_AUDIT_BLOCKING=false`) is the operational lever for day-one and false-positive crises. Triggers for flipping it on:
+
+- ≥3 PRs in a 7-day window add the per-PR `compliance-audit:advisory` label to bypass the gate. Signal: per-PR override is being used as a workaround, not an exception.
+- Any PR is blocked on a rule whose `llm_eval` finding is later judged false by reviewer in PR comments. Signal: false positive entered the gate.
+- The auditor exceeds budget on >25% of runs in a 7-day window. Signal: cost model is wrong.
+
+When any trigger fires, flip to advisory, file a follow-up Linear ticket to triage, and flip back when the trigger condition no longer holds. This is a written rule, not a vibe call.
+
+## Test plan and shipping criterion
+
+`tests/compliance/fixtures/` contains:
+
+- 3 known-good example artifacts (real, taken from `categories/`) with their expected zero-finding result frozen in `expected.json`
+- 3 seeded-failure artifacts (fixtures purpose-built to violate specific rules) with their expected non-zero findings frozen
+- For each seeded failure, the rule id violated, the expected severity, and the expected finding count
+
+The shipping bar: `npm run test:compliance` is green, **100% recall on seeded failures, 100% precision on known-goods** (matching cohesion-audit's bar). LLM-rule fixtures use a recorded-response cassette (no live model calls in `npm test`) so the suite is deterministic.
+
+`npm run audit:compliance:smoke` runs the full live pipeline (with LLM calls) on one fixture as a final pre-merge sanity check; not run by default in CI to avoid burning budget.
+
 ## Failure modes accepted in v0.1
 
-- **Day-one violation count.** Blocking is on by default but can be flipped repo-wide if it chokes the team. Realistic expectation: first PR after merge will fire several rules; expect to flip to advisory for ~1 week while the team triages, then flip back.
+- **Day-one violation count.** Blocking is on by default but can be flipped repo-wide via the operational signal above. The baseline JSON makes the count visible before launch.
 - **LLM false positives.** Each finding includes the rule's `llm_eval` prompt text and the model's verbatim answer in the JSON report so reviewers can spot bad calls. Persistent false-positive rules graduate to a Linear cleanup ticket and (if rule is wrong) get downgraded to `experimental` until fixed.
 - **Gaming via `data-genre` lies.** A producer can change `data-genre` to dodge rules. v0.1 does not prevent this. v0.2 adds a cross-check that `data-genre` matches the file's location (slides/examples/*.html ⇒ genre ∈ slides genres).
 
