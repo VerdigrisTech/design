@@ -38,7 +38,6 @@ exclude:
   - vendor/
   - example_gen/
   - audits/
-  - explorations/
 
 # Default front matter
 defaults:

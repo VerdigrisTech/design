@@ -41,11 +41,12 @@ const SKIP_DIRS = new Set([
   "node_modules",
   "build",
   // Internal working dirs: AI generation pipeline source + audit report outputs.
-  // Must mirror the Jekyll `exclude:` list in _config.yml.
+  // Must mirror the Jekyll `exclude:` list in _config.yml. Note: explorations/
+  // IS rendered (visual-signature-demo etc. are linked from public pages), so
+  // it stays in the public scan set.
   "example_gen",
   "audits",
   "tests",
-  "explorations",
   "vendor",
 ]);
 
