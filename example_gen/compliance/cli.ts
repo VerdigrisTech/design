@@ -49,7 +49,8 @@ Environment:
 Exit codes:
   0    Audit completed; no blocking failures (advisory mode always exits 0).
   1    Blocking findings, budget exhausted, or invariant-bypass attempted
-       (only in COMPLIANCE_AUDIT_BLOCKING=true mode).
+       (in blocking mode -- the default; advisory mode requires
+       COMPLIANCE_AUDIT_BLOCKING=false explicitly).
   2    Bad CLI args, missing paths, or unrecoverable error in the auditor.
 `;
 
@@ -90,7 +91,19 @@ async function main() {
   // instead of silently disabling the gate.
   const isValidBudget = (n: number): boolean => Number.isFinite(n) && n > 0;
 
-  const budgetFlag = args.find((a) => a.startsWith("--budget="));
+  // Bare `--budget` (no `=`) would otherwise fall through to the generic
+  // unknown-flag error. Catch it here so users see the actual fix instead
+  // of being told `--budget` is unknown.
+  if (args.includes("--budget")) {
+    console.error(`compliance-audit: --budget requires a value; use --budget=<usd> (e.g. --budget=40).`);
+    process.exit(2);
+  }
+  const budgetFlags = args.filter((a) => a.startsWith("--budget="));
+  if (budgetFlags.length > 1) {
+    console.error(`compliance-audit: --budget specified ${budgetFlags.length} times (${budgetFlags.join(" ")}); pass it exactly once.`);
+    process.exit(2);
+  }
+  const budgetFlag = budgetFlags[0];
   const budgetCliRaw = budgetFlag ? budgetFlag.split("=")[1] ?? "" : "";
   const budgetCli = budgetCliRaw === "" ? NaN : Number(budgetCliRaw);
   if (budgetFlag && !isValidBudget(budgetCli)) {
